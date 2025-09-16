@@ -1458,6 +1458,7 @@ GameObject:
   - component: {fileID: -5322448002162408945}
   - component: {fileID: 8964794528452801434}
   - component: {fileID: 2230581264522161416}
+  - component: {fileID: 9163024940700195790}
   m_Layer: 0
   m_Name: Wizard
   m_TagString: Untagged
@@ -1524,7 +1525,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.55
+  m_Radius: 0.45
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.0001
@@ -1542,13 +1543,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09ee9da338ae9d4783853782df64087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  moveSpeed: 10
   gravity: -13
   cameraSpeed: 15
   jumpMultiplier: 1
   jumpForce: 7
   coyoteTime: 0.1
   jumpBufferTime: 0.2
+  currentXp: 0
+  currentLevel: 0
+  xpRequirement: 100
+  currentCoins: 0
+  hp: 100
+  meleeAtkDmg: 10
+  distanceAtkDmg: 20
+  moveSpeed: 10
+  dashSpeed: 20
 --- !u!114 &2230581264522161416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1691,6 +1700,18 @@ MonoBehaviour:
   m_DefaultActionMap: 
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &9163024940700195790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5348063350356945621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b88296ef8cf374eb6a2820f58fe31a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCollision
 --- !u!1 &5411934067007340404
 GameObject:
   m_ObjectHideFlags: 0
