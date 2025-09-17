@@ -1,5 +1,6 @@
 using System.Collections;
 using TreeEditor;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,10 +15,11 @@ public class PlayerMovement : MonoBehaviour
     CharacterController player;
     Animator animator;
 
-    [SerializeField] float gravity = -9.81f;
+    
     [SerializeField] float cameraSpeed = 15f;
 
     #region Jump
+    [Header("Jump")]
     public float jumpMultiplier = 1f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float coyoteTime = 0.2f;
@@ -25,30 +27,51 @@ public class PlayerMovement : MonoBehaviour
     float coyoteTimeCounter;
     float jumpBufferCounter;
     bool doubleJumped = false;
+
+
+    //float initialJumpVelocity;
+    //float maxJumpHeight = 2f;
+    //float maxJumpTime = 1f;
+    [SerializeField] float gravity = -13;
+    [SerializeField] float gravityMultiplier = 2;
+    //float timeToApex;
+
+
+
+
     #endregion
 
     #region Player Status
-   
+
     float defenceChargeTime = 10f;
     float defenceChargeIncrement = 1f;
     float defenceConsumption = 1f; //Vitesse a laquelle le joeur perds de l'energie en bloquant
-    
+
     float distanceAtkCd = 3f;
     float meleeAtkCd = 1f;
     float dashCd = 2.5f; //Cd = cooldown
 
-    [SerializeField] int currentXp = 0;
-    [SerializeField] int currentLevel = 0;
-    [SerializeField] int xpRequirement = 100;
+    int currentXp = 0;
+    int currentLevel = 0;
+    int xpRequirement = 100;
+    [Header("Status")]
     [SerializeField] int currentCoins = 0;
 
     [SerializeField] int hp = 100;
     [SerializeField] int meleeAtkDmg = 10; //Dmg = damage
     [SerializeField] int distanceAtkDmg = 20;
-    [SerializeField] float moveSpeed = 5f;
+
+    [Header("Speed")]
+    [SerializeField] float moveSpeed = 0f;
+    [SerializeField] float maxSpeed = 5f;
+    [SerializeField] float acceleration = 12f;
+    [SerializeField] float deceleration = 10f;
+    [SerializeField] float slowedDownSpeed = 3f;
+
     [SerializeField] float dashSpeed = 20f;
     int maxHp;
 
+    [Header("Status Effect")]
     string statusEffect = "";
     int statusDuration = 0;
     int statusTickDmg = 0;
@@ -73,6 +96,10 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
         maxHp = hp;
+
+        //timeToApex = maxJumpTime / 2f;
+        //gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
+        //initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
     }
 
     // Update is called once per frame
@@ -97,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            jump += Time.deltaTime * gravity * transform.up;
+            jump += Time.deltaTime * gravity * gravityMultiplier * transform.up;
             coyoteTimeCounter -= Time.deltaTime;
         }
 
@@ -119,7 +146,22 @@ public class PlayerMovement : MonoBehaviour
                 jumpBufferCounter = 0f;
             }
         }
+
+        if (direction.sqrMagnitude > 0.001f) //si ya input
+        {
+            if (moveSpeed < maxSpeed) //et que ya pas atteint sa vitesse max
+                moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxSpeed); //accelere
+            if (move.y <= 0)
+                moveSpeed = slowedDownSpeed; //autre direction que forward = ralenti
+        }
+        else
+        {
+            if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
+                moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
+        }
         
+        animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
+        animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
         player.Move((moveSpeed * direction + jump) * Time.deltaTime);
     }
 
@@ -133,8 +175,7 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext ctx)
     {
         move = ctx.ReadValue<Vector2>();
-        animator.SetFloat("x", move.x);
-        animator.SetFloat("y", move.y);
+        
     }
     public void Look(InputAction.CallbackContext ctx)
     {
@@ -178,9 +219,6 @@ public class PlayerMovement : MonoBehaviour
         currentCoins += coinGain;
         //Faire autre logique: sound effects, Ui updates (?), etc.
     }
-
-
-
 }
 
 //Source for jumping mechanics: https://www.youtube.com/watch?v=RFix_Kg2Di0
