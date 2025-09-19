@@ -31,8 +31,7 @@ public class EnemieDrops : MonoBehaviour
 
                 for (int i = 0; i < count; i++)
                 {
-                    Vector3 pos = transform.position;
-                    + Random.insideUnitSphere * spread; // source: https://docs.unity3d.com/ScriptReference/Random-insideUnitSphere.html
+                    Vector3 pos = transform.position + Random.insideUnitSphere * spread; // source: https://docs.unity3d.com/ScriptReference/Random-insideUnitSphere.html
                     pos.y = transform.position.y + 0.5f;
 
                     GameObject orb = Instantiate(DropModel, pos, Quaternion.identity);
