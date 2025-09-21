@@ -4,19 +4,20 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent (typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
     static PlayerMovement instance;
-    public static PlayerMovement Instance { get { return instance; } } 
+    public static PlayerMovement Instance { get { return instance; } }
 
 
     Camera playerCamera;
     CharacterController player;
     Animator animator;
 
-    
+
     [SerializeField] float cameraSpeed = 15f;
+    bool isAirborne = false;
 
     #region Jump
     [Header("Jump")]
@@ -64,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Speed")]
     [SerializeField] float moveSpeed = 0f;
     [SerializeField] float maxSpeed = 5f;
+    [SerializeField] float slowedAcceleration = 9f;
     [SerializeField] float acceleration = 12f;
     [SerializeField] float deceleration = 10f;
     [SerializeField] float slowedDownSpeed = 3f;
@@ -95,11 +97,6 @@ public class PlayerMovement : MonoBehaviour
         playerCamera = GetComponentInChildren<Camera>();
         animator = GetComponent<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
-        maxHp = hp;
-
-        //timeToApex = maxJumpTime / 2f;
-        //gravity = (-2 * maxJumpHeight) / Mathf.Pow(timeToApex, 2);
-        //initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
     }
 
     // Update is called once per frame
@@ -112,24 +109,26 @@ public class PlayerMovement : MonoBehaviour
     public void Movement()
     {
         Vector3 direction = playerCamera.transform.forward * move.y + playerCamera.transform.right * move.x;
-        if(direction.magnitude > 0)
+        if (direction.magnitude > 0)
             direction.Normalize();
         direction.y = 0;
 
         if (player.isGrounded)
         {
             jump.y = Mathf.Max(-1, jump.y);
-            doubleJumped = false;
             coyoteTimeCounter = coyoteTime;
+            doubleJumped = false;
+            isAirborne = false;
         }
         else
         {
             jump += Time.deltaTime * gravity * gravityMultiplier * transform.up;
             coyoteTimeCounter -= Time.deltaTime;
+            isAirborne = true;
         }
 
         //Jump + buffer mechanics
-        if(jumpBufferCounter > 0f)
+        if (jumpBufferCounter > 0f)
         {
             jumpBufferCounter -= Time.deltaTime;
             if (player.isGrounded || coyoteTimeCounter > 0f)
@@ -149,17 +148,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (direction.sqrMagnitude > 0.001f) //si ya input
         {
-            if (moveSpeed < maxSpeed) //et que ya pas atteint sa vitesse max
+            if (moveSpeed < maxSpeed && move.y > 0) //et que ya pas atteint sa vitesse max
                 moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxSpeed); //accelere
             if (move.y <= 0)
-                moveSpeed = slowedDownSpeed; //autre direction que forward = ralenti
+                moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * Time.deltaTime, slowedDownSpeed); //pas forward = ralenti
         }
         else
         {
             if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
                 moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
         }
-        
+
         animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
         animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
         player.Move((moveSpeed * direction + jump) * Time.deltaTime);
@@ -175,7 +174,7 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext ctx)
     {
         move = ctx.ReadValue<Vector2>();
-        
+
     }
     public void Look(InputAction.CallbackContext ctx)
     {
@@ -194,15 +193,6 @@ public class PlayerMovement : MonoBehaviour
     public IEnumerator Dash()
     {
         yield return null;
-    }
-
-    public void UpdateHp(int dmg) //Mettre valeur negative pour regagner de la vie
-    {
-        hp -= dmg;
-        if(hp > maxHp) //Peut pas depasser le max de hp
-            hp = maxHp;
-
-        //Faire autre logique: animations, sound effects, etc.
     }
 
     public void ApplyStatusEffect(string statusToApply, int duration, int tickDmg) //Mettre le statusEffect, son temps et son dmg par tick, si pas de dmg (ex.: paralyser) --> 0

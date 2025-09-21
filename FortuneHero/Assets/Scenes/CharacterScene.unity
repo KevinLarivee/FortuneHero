@@ -821,7 +821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8964794528452801434, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: jumpForce
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 8964794528452801434, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: moveSpeed
