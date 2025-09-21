@@ -3,20 +3,20 @@ using UnityEngine;
 public class DamageCollision : MonoBehaviour
 {
     [Header("Paramètres d'attaque")]
-    [SerializeField] private int damage = 1;
-    [SerializeField] private string targetTag = "Player";
-    [SerializeField] private StatusEffect statusEffect = StatusEffect.Knockback;
+    [SerializeField] int damage = 1;
+    [SerializeField] string targetTag = "Player";
+    [SerializeField] StatusEffect statusEffect = StatusEffect.Knockback;
 
     [Header("Knockback")]
-    [SerializeField] private float knockbackForce = 10f;
-    [SerializeField] private float knockbackDuration = 0.25f;
-    [Range(0f, 1f)][SerializeField] private float verticalFactor = 1f;
+    [SerializeField] float knockbackForce = 10f;
+    [SerializeField] float knockbackDuration = 0.25f;
+    [Range(0f, 3f)][SerializeField] float verticalFactor = 1f;
 
     private void HandleHit(GameObject other, string via)
     {
         if (!other.CompareTag(targetTag)) return;
 
-        //Debug.Log($"[DamageCollision] {name} touche {other.name} via {via} | dmg={damage} | effect={statusEffect}");
+        Debug.Log($"[DamageCollision] {name} touche {other.name} via {via} | dmg={damage} | effect={statusEffect}");
 
         var targetHealth = other.GetComponent<HealthComponent>();
         if (targetHealth != null)
@@ -40,6 +40,12 @@ public class DamageCollision : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision) => HandleHit(collision.gameObject, "OnCollisionEnter");
-    private void OnTriggerEnter(Collider other) => HandleHit(other.gameObject, "OnTriggerEnter");
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    HandleHit(collision.gameObject, "OnCollisionEnter");
+    //}
+    private void OnTriggerEnter(Collider other)
+    {
+        HandleHit(other.gameObject, "OnTriggerEnter");
+    }
 }

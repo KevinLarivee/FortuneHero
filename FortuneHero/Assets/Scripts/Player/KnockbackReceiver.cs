@@ -5,7 +5,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class KnockbackReceiver : MonoBehaviour
 {
-    [Header("R�glages g�n�raux")]
+    [Header("Reglages generaux")]
     [SerializeField] private bool allowWhileAirborne = true; // garde-le si tu veux filtrer par sol + raycast
     [SerializeField] private float dragWhileKnockback = 0f;
 
