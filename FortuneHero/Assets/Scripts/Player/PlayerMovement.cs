@@ -1,5 +1,6 @@
 using System.Collections;
 using TreeEditor;
+using UnityEditor.Build;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -10,57 +11,47 @@ public class PlayerMovement : MonoBehaviour
     static PlayerMovement instance;
     public static PlayerMovement Instance { get { return instance; } }
 
-
     Camera playerCamera;
     CharacterController player;
     Animator animator;
 
-
     [SerializeField] float cameraSpeed = 15f;
-    bool isAirborne = false;
+
+
+
+    #region Dash
+
+    [SerializeField] float dashCooldown = 0.75f;
+    [SerializeField] float dashTime = 0.2f;
+    [SerializeField] float dashSpeed = 2f;
+    //bool isDashing = false;
+    bool canDash = true;
+
+    #endregion
 
     #region Jump
     [Header("Jump")]
     public float jumpMultiplier = 1f;
     [SerializeField] float jumpForce = 5f;
+    [SerializeField] float gravity = -13;
+    [SerializeField] float gravityMultiplier = 2;
     [SerializeField] float coyoteTime = 0.2f;
     [SerializeField] float jumpBufferTime = 0.2f;
     float coyoteTimeCounter;
     float jumpBufferCounter;
     bool doubleJumped = false;
-
-
-    //float initialJumpVelocity;
-    //float maxJumpHeight = 2f;
-    //float maxJumpTime = 1f;
-    [SerializeField] float gravity = -13;
-    [SerializeField] float gravityMultiplier = 2;
-    //float timeToApex;
-
-
-
-
+    bool isAirborne = false;
     #endregion
 
     #region Player Status
-
-    float defenceChargeTime = 10f;
-    float defenceChargeIncrement = 1f;
-    float defenceConsumption = 1f; //Vitesse a laquelle le joeur perds de l'energie en bloquant
-
-    float distanceAtkCd = 3f;
-    float meleeAtkCd = 1f;
-    float dashCd = 2.5f; //Cd = cooldown
-
     int currentXp = 0;
     int currentLevel = 0;
     int xpRequirement = 100;
+    
     [Header("Status")]
     [SerializeField] int currentCoins = 0;
-
     [SerializeField] int hp = 100;
-    [SerializeField] int meleeAtkDmg = 10; //Dmg = damage
-    [SerializeField] int distanceAtkDmg = 20;
+    int maxHp;
 
     [Header("Speed")]
     [SerializeField] float moveSpeed = 0f;
@@ -69,9 +60,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float acceleration = 12f;
     [SerializeField] float deceleration = 10f;
     [SerializeField] float slowedDownSpeed = 3f;
-
-    [SerializeField] float dashSpeed = 20f;
-    int maxHp;
 
     [Header("Status Effect")]
     string statusEffect = "";
@@ -83,9 +71,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 jump;
     Vector2 look;
     Vector2 move;
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         if (instance != null && instance != this)
@@ -99,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         Movement();
@@ -145,19 +129,41 @@ public class PlayerMovement : MonoBehaviour
                 jumpBufferCounter = 0f;
             }
         }
+        if (player.isGrounded)
+        {
+            if (direction.sqrMagnitude > 0.001f) //si ya input
+            {
+                if (moveSpeed < maxSpeed && move.y > 0) //et que ya pas atteint sa vitesse max
+                    moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxSpeed); //accelere
+                if (move.y <= 0)
+                    moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * Time.deltaTime, slowedDownSpeed); //pas forward = ralenti
+            }
+            else
+            {
+                if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
+                    moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
+            }
+        }
+        /*else
+        {
+            float airAcceleration = acceleration * 0.4f;    // 40% of ground accel (tweak)
+            float maxAirSpeed = maxSpeed * 0.8f;        // 80% of ground max (tweak)
 
-        if (direction.sqrMagnitude > 0.001f) //si ya input
-        {
-            if (moveSpeed < maxSpeed && move.y > 0) //et que ya pas atteint sa vitesse max
-                moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxSpeed); //accelere
-            if (move.y <= 0)
-                moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * Time.deltaTime, slowedDownSpeed); //pas forward = ralenti
-        }
-        else
-        {
-            if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
-                moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
-        }
+            if (direction.sqrMagnitude > 0.001f)
+            {
+                if (moveSpeed < maxAirSpeed && move.y > 0)
+                    moveSpeed = Mathf.Min(moveSpeed + airAcceleration * Time.deltaTime, maxAirSpeed);
+                if (move.y <= 0)
+                    moveSpeed = Mathf.Min(moveSpeed + airAcceleration * 0.5f * Time.deltaTime, slowedDownSpeed);
+            }
+            else
+            {
+                // slight natural air deceleration so player doesn't instantly stop
+                if (moveSpeed > 0f)
+                    moveSpeed = Mathf.Max(moveSpeed - (deceleration * 0.2f) * Time.deltaTime, 0f);
+            }
+        }*/
+
 
         animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
         animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
@@ -187,12 +193,27 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Dash(InputAction.CallbackContext ctx)
     {
-
+        if(ctx.performed && canDash)
+        {
+            StartCoroutine(Dash());
+        }
     }
 
     public IEnumerator Dash()
     {
-        yield return null;
+        canDash = false;
+        float originalGravity = gravity;
+        gravity = 0f;
+        moveSpeed = moveSpeed * dashSpeed;
+        //animation.setBool("isDashing", true);
+        yield return new WaitForSeconds(dashTime);
+        
+        gravity = originalGravity;
+        moveSpeed = maxSpeed;
+        //animation.setBool("isDashing", false);
+        yield return new WaitForSeconds(dashCooldown);
+        
+        canDash = true;
     }
 
     public void ApplyStatusEffect(string statusToApply, int duration, int tickDmg) //Mettre le statusEffect, son temps et son dmg par tick, si pas de dmg (ex.: paralyser) --> 0

@@ -97,6 +97,7 @@ Transform:
   - {fileID: 651390330329103375}
   - {fileID: 8657573292333263293}
   - {fileID: 6142252925145604409}
+  - {fileID: 4525435825804530791}
   m_Father: {fileID: 5254508506807550201}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &635022915881031134
@@ -538,15 +539,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2665290523169959625}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0028643396, y: -0.707101, z: -0.0028643396, w: 0.707101}
-  m_LocalPosition: {x: -40.60069, y: 2.6159427, z: 93.42256}
+  m_LocalRotation: {x: -0.70834345, y: -0.011539475, z: 0.00905328, w: 0.7057156}
+  m_LocalPosition: {x: 14.934321, y: -4.022293, z: -0.22166538}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2441798606571417170}
   - {fileID: 4162636355717484038}
   - {fileID: 4713982679413640869}
-  m_Father: {fileID: 1900900291662925095}
+  m_Father: {fileID: 2554125810122752251}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3125797157014777679
 GameObject:
@@ -1543,21 +1544,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09ee9da338ae9d4783853782df64087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  gravity: -13
   cameraSpeed: 15
+  dashCooldown: 0.75
+  dashTime: 0.2
+  dashSpeed: 7
   jumpMultiplier: 1
-  jumpForce: 7
+  jumpForce: 11
   coyoteTime: 0.1
   jumpBufferTime: 0.2
-  currentXp: 0
-  currentLevel: 0
-  xpRequirement: 100
+  gravity: -15
+  gravityMultiplier: 2
   currentCoins: 0
   hp: 100
   meleeAtkDmg: 10
   distanceAtkDmg: 20
-  moveSpeed: 10
-  dashSpeed: 20
+  moveSpeed: 0
+  maxSpeed: 10
+  slowedAcceleration: 9
+  acceleration: 12
+  deceleration: 10
+  slowedDownSpeed: 6
 --- !u!114 &2230581264522161416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1652,7 +1658,19 @@ MonoBehaviour:
     m_ActionId: b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba
     m_ActionName: 'Player/Next[/Keyboard/2]'
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8964794528452801434}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
+        m_MethodName: Dash
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 641cd816-40e6-41b4-8c3d-04687c349290
     m_ActionName: 'Player/Sprint[/Keyboard/leftShift]'
   - m_PersistentCalls:
@@ -2683,7 +2701,6 @@ Transform:
   - {fileID: 8585460142637169973}
   - {fileID: 1914409974721282238}
   - {fileID: 2266475410762482844}
-  - {fileID: 4525435825804530791}
   m_Father: {fileID: 4230229768828790997}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8594275791808437842
