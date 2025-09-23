@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     Vector3 cameraRotation;
-    Vector3 jump;
+    [SerializeField] Vector3 jump;
     Vector2 look;
     Vector2 move;
     void Awake()
@@ -103,10 +103,15 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimeCounter = coyoteTime;
             doubleJumped = false;
             isAirborne = false;
+            animator.SetBool("isFalling", false);
         }
         else
         {
-            jump += Time.deltaTime * gravity * gravityMultiplier * transform.up;
+            jump += gravity * gravityMultiplier * Time.deltaTime * transform.up;
+            if(jump.y < 0)
+            {
+                animator.SetBool("isFalling", true);
+            }
             coyoteTimeCounter -= Time.deltaTime;
             isAirborne = true;
         }
@@ -133,6 +138,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (direction.sqrMagnitude > 0.001f) //si ya input
             {
+               
                 if (moveSpeed < maxSpeed && move.y > 0) //et que ya pas atteint sa vitesse max
                     moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxSpeed); //accelere
                 if (move.y <= 0)
@@ -146,24 +152,7 @@ public class PlayerMovement : MonoBehaviour
         }
         /*else
         {
-            float airAcceleration = acceleration * 0.4f;    // 40% of ground accel (tweak)
-            float maxAirSpeed = maxSpeed * 0.8f;        // 80% of ground max (tweak)
-
-            if (direction.sqrMagnitude > 0.001f)
-            {
-                if (moveSpeed < maxAirSpeed && move.y > 0)
-                    moveSpeed = Mathf.Min(moveSpeed + airAcceleration * Time.deltaTime, maxAirSpeed);
-                if (move.y <= 0)
-                    moveSpeed = Mathf.Min(moveSpeed + airAcceleration * 0.5f * Time.deltaTime, slowedDownSpeed);
-            }
-            else
-            {
-                // slight natural air deceleration so player doesn't instantly stop
-                if (moveSpeed > 0f)
-                    moveSpeed = Mathf.Max(moveSpeed - (deceleration * 0.2f) * Time.deltaTime, 0f);
-            }
         }*/
-
 
         animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
         animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
