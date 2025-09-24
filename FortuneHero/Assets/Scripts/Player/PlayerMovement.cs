@@ -17,9 +17,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float gravity = -9.81f;
     [SerializeField] float cameraSpeed = 15f;
 
-    public float knockBackForcel;
-    public float knockBackTime;
-    private float knockBackCounter;
+  
 
     #region Jump
     public float jumpMultiplier = 1f;
@@ -82,14 +80,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (knockBackCounter <= 0)
-        {
-            Movement();
-        }
-            RotateCamera();
-        
-        
-        
+        Movement();
+        RotateCamera();
     }
 
     public void Movement()
@@ -189,10 +181,7 @@ public class PlayerMovement : MonoBehaviour
         //Faire autre logique: sound effects, Ui updates (?), etc.
     }
 
-    public void Knockback()
-    {
-        knockBackCounter = knockBackTime;
-    }
+   
 
 }
 
