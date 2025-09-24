@@ -10,11 +10,14 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] Collider weaponCollider;
     [SerializeField] GameObject exitPoint;
     [SerializeField] GameObject projectilePrefab;
+    [SerializeField] GameObject shield;
+    PlayerMovement player;
 
-
+    bool showShield = false;
     float defenceChargeTime = 10f;
     float defenceChargeIncrement = 1f;
     float defenceConsumption = 1f; //Vitesse a laquelle le joeur perds de l'energie en bloquant
+    float defenceCurrentCharge = 0f;
 
     [SerializeField] float rangedAtkCd = 1.5f;
     [SerializeField] float rangedAtkTimer = 0f;
@@ -64,9 +67,28 @@ public class PlayerActions : MonoBehaviour
             canRangedAtk = false;
         }
     }
+    public void Defend(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed /*canDefend*/)
+        {
+            animator.SetBool("isDefending", true);
+            ShowShield();
+        }
+        else if (ctx.canceled)
+        {
+            animator.SetBool("isDefending", false);
+            ShowShield();
+        }
+    }
     public void ShootProjectile()
     {
         Instantiate(projectilePrefab, exitPoint.transform.position, gameObject.transform.rotation);
+    }
+    public void ShowShield()
+    {
+        PlayerMovement.Instance.SlowPlayer();
+        showShield = !showShield;
+        shield.SetActive(showShield);
     }
     public void EnableWeaponCollider()
     {

@@ -4,6 +4,7 @@ using UnityEditor.Build;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
@@ -14,10 +15,13 @@ public class PlayerMovement : MonoBehaviour
     Camera playerCamera;
     CharacterController player;
     Animator animator;
+    Vector3 cameraRotation;
+    Vector3 jump;
+    Vector2 look;
+    Vector2 move = Vector2.zero;
+
 
     [SerializeField] float cameraSpeed = 15f;
-
-
 
     #region Dash
 
@@ -55,11 +59,15 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Speed")]
     [SerializeField] float moveSpeed = 0f;
-    [SerializeField] float maxSpeed = 5f;
+    [SerializeField] float currentMaxSpeed;
+    float baseMaxSpeed = 12f;
+
     [SerializeField] float slowedAcceleration = 9f;
     [SerializeField] float acceleration = 12f;
     [SerializeField] float deceleration = 10f;
-    [SerializeField] float slowedDownSpeed = 3f;
+    [SerializeField] float slowedDownSpeed = 6f;
+    [SerializeField] float speedWhileDefending = 3f;
+    bool isDefending = false;
 
     [Header("Status Effect")]
     string statusEffect = "";
@@ -67,10 +75,7 @@ public class PlayerMovement : MonoBehaviour
     int statusTickDmg = 0;
     #endregion
 
-    Vector3 cameraRotation;
-    [SerializeField] Vector3 jump;
-    Vector2 look;
-    Vector2 move;
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -82,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         playerCamera = GetComponentInChildren<Camera>();
         animator = GetComponent<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
+        currentMaxSpeed = baseMaxSpeed;
     }
 
     void Update()
@@ -102,18 +108,14 @@ public class PlayerMovement : MonoBehaviour
             jump.y = Mathf.Max(-1, jump.y);
             coyoteTimeCounter = coyoteTime;
             doubleJumped = false;
-            isAirborne = false;
-            animator.SetBool("isFalling", false);
+            animator.SetBool("isGrounded", true);
+            animator.SetBool("hasJumped", false);
         }
         else
         {
             jump += gravity * gravityMultiplier * Time.deltaTime * transform.up;
-            if(jump.y < 0)
-            {
-                animator.SetBool("isFalling", true);
-            }
             coyoteTimeCounter -= Time.deltaTime;
-            isAirborne = true;
+            animator.SetBool("isGrounded", false);
         }
 
         //Jump + buffer mechanics
@@ -125,13 +127,14 @@ public class PlayerMovement : MonoBehaviour
                 coyoteTimeCounter = 0f;
                 jump = transform.up * (jumpForce * jumpMultiplier);
                 jumpBufferCounter = 0f;
-                animator.SetTrigger("Jump");
+                animator.SetBool("hasJumped", true);
             }
             else if (coyoteTimeCounter <= 0f && !doubleJumped)
             {
                 jump = transform.up * (jumpForce * jumpMultiplier);
                 doubleJumped = true;
                 jumpBufferCounter = 0f;
+                animator.SetTrigger("doubleJump");
             }
         }
         if (player.isGrounded)
@@ -139,10 +142,10 @@ public class PlayerMovement : MonoBehaviour
             if (direction.sqrMagnitude > 0.001f) //si ya input
             {
                
-                if (moveSpeed < maxSpeed && move.y > 0) //et que ya pas atteint sa vitesse max
-                    moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, maxSpeed); //accelere
+                if (moveSpeed < currentMaxSpeed && move.y > 0) //et que ya pas atteint sa vitesse max
+                    moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, currentMaxSpeed); //accelere
                 if (move.y <= 0)
-                    moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * Time.deltaTime, slowedDownSpeed); //pas forward = ralenti
+                    moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * Time.deltaTime, isDefending ? speedWhileDefending : slowedDownSpeed); //pas forward = ralenti
             }
             else
             {
@@ -193,16 +196,23 @@ public class PlayerMovement : MonoBehaviour
         canDash = false;
         float originalGravity = gravity;
         gravity = 0f;
-        moveSpeed = moveSpeed * dashSpeed;
+        moveSpeed = baseMaxSpeed * dashSpeed;
         //animation.setBool("isDashing", true);
         yield return new WaitForSeconds(dashTime);
         
         gravity = originalGravity;
-        moveSpeed = maxSpeed;
+        moveSpeed = currentMaxSpeed;
         //animation.setBool("isDashing", false);
         yield return new WaitForSeconds(dashCooldown);
-        
         canDash = true;
+    }
+    public void SlowPlayer() 
+    {
+        isDefending = !isDefending;
+        if (isDefending)
+            currentMaxSpeed = speedWhileDefending;
+        else
+            currentMaxSpeed = baseMaxSpeed;
     }
 
     public void ApplyStatusEffect(string statusToApply, int duration, int tickDmg) //Mettre le statusEffect, son temps et son dmg par tick, si pas de dmg (ex.: paralyser) --> 0
