@@ -6,6 +6,9 @@ public enum StatusEffect { None, Burn, Freeze, Paralyze, Knockback }
 //Code a revoir (chat)
 public class HealthComponent : MonoBehaviour
 {
+    [SerializeField] int hp = 100;
+    int maxHp;
+
     // Événement optionnel pour écouter les coups ailleurs (UI, sons, etc.)
     public UnityAction<int, StatusEffect> OnHit;
 

@@ -22,18 +22,13 @@ public class PlayerMovement : MonoBehaviour
     Vector2 look;
     Vector2 move;
     [SerializeField] LayerMask playerLayer;
-
     [SerializeField] float cameraSpeed = 15f;
 
-    #region Dash
 
     [SerializeField] float dashCooldown = 0.75f;
     [SerializeField] float dashTime = 0.2f;
     [SerializeField] float dashSpeed = 2f;
-    //bool isDashing = false;
     bool canDash = true;
-
-    #endregion
 
     #region Jump
     [Header("Jump")]
@@ -46,18 +41,7 @@ public class PlayerMovement : MonoBehaviour
     float coyoteTimeCounter;
     float jumpBufferCounter;
     bool doubleJumped = false;
-    bool isAirborne = false;
     #endregion
-
-    #region Player Status
-    int currentXp = 0;
-    int currentLevel = 0;
-    int xpRequirement = 100;
-    
-    [Header("Status")]
-    [SerializeField] int currentCoins = 0;
-    [SerializeField] int hp = 100;
-    int maxHp;
 
     [Header("Speed")]
     [SerializeField] float moveSpeed = 0f;
@@ -70,12 +54,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float slowedDownSpeed = 6f;
     [SerializeField] float speedWhileDefending = 3f;
     bool isDefending = false;
-
-    [Header("Status Effect")]
-    string statusEffect = "";
-    int statusDuration = 0;
-    int statusTickDmg = 0;
-    #endregion
 
     #region KnockBack
     float knockBackTime;
@@ -94,11 +72,12 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
         currentMaxSpeed = baseMaxSpeed;
+
     }
 
     void Update()
     {
-        Debug.Log(IsGrounded());
+        //Debug.Log(player.isGrounded);
         if (knockBackCounter <= 0)
         {
             Movement();
@@ -118,7 +97,7 @@ public class PlayerMovement : MonoBehaviour
             direction.Normalize();
         direction.y = 0;
 
-        if (IsGrounded())
+        if (player.isGrounded)
         {
             jump.y = Mathf.Max(-1, jump.y);
             coyoteTimeCounter = coyoteTime;
@@ -137,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
         if (jumpBufferCounter > 0f)
         {
             jumpBufferCounter -= Time.deltaTime;
-            if (IsGrounded() || coyoteTimeCounter > 0f)
+            if (player.isGrounded || coyoteTimeCounter > 0f)
             {
                 coyoteTimeCounter = 0f;
                 jump = transform.up * (jumpForce * jumpMultiplier);
@@ -152,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("doubleJump");
             }
         }
-        if (IsGrounded())
+        if (player.isGrounded)
         {
             if (direction.sqrMagnitude > 0.001f) //si ya input
             {
@@ -177,16 +156,16 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
         player.Move((moveSpeed * direction + jump) * Time.deltaTime);
     }
-    public bool IsGrounded()
-    {
-        Vector3 origin = transform.position + Vector3.up * 0.4f;
+    //public bool IsGrounded()
+    //{
+    //    Vector3 origin = transform.position + Vector3.up * 0.4f;
 
-        if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 0.5f, playerLayer))
-        {
-            return true;
-        }
-        return false;
-    }
+    //    if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 0.5f, playerLayer))
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
     public void RotateCamera()
     {
         cameraRotation += cameraSpeed * Time.deltaTime * new Vector3(-look.y, look.x, 0);
@@ -238,21 +217,6 @@ public class PlayerMovement : MonoBehaviour
             currentMaxSpeed = speedWhileDefending;
         else
             currentMaxSpeed = baseMaxSpeed;
-    }
-
-    public void ApplyStatusEffect(string statusToApply, int duration, int tickDmg) //Mettre le statusEffect, son temps et son dmg par tick, si pas de dmg (ex.: paralyser) --> 0
-    {
-        statusEffect = statusToApply;
-        statusDuration = duration;
-        statusTickDmg = tickDmg;
-        //pt d'autre logique, sinon juste mettre variable publique et faire qqchose avec
-    }
-
-    public void GetXpAndCoins(int xpGain, int coinGain) //Mettre valeur negative pour perdre coins ou xp, pour get un des deux, mettre l'autre a 0
-    {
-        currentXp += xpGain;
-        currentCoins += coinGain;
-        //Faire autre logique: sound effects, Ui updates (?), etc.
     }
 
     public void KnockBack(Vector3 direction, float knockForce)

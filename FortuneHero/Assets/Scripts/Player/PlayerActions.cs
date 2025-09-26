@@ -16,6 +16,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] float defenceCurrentCharge = 0f;
     bool showShield = false;
     float defenceMaxCharge = 10f;
+    bool canDefend = false;
 
     [SerializeField] float rangedAtkCd = 1.5f;
     [SerializeField] float rangedAtkTimer = 0f;
@@ -28,27 +29,43 @@ public class PlayerActions : MonoBehaviour
     void Start()
     {
         animator = GetComponent<Animator>();
+        defenceCurrentCharge = defenceMaxCharge;
     }
 
     void Update()
     {
-        if(!canMeleeAtk)
+        if (!canMeleeAtk)
         {
             meleeAtkTimer -= Time.deltaTime;
-            if(meleeAtkTimer <= 0f)
+            if (meleeAtkTimer <= 0f)
                 canMeleeAtk = true;
         }
-       if(!canRangedAtk)
-       {
+        if (!canRangedAtk)
+        {
             rangedAtkTimer -= Time.deltaTime;
             if (rangedAtkTimer <= 0f)
                 canRangedAtk = true;
-       }
-        if (showShield)
-            defenceCurrentCharge -= Time.deltaTime;
+        }
+
+        if (defenceCurrentCharge <= 0)
+            canDefend = false;
         else
-            if(defenceCurrentCharge < defenceMaxCharge)
-                defenceCurrentCharge += Time.deltaTime;
+            canDefend = true;
+
+        if (showShield)
+        {
+            Mathf.Max(defenceCurrentCharge -= Time.deltaTime, 0);
+        }
+        else
+        {
+            if (defenceCurrentCharge < defenceMaxCharge)
+            {
+                Mathf.Min(defenceCurrentCharge += Time.deltaTime, defenceMaxCharge);
+            }
+        }
+           
+
+        
     }
 
     public void MeleeAttack(InputAction.CallbackContext ctx)
@@ -71,12 +88,12 @@ public class PlayerActions : MonoBehaviour
     }
     public void Defend(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed /*canDefend*/)
+        if (ctx.performed && canDefend)
         {
             animator.SetBool("isDefending", true);
             ShowShield();
         }
-        else if (ctx.canceled)
+        else if (ctx.canceled && canDefend)
         {
             animator.SetBool("isDefending", false);
             ShowShield();
