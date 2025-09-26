@@ -1421,7 +1421,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 5.407799, y: 2.9024487, z: 6.897526}
   m_Center: {x: 0.13109207, y: 2.1765924, z: -2.1147175}
@@ -1763,6 +1763,7 @@ GameObject:
   - component: {fileID: 1733564636}
   - component: {fileID: 1733564635}
   - component: {fileID: 1733564639}
+  - component: {fileID: 1733564640}
   m_Layer: 0
   m_Name: FakeEnnemie
   m_TagString: Untagged
@@ -1874,12 +1875,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba0824bf1660ce4b81b19f172a2c9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemieDrops
-  isded: 0
   isdropped: 0
-  DropModel: {fileID: 720135145037961379, guid: 5714829a3d11d394c8f7dba269972167, type: 3}
+  XpOrb: {fileID: 720135145037961379, guid: 5714829a3d11d394c8f7dba269972167, type: 3}
+  CoinsOrb: {fileID: 1039937051871170706, guid: 312ce025dd3510b489aae70feeb36bb1, type: 3}
   XpCount: 9
-  xpPerOrb: 5
+  CoinsCount: 3
   spread: 1.5
+  heightOffset: 0.5
+--- !u!114 &1733564640
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733564634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a04574d973c83a468bf05bf5e8cdc14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyCollison
 --- !u!1 &1769404684
 GameObject:
   m_ObjectHideFlags: 0
