@@ -45,16 +45,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Speed")]
     [SerializeField] float moveSpeed = 0f;
-    [SerializeField] float currentMaxSpeed;
-    float baseMaxSpeed = 12f;
-
+    [SerializeField] float maxSpeed = 12f;
     [SerializeField] float slowedAcceleration = 9f;
     [SerializeField] float acceleration = 12f;
     [SerializeField] float deceleration = 10f;
     [SerializeField] float slowedDownSpeed = 6f;
     [SerializeField] float speedWhileDefending = 3f;
-    bool isDefending = false;
-
+    float speedMultiplier = 1f;
     #region KnockBack
     float knockBackTime;
     float knockBackCounter;
@@ -71,13 +68,11 @@ public class PlayerMovement : MonoBehaviour
         playerCamera = GetComponentInChildren<Camera>();
         animator = GetComponent<Animator>();
         Cursor.lockState = CursorLockMode.Locked;
-        currentMaxSpeed = baseMaxSpeed;
 
     }
 
     void Update()
     {
-        //Debug.Log(player.isGrounded);
         if (knockBackCounter <= 0)
         {
             Movement();
@@ -97,9 +92,9 @@ public class PlayerMovement : MonoBehaviour
             direction.Normalize();
         direction.y = 0;
 
-        if (player.isGrounded)
+        if (IsGrounded())
         {
-            jump.y = Mathf.Max(-1, jump.y);
+            jump.y = Mathf.Max(-10, jump.y);
             coyoteTimeCounter = coyoteTime;
             doubleJumped = false;
             animator.SetBool("isGrounded", true);
@@ -116,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
         if (jumpBufferCounter > 0f)
         {
             jumpBufferCounter -= Time.deltaTime;
-            if (player.isGrounded || coyoteTimeCounter > 0f)
+            if (IsGrounded() || coyoteTimeCounter > 0f)
             {
                 coyoteTimeCounter = 0f;
                 jump = transform.up * (jumpForce * jumpMultiplier);
@@ -131,41 +126,36 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("doubleJump");
             }
         }
-        if (player.isGrounded)
+        if (direction.sqrMagnitude > 0.001f) //si ya input
         {
-            if (direction.sqrMagnitude > 0.001f) //si ya input
-            {
-               
-                if (moveSpeed < currentMaxSpeed && move.y > 0) //et que ya pas atteint sa vitesse max
-                    moveSpeed = Mathf.Min(moveSpeed + acceleration * Time.deltaTime, currentMaxSpeed); //accelere
-                if (move.y <= 0)
-                    moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * Time.deltaTime, isDefending ? speedWhileDefending : slowedDownSpeed); //pas forward = ralenti
-            }
-            else
-            {
-                if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
-                    moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
-            }
+            float drag = IsGrounded() ? 1f : 0.5f;
+            if (moveSpeed <= maxSpeed && move.y > 0) //et que ya pas atteint sa vitesse max
+                moveSpeed = Mathf.Min(moveSpeed + acceleration * drag * Time.deltaTime, maxSpeed * speedMultiplier); //accelere
+            else if (move.y <= 0)
+                moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * drag * Time.deltaTime, slowedDownSpeed * speedMultiplier); //pas forward = ralenti
         }
         else
         {
-
+            if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
+                moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
         }
+
+
 
         animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
         animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
         player.Move((moveSpeed * direction + jump) * Time.deltaTime);
     }
-    //public bool IsGrounded()
-    //{
-    //    Vector3 origin = transform.position + Vector3.up * 0.4f;
+    public bool IsGrounded()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.2f;
 
-    //    if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 0.5f, playerLayer))
-    //    {
-    //        return true;
-    //    }
-    //    return false;
-    //}
+        if (Physics.SphereCast(origin, 0.1f, Vector3.down, out RaycastHit hit, 0.2f, playerLayer))
+        {
+            return true;
+        }
+        return false;
+    }
     public void RotateCamera()
     {
         cameraRotation += cameraSpeed * Time.deltaTime * new Vector3(-look.y, look.x, 0);
@@ -189,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Dash(InputAction.CallbackContext ctx)
     {
-        if(ctx.performed && canDash)
+        if (ctx.performed && canDash)
         {
             StartCoroutine(Dash());
         }
@@ -200,23 +190,23 @@ public class PlayerMovement : MonoBehaviour
         canDash = false;
         float originalGravity = gravity;
         gravity = 0f;
-        moveSpeed = baseMaxSpeed * dashSpeed;
+        moveSpeed = maxSpeed * dashSpeed;
         //animation.setBool("isDashing", true);
         yield return new WaitForSeconds(dashTime);
-        
+
         gravity = originalGravity;
-        moveSpeed = currentMaxSpeed;
+        moveSpeed = maxSpeed;
         //animation.setBool("isDashing", false);
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
     }
-    public void SlowPlayer() 
+    public void SlowPlayer(float divider)
     {
-        isDefending = !isDefending;
-        if (isDefending)
-            currentMaxSpeed = speedWhileDefending;
-        else
-            currentMaxSpeed = baseMaxSpeed;
+        speedMultiplier /= divider;
+    }
+    public void SpeedUpPlayer(float multiplier)
+    {
+        speedMultiplier *= multiplier;
     }
 
     public void KnockBack(Vector3 direction, float knockForce)

@@ -29,5 +29,4 @@ public class PlayerComponent : MonoBehaviour
         currentCoins += coinGain;
         //Faire autre logique: sound effects, Ui updates (?), etc.
     }
-
 }

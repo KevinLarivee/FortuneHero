@@ -1528,7 +1528,6 @@ GameObject:
   - component: {fileID: 2230581264522161416}
   - component: {fileID: 9163024940700195790}
   - component: {fileID: 5366150510080605653}
-  - component: {fileID: 3164589576091566563}
   - component: {fileID: 4677347551690933205}
   - component: {fileID: 5166883930530795406}
   m_Layer: 0
@@ -1597,8 +1596,8 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.45
+  m_Height: 1.9
+  m_Radius: 0.44
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.0001
@@ -1865,29 +1864,6 @@ MonoBehaviour:
   rangedAtkTimer: 0
   meleeAtkCd: 0.75
   meleeAtkTimer: 0
---- !u!136 &3164589576091566563
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5348063350356945621}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.90356064
-  m_Height: 2.486084
-  m_Direction: 1
-  m_Center: {x: 0.029693604, y: 0.743042, z: -0.15603638}
 --- !u!54 &4677347551690933205
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1932,12 +1908,12 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.90356064
-  m_Height: 2.486084
+  m_Radius: 0.46
+  m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.029693604, y: 0.743042, z: -0.15603638}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &5411934067007340404
 GameObject:
   m_ObjectHideFlags: 0

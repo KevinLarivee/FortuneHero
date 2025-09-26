@@ -63,9 +63,6 @@ public class PlayerActions : MonoBehaviour
                 Mathf.Min(defenceCurrentCharge += Time.deltaTime, defenceMaxCharge);
             }
         }
-           
-
-        
     }
 
     public void MeleeAttack(InputAction.CallbackContext ctx)
@@ -91,23 +88,24 @@ public class PlayerActions : MonoBehaviour
         if (ctx.performed && canDefend)
         {
             animator.SetBool("isDefending", true);
-            ShowShield();
+            ShowShield(true);
+            PlayerMovement.Instance.SlowPlayer(2);
         }
         else if (ctx.canceled && canDefend)
         {
             animator.SetBool("isDefending", false);
-            ShowShield();
+            ShowShield(false);
+            PlayerMovement.Instance.SpeedUpPlayer(2);
         }
     }
     public void ShootProjectile()
     {
         Instantiate(projectilePrefab, exitPoint.transform.position, gameObject.transform.rotation);
     }
-    public void ShowShield()
+    public void ShowShield(bool show)
     {
-        PlayerMovement.Instance.SlowPlayer();
-        showShield = !showShield;
-        shield.SetActive(showShield);
+        showShield = show;
+        shield.SetActive(show);
     }
     public void EnableWeaponCollider()
     {
