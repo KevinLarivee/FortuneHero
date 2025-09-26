@@ -5,7 +5,7 @@ public class PlayerActions : MonoBehaviour
 {
     Animator animator;
 
-    [SerializeField] int meleeAtkDmg = 10; //Dmg = damage
+    [SerializeField] int meleeAtkDmg = 10;
     [SerializeField] int rangedAtkDmg = 20;
     [SerializeField] Collider weaponCollider;
     [SerializeField] GameObject exitPoint;
@@ -13,11 +13,9 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] GameObject shield;
     PlayerMovement player;
 
+    [SerializeField] float defenceCurrentCharge = 0f;
     bool showShield = false;
-    float defenceChargeTime = 10f;
-    float defenceChargeIncrement = 1f;
-    float defenceConsumption = 1f; //Vitesse a laquelle le joeur perds de l'energie en bloquant
-    float defenceCurrentCharge = 0f;
+    float defenceMaxCharge = 10f;
 
     [SerializeField] float rangedAtkCd = 1.5f;
     [SerializeField] float rangedAtkTimer = 0f;
@@ -46,7 +44,11 @@ public class PlayerActions : MonoBehaviour
             if (rangedAtkTimer <= 0f)
                 canRangedAtk = true;
        }
-            
+        if (showShield)
+            defenceCurrentCharge -= Time.deltaTime;
+        else
+            if(defenceCurrentCharge < defenceMaxCharge)
+                defenceCurrentCharge += Time.deltaTime;
     }
 
     public void MeleeAttack(InputAction.CallbackContext ctx)

@@ -1,5 +1,6 @@
 using System.Collections;
 using TreeEditor;
+using Unity.VisualScripting;
 using UnityEditor.Build;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
@@ -17,9 +18,10 @@ public class PlayerMovement : MonoBehaviour
     Animator animator;
     Vector3 cameraRotation;
     Vector3 jump;
+    Vector3 knockBackDirection;
     Vector2 look;
-    Vector2 move = Vector2.zero;
-
+    Vector2 move;
+    [SerializeField] LayerMask playerLayer;
 
     [SerializeField] float cameraSpeed = 15f;
 
@@ -75,6 +77,10 @@ public class PlayerMovement : MonoBehaviour
     int statusTickDmg = 0;
     #endregion
 
+    #region KnockBack
+    float knockBackTime;
+    float knockBackCounter;
+    #endregion
 
     void Awake()
     {
@@ -92,8 +98,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        Movement();
-        RotateCamera();
+        Debug.Log(IsGrounded());
+        if (knockBackCounter <= 0)
+        {
+            Movement();
+            RotateCamera();
+        }
+        else
+        {
+            knockBackCounter -= Time.deltaTime;
+            player.Move(knockBackDirection * Time.deltaTime);
+        }
     }
 
     public void Movement()
@@ -103,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
             direction.Normalize();
         direction.y = 0;
 
-        if (player.isGrounded)
+        if (IsGrounded())
         {
             jump.y = Mathf.Max(-1, jump.y);
             coyoteTimeCounter = coyoteTime;
@@ -122,7 +137,7 @@ public class PlayerMovement : MonoBehaviour
         if (jumpBufferCounter > 0f)
         {
             jumpBufferCounter -= Time.deltaTime;
-            if (player.isGrounded || coyoteTimeCounter > 0f)
+            if (IsGrounded() || coyoteTimeCounter > 0f)
             {
                 coyoteTimeCounter = 0f;
                 jump = transform.up * (jumpForce * jumpMultiplier);
@@ -137,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("doubleJump");
             }
         }
-        if (player.isGrounded)
+        if (IsGrounded())
         {
             if (direction.sqrMagnitude > 0.001f) //si ya input
             {
@@ -153,15 +168,25 @@ public class PlayerMovement : MonoBehaviour
                     moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
             }
         }
-        /*else
+        else
         {
-        }*/
+
+        }
 
         animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
         animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
         player.Move((moveSpeed * direction + jump) * Time.deltaTime);
     }
+    public bool IsGrounded()
+    {
+        Vector3 origin = transform.position + Vector3.up * 0.4f;
 
+        if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 0.5f, playerLayer))
+        {
+            return true;
+        }
+        return false;
+    }
     public void RotateCamera()
     {
         cameraRotation += cameraSpeed * Time.deltaTime * new Vector3(-look.y, look.x, 0);
@@ -228,6 +253,13 @@ public class PlayerMovement : MonoBehaviour
         currentXp += xpGain;
         currentCoins += coinGain;
         //Faire autre logique: sound effects, Ui updates (?), etc.
+    }
+
+    public void KnockBack(Vector3 direction, float knockForce)
+    {
+        knockBackCounter = knockBackTime;
+        knockBackDirection = direction * knockForce;
+
     }
 }
 
