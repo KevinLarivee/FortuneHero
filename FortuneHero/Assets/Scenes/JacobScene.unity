@@ -1325,6 +1325,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1124109913600760, guid: 2282bc04572c9ad479cf55d68ab486c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1266974218}
+    - targetCorrespondingSourceObject: {fileID: 1124109913600760, guid: 2282bc04572c9ad479cf55d68ab486c1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1266974219}
     - targetCorrespondingSourceObject: {fileID: 1288994652787728, guid: 2282bc04572c9ad479cf55d68ab486c1, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1469806690}
@@ -1346,8 +1349,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79aa27747fc5b1b439bba46b6147f55a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform
-  _waypointPath: {fileID: 490107345}
   _speed: 1
+  _previousTarget: {fileID: 748681989}
 --- !u!65 &1266974218
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1369,6 +1372,30 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.407799, y: 2.9024487, z: 6.897526}
   m_Center: {x: 0.13109207, y: 2.1765924, z: -2.1147175}
+--- !u!114 &1266974219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1266974215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50f7f87c29d78ae48b351957512cf08a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PatrolComponent
+  targets:
+  - {fileID: 1577957001}
+  - {fileID: 897180115}
+  - {fileID: 748681989}
+  lookAroundProbability: 0.1
+  lookAroundFrequency: 1
+  lookAroundSeconds: 0.5
+  waitSecondsBetweenTargets: 1
+  patrolType: 0
+  waitSecondsAtEnds: 1
+  allowPreviousTarget: 1
+  isActive: 1
 --- !u!1 &1278989367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1721,6 +1748,14 @@ PrefabInstance:
     - target: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: m_Name
       value: Wizard
+      objectReference: {fileID: 0}
+    - target: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8964794528452801434, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 55
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

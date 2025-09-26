@@ -148,9 +148,9 @@ public class PlayerMovement : MonoBehaviour
     }
     public bool IsGrounded()
     {
-        Vector3 origin = transform.position + Vector3.up * 0.2f;
+        Vector3 origin = transform.position + Vector3.up * 0.5f;
 
-        if (Physics.SphereCast(origin, 0.1f, Vector3.down, out RaycastHit hit, 0.2f, playerLayer))
+        if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 0.2f, playerLayer))
         {
             return true;
         }
