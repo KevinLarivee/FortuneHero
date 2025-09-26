@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -2025218266445891208}
   m_Layer: 0
   m_Name: Projectile
-  m_TagString: Untagged
+  m_TagString: RangedAtk
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -152,4 +152,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91ba96ada5efb51499c0553436e640a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileMovement
+  distanceUntilRecycled: 100
   projectileVelocity: 100
