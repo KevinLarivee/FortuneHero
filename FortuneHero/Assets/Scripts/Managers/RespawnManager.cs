@@ -6,6 +6,7 @@ public class RespawnManager : MonoBehaviour
     [SerializeField] LayerMask mask;
     PlayerMovement pm;
     CharacterController cc;
+    DissolveComponent dissolve;
     Vector3 respawnPoint = Vector3.zero;
 
     static RespawnManager instance;
@@ -21,6 +22,7 @@ public class RespawnManager : MonoBehaviour
 
         pm = PlayerMovement.Instance;
         cc = pm.GetComponent<CharacterController>();
+        dissolve = pm.GetComponent<DissolveComponent>();
         InvokeRepeating(nameof(UpdateRespawn), 0.5f, 0.5f);
     }
 
@@ -44,10 +46,10 @@ public class RespawnManager : MonoBehaviour
 
         cc.enabled = false;
         //Animation de despawn
-        yield return new WaitForSeconds(1f);
+        yield return dissolve.Dissolve();
         pm.transform.position = respawnPoint;
         //Animation de respawn
-        yield return new WaitForSeconds(1f);
+        yield return dissolve.Dissolve(true);
         cc.enabled = true;
     }
 

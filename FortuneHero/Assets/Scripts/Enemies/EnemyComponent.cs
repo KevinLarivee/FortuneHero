@@ -8,6 +8,8 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
     public ObjectPoolComponent Pool { get; set; }
 
+    public int dmg = 1;
+
     Animator animator;
     EnemyDrops enemyDrops;
     HealthComponent healthComponent;
