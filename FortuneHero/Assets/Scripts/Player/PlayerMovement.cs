@@ -21,9 +21,9 @@ public class PlayerMovement : MonoBehaviour
     Vector3 knockBackDirection;
     Vector2 look;
     Vector2 move;
+
     [SerializeField] LayerMask playerLayer;
     [SerializeField] float cameraSpeed = 15f;
-
 
     [SerializeField] float dashCooldown = 0.75f;
     [SerializeField] float dashTime = 0.2f;
@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float slowedDownSpeed = 6f;
     [SerializeField] float speedWhileDefending = 3f;
     float speedMultiplier = 1f;
+
     #region KnockBack
     float knockBackTime;
     float knockBackCounter;
@@ -129,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
         if (direction.sqrMagnitude > 0.001f) //si ya input
         {
             float drag = IsGrounded() ? 1f : 0.5f;
-            if (moveSpeed <= maxSpeed && move.y > 0) //et que ya pas atteint sa vitesse max
+            if (moveSpeed <= maxSpeed && move.y > 0)
                 moveSpeed = Mathf.Min(moveSpeed + acceleration * drag * Time.deltaTime, maxSpeed * speedMultiplier); //accelere
             else if (move.y <= 0)
                 moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * drag * Time.deltaTime, slowedDownSpeed * speedMultiplier); //pas forward = ralenti
