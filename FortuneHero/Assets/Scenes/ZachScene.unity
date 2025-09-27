@@ -402,7 +402,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1968216687590288076, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.85
+      value: 2.58
       objectReference: {fileID: 0}
     - target: {fileID: 1968216687590288076, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -440,9 +440,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard
       objectReference: {fileID: 0}
-    - target: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
-      propertyPath: m_TagString
-      value: Player
+    - target: {fileID: 8964794528452801434, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1067,13 +1067,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PatrolComponent
   targets:
   - {fileID: 1011677056}
+  stoppingDistance: 0.1
   lookAroundProbability: 1
+  lookAroundSeconds: 1
+  waitSecondsBetweenTargets: 0
+  stopAtGoal: 0
+  doRotation: 0
   patrolType: 3
   isLooping: 0
-  isReverse: 0
-  isRandom: 0
-  isChaos: 0
-  isActive: 0
+  waitSecondsAtEnds: 1
+  allowPreviousTarget: 1
+  minDistance: 1
+  maxDistance: 20
 --- !u!1 &2092395810
 GameObject:
   m_ObjectHideFlags: 0

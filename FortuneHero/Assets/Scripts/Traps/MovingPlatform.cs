@@ -2,52 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PatrolComponent))]
 public class MovingPlatform : MonoBehaviour
 {
-    [SerializeField]
-    private WaypointPath _waypointPath;
+    private PatrolComponent _patrol;
 
     [SerializeField]
-    private float _speed;
+    private float _speed = 1f;
 
-    private int _targetWaypointIndex;
+    [SerializeField]
+    private Transform _previousTarget;
 
-    private Transform _previousWaypoint;
-    private Transform _targetWaypoint;
-
-    private float _timeToWaypoint;
+    private float _timeToTarget;
     private float _elapsedTime;
 
     void Start()
     {
-        TargetNextWaypoint();
-    }
-
-    void FixedUpdate()
-    {
-        _elapsedTime += Time.deltaTime;
-
-        float elapsedPercentage = _elapsedTime / _timeToWaypoint;
-        elapsedPercentage = Mathf.SmoothStep(0, 1, elapsedPercentage);
-        transform.position = Vector3.Lerp(_previousWaypoint.position, _targetWaypoint.position, elapsedPercentage);
-        transform.rotation = Quaternion.Lerp(_previousWaypoint.rotation, _targetWaypoint.rotation, elapsedPercentage);
-
-        if (elapsedPercentage >= 1)
-        {
-            TargetNextWaypoint();
-        }
-    }
-
-    private void TargetNextWaypoint()
-    {
-        _previousWaypoint = _waypointPath.GetWaypoint(_targetWaypointIndex);
-        _targetWaypointIndex = _waypointPath.GetNextWaypointIndex(_targetWaypointIndex);
-        _targetWaypoint = _waypointPath.GetWaypoint(_targetWaypointIndex);
-
-        _elapsedTime = 0;
-
-        float distanceToWaypoint = Vector3.Distance(_previousWaypoint.position, _targetWaypoint.position);
-        _timeToWaypoint = distanceToWaypoint / _speed;
+        _patrol = GetComponent<PatrolComponent>();
+        _patrol.move = Move;
+        _patrol.isActive = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -58,5 +31,26 @@ public class MovingPlatform : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         other.transform.SetParent(null);
+    }
+
+    private void Move(Transform destination)
+    {
+        _elapsedTime += Time.deltaTime;
+        //pas optimisé, à revoir
+        float distanceToTarget = Vector3.Distance(_previousTarget.position, destination.position);
+        _timeToTarget = distanceToTarget / _speed;
+
+        float elapsedPercentage = _elapsedTime / _timeToTarget;
+        elapsedPercentage = Mathf.SmoothStep(0, 1, elapsedPercentage);
+        transform.position = Vector3.Lerp(_previousTarget.position, destination.position, elapsedPercentage);
+        transform.rotation = Quaternion.Lerp(_previousTarget.rotation, destination.rotation, elapsedPercentage);
+        if (elapsedPercentage >= 1)
+        {
+            _elapsedTime = 0f;
+            _previousTarget = destination;
+            destination = _patrol.NextTarget();
+            //float distanceToTarget = Vector3.Distance(_previousTarget.position, destination.position);
+            //_timeToTarget = distanceToTarget / _speed;
+        }
     }
 }
