@@ -11,12 +11,12 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] GameObject exitPoint;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject shield;
-    PlayerMovement player;
 
     [SerializeField] float defenceCurrentCharge = 0f;
     bool showShield = false;
-    float defenceMaxCharge = 10f;
     bool canDefend = false;
+    float defenceMaxCharge = 10f;
+    float defenceSpeedMultiplier = 2f;
 
     [SerializeField] float rangedAtkCd = 1.5f;
     [SerializeField] float rangedAtkTimer = 0f;
@@ -48,20 +48,20 @@ public class PlayerActions : MonoBehaviour
         }
 
         if (defenceCurrentCharge <= 0)
+        {
             canDefend = false;
+            ShowShield(false);
+        }
         else
             canDefend = true;
 
         if (showShield)
         {
-            Mathf.Max(defenceCurrentCharge -= Time.deltaTime, 0);
+            defenceCurrentCharge = Mathf.Max(defenceCurrentCharge - Time.deltaTime, 0);
         }
-        else
+        else if (defenceCurrentCharge < defenceMaxCharge)
         {
-            if (defenceCurrentCharge < defenceMaxCharge)
-            {
-                Mathf.Min(defenceCurrentCharge += Time.deltaTime, defenceMaxCharge);
-            }
+            defenceCurrentCharge = Mathf.Min(defenceCurrentCharge + Time.deltaTime, defenceMaxCharge);
         }
     }
 
@@ -87,15 +87,11 @@ public class PlayerActions : MonoBehaviour
     {
         if (ctx.performed && canDefend)
         {
-            animator.SetBool("isDefending", true);
             ShowShield(true);
-            PlayerMovement.Instance.SlowPlayer(2);
         }
-        else if (ctx.canceled && canDefend)
+        else if (ctx.canceled && showShield)
         {
-            animator.SetBool("isDefending", false);
             ShowShield(false);
-            PlayerMovement.Instance.SpeedUpPlayer(2);
         }
     }
     public void ShootProjectile()
@@ -105,6 +101,19 @@ public class PlayerActions : MonoBehaviour
     public void ShowShield(bool show)
     {
         showShield = show;
+        if (showShield)
+        {
+            animator.SetBool("isDefending", true);
+            PlayerMovement.Instance.SlowPlayer(defenceSpeedMultiplier);
+            Debug.Log("Slow");
+        }
+        else
+        {
+            Debug.Log("SpeedUp");
+            animator.SetBool("isDefending", false);
+            PlayerMovement.Instance.SpeedUpPlayer(defenceSpeedMultiplier);
+        }
+
         shield.SetActive(show);
     }
     public void EnableWeaponCollider()
