@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(Animator), typeof(EnemyDrops), typeof(HealthComponent))]
+[RequireComponent(typeof(EnemyDrops), typeof(HealthComponent))]
 public class EnemyComponent : MonoBehaviour, IPoolable
 {
     //!!! Quoi mettre dans EnnemyComponent vs SpecificEnnemyComponent
