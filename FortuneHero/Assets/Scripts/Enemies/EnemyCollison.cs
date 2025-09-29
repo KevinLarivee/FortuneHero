@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class EnemyCollison : MonoBehaviour
 {
+    EnemyDrops drops;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        drops = GetComponent<EnemyDrops>();
     }
 
     // Update is called once per frame
@@ -18,7 +19,7 @@ public class EnemyCollison : MonoBehaviour
         
         if (collision.gameObject.CompareTag("RangedAtk"))
         {
-            gameObject.GetComponent<EnemyDrops>().SpawnDrops();
+            drops.SpawnDrops();
             gameObject.SetActive(false);
         }
 
@@ -27,7 +28,7 @@ public class EnemyCollison : MonoBehaviour
     {
         if (other.gameObject.CompareTag("MeleeAtk"))
         {
-            gameObject.GetComponent<EnemyDrops>().SpawnDrops();
+            drops.SpawnDrops();
             gameObject.SetActive(false);
         }
     }
