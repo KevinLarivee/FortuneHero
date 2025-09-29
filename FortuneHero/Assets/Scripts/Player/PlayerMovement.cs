@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     static PlayerMovement instance;
     public static PlayerMovement Instance { get { return instance; } }
 
+    [SerializeField] GameObject jumpVFX;
     Camera playerCamera;
     CharacterController player;
     Animator animator;
@@ -29,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashTime = 0.2f;
     [SerializeField] float dashSpeed = 2f;
     bool canDash = true;
+    bool isDashing = false;
 
     #region Jump
     [Header("Jump")]
@@ -38,8 +40,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float gravityMultiplier = 2;
     [SerializeField] float coyoteTime = 0.2f;
     [SerializeField] float jumpBufferTime = 0.2f;
+    [SerializeField] float doubleJumpAnimDelay = 0.5f;
+    [SerializeField] float doubleJumpAnimTimer;
+    float jumpVFXCd = 0.4f; 
     float coyoteTimeCounter;
     float jumpBufferCounter;
+    bool doubleJumpStartTimer = false;
     bool doubleJumped = false;
     #endregion
 
@@ -103,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            jump += gravity * gravityMultiplier * Time.deltaTime * transform.up;
+            jump.y += Mathf.Max(gravity * gravityMultiplier * Time.deltaTime, -15);
             coyoteTimeCounter -= Time.deltaTime;
             animator.SetBool("isGrounded", false);
         }
@@ -118,14 +124,27 @@ public class PlayerMovement : MonoBehaviour
                 jump = transform.up * (jumpForce * jumpMultiplier);
                 jumpBufferCounter = 0f;
                 animator.SetBool("hasJumped", true);
+                StartCoroutine(StartJumpVFX());
             }
             else if (coyoteTimeCounter <= 0f && !doubleJumped)
             {
                 jump = transform.up * (jumpForce * jumpMultiplier);
-                doubleJumped = true;
                 jumpBufferCounter = 0f;
-                animator.SetTrigger("doubleJump");
+                doubleJumped = true;
+                doubleJumpStartTimer = true;
+                StartCoroutine(StartJumpVFX());
             }
+        }
+        if (doubleJumpStartTimer)
+        {
+            doubleJumpAnimTimer -= Time.deltaTime;
+            animator.SetBool("hasDoubleJumped", true);
+        }
+        if (doubleJumpAnimTimer <= 0)
+        {
+            doubleJumpStartTimer = false;
+            animator.SetBool("hasDoubleJumped", false);
+            doubleJumpAnimTimer = doubleJumpAnimDelay;
         }
         if (direction.sqrMagnitude > 0.001f) //si ya input
         {
@@ -140,8 +159,6 @@ public class PlayerMovement : MonoBehaviour
             if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
                 moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
         }
-
-
 
         animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
         animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
@@ -158,6 +175,7 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
     public void RotateCamera()
+
     {
         cameraRotation += cameraSpeed * Time.deltaTime * new Vector3(-look.y, look.x, 0);
         cameraRotation.x = Mathf.Clamp(cameraRotation.x, -50, 50);
@@ -166,8 +184,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext ctx)
     {
-        move = ctx.ReadValue<Vector2>();
-
+        if(!isDashing)
+            move = ctx.ReadValue<Vector2>();
     }
     public void Look(InputAction.CallbackContext ctx)
     {
@@ -192,11 +210,13 @@ public class PlayerMovement : MonoBehaviour
         float originalGravity = gravity;
         gravity = 0f;
         moveSpeed = maxSpeed * dashSpeed;
+        isDashing = true;
         //animation.setBool("isDashing", true);
         yield return new WaitForSeconds(dashTime);
 
         gravity = originalGravity;
         moveSpeed = maxSpeed;
+        isDashing = false;
         //animation.setBool("isDashing", false);
         yield return new WaitForSeconds(dashCooldown);
         canDash = true;
@@ -215,6 +235,12 @@ public class PlayerMovement : MonoBehaviour
         knockBackCounter = knockBackTime;
         knockBackDirection = direction * knockForce;
 
+    }
+    public IEnumerator StartJumpVFX()
+    {
+        var gameobject = Instantiate(jumpVFX, transform.position + Vector3.up * 0.5f, Quaternion.Euler(90, 0, 0)); //Object Pool
+        yield return new WaitForSeconds(jumpVFXCd);
+        Destroy(gameobject);
     }
 }
 

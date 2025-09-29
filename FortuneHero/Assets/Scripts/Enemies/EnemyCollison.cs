@@ -2,34 +2,35 @@ using UnityEngine;
 
 public class EnemyCollison : MonoBehaviour
 {
-    EnemyDrops drops;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    Animator animator;
+
     void Start()
     {
-        drops = GetComponent<EnemyDrops>();
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     private void OnCollisionEnter(Collision collision)
     {
         
         if (collision.gameObject.CompareTag("RangedAtk"))
         {
-            drops.SpawnDrops();
-            gameObject.SetActive(false);
+            gameObject.GetComponent<EnemyDrops>().SpawnDrops();
+            //gameObject.SetActive(false);
+            animator.SetTrigger("isHit");
         }
-
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<HealthComponent>().Hit(10); //Lier le dmg au dmg de l'enemy
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("MeleeAtk"))
         {
-            drops.SpawnDrops();
-            gameObject.SetActive(false);
+            gameObject.GetComponent<EnemyDrops>().SpawnDrops();
+            Debug.Log("isHit");
+            //gameObject.SetActive(false);
+            animator.SetTrigger("isHit");
         }
     }
 }

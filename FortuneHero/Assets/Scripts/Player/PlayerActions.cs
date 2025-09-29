@@ -5,8 +5,6 @@ public class PlayerActions : MonoBehaviour
 {
     Animator animator;
 
-    [SerializeField] int meleeAtkDmg = 10;
-    [SerializeField] int rangedAtkDmg = 20;
     [SerializeField] Collider weaponCollider;
     [SerializeField] GameObject exitPoint;
     [SerializeField] GameObject projectilePrefab;
@@ -18,13 +16,15 @@ public class PlayerActions : MonoBehaviour
     float defenceMaxCharge = 10f;
     float defenceSpeedMultiplier = 2f;
 
+    [SerializeField] int rangedAtkDmg = 20;
     [SerializeField] float rangedAtkCd = 1.5f;
     [SerializeField] float rangedAtkTimer = 0f;
     bool canRangedAtk = false;
-    bool canMeleeAtk = false;
-
+    
+    public int meleeAtkDmg = 10;
     [SerializeField] float meleeAtkCd = 0.5f;
     [SerializeField] float meleeAtkTimer = 0f;
+    bool canMeleeAtk = false;
 
     void Start()
     {

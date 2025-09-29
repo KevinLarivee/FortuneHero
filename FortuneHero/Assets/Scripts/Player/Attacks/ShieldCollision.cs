@@ -16,8 +16,8 @@ public class ShieldCollision : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("hitfr");
-            int dmg = other.gameObject.GetComponent<EnemyComponent>().dmg;
-            healthComponent.Hit(dmg / defenceDmgReduce);
+            //int dmg = other.gameObject.GetComponent<EnemyComponent>().dmg;
+            //healthComponent.Hit(dmg / defenceDmgReduce);
         }
     }
 }
