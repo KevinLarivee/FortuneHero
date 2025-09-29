@@ -10,6 +10,7 @@ public class FireComponent : MonoBehaviour
     [SerializeField] float dmg = 1f;
     [SerializeField] float afterBurnTime = 3f;
     [SerializeField] bool slowness = true;
+    [SerializeField] bool preventDash = true;
     [SerializeField] string target = "Player";
 
     Coroutine afterBurn;
@@ -53,6 +54,11 @@ public class FireComponent : MonoBehaviour
                 Debug.Log("Start Slowness");
                 //Appliquer l'effet de slowness à la cible
             }
+            if (preventDash)
+            {
+                Debug.Log("Start Prevent Dash");
+                //Appliquer l'effet de slowness à la cible
+            }
         }
     }
     void OnTriggerExit(Collider other)
@@ -64,7 +70,12 @@ public class FireComponent : MonoBehaviour
                 Debug.Log("Stop slowness");
                 //Retirer slowness
             }
-            if(afterBurn != null)
+            if (preventDash)
+            {
+                Debug.Log("Stop prevent dash");
+                //Retirer slowness
+            }
+            if (afterBurn != null)
                 StopCoroutine(afterBurn);
             afterBurn = StartCoroutine(AfterBurn(other));
         }
