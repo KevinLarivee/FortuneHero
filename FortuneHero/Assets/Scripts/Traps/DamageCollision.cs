@@ -12,7 +12,7 @@ public class DamageCollision : MonoBehaviour
     [SerializeField] float knockbackDuration = 0.25f;
     [Range(0f, 3f)][SerializeField] float verticalFactor = 1f;
 
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         Debug.Log($"[DamageCollision] Collision detected with {collision.gameObject.name}");
         if (collision.gameObject.CompareTag("Player"))
