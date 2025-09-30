@@ -1617,6 +1617,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e09ee9da338ae9d4783853782df64087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  jumpVFX: {fileID: 2731371987758915776, guid: b36e8eb8cb6ee674990e6308311274b0, type: 3}
   playerLayer:
     serializedVersion: 2
     m_Bits: 55
