@@ -241,4 +241,5 @@ MonoBehaviour:
   dmg: 1
   afterBurnTime: 3
   slowness: 1
+  preventDash: 1
   target: Player

@@ -6,32 +6,26 @@ public class ProjectileMovement : MonoBehaviour
     Rigidbody rb;
     PlayerMovement player;
 
-    [SerializeField] int distanceUntilRecycled = 100;
+    [SerializeField] float distanceUntilRecycled = 80f;
     [SerializeField] float projectileVelocity = 20f;
-    float initialPosX;
-    float currentPosX;
+    [SerializeField] Vector3 initialPosX;
+    [SerializeField] Vector3 currentPosX;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         player = FindAnyObjectByType<PlayerMovement>();
         rb.linearVelocity = player.transform.forward * projectileVelocity;
-        initialPosX = player.transform.position.x;
+        initialPosX = player.transform.position;
     }
     void Update()
     {
-        currentPosX = gameObject.transform.position.x;
-        if (currentPosX - initialPosX > distanceUntilRecycled)
+        currentPosX = gameObject.transform.position;
+        if ((currentPosX - initialPosX).sqrMagnitude > distanceUntilRecycled * distanceUntilRecycled)
         {
             Destroy(gameObject);
+            //ObjectPool
         }
     }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        Destroy(gameObject);
-        //ObjectPool
-    }
-
 }
 
