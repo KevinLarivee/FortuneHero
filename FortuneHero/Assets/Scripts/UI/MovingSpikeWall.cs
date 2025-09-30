@@ -34,16 +34,16 @@ public class MovingSpikeWall : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Player"))
-        {
-            PlayerHealth ph = other.gameObject.GetComponent<PlayerHealth>();
-            if (ph != null)
-                ph.TakeDamage(damage);
-        }
-        else if (other.gameObject.CompareTag("Spike"))
-        {
-            direction = -direction;
-        }
+        //if (other.gameObject.CompareTag("Player"))
+        //{
+        //    PlayerHealth ph = other.gameObject.GetComponent<PlayerHealth>();
+        //    if (ph != null)
+        //        ph.TakeDamage(damage);
+        //}
+        //else if (other.gameObject.CompareTag("Spike"))
+        //{
+        //    direction = -direction;
+        //}
     }
 
 
