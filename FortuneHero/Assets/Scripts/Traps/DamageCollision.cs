@@ -18,7 +18,7 @@ public class DamageCollision : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             //faire degats
-            //collision.gameObject.GetComponent<HealthComponent>().Hit(damage, statusEffect);
+            collision.gameObject.GetComponent<HealthComponent>().Hit(damage);//statusEffect
             Vector3 sourcePos = collision.collider.bounds.center;
             //appel knockback
             //PlayerMovement.Instance.Knockback(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
