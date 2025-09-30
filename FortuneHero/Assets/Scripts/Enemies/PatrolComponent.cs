@@ -22,6 +22,7 @@ public class PatrolComponent : MonoBehaviour
     //[SerializeField, ShowIf(nameof(patrolType), PatrolType.Loop)] float isLooping;
 
     [SerializeField, ShowIf(nameof(patrolType), PatrolType.Reverse)] float waitSecondsAtEnds = 1f;
+    int increment = 1;
 
     [SerializeField, ShowIf(nameof(patrolType), PatrolType.Random)] bool allowPreviousTarget = true;
 
@@ -84,7 +85,9 @@ public class PatrolComponent : MonoBehaviour
                 currentTarget = (currentTarget + 1) % targets.Length;
                 break;
             case PatrolType.Reverse:
-                currentTarget = (currentTarget + 1 + targets.Length) % targets.Length;
+                if (currentTarget == targets.Length) increment = -1;
+                else if (currentTarget == 0) increment = 1;
+                currentTarget += increment;
                 break;
             case PatrolType.Random:
                 currentTarget = UnityEngine.Random.Range(0, targets.Length);

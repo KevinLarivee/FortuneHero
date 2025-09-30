@@ -17,7 +17,6 @@ public class FireTrapComponent : MonoBehaviour
         flame = GetComponentInChildren<FireComponent>();
         flame.StopFire();
         player = PlayerMovement.Instance;
-        Debug.Log(player);
     }
 
     // Update is called once per frame
@@ -34,9 +33,11 @@ public class FireTrapComponent : MonoBehaviour
     {
         while (distance <= activeDistance)
         {
-            yield return new WaitForSeconds(inactiveTime);
+            if(inactiveTime > 0f)
+                yield return new WaitForSeconds(inactiveTime);
             flame.PlayFire();
-            yield return new WaitForSeconds(activeTime);
+            if(activeTime  > 0f)
+                yield return new WaitForSeconds(activeTime);
             flame.StopFire();
         }
         fireCycle = null;
