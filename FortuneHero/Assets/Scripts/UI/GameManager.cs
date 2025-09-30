@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] GameObject PlayerPrefab;
+    public Transform spawnPoint;
     public static GameManager Instance { get; private set; }
 
 
@@ -10,9 +12,10 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
+        if(spawnPoint == null) spawnPoint = transform;
+        Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
     }
 
     public void OnPlayerDeath()
