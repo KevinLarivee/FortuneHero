@@ -16,7 +16,7 @@ public class ProjectileCollision : MonoBehaviour
             enemyHealthComponent.Hit(player.GetComponent<PlayerActions>().rangedAtkDmg);
             //if (enemyHealthComponent.hp <= 0)
             //    enemyHealthComponent.Die();   OU Appeler Die dans Hit ? + Appeler SpawnDrops dans Die
-            enemyHealthComponent.gameObject.GetComponent<Animator>().SetTrigger("isHit");
+            enemyHealthComponent.gameObject.GetComponentInParent<Animator>().SetTrigger("isHit");
 
             //Trop de getComponent ?
             //Pas getComponent dans start pour que si ya un upgrade au dmg, le nb de dmg s'update

@@ -2188,6 +2188,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wizard
       objectReference: {fileID: 0}
+    - target: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: aimCamera
       value: 

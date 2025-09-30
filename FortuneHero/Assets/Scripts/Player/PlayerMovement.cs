@@ -232,10 +232,10 @@ public class PlayerMovement : MonoBehaviour
         if (direction.sqrMagnitude > 0.001f) //si ya input
         {
             float drag = IsGrounded() ? 1f : 0.5f;
-            if (moveSpeed <= maxSpeed && move.y > 0)
+            if (moveSpeed <= maxSpeed)
                 moveSpeed = Mathf.Min(moveSpeed + acceleration * drag * Time.deltaTime, maxSpeed * speedMultiplier); //accelere
-            else if (move.y <= 0)
-                moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * drag * Time.deltaTime, slowedDownSpeed * speedMultiplier); //pas forward = ralenti
+            //else if (move.y <= 0)
+            //    moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * drag * Time.deltaTime, slowedDownSpeed * speedMultiplier); //pas forward = ralenti
         }
         else
         {
@@ -243,8 +243,12 @@ public class PlayerMovement : MonoBehaviour
                 moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
         }
 
-        animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
-        animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
+      
+        if(!isAiming && direction.sqrMagnitude > 0.001f)
+            animator.SetBool("isRunning", true);
+        else
+            animator.SetBool("isRunning", false);
+
         player.Move((moveSpeed * direction + jump) * Time.deltaTime);
     }
     public bool IsGrounded()
@@ -326,19 +330,27 @@ public class PlayerMovement : MonoBehaviour
     {
         isAiming = !context.canceled;
 
-        if (isAiming)
+        if (isAiming && context.performed)
         {
             SetYawPitchFromCameraForward(freelookCam.transform);
             aimCam.Priority = 20;
             freelookCam.Priority = 10;
             inputAxisController.enabled = false;
+            SlowPlayer(2);
+            animator.SetBool("isAiming", true);
+            animator.SetBool("isRunning", false);
+            animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
+            animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
         }
-        else
+        else if(context.canceled)
         {
             SnapFreeLookBehindPlayer();
             aimCam.Priority = 10;
             freelookCam.Priority = 20;
             inputAxisController.enabled = true;
+            SpeedUpPlayer(2);
+            animator.SetBool("isAiming", false);
+
         }
     }
 
