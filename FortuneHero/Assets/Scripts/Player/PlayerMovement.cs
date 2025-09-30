@@ -160,10 +160,6 @@ public class PlayerMovement : MonoBehaviour
         //player.Move(velocity * Time.deltaTime);
 
 
-
-
-
-
         if (knockBackCounter <= 0)
         {
             Movement();
