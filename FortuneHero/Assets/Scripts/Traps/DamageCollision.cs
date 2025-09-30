@@ -14,16 +14,13 @@ public class DamageCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"[DamageCollision] Collision detected with {collision.gameObject.name}");
         if (collision.gameObject.CompareTag("Player"))
         {
-            //faire degats
+            //dommages
             //collision.gameObject.GetComponent<HealthComponent>().Hit(damage, statusEffect);
             Vector3 sourcePos = collision.collider.bounds.center;
             //appel knockback
-            //PlayerMovement.Instance.Knockback(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
-            Debug.Log($"[DamageCollision] {name} a infligé {damage} dégâts à {collision.gameObject.name} avec effet {statusEffect}." +
-                $"Knockback Force: {knockbackForce}, Duration: {knockbackDuration}, Vertical Factor: {verticalFactor}");
+            //PlayerMovement.Instance.KnockBack(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
         }
     }
 }
