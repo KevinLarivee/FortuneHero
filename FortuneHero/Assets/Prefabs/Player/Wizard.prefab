@@ -157,7 +157,7 @@ Transform:
   m_GameObject: {fileID: 639833179998095069}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.589, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1515,6 +1515,7 @@ MonoBehaviour:
   jumpVFX: {fileID: 2731371987758915776, guid: b36e8eb8cb6ee674990e6308311274b0, type: 3}
   freelookCam: {fileID: 0}
   aimCam: {fileID: 0}
+  crossHair: {fileID: 0}
   dirTarget: {fileID: 7465507368810723315}
   sensitivity: 1.5
   mouseSensitivity: 0.05

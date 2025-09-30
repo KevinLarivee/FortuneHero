@@ -22,6 +22,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Aiming")]
     [SerializeField] CinemachineCamera freelookCam;
     [SerializeField] CinemachineCamera aimCam;
+    [SerializeField] GameObject crossHair;
     //[SerializeField] Transform playerCamera;
     [SerializeField] Transform dirTarget;
     [SerializeField] float sensitivity = 1.5f;
@@ -263,6 +264,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void RotateCamera()
     {
+        crossHair.SetActive(isAiming);
         if (isAiming)
         {
             yaw += look.x * sensitivity;

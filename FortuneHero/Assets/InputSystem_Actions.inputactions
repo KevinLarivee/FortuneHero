@@ -97,18 +97,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Aim",
+                    "name": "Pause",
                     "type": "Button",
-                    "id": "e5aeaf4a-9ec8-4ea0-8687-75b223425b25",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SwitchShoulder",
-                    "type": "Button",
-                    "id": "80e40575-ad1b-4dea-b615-17b04f8c2e35",
+                    "id": "7db0cd92-0968-4745-95ad-e1ac20f3e3c6",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -262,7 +253,7 @@
                 {
                     "name": "",
                     "id": "8c8e490b-c610-4785-884f-f04217b23ca4",
-                    "path": "<Mouse>/delta",
+                    "path": "<Pointer>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Keyboard&Mouse;Touch",
@@ -514,23 +505,12 @@
                 },
                 {
                     "name": "",
-                    "id": "6e68c568-7cfd-4eae-b168-b3196b55495c",
-                    "path": "<Mouse>/middleButton",
+                    "id": "d724efbd-6e26-4ceb-9d3d-7d570abdd4dc",
+                    "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4e28813c-e874-4ae9-b980-f37d77963777",
-                    "path": "<Keyboard>/v",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "SwitchShoulder",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
