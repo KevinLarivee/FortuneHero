@@ -21,6 +21,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         animator = GetComponent<Animator>();
         enemyDrops = GetComponent<EnemyDrops>();
         healthComponent = GetComponent<HealthComponent>();
+        healthComponent.OnDeath = death;
         //agent = GetComponent<NavMeshAgent>();
         //agent.updatePosition = false;
         //agent.updateRotation = true;
@@ -33,6 +34,14 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     void Update()
     {
 
+    }
+    private void death()
+    {
+        //animator.SetTrigger("death");
+        //agent.isStopped = true;
+        //À la fin de l'anim de mort
+        Destroy(gameObject);
+        enemyDrops.SpawnDrops();
     }
     //À revoir...
     //void Move(Transform destination)

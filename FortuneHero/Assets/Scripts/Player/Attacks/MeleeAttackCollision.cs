@@ -18,7 +18,16 @@ public class MeleeAttackCollision : MonoBehaviour
             enemyHealthComponent.Hit(player.GetComponent<PlayerActions>().meleeAtkDmg);
             //if (enemyHealthComponent.hp <= 0)
             //    enemyHealthComponent.Die();   OU Appeler Die dans Hit ? + Appeler SpawnDrops dans Die
-            enemyHealthComponent.gameObject.GetComponentInParent<Animator>().SetTrigger("isHit");
+            var caca = enemyHealthComponent.gameObject.GetComponentInParent<Animator>();
+            if (caca == null)
+            {
+                enemyHealthComponent.gameObject.GetComponent<Animator>().SetTrigger("hit");
+            }
+            else
+            {
+                caca.SetTrigger("hit");
+            }
+            
 
             //Trop de getComponent ?
             //Pas getComponent dans start pour que si ya un upgrade au dmg, le nb de dmg s'update
