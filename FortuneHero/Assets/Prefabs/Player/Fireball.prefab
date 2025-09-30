@@ -4897,8 +4897,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileMovement
   distanceUntilRecycled: 100
   projectileVelocity: 100
-  initialPosX: 0
-  currentPosX: 0
+  initialPosX: {x: 0, y: 0, z: 0}
+  currentPosX: {x: 0, y: 0, z: 0}
 --- !u!114 &-5549035433942938144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4911,3 +4911,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bfbb82f77031ae44ad26eb9f1a3b5f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileCollision
+  player: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}

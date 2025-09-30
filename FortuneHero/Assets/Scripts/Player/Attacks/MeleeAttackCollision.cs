@@ -14,7 +14,13 @@ public class MeleeAttackCollision : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("You have attacked the enemy !!!");
-            other.gameObject.GetComponentInParent<HealthComponent>().Hit(player.GetComponent<PlayerActions>().meleeAtkDmg);
+            var enemyHealthComponent = other.gameObject.GetComponent<HealthComponent>();
+            enemyHealthComponent.Hit(player.GetComponent<PlayerActions>().meleeAtkDmg);
+            //if (enemyHealthComponent.hp <= 0)
+            //    enemyHealthComponent.Die();   OU Appeler Die dans Hit ? + Appeler SpawnDrops dans Die
+            enemyHealthComponent.gameObject.GetComponentInParent<Animator>().SetTrigger("isHit");
+
+            //Trop de getComponent ?
             //Pas getComponent dans start pour que si ya un upgrade au dmg, le nb de dmg s'update
         }
     }

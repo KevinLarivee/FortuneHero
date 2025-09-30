@@ -8,27 +8,36 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Staff01
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: fec9efa922ed0a144a72f5f5ac7dbe67, type: 2}
-  m_ModifiedSerializedProperties: 0
+  m_Shader: {fileID: -6465566751694194690, guid: 9d845610d426c694ba40cda040abb2c4, type: 3}
+  m_Parent: {fileID: 2100000, guid: 611579e29bb0f514e86c62fdd46e519f, type: 2}
+  m_ModifiedSerializedProperties: 16
   m_ValidKeywords:
+  - _ALPHATEST_ON
+  m_InvalidKeywords:
   - _EMISSION
   - _METALLICSPECGLOSSMAP
   - _NORMALMAP
   - _OCCLUSIONMAP
-  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2450
   stringTagMap:
-    RenderType: Opaque
+    RenderType: TransparentCutout
   disabledShaderPasses:
   - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Albedo:
+        m_Texture: {fileID: 2800000, guid: 770bb7509d172f84eb4eac3ffcdd4e7b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _AmbientOcclusion:
+        m_Texture: {fileID: 2800000, guid: 54ba80b99694bc14087c74f5e5b5f29c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 770bb7509d172f84eb4eac3ffcdd4e7b, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -41,6 +50,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 4f8889a8277f26543a62df7dedb08981, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Emission_Texture:
+        m_Texture: {fileID: 2800000, guid: 4f8889a8277f26543a62df7dedb08981, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 770bb7509d172f84eb4eac3ffcdd4e7b, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -49,12 +62,21 @@ Material:
         m_Texture: {fileID: 2800000, guid: 6044c3153c24a304b887372850bcc97b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MetallicTexture:
+        m_Texture: {fileID: 2800000, guid: 6044c3153c24a304b887372850bcc97b, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normals:
+        m_Texture: {fileID: 2800000, guid: 7a996cb26846acc47a968d354adbb1f0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 2800000, guid: 54ba80b99694bc14087c74f5e5b5f29c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats: []
+    m_Floats:
+    - _QueueControl: 0
     m_Colors:
     - _EmissionColor: {r: 6.8705883, g: 6.8705883, b: 6.8705883, a: 1}
   m_BuildTextureStacks: []
