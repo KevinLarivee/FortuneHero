@@ -35,7 +35,7 @@ public class DetectorComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.Rotate(new(0f, 0.1f, 0f));
+        //transform.Rotate(new(0f, 0.1f, 0f));
         Vector3 origin = transform.position;
         if(Vector3.Distance(origin, player.transform.position) <= activeDistance)
         {
@@ -55,7 +55,7 @@ public class DetectorComponent : MonoBehaviour
                         if (hit.collider.CompareTag(target))
                         {
                             Debug.DrawLine(origin, hit.point, Color.green); // touche la cible
-                            //targetDetected(hit.transform.position);
+                            targetDetected(hit.transform.position);
                             return;
                         }
                         else

@@ -9,6 +9,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] GameObject exitPoint;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject shield;
+    [SerializeField] Camera aimCamera;
 
     [SerializeField] float defenceCurrentCharge = 0f;
     bool showShield = false;
@@ -16,7 +17,7 @@ public class PlayerActions : MonoBehaviour
     float defenceMaxCharge = 10f;
     float defenceSpeedMultiplier = 2f;
 
-    [SerializeField] int rangedAtkDmg = 20;
+    public int rangedAtkDmg = 20;
     [SerializeField] float rangedAtkCd = 1.5f;
     [SerializeField] float rangedAtkTimer = 0f;
     bool canRangedAtk = false;
@@ -96,7 +97,8 @@ public class PlayerActions : MonoBehaviour
     }
     public void ShootProjectile()
     {
-        Instantiate(projectilePrefab, exitPoint.transform.position, gameObject.transform.rotation);
+        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+        Instantiate(projectilePrefab, exitPoint.transform.position, Quaternion.LookRotation(aimCamera.ScreenPointToRay(screenCenter).direction));
     }
     public void ShowShield(bool show)
     {
