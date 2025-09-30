@@ -1,34 +1,40 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    [SerializeField] private GameObject pauseMenuUI; 
+    private bool isPaused = false;
 
-    [SerializeField] private GameObject panelOptions;
-
-    private bool estEnPause = false;
-
-    void Update()
+    public void OnPause(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) //option
+        if (context.performed) // seulement quand l'action est déclenchée
         {
-            if (estEnPause)
-                Reprendre();
+            if (isPaused)
+                ResumeGame();
             else
-                MettreEnPause();
+                PauseGame();
         }
     }
 
-    public void MettreEnPause()
+    private void PauseGame()
     {
-        panelOptions.SetActive(true);
-        Time.timeScale = 0f;
-        estEnPause = true;
+        pauseMenuUI.SetActive(true); 
+        Time.timeScale = 0f;         
+        isPaused = true;
     }
 
-    public void Reprendre()
+    public void ResumeGame()
     {
-        panelOptions.SetActive(false);
-        Time.timeScale = 1f;
-        estEnPause = false;
+        pauseMenuUI.SetActive(false); 
+        Time.timeScale = 1f;         
+        isPaused = false;
+    }
+
+    public void ReturnToLobby()
+    {
+        Time.timeScale = 1f;          
+        SceneManager.LoadScene(""); 
     }
 }
