@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     float yaw;
     float pitch;
     float targetCameraSide;
-    bool isAiming = false;
+    public bool isAiming = false;
     //Vector3 cameraRotation;
     #endregion
 
@@ -74,9 +74,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float speedWhileDefending = 3f;
     float speedMultiplier = 1f;
 
-    #region KnockBack
+    #region Status
     float knockBackTime;
     float knockBackCounter;
+
+    bool isBurning = false;
+    bool isParalysed = false;
+
+    bool canJump = true;
     #endregion
 
     void Awake()
@@ -387,6 +392,23 @@ public class PlayerMovement : MonoBehaviour
         knockBackCounter = knockBackTime;
         knockBackDirection = direction * knockForce;
 
+    }
+    public void ToggleBurn(bool burning)
+    {
+        isBurning = burning;
+    }
+    public void ToggleParalyse(bool paralyse)
+    {
+        isParalysed = paralyse;
+    }
+    public void ToggleDash(bool dash)
+    {
+        canDash = dash;
+    }
+    public void ToggleJump(bool doubleJump, bool jump = true)
+    {
+        canJump = jump;
+        doubleJumped = doubleJump;
     }
     public IEnumerator StartJumpVFX()
     {
