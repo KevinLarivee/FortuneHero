@@ -10,7 +10,6 @@ public class FlyingEnemyComponent : MonoBehaviour
     PatrolComponent patrol;
     DetectorComponent detector;
 
-    [SerializeField] GameObject player;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float attackStopDistance = 3f;
     [SerializeField] float patrolStopDistance = 0.5f;
@@ -24,7 +23,6 @@ public class FlyingEnemyComponent : MonoBehaviour
     [SerializeField] bool isDetecting = false; //Placeholder
 
     Vector3 target;
-
     enum EnemyState { Patrol, Attacking, Chasing }
     EnemyState enemyState;
 
