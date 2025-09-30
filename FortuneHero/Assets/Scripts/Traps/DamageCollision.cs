@@ -21,6 +21,7 @@ public class DamageCollision : MonoBehaviour
             Vector3 sourcePos = collision.collider.bounds.center;
             //appel knockback
             //PlayerMovement.Instance.KnockBack(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
+            Debug.Log($"[StationarySpike] {collision.gameObject.name} touché. Dégâts: {damage}");
         }
     }
 }

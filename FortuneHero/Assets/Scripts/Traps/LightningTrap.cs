@@ -1,18 +1,18 @@
+//code a revoir
+//ca marche mais ca dlair complique pour rien
 using System.Collections;
 using UnityEngine;
+using DigitalRuby.LightningBolt;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Collider))]
 public class LightningTrap : MonoBehaviour
 {
     [Header("Timing")]
-    [Tooltip("Seconds ON, then OFF, then ON... (symmetrical duty cycle).")]
-    [SerializeField] private float intervalSeconds = 5f;
+    [SerializeField] private float intervalSeconds = 3f;
+    [SerializeField] private bool startDisabled = false;
 
-    [Tooltip("Start disabled (OFF) or enabled (ON).")]
-    [SerializeField] private bool disabled = false;
-
-    [Header("Target & Damage (commented call below)")]
+    [Header("Cible & Dégâts (appels commentés plus bas)")]
     [SerializeField] private string targetTag = "Player";
     [SerializeField] private int damage = 10;
 
@@ -24,86 +24,87 @@ public class LightningTrap : MonoBehaviour
     [Header("Anti-spam")]
     [SerializeField] private float reHitCooldown = 0.15f;
     private float _nextAllowedHitTime = 0f;
+    
+    LightningBoltScript lightningBolt;
 
     private Collider _col;
-
-    private void Reset()
-    {
-        // Use a trigger volume so we don't physically shove the player; we just detect and knockback.
-        _col = GetComponent<Collider>();
-        if (_col != null) _col.isTrigger = true;
-    }
+    private LineRenderer[] _lineRenderers; // on ne touche qu’aux lignes (l’éclair), pas aux meshes de LightningStart/End
+    private bool _isEnabledNow;
 
     private void Awake()
     {
         _col = GetComponent<Collider>();
-        _col.isTrigger = true;
+        _col.isTrigger = true; // détection uniquement
+        _lineRenderers = GetComponentsInChildren<LineRenderer>(true);
+        lightningBolt = GetComponentInChildren<LightningBoltScript>(true);
     }
 
     private void OnEnable()
     {
+        SetEnabled(!startDisabled);
         StartCoroutine(ToggleLoop());
     }
 
     private IEnumerator ToggleLoop()
     {
-        // Simple symmetrical ON/OFF loop using intervalSeconds
+        float t = Mathf.Max(0.01f, intervalSeconds);
         while (true)
         {
-            // Phase A
             SetEnabled(true);
-            yield return new WaitForSeconds(Mathf.Max(0.01f, intervalSeconds));
+            yield return new WaitForSeconds(t);
 
-            // Phase B
             SetEnabled(false);
-            yield return new WaitForSeconds(Mathf.Max(0.01f, intervalSeconds));
+            yield return new WaitForSeconds(t);
         }
     }
 
     private void SetEnabled(bool on)
     {
-        disabled = !on;
-        gameObject.SetActive(disabled);
-        // Optional: change visuals here (material emission, particle enable, SFX, etc.)
-        // Example:
-        // if (renderer != null) renderer.material.SetColor("_EmissionColor", on ? Color.cyan : Color.black);
+        _isEnabledNow = on;
 
-        // Also optional: enable/disable a child VFX object
-        // if (vfxRoot != null) vfxRoot.SetActive(on);
+        // 1) Activer/désactiver la zone de hit
+        if (_col != null) _col.enabled = on;
+
+        // 2) Afficher/masquer l’éclair en activant/désactivant les LineRenderer
+        if (_lineRenderers != null)
+        {
+            for (int i = 0; i < _lineRenderers.Length; i++)
+            {
+                if (_lineRenderers[i] != null)
+                    _lineRenderers[i].enabled = on;
+            }
+        }
+
+        // 3) Si l’éclair est en ManualMode, on trigge le bolt quand on passe ON (pas besoin de modifier le script d’origine)
+        if (on && lightningBolt != null && lightningBolt.ManualMode)
+        {
+            lightningBolt.Trigger();
+        }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        TryHit(other, "OnTriggerEnter");
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        // In case the player sits in the trap right when it turns ON
-        TryHit(other, "OnTriggerStay");
-    }
+    private void OnTriggerEnter(Collider other) => TryHit(other, "OnTriggerEnter");
+    private void OnTriggerStay(Collider other) => TryHit(other, "OnTriggerStay");
 
     private void TryHit(Collider other, string via)
     {
-        if (disabled) return;
+        if (!_isEnabledNow) return;
         if (Time.time < _nextAllowedHitTime) return;
         if (!other.CompareTag(targetTag)) return;
 
-        // Direction: push the player away from the trap’s center, with a small vertical lift
-        Vector3 source = transform.position;
-        Vector3 dir = (other.transform.position - source);
+        // Direction depuis la trap vers le joueur + petit lift vertical
+        Vector3 dir = other.transform.position - transform.position;
         dir.y = Mathf.Abs(dir.y) * verticalFactor;
         dir = dir.sqrMagnitude > 1e-6f ? dir.normalized : transform.forward;
 
-        // --- Knockback (via your PlayerMovement) ---
+        // --- Knockback (via ton PlayerMovement) ---
         // var pm = other.GetComponent<PlayerMovement>();
         // if (pm != null) pm.Knockback(dir, knockbackForce, knockbackDuration);
 
-        // --- Damage (via your HealthComponent) ---
+        // --- Dégâts (via ton HealthComponent) ---
         // var hp = other.GetComponent<HealthComponent>();
         // if (hp != null) hp.Hit(damage, StatusEffect.Knockback);
 
-        Debug.Log($"[LightningTrap] Hit {other.name} ({via}) | dir={dir} | F={knockbackForce} | T={knockbackDuration}");
+        Debug.Log($"[LightningTrap] Hit {other.name} ({via}) | ON={_isEnabledNow} | dir={dir} | F={knockbackForce}");
 
         _nextAllowedHitTime = Time.time + reHitCooldown;
     }
