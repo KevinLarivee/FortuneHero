@@ -1,4 +1,4 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 
 public class DamageCollision : MonoBehaviour
 {
@@ -21,11 +21,7 @@ public class DamageCollision : MonoBehaviour
             Vector3 sourcePos = collision.collider.bounds.center;
             //appel knockback
             //PlayerMovement.Instance.KnockBack(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
-<<<<<<< Updated upstream
-            Debug.Log($"[StationarySpike] {collision.gameObject.name} touchÔøΩ. DÔøΩgÔøΩts: {damage}");
-=======
-            Debug.Log($"{collision.gameObject.name} touchÈ. DÈg‚ts: {damage}");
->>>>>>> Stashed changes
+            Debug.Log($"{collision.gameObject.name} touch√©. D√©gats: {damage}");
         }
     }
 }
