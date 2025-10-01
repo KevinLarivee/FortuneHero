@@ -376,8 +376,9 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(paralyseTime);
         animator.SetBool("isParalysed", false);
         //Desactiver le particleSystem
-        isInCoroutine = false;
         ToggleParalyse(false);
+        isInCoroutine = false;
+        
     }
     public void ToggleDash(bool dash)
     {
