@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     static PlayerMovement instance;
     public static PlayerMovement Instance { get { return instance; } }
 
+    public bool isPaused = false;
+
     [SerializeField] GameObject jumpVFX;
     CharacterController player;
     Animator animator;
@@ -86,10 +88,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-        if (instance != null && instance != this)
-            Destroy(this.gameObject);
-        else
-            instance = this;
+       instance = this;
 
         player = GetComponent<CharacterController>();
         //playerCamera = GetComponentInChildren<Camera>();
@@ -308,20 +307,28 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext ctx)
     {
-        if(!isDashing)
+        if (isPaused) return;
+
+        if (!isDashing)
             move = ctx.ReadValue<Vector2>();
     }
     public void Look(InputAction.CallbackContext ctx)
     {
+        if (isPaused) return;
+
         look = ctx.ReadValue<Vector2>() * mouseSensitivity;
     }
     public void Jump(InputAction.CallbackContext ctx)
     {
+        if (isPaused) return;
+
         if (ctx.performed)
             jumpBufferCounter = jumpBufferTime;
     }
     public void Dash(InputAction.CallbackContext ctx)
     {
+        if (isPaused) return;
+
         if (ctx.performed && canDash)
         {
             StartCoroutine(Dash());
@@ -330,11 +337,15 @@ public class PlayerMovement : MonoBehaviour
 
     public void SwitchShoulder(InputAction.CallbackContext context)
     {
+        if (isPaused) return;
+
         targetCameraSide = aimingCamera.CameraSide < 0.5f ? 1f : 0f;
     }
 
     public void Aim(InputAction.CallbackContext context)
     {
+        if (isPaused) return;
+
         isAiming = !context.canceled;
 
         if (isAiming && context.performed)

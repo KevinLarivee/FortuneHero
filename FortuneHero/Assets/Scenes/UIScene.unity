@@ -243,7 +243,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadManager
   loadingTime: 1
-  fadeManager: {fileID: 94169318}
 --- !u!4 &488473936
 Transform:
   m_ObjectHideFlags: 0
