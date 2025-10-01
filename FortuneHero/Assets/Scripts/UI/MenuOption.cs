@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class MenuOption : MonoBehaviour
 {
-    [SerializeField] private Button retour;
+    [SerializeField]  Button retour;
 
 
     public UnityAction previous;
