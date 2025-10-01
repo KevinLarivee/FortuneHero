@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenuUI; 
+    [SerializeField]  GameObject pauseMenuUI; 
     private bool isPaused = false;
-    [SerializeField] private GameObject panelParametres;
+    [SerializeField]  GameObject panelParametres;
 
     PlayerComponent player;
 

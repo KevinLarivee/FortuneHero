@@ -3,16 +3,16 @@ using UnityEngine.UI;
 
 public class PlayerOverlayComponent : MonoBehaviour
 {
-    [SerializeField] private Image shieldBar;
-    [SerializeField] private float maxShield = 10;
+    [SerializeField]  Image shieldBar;
+    [SerializeField] float maxShield = 10;
     private float currentShield;
-    [SerializeField] private Image xpBar;
-    [SerializeField] private TMPro.TextMeshProUGUI levelText;
+    [SerializeField] Image xpBar;
+    [SerializeField] TMPro.TextMeshProUGUI levelText;
 
     private int level = 1;
     private int currentXP = 0;
     private int xpToNextLevel = 100;
-    [SerializeField] private TMPro.TextMeshProUGUI coinText;
+    [SerializeField]  TMPro.TextMeshProUGUI coinText;
     private int coins = 0;
 
 
@@ -49,9 +49,7 @@ public class PlayerOverlayComponent : MonoBehaviour
     public void UseShield(float amount)
     {
         currentShield = amount;
-        //currentShield = Mathf.MoveTowards(currentShield, amount, Time.deltaTime * 5f);
-
-        //currentShield = Mathf.Clamp(currentShield, 0f, maxShield);
+        
 
         shieldBar.fillAmount = currentShield / maxShield;
     }
@@ -76,6 +74,6 @@ public class PlayerOverlayComponent : MonoBehaviour
     {
         level++;
         xpToNextLevel += 50; 
-        levelText.text = "Niveau : " + level;
+        levelText.text = "Niveau: " + level;
     }
 }

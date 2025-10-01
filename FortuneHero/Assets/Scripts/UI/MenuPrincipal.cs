@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class MenuPrincipal : MonoBehaviour
 {
-    [SerializeField] private Button boutonJouer;
-    [SerializeField] private Button boutonOptions;
-    [SerializeField] private Button boutonQuitter;
-    [SerializeField] private GameObject panelParametres;
-    private void Start()
+    [SerializeField]  Button boutonJouer;
+    [SerializeField]  Button boutonOptions;
+    [SerializeField]  Button boutonQuitter;
+    [SerializeField]  GameObject panelParametres;
+     void Start()
     {
         boutonJouer.onClick.AddListener(Jouer);
         boutonOptions.onClick.AddListener(Options);
