@@ -354,12 +354,5 @@ namespace DigitalRuby.LightningBolt
                 }
             }
         }
-        private void OnTriggerEnter(Collider other)
-        {
-            if (other.gameObject.CompareTag("Player"))
-            {
-                Debug.Log("allo t dans eclair gros");
-            }
-        }
     }
 }

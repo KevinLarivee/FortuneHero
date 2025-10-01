@@ -102,8 +102,8 @@ public class PlayerActions : MonoBehaviour
     }
     public void ShootProjectile()
     {
-        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
-        Instantiate(projectilePrefab, exitPoint.transform.position, Quaternion.LookRotation(aimCamera.ScreenPointToRay(screenCenter).direction));
+        Vector3 screenCenter =  new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+        Instantiate(projectilePrefab, exitPoint.transform.position, PlayerMovement.Instance.isAiming ? Quaternion.LookRotation(aimCamera.ScreenPointToRay(screenCenter).direction) : transform.rotation);
     }
     public void ShowShield(bool show)
     {

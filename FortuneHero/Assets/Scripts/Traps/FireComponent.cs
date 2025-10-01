@@ -16,11 +16,15 @@ public class FireComponent : MonoBehaviour
     Coroutine afterBurn;
     ParticleSystem[] effects;
     Collider collider;
+    bool playerIsEnter = false;
+
+    LayerMask ignoreTrigger;
 
     void Awake()
     {
         effects = GetComponents<ParticleSystem>();
         collider = GetComponent<Collider>();
+        ignoreTrigger = LayerMask.GetMask("IgnoreTrigger");
     }
 
     public void PlayFire()
@@ -38,13 +42,18 @@ public class FireComponent : MonoBehaviour
         {
             p.Stop();
         }
+        if (playerIsEnter)
+        {
+            ExitFire(PlayerMovement.Instance.gameObject.GetComponent<Collider>());
+        }
         collider.enabled = false;
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(target))
+        if (other.CompareTag(target) && other.excludeLayers != ignoreTrigger)
         {
+            playerIsEnter = true;
             if (afterBurn != null)
                 StopCoroutine(afterBurn);
             Debug.Log("Start Burn");
@@ -63,22 +72,28 @@ public class FireComponent : MonoBehaviour
     }
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(target))
+        if (other.CompareTag(target) && other.excludeLayers != ignoreTrigger)
         {
-            if (slowness)
-            {
-                Debug.Log("Stop slowness");
-                //Retirer slowness
-            }
-            if (preventDash)
-            {
-                Debug.Log("Stop prevent dash");
-                //Retirer slowness
-            }
-            if (afterBurn != null)
-                StopCoroutine(afterBurn);
-            afterBurn = StartCoroutine(AfterBurn(other));
+            ExitFire(other);
         }
+    }
+
+    void ExitFire(Collider other)
+    {
+        if (slowness)
+        {
+            Debug.Log("Stop slowness");
+            //Retirer slowness
+        }
+        if (preventDash)
+        {
+            Debug.Log("Stop prevent dash");
+            //Retirer slowness
+        }
+        if (afterBurn != null)
+            StopCoroutine(afterBurn);
+        afterBurn = StartCoroutine(AfterBurn(other));
+        playerIsEnter = false;
     }
 
     IEnumerator AfterBurn(Collider other)

@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class ProjectileCollision : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    PlayerActions player;
     void Start()
     {
-        
+        player = PlayerMovement.Instance.GetComponent<PlayerActions>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -13,7 +13,7 @@ public class ProjectileCollision : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             var enemyHealthComponent = collision.gameObject.GetComponent<HealthComponent>();
-            enemyHealthComponent.Hit(player.GetComponent<PlayerActions>().rangedAtkDmg);
+            enemyHealthComponent.Hit(player.rangedAtkDmg);
             //if (enemyHealthComponent.hp <= 0)
             //    enemyHealthComponent.Die();   OU Appeler Die dans Hit ? + Appeler SpawnDrops dans Die
             enemyHealthComponent.gameObject.GetComponentInParent<Animator>().SetTrigger("isHit");

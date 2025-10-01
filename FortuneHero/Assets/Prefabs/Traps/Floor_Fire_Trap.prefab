@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1081184208529663660}
   - component: {fileID: 1930218628442572989}
   - component: {fileID: 2392568418783090560}
+  - component: {fileID: 6326805023635113722}
   m_Layer: 0
   m_Name: Floor_Fire_Trap
   m_TagString: Untagged
@@ -112,6 +113,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.9999995, y: 0.08602305, z: 1}
   m_Center: {x: -0.00054860115, y: -0.010496264, z: -0.0000054985285}
+--- !u!114 &6326805023635113722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7087792561863806987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89a1631e73ab1a34f9ceee5753dc4a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FireTrapComponent
+  inactiveTime: 1
+  activeTime: 1
+  activeDistance: 20
 --- !u!1001 &671639786598911091
 PrefabInstance:
   m_ObjectHideFlags: 0

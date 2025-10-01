@@ -10,7 +10,6 @@ public class FlyingEnemyComponent : MonoBehaviour
     PatrolComponent patrol;
     DetectorComponent detector;
 
-    [SerializeField] GameObject player;
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float attackStopDistance = 3f;
     [SerializeField] float patrolStopDistance = 0.5f;
@@ -24,7 +23,6 @@ public class FlyingEnemyComponent : MonoBehaviour
     [SerializeField] bool isDetecting = false; //Placeholder
 
     Vector3 target;
-
     enum EnemyState { Patrol, Attacking, Chasing }
     EnemyState enemyState;
 
@@ -86,6 +84,7 @@ public class FlyingEnemyComponent : MonoBehaviour
     {
         Vector3 posToTarget = target - transform.parent.position;
         transform.parent.position = Vector3.MoveTowards(transform.parent.position, target, moveSpeed * Time.deltaTime);
+        //Envoie un message dans la console si posToTarget est 0...
         Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
         transform.parent.rotation = Quaternion.Slerp(transform.parent.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 

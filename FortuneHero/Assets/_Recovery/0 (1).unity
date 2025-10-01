@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18303c82301a0e54fb81085c48b01995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorComponent
-  sceneToLoad: MainScene
+  sceneToLoad: JacobScene
   levelRequirement: 0
 --- !u!65 &421043198
 BoxCollider:

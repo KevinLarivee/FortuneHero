@@ -7,7 +7,7 @@ public class LoadManager : MonoBehaviour
 {
     [SerializeField] float loadingTime = 1f;
 
-    [SerializeField] FadeInOut fadeManager;
+    FadeInOut fadeManager;
 
     bool isLoading = false;
 
@@ -20,6 +20,8 @@ public class LoadManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+        fadeManager = GetComponentInChildren<FadeInOut>();
+        DontDestroyOnLoad(gameObject);
     }
     public void Load(params string[] scenesToLoad)
     {

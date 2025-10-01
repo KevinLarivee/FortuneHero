@@ -14,11 +14,7 @@ public class RespawnManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Nécessaire?
-        if (instance != null && instance != this)
-            Destroy(this.gameObject);
-        else
-            instance = this;
+        instance = this;
 
         pm = PlayerMovement.Instance;
         cc = pm.GetComponent<CharacterController>();
