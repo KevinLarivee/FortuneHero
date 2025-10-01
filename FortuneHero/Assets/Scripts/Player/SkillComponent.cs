@@ -18,7 +18,7 @@ public class SkillComponent : MonoBehaviour
   
     // === Paramètres simples pour acheter/appliquer les skills ===
     [Header("Monnaie des skills")]
-    [SerializeField] public int skillPoints = 0;
+    [SerializeField] public int skillPoints = PlayerPrefs.GetInt("skill");
 
     [Header("Coûts de base par skill")]
     [SerializeField] private int meleeCost = 1;

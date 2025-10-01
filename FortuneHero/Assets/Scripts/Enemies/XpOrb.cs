@@ -50,13 +50,15 @@ public class XpOrb : MonoBehaviour
         else // XP
         {
             int level = Mathf.Max(1, PlayerPrefs.GetInt("Level", 1)); 
-            int xp = Mathf.Max(0, PlayerPrefs.GetInt("XP", 0));     
+            int xp = Mathf.Max(0, PlayerPrefs.GetInt("XP", 0));  
+            int skillUp = PlayerPrefs.GetInt("Skill", 0);
 
             xp += Mathf.Max(0, xpPerOrb); 
             while (xp >= RequiredXpForLevel(level))
             {
                 xp -= RequiredXpForLevel(level);
                 level++;
+                PlayerPrefs.SetInt("Skill", skillUp + 1); // Indicateur de montée de niveau
             }
 
             PlayerPrefs.SetInt("Level", level);

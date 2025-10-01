@@ -1050,6 +1050,7 @@ GameObject:
   - component: {fileID: 1733564640}
   - component: {fileID: 1733564641}
   - component: {fileID: 1733564642}
+  - component: {fileID: 1733564643}
   m_Layer: 0
   m_Name: FakeEnnemie
   m_TagString: Enemy
@@ -1193,7 +1194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   bar: {fileID: 0}
-  maxHp: 100
+  maxHp: 20
   hp: 10
   alive: 1
 --- !u!114 &1733564642
@@ -1209,6 +1210,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyComponent
   dmg: 1
+--- !u!95 &1733564643
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1733564634}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1777935575
 GameObject:
   m_ObjectHideFlags: 0
