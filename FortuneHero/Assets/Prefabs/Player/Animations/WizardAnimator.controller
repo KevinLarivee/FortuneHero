@@ -11,6 +11,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: isDefending
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isParalysed
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1166900679969570515}
   m_Solo: 0
@@ -457,6 +460,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: MeleeAttack
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isParalysed
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 27789208057430635}
@@ -971,6 +977,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: RangedAttack
     m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: isParalysed
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -74857984516543242}
   m_Solo: 0
@@ -1351,7 +1360,7 @@ AnimatorStateMachine:
     m_Position: {x: -30, y: -550, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8029544285231116783}
-    m_Position: {x: -300, y: -330, z: 0}
+    m_Position: {x: -290, y: -330, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions:
   - {fileID: 8009200025744600232}
