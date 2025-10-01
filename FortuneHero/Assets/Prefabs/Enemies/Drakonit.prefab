@@ -1331,8 +1331,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba0824bf1660ce4b81b19f172a2c9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDrops
-  drops: []
-  spread: 1.5
+  drops:
+  - ObjectToDrop: {fileID: 720135145037961379, guid: 5714829a3d11d394c8f7dba269972167, type: 3}
+    dropSize: 4
+  - ObjectToDrop: {fileID: 1039937051871170706, guid: 312ce025dd3510b489aae70feeb36bb1, type: 3}
+    dropSize: 4
+  spread: 3
   heightOffset: 0.5
 --- !u!114 &156366364216746294
 MonoBehaviour:
