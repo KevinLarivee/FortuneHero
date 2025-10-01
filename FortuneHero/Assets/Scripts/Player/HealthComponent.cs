@@ -58,7 +58,7 @@ public class HealthComponent : MonoBehaviour
     {
         hp -= dmg;
         //OnHit();
-        //SetBar(hp / maxHp);
+        SetBar(hp / maxHp);
         alive = hp > 0;
         if (!alive)
             OnDeath();
