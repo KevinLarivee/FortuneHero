@@ -8,7 +8,6 @@ public class MenuPrincipal : MonoBehaviour
     [SerializeField] private Button boutonOptions;
     [SerializeField] private Button boutonQuitter;
     [SerializeField] private GameObject panelParametres;
-    [SerializeField] private GameObject panelMenuPrincipal;
     private void Start()
     {
         boutonJouer.onClick.AddListener(Jouer);
@@ -19,7 +18,8 @@ public class MenuPrincipal : MonoBehaviour
 
     public void Jouer()
     {
-        SceneManager.LoadScene("MainScene");
+        LoadManager.Instance.Load("MainScene");
+        //SceneManager.LoadScene("MainScene");
     }
 
     public void Options()
@@ -39,6 +39,5 @@ public class MenuPrincipal : MonoBehaviour
     public void Retour()
     {
         panelParametres.SetActive(false);
-        panelMenuPrincipal.SetActive(true);
     }
 }
