@@ -309,11 +309,21 @@ public class PlayerMovement : MonoBehaviour
 
     public void Aim(InputAction.CallbackContext context)
     {
-        if (isPaused) return;
+        //if (isPaused) return;
 
         isAiming = !context.canceled;
 
-        if (isAiming && context.performed)
+        if (isPaused || context.canceled)
+        {
+            SnapFreeLookBehindPlayer();
+            aimCam.Priority = 10;
+            freelookCam.Priority = 20;
+            inputAxisController.enabled = true;
+            SpeedUpPlayer(2);
+            animator.SetBool("isAiming", false);
+        }
+
+        else if (isAiming && context.performed)
         {
             SetYawPitchFromCameraForward(freelookCam.transform);
             aimCam.Priority = 20;
@@ -324,15 +334,6 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("isRunning", false);
             animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
             animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
-        }
-        else if (context.canceled)
-        {
-            SnapFreeLookBehindPlayer();
-            aimCam.Priority = 10;
-            freelookCam.Priority = 20;
-            inputAxisController.enabled = true;
-            SpeedUpPlayer(2);
-            animator.SetBool("isAiming", false);
         }
     }
 

@@ -97,15 +97,16 @@ public class PlayerActions : MonoBehaviour
     }
     public void Defend(InputAction.CallbackContext ctx)
     {
-        //if (isPaused) return;
+        //if(isPaused) return;
 
-        if (ctx.performed && canDefend)
-        {
-            ShowShield(true);
-        }
-        else if (ctx.canceled && showShield)
+        if (isPaused || (ctx.canceled && showShield))
         {
             ShowShield(false);
+        }
+
+        else if (ctx.performed && canDefend)
+        {
+            ShowShield(true);
         }
     }
     public void ShootProjectile()
