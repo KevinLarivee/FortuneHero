@@ -47,8 +47,11 @@ public class PlayerComponent : MonoBehaviour
     public void PausePlayer(bool paused)
     {
         playerM.isPaused = paused;
-        playerM.enabled = paused;
-        playerA.enabled = paused;
-        playerI.enabled = paused;
+        playerA.isPaused = paused;
+        playerI.isPaused = paused;
+
+        playerM.enabled = !paused;
+        playerA.enabled = !paused;
+        playerI.enabled = !paused;
     }
 }

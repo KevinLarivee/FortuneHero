@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5723626329066511716}
   - component: {fileID: 5788212028385746029}
   - component: {fileID: 1224977838131789724}
-  - component: {fileID: 5615462614640913562}
+  - component: {fileID: 4333826379522123209}
   m_Layer: 5
   m_Name: CanvaEnnemie
   m_TagString: Untagged
@@ -37,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.62, y: 3.23}
+  m_AnchoredPosition: {x: -0.6199951, y: 3.230011}
   m_SizeDelta: {x: 3, y: 3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5723626329066511716
@@ -85,7 +85,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1224977838131789724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &5615462614640913562
+--- !u!114 &4333826379522123209
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,13 +112,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7423424442332496935}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9162e290bcc0284c87ecc74cc45c314, type: 3}
+  m_Script: {fileID: 11500000, guid: 4d8369fd904257e4b8e48e6de01e58b9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  bar: {fileID: 5709244732119354463}
-  maxHp: 100
-  hp: 10
-  alive: 1
+  m_EditorClassIdentifier: Assembly-CSharp::ApplyMainCamera
 --- !u!1001 &5669193221813065151
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -253,14 +249,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224374824136518608, guid: ad84c37a896f54e1180d600bd7746b95, type: 3}
   m_PrefabInstance: {fileID: 5669193221813065151}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5709244732119354463 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114361196886809056, guid: ad84c37a896f54e1180d600bd7746b95, type: 3}
-  m_PrefabInstance: {fileID: 5669193221813065151}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
