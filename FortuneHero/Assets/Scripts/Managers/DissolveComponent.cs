@@ -30,16 +30,6 @@ public class DissolveComponent : MonoBehaviour
             
     }
 
-    //public void StartDissolve()
-    //{
-    //    StartCoroutine(Dissolve());
-    //}
-
-    //public void StartAppear()
-    //{
-    //    StartCoroutine(Dissolve(true));
-    //}
-
     public IEnumerator Dissolve(bool reverse = false)
     {
         Debug.Log(reverse);

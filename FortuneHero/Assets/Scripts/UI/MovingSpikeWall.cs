@@ -1,18 +1,26 @@
+using System.Collections;
 using UnityEngine;
 
 public class MovingSpikeWall : MonoBehaviour
 {
-    private PatrolComponent _patrol;
-    [SerializeField]  float _speed = 1f;
+    [SerializeField] float speed = 1f;
+    [SerializeField] float syncTime = 8f;
+    [SerializeField] float extendDistance = 3f;
 
-    private float _timeToTarget;
-    private float _elapsedTime;
+    //Les wall sont bizarre, c'est right qui est "forward"
+    Vector3 initialPos;
+    Vector3 targetPos;
+
+    float elapsedTime = 0f;
+    bool extending = true;
+    public bool isActive = true;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _patrol = GetComponent<PatrolComponent>();
-        _patrol.move = Move;
-        _patrol.isActive = true;
+        initialPos = transform.position;
+        targetPos = initialPos + transform.right * extendDistance;
+        StartCoroutine(AlternateSync());
     }
 
     // Update is called once per frame
@@ -21,23 +29,33 @@ public class MovingSpikeWall : MonoBehaviour
 
     }
 
-    void Move(Transform destination)
+    IEnumerator AlternateSync()
     {
-        // avancer vers la destination
-        transform.position = Vector3.MoveTowards(
-            transform.position,
-            destination.position,
-            _speed * Time.deltaTime
-        );
-
-        // arrivé à la destination demander la prochaine cible
-        if (Vector3.Distance(transform.position, destination.position) < 0.5f)
+        while (isActive)
         {
-            destination = _patrol.NextTarget();
+            elapsedTime = 0f;
+
+            while (extending && Vector3.Distance(transform.position, targetPos) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            while (elapsedTime < syncTime || Vector3.Distance(transform.position, initialPos) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, initialPos, speed * Time.deltaTime);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            extending = true;
         }
     }
 
-    
-
+    void OnCollisionEnter(Collision collision)
+    {
+        extending = false;
+    }
 
 }

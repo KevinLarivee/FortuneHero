@@ -29,6 +29,8 @@ public class PlayerActions : MonoBehaviour
 
     PlayerOverlayComponent overlay;
 
+    public bool isPaused = false;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -73,6 +75,8 @@ public class PlayerActions : MonoBehaviour
 
     public void MeleeAttack(InputAction.CallbackContext ctx)
     {
+        if(isPaused) return;
+
         if (ctx.performed && canMeleeAtk)
         {
             animator.SetTrigger("MeleeAttack");
@@ -82,6 +86,8 @@ public class PlayerActions : MonoBehaviour
     }
     public void RangedAttack(InputAction.CallbackContext ctx)
     {
+        if (isPaused) return;
+
         if (ctx.performed && canRangedAtk)
         {
             animator.SetTrigger("RangedAttack");
@@ -91,13 +97,16 @@ public class PlayerActions : MonoBehaviour
     }
     public void Defend(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed && canDefend)
-        {
-            ShowShield(true);
-        }
-        else if (ctx.canceled && showShield)
+        //if(isPaused) return;
+
+        if (isPaused || (ctx.canceled && showShield))
         {
             ShowShield(false);
+        }
+
+        else if (ctx.performed && canDefend)
+        {
+            ShowShield(true);
         }
     }
     public void ShootProjectile()
