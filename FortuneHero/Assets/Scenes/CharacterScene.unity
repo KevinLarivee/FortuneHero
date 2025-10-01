@@ -1404,11 +1404,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
---- !u!1 &1738466422 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5348019136153283326, guid: 0283053334043de45b20b0876511552a, type: 3}
-  m_PrefabInstance: {fileID: 3166958224098449432}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2038612665
 GameObject:
   m_ObjectHideFlags: 0
@@ -1745,10 +1740,6 @@ PrefabInstance:
       propertyPath: freelookCam
       value: 
       objectReference: {fileID: 1537134169}
-    - target: {fileID: 8964794528452801434, guid: 0283053334043de45b20b0876511552a, type: 3}
-      propertyPath: lightningPrefab
-      value: 
-      objectReference: {fileID: 1738466422}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

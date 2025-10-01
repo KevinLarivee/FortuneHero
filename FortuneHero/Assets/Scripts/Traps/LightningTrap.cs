@@ -9,27 +9,28 @@ using DigitalRuby.LightningBolt;
 public class LightningTrap : MonoBehaviour
 {
     [Header("Timing")]
-    [SerializeField] private float intervalSeconds = 3f;
-    [SerializeField] private bool startDisabled = false;
+    [SerializeField] float intervalSeconds = 3f;
+    [SerializeField] bool startDisabled = false;
+    [SerializeField] float paralyseTime = 1f;
 
     [Header("Cible & Dégâts (appels commentés plus bas)")]
-    [SerializeField] private string targetTag = "Player";
-    [SerializeField] private int damage = 1;
+    [SerializeField] string targetTag = "Player";
+    [SerializeField] int damage = 1;
 
     [Header("Knockback")]
-    [SerializeField] private float knockbackForce = 8f;
-    [SerializeField] private float knockbackDuration = 0.20f;
-    [Range(0f, 3f)][SerializeField] private float verticalFactor = 0.15f;
+    [SerializeField] float knockbackForce = 8f;
+    [SerializeField] float knockbackDuration = 0.20f;
+    [Range(0f, 3f)][SerializeField] float verticalFactor = 0.15f;
 
     [Header("Anti-spam")]
-    [SerializeField] private float reHitCooldown = 0.15f;
-    private float _nextAllowedHitTime = 0f;
+    [SerializeField] float reHitCooldown = 0.15f;
+    float _nextAllowedHitTime = 0f;
     
     LightningBoltScript lightningBolt;
 
-    private Collider _col;
-    private LineRenderer[] _lineRenderers; // on ne touche qu’aux lignes (l’éclair), pas aux meshes de LightningStart/End
-    private bool _isEnabledNow;
+    Collider _col;
+    LineRenderer[] _lineRenderers; // on ne touche qu’aux lignes (l’éclair), pas aux meshes de LightningStart/End
+    bool _isEnabledNow;
 
     private void Awake()
     {
@@ -105,6 +106,7 @@ public class LightningTrap : MonoBehaviour
         // if (hp != null) hp.Hit(damage, StatusEffect.Knockback);
 
         Debug.Log($"[LightningTrap] Hit {other.name} ({via}) | ON={_isEnabledNow} | dir={dir} | F={knockbackForce}");
+        PlayerMovement.Instance.ToggleParalyse(paralyseTime);
 
         _nextAllowedHitTime = Time.time + reHitCooldown;
     }

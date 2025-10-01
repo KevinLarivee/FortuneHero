@@ -12,6 +12,9 @@ public class PlayerMovement : MonoBehaviour
     public bool isPaused = false;
 
     [SerializeField] GameObject jumpVFX;
+    [SerializeField] GameObject lightningVFX;
+    [SerializeField] GameObject fireVFX;
+
     CharacterController player;
     Animator animator;
     HealthComponent health;
@@ -84,17 +87,15 @@ public class PlayerMovement : MonoBehaviour
     float knockBackTime;
     float knockBackCounter;
 
-    [SerializeField] GameObject lightningPrefab;
     [SerializeField] bool isParalysed = false;
     [SerializeField] bool isBurning = false;
-    [SerializeField] float paralyseTime = 3f;
+    //[SerializeField] float paralyseTime = 3f;
     [SerializeField] float burnTimeUntilDmgTick = 1f;
 
     float burnDmgPerTick = 2f; //Temp ? (envoye par fireComponent potentiellement)
     float burnTimer;
     float paralyseTimer;
 
-    bool isInCoroutine = false;
     bool canJump = true;
     #endregion
 
@@ -115,8 +116,6 @@ public class PlayerMovement : MonoBehaviour
         yaw = angles.y;
         pitch = angles.x;
 
-        paralyseTimer = paralyseTime;
-
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -128,17 +127,17 @@ public class PlayerMovement : MonoBehaviour
                 Movement();
             else
             {
-                playerComponent.PausePlayer(true);
+                //playerComponent.PausePlayer(true);
                 paralyseTimer -= Time.deltaTime;
-                lightningPrefab.SetActive(true);
+                lightningVFX.SetActive(true);
                 animator.SetBool("isParalysed", true);
                 if (paralyseTimer <= 0) 
                 {
-                    lightningPrefab.SetActive(false);
-                    paralyseTimer = paralyseTime;
-                    ToggleParalyse(false);
+                    lightningVFX.SetActive(false);
+                    //paralyseTimer = paralyseTime;
+                    isParalysed = false;
                     animator.SetBool("isParalysed", false);
-                    playerComponent.PausePlayer(false);
+                    //playerComponent.PausePlayer(false);
                 }
             }
 
@@ -151,6 +150,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isBurning)
         {
+            fireVFX.SetActive(true);
             burnTimer += Time.deltaTime;
             if (burnTimer >= burnTimeUntilDmgTick)
             {
@@ -160,6 +160,9 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetTrigger("isHit");
             }
         }
+        else
+            fireVFX.SetActive(false);
+
     }
 
     public void Movement()
@@ -389,25 +392,26 @@ public class PlayerMovement : MonoBehaviour
     {
         isBurning = burning;
     }
-    public void ToggleParalyse(bool paralyse)
+    public void ToggleParalyse(float paralyseTime)
     {
-        isParalysed = paralyse;
+        isParalysed = true;
+        paralyseTimer = paralyseTime;
         //if (isParalysed)
         //    StartCoroutine(ApplyParalyse());
     }
-    public IEnumerator ApplyParalyse() //A appeler ailleur plus tard ?
-    {
-        isInCoroutine = true;
-        Debug.Log("Started Paralyse Coroutine");
-        animator.SetBool("isParalysed", true);
-        //Activer le particleSystem
-        yield return new WaitForSeconds(paralyseTime);
-        animator.SetBool("isParalysed", false);
-        //Desactiver le particleSystem
-        ToggleParalyse(false);
-        isInCoroutine = false;
+    //public IEnumerator ApplyParalyse() //A appeler ailleur plus tard ?
+    //{
+    //    isInCoroutine = true;
+    //    Debug.Log("Started Paralyse Coroutine");
+    //    animator.SetBool("isParalysed", true);
+    //    //Activer le particleSystem
+    //    yield return new WaitForSeconds(paralyseTime);
+    //    animator.SetBool("isParalysed", false);
+    //    //Desactiver le particleSystem
+    //    ToggleParalyse(false);
+    //    isInCoroutine = false;
         
-    }
+    //}
     public void ToggleDash(bool dash)
     {
         canDash = dash;
