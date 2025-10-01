@@ -1163,10 +1163,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemieDrops
   drops:
   - ObjectToDrop: {fileID: 1039937051871170706, guid: 312ce025dd3510b489aae70feeb36bb1, type: 3}
-    dropSize: 1
+    dropSize: 5
   - ObjectToDrop: {fileID: 720135145037961379, guid: 5714829a3d11d394c8f7dba269972167, type: 3}
-    dropSize: 1
-  spread: 1.5
+    dropSize: 20
+  spread: 3.57
   heightOffset: 0.5
 --- !u!114 &1733564640
 MonoBehaviour:

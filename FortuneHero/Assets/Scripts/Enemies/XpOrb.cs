@@ -1,20 +1,22 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
+
+public enum PickupType { XP, Coin }
 
 [RequireComponent(typeof(SphereCollider))]
 public class XpOrb : MonoBehaviour
 {
-    [Min(1)] public int amount = 5;
+    [Header("Type de pickup")]
+    public PickupType type = PickupType.XP;
+
+    [Header("Valeur par orb")]
+    [Min(1)] public int xpPerOrb = 5;     // ‚Üê 5 XP par boule
+    [Min(1)] public int coinsPerOrb = 10; // ‚Üê 10 coins par orb
+
+    [Header("Attraction")]
     public float attractRadius = 4f;
     public float moveSpeed = 6f;
 
-    Transform target;
-
-    void Reset()
-    {
-        var col = GetComponent<SphereCollider>();
-        col.isTrigger = true;
-        col.radius = 0.4f;
-    }
+    private Transform target;
 
     void Update()
     {
@@ -22,6 +24,7 @@ public class XpOrb : MonoBehaviour
         {
             var player = GameObject.FindGameObjectWithTag("Player");
             if (player == null) return;
+
             if (Vector3.Distance(transform.position, player.transform.position) <= attractRadius)
                 target = player.transform;
         }
@@ -35,10 +38,40 @@ public class XpOrb : MonoBehaviour
     {
         if (!other.CompareTag("Player")) return;
 
-        // Ajoute líXP ici (remplace par ton propre gestionnaire díXP si tu en as un)
-       // var xpHolder = other.GetComponent<PlayerXpHolder>();
-        //if (xpHolder != null) xpHolder.AddXp(amount);
+        if (type == PickupType.Coin)
+        {
+            // Coins
+            int coins = PlayerPrefs.GetInt("coins", 0);
+            coins += Mathf.Max(0, coinsPerOrb); 
+            PlayerPrefs.SetInt("coins", coins);
+            PlayerPrefs.Save();
+            Debug.Log($"Coins: {coins}");
+        }
+        else // XP
+        {
+            int level = Mathf.Max(1, PlayerPrefs.GetInt("Level", 1)); 
+            int xp = Mathf.Max(0, PlayerPrefs.GetInt("XP", 0));     
+
+            xp += Mathf.Max(0, xpPerOrb); 
+            while (xp >= RequiredXpForLevel(level))
+            {
+                xp -= RequiredXpForLevel(level);
+                level++;
+            }
+
+            PlayerPrefs.SetInt("Level", level);
+            PlayerPrefs.SetInt("XP", xp);
+            PlayerPrefs.Save();
+            Debug.Log($"Niveau {level} avec {xp} XP (next: {RequiredXpForLevel(level)})");
+        }
 
         gameObject.SetActive(false);
+    }
+
+    private static int RequiredXpForLevel(int level)
+    {
+        level = Mathf.Max(1, level);
+        float need = 100f * Mathf.Pow(1.1f, level - 1);
+        return Mathf.CeilToInt(need);
     }
 }
