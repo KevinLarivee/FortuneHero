@@ -8,11 +8,12 @@ public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenuUI; 
     private bool isPaused = false;
-    [SerializeField] private PlayerActions script;
     [SerializeField] private Button boutonResumeGame;
     [SerializeField] private Button boutonOptions;
     [SerializeField] private Button boutonRetournerLobby;
     [SerializeField] private GameObject panelParametres;
+
+    PlayerComponent player;
 
     private void Start()
     {
@@ -20,8 +21,7 @@ public class PauseMenu : MonoBehaviour
         boutonOptions.onClick.AddListener(Options);
         boutonRetournerLobby.onClick.AddListener(ReturnToLobby);
         panelParametres.GetComponent<MenuOption>().previous = Retour;
-        script = GetComponent<PlayerActions>();
-
+        player = PlayerComponent.Instance;
     }
     public void OnPause(InputAction.CallbackContext context)
     {
@@ -40,8 +40,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;         
         isPaused = true;
         Cursor.lockState = CursorLockMode.None;
-        if (script)
-            script.enabled = true;
+        player.PausePlayer(true);
     }
 
     public void ResumeGame()
@@ -50,9 +49,7 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;         
         isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
-        if (script)
-            script.enabled = false;
-
+        player.PausePlayer(false);
     }
 
     public void ReturnToLobby()

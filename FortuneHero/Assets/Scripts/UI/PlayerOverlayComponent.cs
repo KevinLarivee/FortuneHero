@@ -49,7 +49,10 @@ public class PlayerOverlayComponent : MonoBehaviour
     public void UseShield(float amount)
     {
         currentShield = amount;
-        //currentShield = Mathf.Clamp(currentShield, 0, maxShield);
+        //currentShield = Mathf.MoveTowards(currentShield, amount, Time.deltaTime * 5f);
+
+        //currentShield = Mathf.Clamp(currentShield, 0f, maxShield);
+
         shieldBar.fillAmount = currentShield / maxShield;
     }
 
