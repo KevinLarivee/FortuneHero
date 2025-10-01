@@ -12,6 +12,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject jumpVFX;
     CharacterController player;
     Animator animator;
+    HealthComponent health;
+
     Vector3 jump;
     Vector3 knockBackDirection;
     Vector2 move;
@@ -57,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpBufferTime = 0.2f;
     [SerializeField] float doubleJumpAnimDelay = 0.5f;
     [SerializeField] float doubleJumpAnimTimer;
-    float jumpVFXCd = 0.4f; 
+    float jumpVFXCd = 0.4f;
     float coyoteTimeCounter;
     float jumpBufferCounter;
     bool doubleJumpStartTimer = false;
@@ -78,9 +80,14 @@ public class PlayerMovement : MonoBehaviour
     float knockBackTime;
     float knockBackCounter;
 
-    bool isBurning = false;
-    bool isParalysed = false;
+    [SerializeField] bool isParalysed = false;
+    [SerializeField] bool isBurning = false;
+    [SerializeField] float paralyseTime = 3f;
+    [SerializeField] float burnTimeUntilDmgTick = 1f;
+    float burnDmgPerTick = 2f; //Temp ? (envoye par fireComponent potentiellement)
+    float burnTimer;
 
+    bool isInCoroutine = false;
     bool canJump = true;
     #endregion
 
@@ -92,9 +99,8 @@ public class PlayerMovement : MonoBehaviour
             instance = this;
 
         player = GetComponent<CharacterController>();
-        //playerCamera = GetComponentInChildren<Camera>();
         animator = GetComponent<Animator>();
-        Cursor.lockState = CursorLockMode.Locked;
+        health = GetComponent<HealthComponent>();
 
         inputAxisController = freelookCam.GetComponent<CinemachineInputAxisController>();
         aimingCamera = aimCam.GetComponent<CinemachineThirdPersonFollow>();
@@ -103,78 +109,37 @@ public class PlayerMovement : MonoBehaviour
         Vector3 angles = dirTarget.rotation.eulerAngles;
         yaw = angles.y;
         pitch = angles.x;
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void Update()
     {
-        //Vector3 moveDirection = Vector3.zero;
-
-        //if (isAiming)
-        //{
-        //    Vector3 forward = transform.forward;
-        //    Vector3 right = transform.right;
-
-        //    forward.y = 0;
-        //    right.y = 0;
-
-        //    forward.Normalize();
-        //    right.Normalize();
-        //    moveDirection = forward * move.y + right * move.x;
-        //}
-        //else
-        //{
-        //    Vector3 forward = playerCamera.forward;
-        //    Vector3 right = playerCamera.right;
-
-        //    forward.y = 0;
-        //    right.y = 0;
-
-        //    forward.Normalize();
-        //    right.Normalize();
-        //    moveDirection = forward * move.y + right * move.x;
-        //}
-        //player.Move(moveDirection * speedMultiplier * Time.deltaTime);
-
-        //if (isAiming)
-        //{
-        //    yaw += look.x * sensitivity;
-        //    pitch -= look.y * sensitivity;
-
-        //    yawTarget.rotation = Quaternion.Euler(0f, yaw, 0f);
-        //    pitchTarget.rotation = Quaternion.Euler(pitch, 0f, 0f);
-
-        //    aimingCamera.CameraSide = Mathf.Lerp(aimingCamera.CameraSide, targetCameraSide, Time.deltaTime * shoulderSwitchSpeed);
-
-
-
-        //    Vector3 lookDirection = yawTarget.forward;
-        //    lookDirection.y = 0;
-
-        //    if(lookDirection.sqrMagnitude > 0.01f)
-        //    {
-        //        Quaternion targetRotation = Quaternion.LookRotation(lookDirection);
-        //        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 10f);
-        //    }
-        //}
-        //else if (shouldFaceMoveDirection && moveDirection.sqrMagnitude > 0.001f)
-        //{
-        //    Quaternion toRotation = Quaternion.LookRotation(moveDirection, Vector3.up);
-        //    transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
-        //}
-
-        //velocity.y += gravity * Time.deltaTime;
-        //player.Move(velocity * Time.deltaTime);
-
-
         if (knockBackCounter <= 0)
         {
-            Movement();
+            if (!isParalysed)
+                Movement();
+            else 
+                if(!isInCoroutine)
+                    StartCoroutine(ApplyParalyse());
+
             RotateCamera();
         }
         else
         {
             knockBackCounter -= Time.deltaTime;
             player.Move(knockBackDirection * Time.deltaTime);
+        }
+        if (isBurning)
+        {
+            burnTimer += Time.deltaTime;
+            if (burnTimer >= burnTimeUntilDmgTick)
+            {
+                health.Hit(burnDmgPerTick);
+                burnTimer = 0;
+                Debug.Log("You have been burned! - " + burnDmgPerTick + "hp");
+                animator.SetTrigger("isHit");
+            }
         }
     }
 
@@ -249,8 +214,8 @@ public class PlayerMovement : MonoBehaviour
                 moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
         }
 
-      
-        if(!isAiming && direction.sqrMagnitude > 0.001f)
+
+        if (!isAiming && direction.sqrMagnitude > 0.001f)
             animator.SetBool("isRunning", true);
         else
             animator.SetBool("isRunning", false);
@@ -308,7 +273,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext ctx)
     {
-        if(!isDashing)
+        if (!isDashing)
             move = ctx.ReadValue<Vector2>();
     }
     public void Look(InputAction.CallbackContext ctx)
@@ -349,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
             animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
         }
-        else if(context.canceled)
+        else if (context.canceled)
         {
             SnapFreeLookBehindPlayer();
             aimCam.Priority = 10;
@@ -357,7 +322,6 @@ public class PlayerMovement : MonoBehaviour
             inputAxisController.enabled = true;
             SpeedUpPlayer(2);
             animator.SetBool("isAiming", false);
-
         }
     }
 
@@ -400,6 +364,20 @@ public class PlayerMovement : MonoBehaviour
     public void ToggleParalyse(bool paralyse)
     {
         isParalysed = paralyse;
+        //if (isParalysed)
+        //    StartCoroutine(ApplyParalyse());
+    }
+    public IEnumerator ApplyParalyse() //A appeler ailleur plus tard ?
+    {
+        isInCoroutine = true;
+        Debug.Log("Started Paralyse Coroutine");
+        animator.SetBool("isParalysed", true);
+        //Activer le particleSystem
+        yield return new WaitForSeconds(paralyseTime);
+        animator.SetBool("isParalysed", false);
+        //Desactiver le particleSystem
+        isInCoroutine = false;
+        ToggleParalyse(false);
     }
     public void ToggleDash(bool dash)
     {
