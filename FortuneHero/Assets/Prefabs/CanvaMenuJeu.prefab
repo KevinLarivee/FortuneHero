@@ -74,10 +74,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -223,7 +223,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 742106441512290467}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: ResumeGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3201149094981327514
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,14 +253,14 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 2715183148521316704}
           m_TargetAssemblyTypeName: MenuClavier, Assembly-CSharp
           m_MethodName: OnButtonHover
           m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 1
+            m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
@@ -510,7 +522,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4104727431059057819}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: ReturnToLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4048567396960137842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -528,7 +552,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 2715183148521316704}
           m_TargetAssemblyTypeName: MenuClavier, Assembly-CSharp
           m_MethodName: OnButtonHover
           m_Mode: 3
@@ -821,6 +845,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4813155388425402215}
+  - component: {fileID: 2715183148521316704}
   m_Layer: 5
   m_Name: PanelMenuJeu
   m_TagString: Untagged
@@ -850,6 +875,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2715183148521316704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461689794371412947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbbc5a0dee81407419011da5f71d8fb4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenuClavier
+  boutons:
+  - {fileID: 2351817592301552141}
+  - {fileID: 6441790284509184774}
+  - {fileID: 2040163961068383107}
 --- !u!1 &9217832928891974592
 GameObject:
   m_ObjectHideFlags: 0
@@ -971,7 +1012,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4644901405781631110}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: Options
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5274905695584183544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -989,7 +1042,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 2715183148521316704}
           m_TargetAssemblyTypeName: MenuClavier, Assembly-CSharp
           m_MethodName: OnButtonHover
           m_Mode: 3
