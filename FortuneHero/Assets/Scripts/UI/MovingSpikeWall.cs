@@ -2,49 +2,42 @@ using UnityEngine;
 
 public class MovingSpikeWall : MonoBehaviour
 {
-    [SerializeField] private Vector3 direction = Vector3.left; 
-    [SerializeField] private float speed = 2f; 
-    [SerializeField] private int damage = 20; 
-    [SerializeField] private Transform pointA; // position initiale
-    [SerializeField] private Transform pointB; // limite max
+    private PatrolComponent _patrol;
+    [SerializeField]  float _speed = 1f;
 
-    private Vector3 startPosition;
-    private Vector3 endPosition;
-
-    private void Start()
+    private float _timeToTarget;
+    private float _elapsedTime;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-        startPosition = pointA.position;
-        endPosition = pointB.position;
+        _patrol = GetComponent<PatrolComponent>();
+        _patrol.move = Move;
+        _patrol.isActive = true;
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        transform.position += direction * speed * Time.fixedDeltaTime;
 
-        // Vérifie si on a atteint pointA ou pointB
-        if (Vector3.Distance(transform.position, endPosition) < 0.05f && direction == (endPosition - startPosition).normalized)
+    }
+
+    void Move(Transform destination)
+    {
+        // avancer vers la destination
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            destination.position,
+            _speed * Time.deltaTime
+        );
+
+        // arrivé à la destination demander la prochaine cible
+        if (Vector3.Distance(transform.position, destination.position) < 0.5f)
         {
-            direction = -direction;
-        }
-        else if (Vector3.Distance(transform.position, startPosition) < 0.05f && direction == (startPosition - endPosition).normalized)
-        {
-            direction = -direction;
+            destination = _patrol.NextTarget();
         }
     }
 
-    void OnCollisionEnter(Collision other)
-    {
-        //if (other.gameObject.CompareTag("Player"))
-        //{
-        //    PlayerHealth ph = other.gameObject.GetComponent<PlayerHealth>();
-        //    if (ph != null)
-        //        ph.TakeDamage(damage);
-        //}
-        //else if (other.gameObject.CompareTag("Spike"))
-        //{
-        //    direction = -direction;
-        //}
-    }
+    
 
 
 }

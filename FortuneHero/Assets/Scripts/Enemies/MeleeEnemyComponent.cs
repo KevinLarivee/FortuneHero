@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MeleeEnemyComponent : MonoBehaviour
 {
     Animator animator;
     PatrolComponent patrol;
     DetectorComponent detector;
+    NavMeshAgent agent;
 
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float attackStopDistance = 3f;
-    [SerializeField] float patrolStopDistance = 0.5f;
     [SerializeField] float attackCd = 1f;
     [SerializeField] float animationTime = 0.7f;
 
@@ -27,6 +28,7 @@ public class MeleeEnemyComponent : MonoBehaviour
     {
         animator = GetComponentInParent<Animator>();
         patrol = GetComponent<PatrolComponent>();
+        agent = GetComponent<NavMeshAgent>();
         detector = GetComponentInChildren<DetectorComponent>();
         detector.targetDetected = PlayerDetected;
         patrol.move = Move;
@@ -55,6 +57,7 @@ public class MeleeEnemyComponent : MonoBehaviour
         patrol.isActive = false;
         enemyState = EnemyState.Chasing;
         target = targetPosition;
+        agent.destination = target;
         Vector3 posToTarget = target - transform.position;
 
         if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
@@ -62,25 +65,26 @@ public class MeleeEnemyComponent : MonoBehaviour
     }
     void Move(Transform newTarget)
     {
-        target = newTarget.position;
-        Vector3 posToTarget = target - transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        if (posToTarget.sqrMagnitude <= patrolStopDistance * patrolStopDistance)
+        if (agent.remainingDistance <= agent.stoppingDistance)
         {
             newTarget = patrol.NextTarget();
         }
+        target = newTarget.position;
+        agent.destination = newTarget.position;
+        //Vector3 posToTarget = target - transform.position;
+        //transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        //Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         animator.SetBool("isPatrolling", true);
         animator.SetBool("isChasing", false);
     }
     public void ChasingMove()
     {
-        Vector3 posToTarget = target - transform.position;
-        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        //Vector3 posToTarget = target - transform.position;
+        //transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        //Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         animator.SetBool("isChasing", true);
         animator.SetBool("isPatrolling", false);

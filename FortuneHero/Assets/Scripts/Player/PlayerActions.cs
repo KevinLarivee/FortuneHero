@@ -27,10 +27,13 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] float meleeAtkTimer = 0f;
     bool canMeleeAtk = false;
 
+    PlayerOverlayComponent overlay;
+
     void Start()
     {
         animator = GetComponent<Animator>();
         defenceCurrentCharge = defenceMaxCharge;
+        overlay = GetComponent<PlayerOverlayComponent>();
     }
 
     void Update()
@@ -59,10 +62,12 @@ public class PlayerActions : MonoBehaviour
         if (showShield)
         {
             defenceCurrentCharge = Mathf.Max(defenceCurrentCharge - Time.deltaTime, 0);
+            overlay.UseShield(defenceCurrentCharge);
         }
         else if (defenceCurrentCharge < defenceMaxCharge)
         {
             defenceCurrentCharge = Mathf.Min(defenceCurrentCharge + Time.deltaTime, defenceMaxCharge);
+            overlay.UseShield(defenceCurrentCharge);
         }
     }
 

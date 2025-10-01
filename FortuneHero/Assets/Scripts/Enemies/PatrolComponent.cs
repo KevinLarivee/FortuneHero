@@ -52,31 +52,6 @@ public class PatrolComponent : MonoBehaviour
             move(targets[currentTarget]);
         }
     }
-
-    //void MoveAgent()
-    //{
-    //    if (Vector3.Distance(transform.position, destination) <= stoppingDistance)
-    //    {
-
-    //    }
-    //}
-
-    //void MovePlatform()
-    //{
-    //    float elapsedPercentage = elapsedTime / timeToTarget;
-    //    var _previousTarget = targets[(currentTarget - 1 + targets.Length) % targets.Length];
-    //    elapsedPercentage = Mathf.SmoothStep(0, 1, elapsedPercentage);
-    //    transform.position = Vector3.Lerp(_previousTarget.position, targets[currentTarget].position, elapsedPercentage);
-    //    transform.rotation = Quaternion.Lerp(_previousTarget.rotation, targets[currentTarget].rotation, elapsedPercentage);
-    //    if (elapsedPercentage >= 1)
-    //    {
-    //        elapsedTime = 0f;
-    //        float distanceToWaypoint = Vector3.Distance(_previousTarget.position, targets[currentTarget].position);
-    //        timeToTarget = distanceToWaypoint / speed;
-    //        NextTarget();
-    //    }
-    //}
-
     public Transform NextTarget()
     {
         switch (patrolType)
@@ -85,7 +60,7 @@ public class PatrolComponent : MonoBehaviour
                 currentTarget = (currentTarget + 1) % targets.Length;
                 break;
             case PatrolType.Reverse:
-                if (currentTarget == targets.Length) increment = -1;
+                if (currentTarget == targets.Length - 1) increment = -1;
                 else if (currentTarget == 0) increment = 1;
                 currentTarget += increment;
                 break;

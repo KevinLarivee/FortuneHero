@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class PlayerOverlayComponent : MonoBehaviour
 {
     [SerializeField] private Image shieldBar;
-    [SerializeField] private float maxShield = 100f;
+    [SerializeField] private float maxShield = 10;
     private float currentShield;
     [SerializeField] private Image xpBar;
     [SerializeField] private TMPro.TextMeshProUGUI levelText;
@@ -14,7 +14,6 @@ public class PlayerOverlayComponent : MonoBehaviour
     private int xpToNextLevel = 100;
     [SerializeField] private TMPro.TextMeshProUGUI coinText;
     private int coins = 0;
-    private HealthComponent health;
 
 
 
@@ -23,8 +22,6 @@ public class PlayerOverlayComponent : MonoBehaviour
         currentShield = maxShield;
         shieldBar.fillAmount = 1f;
         xpBar.fillAmount = 0f;
-        levelText.text = "Niveau : " + level;
-        health = GetComponent<HealthComponent>();
     }
 
     void Update()
@@ -32,10 +29,6 @@ public class PlayerOverlayComponent : MonoBehaviour
       /* health.Hit(10); */// -10 HP
 
         //// Test : utiliser le bouclier
-        //if (Input.GetKeyDown(KeyCode.B))
-        //{
-        //    UseShield(15); // -15 shield
-        //}
 
         //// Test : recharger le bouclier
         //if (Input.GetKeyDown(KeyCode.R))
@@ -44,7 +37,7 @@ public class PlayerOverlayComponent : MonoBehaviour
         //}
         //GainXP(30);
 
-            AddCoins(5);
+            //AddCoins(5);
     }
 
     public void AddCoins(int amount)
@@ -55,18 +48,12 @@ public class PlayerOverlayComponent : MonoBehaviour
 
     public void UseShield(float amount)
     {
-        currentShield -= amount;
-        currentShield = Mathf.Clamp(currentShield, 0, maxShield);
+        currentShield = amount;
+        //currentShield = Mathf.Clamp(currentShield, 0, maxShield);
         shieldBar.fillAmount = currentShield / maxShield;
     }
 
-    public void RechargeShield(float amount)
-    {
-        currentShield += amount;
-        currentShield = Mathf.Clamp(currentShield, 0, maxShield);
-        shieldBar.fillAmount = currentShield / maxShield;
-    }
-
+    
     
 
    
@@ -86,6 +73,6 @@ public class PlayerOverlayComponent : MonoBehaviour
     {
         level++;
         xpToNextLevel += 50; 
-        levelText.text = "Lvl " + level;
+        levelText.text = "Niveau : " + level;
     }
 }

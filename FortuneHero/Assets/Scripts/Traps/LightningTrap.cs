@@ -14,7 +14,7 @@ public class LightningTrap : MonoBehaviour
 
     [Header("Cible & Dégâts (appels commentés plus bas)")]
     [SerializeField] private string targetTag = "Player";
-    [SerializeField] private int damage = 10;
+    [SerializeField] private int damage = 1;
 
     [Header("Knockback")]
     [SerializeField] private float knockbackForce = 8f;
