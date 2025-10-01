@@ -15,6 +15,8 @@ public class PlayerMovement : MonoBehaviour
     CharacterController player;
     Animator animator;
     HealthComponent health;
+    PlayerComponent playerComponent;
+
 
     Vector3 jump;
     Vector3 knockBackDirection;
@@ -82,12 +84,15 @@ public class PlayerMovement : MonoBehaviour
     float knockBackTime;
     float knockBackCounter;
 
+    [SerializeField] GameObject lightningPrefab;
     [SerializeField] bool isParalysed = false;
     [SerializeField] bool isBurning = false;
     [SerializeField] float paralyseTime = 3f;
     [SerializeField] float burnTimeUntilDmgTick = 1f;
+
     float burnDmgPerTick = 2f; //Temp ? (envoye par fireComponent potentiellement)
     float burnTimer;
+    float paralyseTimer;
 
     bool isInCoroutine = false;
     bool canJump = true;
@@ -95,11 +100,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
-       instance = this;
+        instance = this;
 
         player = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         health = GetComponent<HealthComponent>();
+        playerComponent = GetComponent<PlayerComponent>();
 
         inputAxisController = freelookCam.GetComponent<CinemachineInputAxisController>();
         aimingCamera = aimCam.GetComponent<CinemachineThirdPersonFollow>();
@@ -108,6 +114,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 angles = dirTarget.rotation.eulerAngles;
         yaw = angles.y;
         pitch = angles.x;
+
+        paralyseTimer = paralyseTime;
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -118,9 +126,21 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!isParalysed)
                 Movement();
-            else 
-                if(!isInCoroutine)
-                    StartCoroutine(ApplyParalyse());
+            else
+            {
+                playerComponent.PausePlayer(true);
+                paralyseTimer -= Time.deltaTime;
+                lightningPrefab.SetActive(true);
+                animator.SetBool("isParalysed", true);
+                if (paralyseTimer <= 0) 
+                {
+                    lightningPrefab.SetActive(false);
+                    paralyseTimer = paralyseTime;
+                    ToggleParalyse(false);
+                    animator.SetBool("isParalysed", false);
+                    playerComponent.PausePlayer(false);
+                }
+            }
 
             RotateCamera();
         }
@@ -264,10 +284,6 @@ public class PlayerMovement : MonoBehaviour
             Quaternion toRotation = Quaternion.LookRotation(direction, Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 10f * Time.deltaTime);
         }
-
-        //cameraRotation += cameraSpeed * Time.deltaTime * new Vector3(-look.y, look.x, 0);
-        //cameraRotation.x = Mathf.Clamp(cameraRotation.x, -50, 50);
-        //transform.rotation = Quaternion.Euler(new Vector3(0, cameraRotation.y, 0));
     }
 
     public void Move(InputAction.CallbackContext ctx)
