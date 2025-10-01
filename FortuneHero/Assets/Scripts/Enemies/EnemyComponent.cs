@@ -84,7 +84,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     public void Hit()
     {
         //animator.SetTrigger("hit");
-        //healthBar.fillAmount = 1f;
         //if(no hp) Kill();
     }
     //public void Hit()
