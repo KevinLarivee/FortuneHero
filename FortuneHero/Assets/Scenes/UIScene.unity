@@ -1145,6 +1145,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvaBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 7577951018056726295, guid: 70259fbcd3f5d224d8b6a3d00bb4cb92, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
