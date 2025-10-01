@@ -272,14 +272,14 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(InputAction.CallbackContext ctx)
     {
-        if (isPaused) return;
+        //if (isPaused) return;
 
         if (!isDashing)
             move = ctx.ReadValue<Vector2>();
     }
     public void Look(InputAction.CallbackContext ctx)
     {
-        if (isPaused) return;
+        //if (isPaused) return;
 
         look = ctx.ReadValue<Vector2>() * mouseSensitivity;
     }

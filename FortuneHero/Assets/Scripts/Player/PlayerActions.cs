@@ -97,7 +97,7 @@ public class PlayerActions : MonoBehaviour
     }
     public void Defend(InputAction.CallbackContext ctx)
     {
-        if (isPaused) return;
+        //if (isPaused) return;
 
         if (ctx.performed && canDefend)
         {
