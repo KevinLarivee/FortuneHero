@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1319191766341739934}
   - component: {fileID: 2273789225960314135}
-  - component: {fileID: 7277712824219762645}
   m_Layer: 0
   m_Name: PauseManager
   m_TagString: Untagged
@@ -46,23 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PauseMenu
   pauseMenuUI: {fileID: 0}
-  boutonResumeGame: {fileID: 0}
-  boutonOptions: {fileID: 0}
-  boutonRetournerLobby: {fileID: 0}
   panelParametres: {fileID: 0}
---- !u!114 &7277712824219762645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3964555514913315413}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbbc5a0dee81407419011da5f71d8fb4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MenuClavier
-  boutons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}

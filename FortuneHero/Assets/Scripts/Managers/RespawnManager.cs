@@ -4,8 +4,8 @@ using UnityEngine;
 public class RespawnManager : MonoBehaviour
 {
     [SerializeField] LayerMask mask;
+    PlayerComponent pc;
     PlayerMovement pm;
-    CharacterController cc;
     DissolveComponent dissolve;
     Vector3 respawnPoint = Vector3.zero;
 
@@ -16,9 +16,9 @@ public class RespawnManager : MonoBehaviour
     {
         instance = this;
 
+        pc = PlayerComponent.Instance;
         pm = PlayerMovement.Instance;
-        cc = pm.GetComponent<CharacterController>();
-        dissolve = pm.GetComponent<DissolveComponent>();
+        dissolve = pc.GetComponent<DissolveComponent>();
         InvokeRepeating(nameof(UpdateRespawn), 0.5f, 0.5f);
     }
 
@@ -27,7 +27,7 @@ public class RespawnManager : MonoBehaviour
         //Vérifie les conditions seulement si la précédente est vraie.
         //Si toutes vraies, alors mettre à jour le RespawnPoint.
         if (pm.IsGrounded()
-            && Physics.Raycast(pm.transform.position + pm.transform.up * 0.1f, pm.transform.up * -1, out RaycastHit hit, 0.3f, mask) 
+            && Physics.Raycast(pc.transform.position + pc.transform.up * 0.1f, pc.transform.up * -1, out RaycastHit hit, 0.3f, mask) 
             && hit.transform.CompareTag("Respawn"))
                 SetRespawn(hit.point);
     }
@@ -40,13 +40,13 @@ public class RespawnManager : MonoBehaviour
     IEnumerator RespawnAnimation()
     {
 
-        cc.enabled = false;
+        pc.PausePlayer(true);
         //Animation de despawn
         yield return dissolve.Dissolve();
-        pm.transform.position = respawnPoint;
+        pc.transform.position = respawnPoint;
         //Animation de respawn
         yield return dissolve.Dissolve(true);
-        cc.enabled = true;
+        pc.PausePlayer(false);
     }
 
     public void SetRespawn(Vector3 point)

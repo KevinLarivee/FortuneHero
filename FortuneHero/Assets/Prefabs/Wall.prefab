@@ -278,7 +278,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -301,7 +301,6 @@ GameObject:
   m_Component:
   - component: {fileID: 94527398181823856}
   - component: {fileID: 7462516722397683912}
-  - component: {fileID: 1199139951094925969}
   - component: {fileID: 2986415099365618610}
   - component: {fileID: 5566904016025406541}
   - component: {fileID: 7190177701113604126}
@@ -340,30 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df84964e098879b4c951545d1a345260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingSpikeWall
-  _speed: 1
---- !u!114 &1199139951094925969
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2204649091690216077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50f7f87c29d78ae48b351957512cf08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PatrolComponent
-  targets:
-  - {fileID: 0}
-  - {fileID: 0}
-  lookAroundProbability: 0
-  lookAroundFrequency: 1
-  lookAroundSeconds: 1
-  waitSecondsBetweenTargets: 0
-  patrolType: 0
-  waitSecondsAtEnds: 1
-  allowPreviousTarget: 1
-  isActive: 1
+  speed: 1
 --- !u!65 &2986415099365618610
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -404,7 +380,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 136
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
@@ -708,7 +684,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -999,7 +975,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1290,7 +1266,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1581,7 +1557,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1872,7 +1848,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2163,7 +2139,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2454,7 +2430,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2725,7 +2701,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 5946
+  m_VersionIndex: 5952
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3109,7 +3085,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3400,7 +3376,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 2999
+  m_VersionIndex: 3005
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
