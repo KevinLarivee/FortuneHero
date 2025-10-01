@@ -122,6 +122,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Skill",
+                    "type": "Button",
+                    "id": "bc8d1932-a3a1-45a7-b59f-5076170a8b56",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -551,6 +560,17 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "SwitchShoulder",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eaec493e-aec1-4e37-a26a-bb30f6bef8c7",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

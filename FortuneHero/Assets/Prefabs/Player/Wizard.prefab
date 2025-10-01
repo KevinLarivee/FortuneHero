@@ -1533,7 +1533,7 @@ MonoBehaviour:
     m_Bits: 55
   dashCooldown: 0.75
   dashTime: 0.2
-  dashSpeed: 5
+  dashSpeed: 3
   jumpMultiplier: 1
   jumpForce: 11
   gravity: -15
@@ -1551,7 +1551,6 @@ MonoBehaviour:
   speedWhileDefending: 3
   isParalysed: 0
   isBurning: 0
-  paralyseTime: 1
   burnTimeUntilDmgTick: 1
 --- !u!114 &9163024940700195790
 MonoBehaviour:

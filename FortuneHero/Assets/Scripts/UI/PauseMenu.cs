@@ -6,9 +6,10 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenuUI; 
+    [SerializeField] GameObject pauseMenuUI; 
     private bool isPaused = false;
-    [SerializeField] private GameObject panelParametres;
+    [SerializeField] GameObject panelParametres;
+    [SerializeField] GameObject skillMenuUI;
 
     PlayerComponent player;
 
@@ -22,24 +23,24 @@ public class PauseMenu : MonoBehaviour
         if (context.performed) 
         {
             if (isPaused)
-                ResumeGame();
+                ResumeGame(context.control.name);
             else
-                PauseGame();
+                PauseGame(context.control.name);
         }
     }
 
-    private void PauseGame()
+    private void PauseGame(string input = "")
     {
-        pauseMenuUI.SetActive(true); 
+        (input == "f" ? skillMenuUI : pauseMenuUI).SetActive(true); 
         Time.timeScale = 0f;         
         isPaused = true;
         Cursor.lockState = CursorLockMode.None;
         player.PausePlayer(true);
     }
 
-    public void ResumeGame()
+    public void ResumeGame(string input = "")
     {
-        pauseMenuUI.SetActive(false); 
+        (input == "f" ? skillMenuUI : pauseMenuUI).SetActive(false); 
         Time.timeScale = 1f;         
         isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;

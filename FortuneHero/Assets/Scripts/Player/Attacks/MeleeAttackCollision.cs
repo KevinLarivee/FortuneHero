@@ -18,14 +18,14 @@ public class MeleeAttackCollision : MonoBehaviour
             enemyHealthComponent.Hit(player.GetComponent<PlayerActions>().meleeAtkDmg);
             //if (enemyHealthComponent.hp <= 0)
             //    enemyHealthComponent.Die();   OU Appeler Die dans Hit ? + Appeler SpawnDrops dans Die
-            var caca = enemyHealthComponent.gameObject.GetComponentInParent<Animator>();
-            if (caca == null)
+            var animator = enemyHealthComponent.gameObject.GetComponentInParent<Animator>();
+            if (animator == null)
             {
                 enemyHealthComponent.gameObject.GetComponent<Animator>().SetTrigger("hit");
             }
             else
             {
-                caca.SetTrigger("hit");
+                animator.SetTrigger("hit");
             }
             
 
