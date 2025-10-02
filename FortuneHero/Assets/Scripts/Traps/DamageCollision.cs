@@ -2,7 +2,7 @@
 
 public class DamageCollision : MonoBehaviour
 {
-    [Header("Param�tres d'attaque")]
+    [Header("Paramètres d'attaque")]
     [SerializeField] int damage = 1;
     [SerializeField] string targetTag = "Player";
     [SerializeField] StatusEffect statusEffect = StatusEffect.Knockback;
