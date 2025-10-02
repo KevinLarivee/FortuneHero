@@ -9,6 +9,8 @@ public class RespawnManager : MonoBehaviour
     DissolveComponent dissolve;
     Vector3 respawnPoint = Vector3.zero;
 
+    bool isRespawning = false;
+
     static RespawnManager instance;
     public static RespawnManager Instance { get { return instance; } }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -34,12 +36,13 @@ public class RespawnManager : MonoBehaviour
 
     public void Respawn()
     {
-        StartCoroutine(RespawnAnimation());
+        if(!isRespawning)
+            StartCoroutine(RespawnAnimation());
         //Faire des dégâts au Joueur? ou ailleurs?
     }
     IEnumerator RespawnAnimation()
     {
-
+        isRespawning = true;
         pc.PausePlayer(true);
         //Animation de despawn
         yield return dissolve.Dissolve();
@@ -47,6 +50,7 @@ public class RespawnManager : MonoBehaviour
         //Animation de respawn
         yield return dissolve.Dissolve(true);
         pc.PausePlayer(false);
+        isRespawning = false;
     }
 
     public void SetRespawn(Vector3 point)

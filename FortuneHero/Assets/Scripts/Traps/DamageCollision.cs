@@ -2,7 +2,7 @@
 
 public class DamageCollision : MonoBehaviour
 {
-    [Header("Param�tres d'attaque")]
+    [Header("Paramètres d'attaque")]
     [SerializeField] int damage = 1;
     [SerializeField] string targetTag = "Player";
     [SerializeField] StatusEffect statusEffect = StatusEffect.Knockback;
@@ -22,6 +22,9 @@ public class DamageCollision : MonoBehaviour
             //appel knockback
             //PlayerMovement.Instance.KnockBack(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
             Debug.Log($"{collision.gameObject.name} touché. Dégats: {damage}");
+
+            if (Physics.Raycast(collision.contacts[0].point, -collision.contacts[0].normal, 1f, 69))
+                RespawnManager.Instance.Respawn();
         }
     }
 }

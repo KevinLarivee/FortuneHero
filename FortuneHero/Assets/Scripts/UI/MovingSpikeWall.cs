@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class MovingSpikeWall : MonoBehaviour
@@ -15,11 +16,16 @@ public class MovingSpikeWall : MonoBehaviour
     bool extending = true;
     public bool isActive = true;
 
+    Collider spikes;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         initialPos = transform.position;
         targetPos = initialPos + transform.right * extendDistance;
+
+        spikes = GetComponentInChildren<Collider>();
+
         StartCoroutine(AlternateSync());
     }
 
@@ -55,7 +61,8 @@ public class MovingSpikeWall : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        extending = false;
+        if (!collision.gameObject.CompareTag("Player"))
+            extending = false;
     }
 
 }
