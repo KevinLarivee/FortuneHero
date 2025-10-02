@@ -887,6 +887,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 435652004603196024}
+    - targetCorrespondingSourceObject: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 835389646948192143}
   m_SourcePrefab: {fileID: 100100000, guid: 0283053334043de45b20b0876511552a, type: 3}
 --- !u!1 &957449320636261456 stripped
 GameObject:
@@ -937,6 +940,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerComponent
   currentCoins: 0
+--- !u!114 &835389646948192143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957449320636261456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b0d310e710472499611312459949c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Skill
+  playerLevel: 0
+  baseDefense: 10
+  baseSpeed: 100
+  baseAttack: 10
+  baseDash: 2.5
+  baseHP: 10
+  baseDistance: 20
+  currentDefense: 0
+  currentSpeed: 0
+  currentAttack: 0
+  currentDash: 0
+  currentHP: 0
+  currentDistance: 0
 --- !u!4 &2372103120546118006 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7465507368810723315, guid: 0283053334043de45b20b0876511552a, type: 3}
