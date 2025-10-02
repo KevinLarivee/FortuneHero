@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,43 +6,133 @@ using UnityEngine.AI;
 public class EnemyComponent : MonoBehaviour, IPoolable
 {
     //!!! Quoi mettre dans EnnemyComponent vs SpecificEnnemyComponent
+    protected enum EnemyState { Patrol, Attacking, Chasing }
 
+    protected EnemyState enemyState;
     public ObjectPoolComponent Pool { get; set; }
 
     public int dmg = 1;
+    public int collisionDmg = 10;
 
-    Animator animator;
-    EnemyDrops enemyDrops;
-    HealthComponent healthComponent;
+    [SerializeField] protected float moveSpeed = 5f;
+    [SerializeField] protected float stoppingDistance = 0.5f;
+    [SerializeField] protected float attackStopDistance = 3f;
+    [SerializeField] protected float attackCd = 1f;
+    [SerializeField] protected float animationTime = 0.7f;
+
+
+    protected Animator animator;
+    protected EnemyDrops enemyDrops;
+    protected HealthComponent healthComponent;
+    protected PatrolComponent patrol;
+    protected DetectorComponent detector;
+
+    protected float timeUntilPatrol = 10f;
+    protected float timeUntilPatrolTimer = 0f;
+    protected float rotationSpeed = 5f;
+
+    protected Vector3 target;
+
     //NavMeshAgent agent;
     //bool _isDead = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         animator = GetComponent<Animator>();
+        patrol = GetComponent<PatrolComponent>();
+        detector = GetComponentInChildren<DetectorComponent>();
         enemyDrops = GetComponent<EnemyDrops>();
         healthComponent = GetComponent<HealthComponent>();
-        healthComponent.OnDeath = death;
+
+        healthComponent.OnHit = Hit;
+        healthComponent.OnDeath = Death;
+
+        detector.targetDetected = PlayerDetected;
+        patrol.move = Move;
         //agent = GetComponent<NavMeshAgent>();
         //agent.updatePosition = false;
         //agent.updateRotation = true;
     }
+
+    void Update()
+    {
+        if (enemyState == EnemyState.Chasing)
+            ChasingMove();
+        else if (enemyState == EnemyState.Attacking)
+            StartCoroutine(Attack());
+
+        timeUntilPatrolTimer += Time.deltaTime; //start le timer 
+
+        if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
+        {
+            //Enable le patrol
+            patrol.isActive = true;
+            enemyState = EnemyState.Patrol;
+        }
+    }
+
+    protected virtual void PlayerDetected(Vector3 targetPosition)
+    {
+        timeUntilPatrolTimer = 0;
+        patrol.isActive = false;
+        enemyState = EnemyState.Chasing;
+        target = targetPosition;
+        //agent.destination = target;
+        Vector3 posToTarget = target - transform.position;
+
+        if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
+            enemyState = EnemyState.Attacking;
+    }
+
+    protected virtual void Move(Transform newTarget)
+    {
+        if (Vector3.Distance(target, transform.position) <= stoppingDistance)
+            newTarget = patrol.NextTarget();
+
+        target = newTarget.position;
+        //agent.destination = newTarget.position;
+        //Vector3 posToTarget = target - transform.position;
+        //transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+        //Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        animator.SetBool("isPatrolling", true);
+        animator.SetBool("isChasing", false);
+    }
+
+    protected virtual void ChasingMove()
+    {
+        animator.SetBool("isChasing", true);
+        animator.SetBool("isPatrolling", false);
+    }
+
+    protected virtual IEnumerator Attack()
+    {
+        animator.SetBool("isChasing", false);
+        animator.SetTrigger("Attack");
+
+        yield return new WaitForSeconds(animationTime);
+        enemyState = EnemyState.Chasing;
+
+        yield return new WaitForSeconds(attackCd);
+    }
+
     //private void OnEnable()
     //{
     //    agent.destination = patrol.NextTarget().position;
     //}
-    // Update is called once per frame
-    void Update()
-    {
 
+    protected virtual void Hit()
+    {
+        animator.SetTrigger("hit");
     }
-    private void death()
+    protected virtual void Death()
     {
         //animator.SetTrigger("death");
         //agent.isStopped = true;
         //À la fin de l'anim de mort
-        Destroy(gameObject);
         enemyDrops.SpawnDrops();
+        Destroy(gameObject);
     }
     //À revoir...
     //void Move(Transform destination)
@@ -81,19 +172,21 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     //    } while (!NavMesh.SamplePosition(spawnPosition, out navHit, 10f, NavMesh.AllAreas));
     //    return navHit.position;
     //}
-    public void Hit()
-    {
-        //animator.SetTrigger("hit");
-        //if(no hp) Kill();
-    }
     //public void Hit()
     //{
     //    //if (!_isDead)
     //    //    StartCoroutine(DeathDelay());
     //    //_isDead = true;
     //}
-    void Kill()
+
+
+
+    protected void OnCollisionEnter(Collision collision)
     {
-        //enemyDrops.Die();
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            collision.gameObject.GetComponent<HealthComponent>().Hit(collisionDmg); //Lier le dmg au dmg de l'enemy
+        }
     }
+
 }

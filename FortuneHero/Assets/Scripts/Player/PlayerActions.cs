@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerActions : MonoBehaviour
 {
+
+    static PlayerActions instance;
+    public static PlayerActions Instance { get { return instance; } }
+
     Animator animator;
 
     [SerializeField] Collider weaponCollider;
@@ -31,8 +35,9 @@ public class PlayerActions : MonoBehaviour
 
     public bool isPaused = false;
 
-    void Start()
+    void Awake()
     {
+        instance = this;
         animator = GetComponent<Animator>();
         defenceCurrentCharge = defenceMaxCharge;
         overlay = GetComponent<PlayerOverlayComponent>();

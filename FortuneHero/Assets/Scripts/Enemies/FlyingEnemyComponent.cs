@@ -4,83 +4,68 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(PatrolComponent))]
-public class FlyingEnemyComponent : MonoBehaviour
+public class FlyingEnemyComponent : EnemyComponent
 {
-    Animator animator;
-    PatrolComponent patrol;
-    DetectorComponent detector;
-
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float attackStopDistance = 3f;
-    [SerializeField] float patrolStopDistance = 0.5f;
-    [SerializeField] float attackCd = 1f;
-    [SerializeField] float animationTime = 0.7f;
-
-    float timeUntilPatrol = 10f;
-    float timeUntilPatrolTimer = 0f;
-    float rotationSpeed = 5f;
-
-    [SerializeField] bool isDetecting = false; //Placeholder
-
-    Vector3 target;
-    enum EnemyState { Patrol, Attacking, Chasing }
-    EnemyState enemyState;
-
     void Start()
     {
         animator = GetComponentInParent<Animator>();
-        patrol = GetComponent<PatrolComponent>();
-        detector = GetComponentInChildren<DetectorComponent>();
-        detector.targetDetected = PlayerDetected;
         patrol.move = Move;
+        //detector.targetDetected = PlayerDetected;
+        //healthComponent.OnHit = Hit;
+        //healthComponent.OnDeath = Death;
     }
 
-    void Update()
+    //void Update()
+    //{
+    //    if (enemyState == EnemyState.Chasing)
+    //        ChasingMove();
+    //    else if (enemyState == EnemyState.Attacking)
+    //        StartCoroutine(Attack());
+
+    //    timeUntilPatrolTimer += Time.deltaTime; //start le timer 
+
+    //    if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
+    //    {
+    //        //Enable le patrol
+    //        patrol.isActive = true;
+    //        enemyState = EnemyState.Patrol;
+    //    }
+    //}
+
+    //protected override void PlayerDetected(Vector3 targetPosition)
+    //{
+    //    timeUntilPatrolTimer = 0;
+    //    patrol.isActive = false;
+    //    enemyState = EnemyState.Chasing;
+    //    target = targetPosition;
+    //    Vector3 posToTarget = target - transform.parent.position;
+
+    //    if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
+    //        enemyState = EnemyState.Attacking;
+    //    base.PlayerDetected(targetPosition);
+    //}
+
+
+    //à cause du parent... à retravailler anyways
+    protected override void Move(Transform newTarget)
     {
-        if (enemyState == EnemyState.Chasing)
-            ChasingMove();
-        else if (enemyState == EnemyState.Attacking)
-            StartCoroutine(Attack());
-
-        timeUntilPatrolTimer += Time.deltaTime; //start le timer 
-
-        if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
-        {
-            //Enable le patrol
-            patrol.isActive = true;
-            enemyState = EnemyState.Patrol;
-        }
-    }
-
-    public void PlayerDetected(Vector3 targetPosition)
-    {
-        timeUntilPatrolTimer = 0;
-        patrol.isActive = false;
-        enemyState = EnemyState.Chasing;
-        target = targetPosition;
-        Vector3 posToTarget = target - transform.parent.position;
-
-        if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
-            enemyState = EnemyState.Attacking;
-    }
-
-    void Move(Transform newTarget)
-    {
+        //Déjà dans base
         target = newTarget.position;
         Vector3 posToTarget = target - transform.parent.position;
+
+        //À override
         transform.parent.position = Vector3.MoveTowards(transform.parent.position, target, moveSpeed * Time.deltaTime);
         Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
         transform.parent.rotation = Quaternion.Slerp(transform.parent.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-        if (posToTarget.sqrMagnitude <= patrolStopDistance * patrolStopDistance)
-        {
-            newTarget = patrol.NextTarget();
-        }
 
+        //Déjà dans base
+        if (posToTarget.sqrMagnitude <= stoppingDistance * stoppingDistance)
+            newTarget = patrol.NextTarget();
         animator.SetBool("isPatrolling", true);
         animator.SetBool("isChasing", false);
     }
 
-    public void ChasingMove()
+    protected override void ChasingMove()
     {
         Vector3 posToTarget = target - transform.parent.position;
         transform.parent.position = Vector3.MoveTowards(transform.parent.position, target, moveSpeed * Time.deltaTime);
@@ -88,18 +73,34 @@ public class FlyingEnemyComponent : MonoBehaviour
         Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
         transform.parent.rotation = Quaternion.Slerp(transform.parent.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        animator.SetBool("isChasing", true);
-        animator.SetBool("isPatrolling", false);
+
+        base.ChasingMove();
+        //animator.SetBool("isChasing", true);
+        //animator.SetBool("isPatrolling", false);
     }
-    public IEnumerator Attack()
-    {
-        animator.SetBool("isChasing", false);
-        animator.SetTrigger("Attack");
+    //protected override IEnumerator Attack()
+    //{
+    //    animator.SetBool("isChasing", false);
+    //    animator.SetTrigger("Attack");
 
-        yield return new WaitForSeconds(animationTime);
-        enemyState = EnemyState.Chasing;
+    //    yield return new WaitForSeconds(animationTime);
+    //    enemyState = EnemyState.Chasing;
 
-        yield return new WaitForSeconds(attackCd);
+    //    yield return new WaitForSeconds(attackCd);
 
-    }
+    //}
+    //protected override void Hit()
+    //{
+    //    animator.SetTrigger("hit");
+    //    base.Hit();
+    //}
+    //protected override void Death()
+    //{
+    //    //animator.SetTrigger("death");
+    //    //agent.isStopped = true;
+    //    //À la fin de l'anim de mort
+    //    Destroy(gameObject);
+    //    enemyDrops.SpawnDrops();
+    //    base.Death();
+    //}
 }

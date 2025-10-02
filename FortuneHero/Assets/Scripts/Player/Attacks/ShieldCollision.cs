@@ -12,10 +12,10 @@ public class ShieldCollision : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("hit");
-        if (other.gameObject.CompareTag("Enemy"))
+        var temp = other.GetComponent<IBlockable>();
+        if (temp != null)
         {
-            Debug.Log("hitfr");
+            
             //int dmg = other.gameObject.GetComponent<EnemyComponent>().dmg;
             //healthComponent.Hit(dmg / defenceDmgReduce);
         }
