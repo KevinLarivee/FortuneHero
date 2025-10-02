@@ -1095,75 +1095,6 @@ Mesh:
       - serializedVersion: 1
         m_IndexStart: 0
         m_IndexCount: 0
---- !u!1001 &244725332
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1000011128802252, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_Name
-      value: PlasmaExplosionEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -20.26061
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 5.315254
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011693693590, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 199000010027337056, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 199000011148726650, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 199000012270651464, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 006f34a9b044897429619a08b24da6f0, type: 3}
 --- !u!1 &295586547
 GameObject:
   m_ObjectHideFlags: 0
@@ -6345,12 +6276,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drakonit
       objectReference: {fileID: 0}
-    - target: {fileID: 6214733342395541472, guid: 45c1b190bae81814b9227e133d92a808, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5441147002940823319, guid: 45c1b190bae81814b9227e133d92a808, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6718,14 +6644,6 @@ PrefabInstance:
       propertyPath: 'targets.Array.data[5]'
       value: 
       objectReference: {fileID: 618693569}
-    - target: {fileID: 5676364308189519196, guid: e0db38b639a0745448286a9d5c7c91c8, type: 3}
-      propertyPath: m_PresetInfoIsWorld
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7100670494520168941, guid: e0db38b639a0745448286a9d5c7c91c8, type: 3}
-      propertyPath: mask.m_Bits
-      value: 55
-      objectReference: {fileID: 0}
     - target: {fileID: 8172233892097122592, guid: e0db38b639a0745448286a9d5c7c91c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.763441
@@ -6802,6 +6720,5 @@ SceneRoots:
   - {fileID: 1961508258}
   - {fileID: 673244929}
   - {fileID: 2000692775}
-  - {fileID: 244725332}
   - {fileID: 704676818}
   - {fileID: 1098764875}

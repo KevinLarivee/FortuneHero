@@ -47,7 +47,7 @@ MonoBehaviour:
   target: Player
   mask:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 55
   activeDistance: 50
   fovHorizontal: 90
   fovVertical: 90
@@ -337,16 +337,10 @@ PrefabInstance:
       addedObject: {fileID: 7665205666970072892}
     - targetCorrespondingSourceObject: {fileID: 684976341981638766, guid: b91187a9debded54988c89438ac8b3f6, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1518052586213096238}
-    - targetCorrespondingSourceObject: {fileID: 684976341981638766, guid: b91187a9debded54988c89438ac8b3f6, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6318476487620560701}
     - targetCorrespondingSourceObject: {fileID: 684976341981638766, guid: b91187a9debded54988c89438ac8b3f6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1937625674241854833}
-    - targetCorrespondingSourceObject: {fileID: 684976341981638766, guid: b91187a9debded54988c89438ac8b3f6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5638011599043799736}
     - targetCorrespondingSourceObject: {fileID: 684976341981638766, guid: b91187a9debded54988c89438ac8b3f6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 886204675726613960}
@@ -412,18 +406,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8204057, y: 0.7224568, z: 0.7764835}
   m_Center: {x: -0.0897966, y: 0.0023027263, z: 0.1537345}
---- !u!114 &1518052586213096238
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9179079631594763941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a04574d973c83a468bf05bf5e8cdc14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyCollison
 --- !u!114 &6318476487620560701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,19 +437,6 @@ MonoBehaviour:
   maxHp: 100
   hp: 100
   alive: 1
---- !u!114 &5638011599043799736
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9179079631594763941}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2621d281cc9036d41ad5221153dea4b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyComponent
-  dmg: 1
 --- !u!114 &886204675726613960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,12 +449,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551af7256f134af449843bbe4d124449, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyingEnemyComponent
+  dmg: 1
+  collisionDmg: 10
   moveSpeed: 5
+  stoppingDistance: 0.5
   attackStopDistance: 3
-  patrolStopDistance: 0.5
   attackCd: 1
   animationTime: 0.7
-  isDetecting: 0
 --- !u!114 &2792869969128521598
 MonoBehaviour:
   m_ObjectHideFlags: 0

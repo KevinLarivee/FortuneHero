@@ -66,6 +66,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5788212028385746029, guid: fcd4b14309454ee458e7299a6519f837, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7423424442332496935, guid: fcd4b14309454ee458e7299a6519f837, type: 3}
       propertyPath: m_Name
       value: CanvaEnnemie
@@ -1215,12 +1219,6 @@ PrefabInstance:
       addedObject: {fileID: 156366364216746294}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1058057262698281409}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2405380468440533249}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 5337833358384433818}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
       insertIndex: -1
@@ -1354,31 +1352,6 @@ MonoBehaviour:
   maxHp: 100
   hp: 10
   alive: 1
---- !u!114 &1058057262698281409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2888618996480270740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2621d281cc9036d41ad5221153dea4b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyComponent
-  dmg: 1
---- !u!114 &2405380468440533249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2888618996480270740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7a04574d973c83a468bf05bf5e8cdc14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyCollison
 --- !u!114 &5337833358384433818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1391,7 +1364,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e428d024801df940b1ee2f189513d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyComponent
+  dmg: 1
+  collisionDmg: 10
   moveSpeed: 5
+  stoppingDistance: 1
   attackStopDistance: 3
   attackCd: 1
   animationTime: 0.7
@@ -1412,10 +1388,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  lookAroundProbability: 0.5
+  lookAroundProbability: 0
   lookAroundFrequency: 1
   lookAroundSeconds: 1
-  waitSecondsBetweenTargets: 1
+  waitSecondsBetweenTargets: 0
   patrolType: 1
   waitSecondsAtEnds: 4
   allowPreviousTarget: 1
