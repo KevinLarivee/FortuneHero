@@ -102,8 +102,8 @@ public class LightningTrap : MonoBehaviour
         // if (pm != null) pm.Knockback(dir, knockbackForce, knockbackDuration);
 
         // --- Dégâts (via ton HealthComponent) ---
-        // var hp = other.GetComponent<HealthComponent>();
-        // if (hp != null) hp.Hit(damage, StatusEffect.Knockback);
+        var hp = other.GetComponent<HealthComponent>();
+        if (hp != null) hp.Hit(damage/*, StatusEffect.Knockback*/);
 
         Debug.Log($"[LightningTrap] Hit {other.name} ({via}) | ON={_isEnabledNow} | dir={dir} | F={knockbackForce}");
         PlayerMovement.Instance.ToggleParalyse(paralyseTime);
