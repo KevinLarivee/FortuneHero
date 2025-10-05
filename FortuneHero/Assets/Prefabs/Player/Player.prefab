@@ -590,13 +590,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621793093583331245, guid: 82245d04093b8424492a9ac576397762, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8621793093583331245, guid: 82245d04093b8424492a9ac576397762, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8528123456159715319}
   m_SourcePrefab: {fileID: 100100000, guid: 82245d04093b8424492a9ac576397762, type: 3}
+--- !u!114 &4552968353314561033 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3945602538472212772, guid: 82245d04093b8424492a9ac576397762, type: 3}
+  m_PrefabInstance: {fileID: 715786478976554285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!224 &6884321002762662745 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6225374881660348020, guid: 82245d04093b8424492a9ac576397762, type: 3}
@@ -607,6 +621,50 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8621793093583331245, guid: 82245d04093b8424492a9ac576397762, type: 3}
   m_PrefabInstance: {fileID: 715786478976554285}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8528123456159715319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9099592462155876992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b0d310e710472499611312459949c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Skill
+  skillPoints: 0
+  skillPointsText: {fileID: 4552968353314561033}
+  baseAttack: 10
+  currentAttack: 0
+  attackUsedPoints: 0
+  attackUsedText: {fileID: 0}
+  attackValueText: {fileID: 0}
+  baseDefense: 10
+  currentDefense: 0
+  defenseUsedPoints: 0
+  defenseUsedText: {fileID: 0}
+  defenseValueText: {fileID: 0}
+  baseHP: 10
+  currentHP: 0
+  hpUsedPoints: 0
+  hpUsedText: {fileID: 0}
+  hpValueText: {fileID: 0}
+  baseDistanceDmg: 20
+  currentDistanceDmg: 0
+  distanceUsedPoints: 0
+  distanceUsedText: {fileID: 0}
+  distanceValueText: {fileID: 0}
+  baseDashCd: 2.5
+  currentDashCd: 0
+  dashUsedPoints: 0
+  dashUsedText: {fileID: 0}
+  dashValueText: {fileID: 0}
+  baseSpeed: 100
+  currentSpeed: 0
+  speedUsedPoints: 0
+  speedUsedText: {fileID: 0}
+  speedValueText: {fileID: 0}
 --- !u!1001 &2157630687998479883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -887,9 +945,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 435652004603196024}
-    - targetCorrespondingSourceObject: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 835389646948192143}
   m_SourcePrefab: {fileID: 100100000, guid: 0283053334043de45b20b0876511552a, type: 3}
 --- !u!1 &957449320636261456 stripped
 GameObject:
@@ -940,31 +995,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerComponent
   currentCoins: 0
---- !u!114 &835389646948192143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 957449320636261456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3b0d310e710472499611312459949c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Skill
-  playerLevel: 0
-  baseDefense: 10
-  baseSpeed: 100
-  baseAttack: 10
-  baseDash: 2.5
-  baseHP: 10
-  baseDistance: 20
-  currentDefense: 0
-  currentSpeed: 0
-  currentAttack: 0
-  currentDash: 0
-  currentHP: 0
-  currentDistance: 0
 --- !u!4 &2372103120546118006 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7465507368810723315, guid: 0283053334043de45b20b0876511552a, type: 3}

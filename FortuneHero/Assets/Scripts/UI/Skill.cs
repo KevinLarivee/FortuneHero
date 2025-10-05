@@ -1,153 +1,88 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEngine.Rendering.GPUSort;
 
 public class Skill : MonoBehaviour
 {
-    public int playerLevel = 0; 
-    private int skillPointsTotal;
-    private int skillPointsRestants;
+    [SerializeField] SkillComponent skillComponent;
 
-    public float baseDefense = 10f;
-    public float baseSpeed = 100f;
-    public int baseAttack = 10;
-    public float baseDash = 2.5f;
-    public int baseHP = 10;
-    public int baseDistance = 20;
 
-    public float currentDefense;
-    public float currentSpeed;
-    public int currentAttack;
-    public float currentDash;
-    public int currentHP;
-    public int currentDistance;
+    [SerializeField]  TMP_Text skillPointsText;
 
-    void Start()
+    [SerializeField]  Button addAttackBtn;
+    [SerializeField]  Button removeAttackBtn;
+    [SerializeField]  TMP_Text attackUsedText;
+    [SerializeField]  TMP_Text attackValueText;
+
+    [SerializeField] Button addDefenseBtn;
+    [SerializeField]  Button removeDefenseBtn;
+    [SerializeField]  TMP_Text defenseUsedText;
+    [SerializeField]  TMP_Text defenseValueText;
+
+    [SerializeField]  Button addHPBtn;
+    [SerializeField]  Button removeHPBtn;
+    [SerializeField]  TMP_Text hpUsedText;
+    [SerializeField]  TMP_Text hpValueText;
+
+    [SerializeField]  Button addDashBtn;
+    [SerializeField]  Button removeDashBtn;
+    [SerializeField]  TMP_Text dashUsedText;
+    [SerializeField]  TMP_Text dashValueText;
+
+    [SerializeField]  Button addSpeedBtn;
+    [SerializeField]  Button removeSpeedBtn;
+    [SerializeField]  TMP_Text speedUsedText;
+    [SerializeField]  TMP_Text speedValueText;
+
+    [SerializeField]  Button addDistanceBtn;
+    [SerializeField]  Button removeDistanceBtn;
+    [SerializeField]  TMP_Text distanceUsedText;
+    [SerializeField]  TMP_Text distanceValueText;
+
+     void OnEnable()
     {
-        skillPointsTotal = playerLevel;
-        skillPointsRestants = skillPointsTotal;
+        addAttackBtn.onClick.AddListener(() => { if (skillComponent.TryBuySkill(SkillComponent.SkillType.MeleeAtkPlus)) RefreshUI(); });
+        //removeAttackBtn.onClick.AddListener(() => { if (skillComponent.TryRemoveSkill(SkillComponent.SkillType.MeleeAtkPlus)) RefreshUI(); });
 
-        // initialiser avec les valeurs de base
-        currentDefense = baseDefense;
-        currentSpeed = baseSpeed;
-        currentAttack = baseAttack;
-        currentDash = baseDash;
-        currentHP = baseHP;
-        currentDistance = baseDistance;
+        addDefenseBtn.onClick.AddListener(() => { if (skillComponent.TryBuySkill(SkillComponent.SkillType.ShieldBlockTime)) RefreshUI(); });
+        //removeDefenseBtn.onClick.AddListener(() => { if (skillComponent.TryRemoveSkill(SkillComponent.SkillType.ShieldBlockTime)) RefreshUI(); });
 
-        Debug.Log("SkillPoints Restants: " + skillPointsRestants);
+        //addHPBtn.onClick.AddListener(() => { if (skillComponent.TryBuySkill(SkillComponent.SkillType.MaxHP)) RefreshUI(); });
+        //removeHPBtn.onClick.AddListener(() => { if (skillComponent.TryRemoveSkill(SkillComponent.SkillType.MaxHP)) RefreshUI(); });
+
+        //addDashBtn.onClick.AddListener(() => { if (skillComponent.TryBuySkill(SkillComponent.SkillType.DashCooldown)) RefreshUI(); });
+        //removeDashBtn.onClick.AddListener(() => { if (skillComponent.TryRemoveSkill(SkillComponent.SkillType.DashCooldown)) RefreshUI(); });
+
+        //addSpeedBtn.onClick.AddListener(() => { if (skillComponent.TryBuySkill(SkillComponent.SkillType.Speed)) RefreshUI(); });
+        //removeSpeedBtn.onClick.AddListener(() => { if (skillComponent.TryRemoveSkill(SkillComponent.SkillType.Speed)) RefreshUI(); });
+
+        //addDistanceBtn.onClick.AddListener(() => { if (skillComponent.TryBuySkill(SkillComponent.SkillType.DistanceAtkPlus)) RefreshUI(); });
+        //removeDistanceBtn.onClick.AddListener(() => { if (skillComponent.TryRemoveSkill(SkillComponent.SkillType.DistanceAtkPlus)) RefreshUI(); });
+
+        RefreshUI();
     }
 
-    // --------- ATTACK -------------
-    public void UpgradeAttack()
+    private void RefreshUI()
     {
-        if (skillPointsRestants > 0)
-        {
-            currentAttack += 3;
-            skillPointsRestants--;
-        }
-    }
+        skillPointsText.text = $"Points restants: {skillComponent.skillPoints}";
 
-    public void DowngradeAttack()
-    {
-        if (currentAttack > baseAttack)
-        {
-            currentAttack -= 3;
-            skillPointsRestants++;
-        }
-    }
+        //attackUsedText.text = $"Utilisés: {skillComponent.G(SkillComponent.SkillType.MeleeAtkPlus)}";
+        //attackValueText.text = $"ATK: {skillComponent.currentAttack}";
 
-    // --------- DEFENSE -------------
-    public void UpgradeDefense()
-    {
-        if (skillPointsRestants > 0)
-        {
-            currentDefense += 0.5f;
-            skillPointsRestants--;
-        }
-    }
+        //defenseUsedText.text = $"Utilisés: {skillComponent.GetUsedPoints(SkillComponent.SkillType.ShieldBlockTime)}";
+        //defenseValueText.text = $"DEF: {skillComponent.currentDefense:F1}";
 
-    public void DowngradeDefense()
-    {
-        if (currentDefense > baseDefense)
-        {
-            currentDefense -= 0.5f;
-            skillPointsRestants++;
-        }
-    }
+        //hpUsedText.text = $"Utilisés: {skillComponent.GetUsedPoints(SkillComponent.SkillType.MaxHealthPlus)}";
+        //hpValueText.text = $"HP: {skillComponent.currentHP}";
 
-    // --------- HP -------------
-    public void UpgradeHP()
-    {
-        if (skillPointsRestants > 0)
-        {
-            currentHP += 10;
-            skillPointsRestants--;
-        }
-    }
+        //dashUsedText.text = $"Utilisés: {skillComponent.GetUsedPoints(SkillComponent.SkillType.DashCooldownMinus)}";
+        //dashValueText.text = $"DASH CD: {skillComponent.currentDashCd:F1}s";
 
-    public void DowngradeHP()
-    {
-        if (currentHP > baseHP)
-        {
-            currentHP -= 10;
-            skillPointsRestants++;
-        }
-    }
+        //speedUsedText.text = $"Utilisés: {skillComponent.GetUsedPoints(SkillComponent.SkillType.SpeedPlus)}";
+        //speedValueText.text = $"VIT: {skillComponent.currentSpeed}%";
 
-    // --------- DISTANCE -------------
-    public void UpgradeDistance()
-    {
-        if (skillPointsRestants > 0)
-        {
-            currentDistance += 5;
-            skillPointsRestants--;
-        }
-    }
-
-    public void DowngradeDistance()
-    {
-        if (currentDistance > baseDistance)
-        {
-            currentDistance -= 5;
-            skillPointsRestants++;
-        }
-    }
-
-    // --------- DASH -------------
-    public void UpgradeDash()
-    {
-        if (skillPointsRestants > 0)
-        {
-            currentDash = Mathf.Max(0.1f, currentDash - 0.2f); 
-            skillPointsRestants--;
-        }
-    }
-
-    public void DowngradeDash()
-    {
-        if (currentDash < baseDash)
-        {
-            currentDash += 0.2f;
-            skillPointsRestants++;
-        }
-    }
-
-    // --------- SPEED -------------
-    public void UpgradeSpeed()
-    {
-        if (skillPointsRestants > 0)
-        {
-            currentSpeed += 10f; // +1%
-            skillPointsRestants--;
-        }
-    }
-
-    public void DowngradeSpeed()
-    {
-        if (currentSpeed > baseSpeed)
-        {
-            currentSpeed -= 10f;
-            skillPointsRestants++;
-        }
+        //distanceUsedText.text = $"Utilisés: {skillComponent.GetUsedPoints(SkillComponent.SkillType.DistanceAtkPlus)}";
+        //distanceValueText.text = $"DIST: {skillComponent.currentDistanceAtk}";
     }
 }
