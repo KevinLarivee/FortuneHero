@@ -1,96 +1,64 @@
-using System.Net;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class RangedEnemyComponent : MonoBehaviour
+[RequireComponent(typeof(PatrolComponent))]
+public class RangedEnemyComponent : EnemyComponent
 {
-    Animator animator;
-    PatrolComponent patrol;
-    DetectorComponent detector;
-    NavMeshAgent agent;
+    [Header("Ranged")]
+    [SerializeField] private GameObject projectilePrefab;   // ← ton prefab avec ProjectileMovement + Rigidbody
+    [SerializeField] private Transform firePoint;           // ← un enfant "sortie de tir"
+    [SerializeField] private float fireDelayInAnim = 0.35f; // moment du tir dans l’anim
 
-    [SerializeField] GameObject player;
-    [SerializeField] float moveSpeed = 5f;
-    [SerializeField] float attackStopDistance = 3f;
-    [SerializeField] float attackCd = 1f;
-    [SerializeField] float animationTime = 0.7f;
-    [SerializeField] GameObject Projectile;
-    [SerializeField] GameObject exitPoint;
+    private NavMeshAgent agent;
 
-    float timeUntilPatrol = 10f;
-    float timeUntilPatrolTimer = 0f;
-    float rotationSpeed = 5f;
-    float timeUntilNextAttack = 1f;
-    float nextAttackTimer = 0f;
-
-    Vector3 target;
-    enum EnemyState { Patrol, Attacking, Chasing }
-    EnemyState enemyState;
-
-    bool canAttack = false;
-    [SerializeField] bool isDetecting = false; //Placeholder
     void Start()
     {
-        animator = GetComponent<Animator>();
-        patrol = GetComponent<PatrolComponent>();
         agent = GetComponent<NavMeshAgent>();
-        detector = GetComponentInChildren<DetectorComponent>();
-        detector.targetDetected = PlayerDetected;
         patrol.move = Move;
-
     }
 
-    void Update()
+    protected override void Move(Transform newTarget)
     {
-        if (isDetecting)
+        if (agent != null) agent.destination = newTarget.position;
+        base.Move(newTarget);
+    }
+
+    private void FireProjectile()
+    {
+
+        // Direction vers la dernière position connue du joueur (stockée dans 'target' par EnemyComponent)
+        Vector3 dir = (target - firePoint.position);
+        if (dir.sqrMagnitude < 1e-6f) dir = transform.forward;
+        dir.Normalize();
+
+        // Oriente le projectile et instancie
+        Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);
+        GameObject proj = Instantiate(projectilePrefab, firePoint.position, rot);
+
+        // Optionnel: si tu veux forcer la vitesse ici (en plus / à la place de ProjectileMovement.Start)
+        var rb = proj.GetComponent<Rigidbody>();
+        if (rb != null)
         {
-            if (timeUntilPatrolTimer > 0) //si il detecte de nouveau apres avoir parti le timer = reset
-                timeUntilPatrolTimer = 0;
-        }
-        else //Detecte pas le joueur
-        {
-            timeUntilPatrolTimer += Time.deltaTime; //start le timer 
-            if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
-            {
-                //Enable le patrol
-                //animator.SetBool("isPatrolling", true);
-            }
+            rb.linearVelocity = dir * rb.linearVelocity.magnitude; // conserve la magnitude si définie sur le prefab
         }
     }
 
-    public void PlayerDetected(Vector3 targetPosition)
+    protected override IEnumerator Attack()
     {
-        timeUntilPatrolTimer = 0;
-        patrol.isActive = false;
-        enemyState = EnemyState.Chasing;
-        target = targetPosition;
-        agent.destination = target;
-        Vector3 posToTarget = target - transform.position;
-
-        if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
-            enemyState = EnemyState.Attacking;
-    }
-
-    public void Attack()
-    {
-        //animator.SetTrigger("Attack");
-        Instantiate(Projectile, exitPoint.transform.position, gameObject.transform.rotation);
-
-    }
-    void Move(Transform newTarget)
-    {
-        if (agent.remainingDistance <= agent.stoppingDistance)
-        {
-            newTarget = patrol.NextTarget();
-        }
-        target = newTarget.position;
-        agent.destination = newTarget.position;
-        //Vector3 posToTarget = target - transform.position;
-        //transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        //Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-        animator.SetBool("isPatrolling", true);
         animator.SetBool("isChasing", false);
+        animator.SetTrigger("Attack");
+
+        float fireAt = Mathf.Clamp(fireDelayInAnim, 0f, animationTime);
+        if (fireAt > 0f) yield return new WaitForSeconds(fireAt);
+
+        FireProjectile();
+
+        float rest = Mathf.Max(0f, animationTime - fireAt);
+        if (rest > 0f) yield return new WaitForSeconds(rest);
+
+        enemyState = EnemyState.Chasing;
+
+        if (attackCd > 0f) yield return new WaitForSeconds(attackCd);
     }
 }

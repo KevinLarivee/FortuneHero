@@ -16,15 +16,20 @@ public class DamageCollision : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            //faire degats
-            collision.gameObject.GetComponent<HealthComponent>().Hit(damage);//statusEffect
-            Vector3 sourcePos = collision.collider.bounds.center;
-            //appel knockback
-            //PlayerMovement.Instance.KnockBack(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
-            Debug.Log($"{collision.gameObject.name} touché. Dégats: {damage}");
-
-            if (Physics.Raycast(collision.contacts[0].point, -collision.contacts[0].normal, 1f, 69))
-                RespawnManager.Instance.Respawn();
+            Damage(collision);
         }
+    }
+
+    public void Damage(Collision collision)
+    {
+        //faire degats
+        collision.gameObject.GetComponent<HealthComponent>().Hit(damage);//statusEffect
+        Vector3 sourcePos = collision.collider.bounds.center;
+        //appel knockback
+        //PlayerMovement.Instance.KnockBack(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
+        Debug.Log($"{collision.gameObject.name} touché. Dégats: {damage}");
+
+        if (Physics.Raycast(collision.contacts[0].point, -collision.contacts[0].normal, 1f, 69))
+            RespawnManager.Instance.Respawn();
     }
 }
