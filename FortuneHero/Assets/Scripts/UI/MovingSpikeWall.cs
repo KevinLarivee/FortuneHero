@@ -1,50 +1,72 @@
+using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class MovingSpikeWall : MonoBehaviour
 {
-    [SerializeField] private Vector3 direction = Vector3.left; 
-    [SerializeField] private float speed = 2f; 
-    [SerializeField] private int damage = 20; 
-    [SerializeField] private Transform pointA; // position initiale
-    [SerializeField] private Transform pointB; // limite max
+    [SerializeField] float speed = 1f;
+    [SerializeField] float syncTime = 8f;
+    [SerializeField] float extendDistance = 3f;
 
-    private Vector3 startPosition;
-    private Vector3 endPosition;
+    //Les wall sont bizarre, c'est right qui est "forward"
+    Vector3 initialPos;
+    Vector3 targetPos;
 
-    private void Start()
+    float elapsedTime = 0f;
+    bool extending = true;
+    public bool isActive = true;
+
+    DamageCollision script;
+    Collider spikes;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
-        startPosition = pointA.position;
-        endPosition = pointB.position;
+        initialPos = transform.position;
+        targetPos = initialPos + transform.right * extendDistance;
+
+        spikes = GetComponentInChildren<Collider>();
+        script = GetComponent<DamageCollision>();
+
+        StartCoroutine(AlternateSync());
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        transform.position += direction * speed * Time.fixedDeltaTime;
 
-        // Vérifie si on a atteint pointA ou pointB
-        if (Vector3.Distance(transform.position, endPosition) < 0.05f && direction == (endPosition - startPosition).normalized)
+    }
+
+    IEnumerator AlternateSync()
+    {
+        while (isActive)
         {
-            direction = -direction;
-        }
-        else if (Vector3.Distance(transform.position, startPosition) < 0.05f && direction == (startPosition - endPosition).normalized)
-        {
-            direction = -direction;
+            elapsedTime = 0f;
+
+            while (extending && Vector3.Distance(transform.position, targetPos) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            while (elapsedTime < syncTime || Vector3.Distance(transform.position, initialPos) > 0.01f)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, initialPos, speed * Time.deltaTime);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            extending = true;
         }
     }
 
-    void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision collision)
     {
-        //if (other.gameObject.CompareTag("Player"))
-        //{
-        //    PlayerHealth ph = other.gameObject.GetComponent<PlayerHealth>();
-        //    if (ph != null)
-        //        ph.TakeDamage(damage);
-        //}
-        //else if (other.gameObject.CompareTag("Spike"))
-        //{
-        //    direction = -direction;
-        //}
+        if (!collision.gameObject.CompareTag("Player"))
+            extending = false;
+        else if (collision.contacts.Any(c => c.thisCollider == spikes))
+            script.Damage(collision);
     }
-
 
 }

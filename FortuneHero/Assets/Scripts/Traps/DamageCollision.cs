@@ -1,8 +1,8 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class DamageCollision : MonoBehaviour
 {
-    [Header("Paramètres d'attaque")]
+    [Header("ParamÃ¨tres d'attaque")]
     [SerializeField] int damage = 1;
     [SerializeField] string targetTag = "Player";
     [SerializeField] StatusEffect statusEffect = StatusEffect.Knockback;
@@ -14,16 +14,22 @@ public class DamageCollision : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log($"[DamageCollision] Collision detected with {collision.gameObject.name}");
         if (collision.gameObject.CompareTag("Player"))
         {
-            //faire degats
-            //collision.gameObject.GetComponent<HealthComponent>().Hit(damage, statusEffect);
-            Vector3 sourcePos = collision.collider.bounds.center;
-            //appel knockback
-            //PlayerMovement.Instance.Knockback(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
-            Debug.Log($"[DamageCollision] {name} a infligé {damage} dégâts à {collision.gameObject.name} avec effet {statusEffect}." +
-                $"Knockback Force: {knockbackForce}, Duration: {knockbackDuration}, Vertical Factor: {verticalFactor}");
+            Damage(collision);
         }
+    }
+
+    public void Damage(Collision collision)
+    {
+        //faire degats
+        collision.gameObject.GetComponent<HealthComponent>().Hit(damage);//statusEffect
+        Vector3 sourcePos = collision.collider.bounds.center;
+        //appel knockback
+        //PlayerMovement.Instance.KnockBack(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
+        Debug.Log($"{collision.gameObject.name} touchÃ©. DÃ©gats: {damage}");
+
+        if (Physics.Raycast(collision.contacts[0].point, -collision.contacts[0].normal, 1f, 69))
+            RespawnManager.Instance.Respawn();
     }
 }

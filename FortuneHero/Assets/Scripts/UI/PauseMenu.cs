@@ -1,40 +1,65 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenuUI; 
+    [SerializeField] GameObject pauseMenuUI; 
     private bool isPaused = false;
+    [SerializeField] GameObject panelParametres;
+    [SerializeField] GameObject skillMenuUI;
 
+    PlayerComponent player;
+
+    private void Start()
+    {
+        panelParametres.GetComponent<MenuOption>().previous = Retour;
+        player = PlayerComponent.Instance;
+    }
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.performed) // seulement quand l'action est déclenchée
+        if (context.performed) 
         {
             if (isPaused)
-                ResumeGame();
+                ResumeGame(context.control.name);
             else
-                PauseGame();
+                PauseGame(context.control.name);
         }
     }
 
-    private void PauseGame()
+    private void PauseGame(string input = "")
     {
-        pauseMenuUI.SetActive(true); 
+        (input == "f" ? skillMenuUI : pauseMenuUI).SetActive(true); 
         Time.timeScale = 0f;         
         isPaused = true;
+        Cursor.lockState = CursorLockMode.None;
+        player.PausePlayer(true);
     }
 
-    public void ResumeGame()
+    public void ResumeGame(string input = "")
     {
-        pauseMenuUI.SetActive(false); 
+        (input == "f" ? skillMenuUI : pauseMenuUI).SetActive(false); 
         Time.timeScale = 1f;         
         isPaused = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        player.PausePlayer(false);
     }
 
     public void ReturnToLobby()
     {
-        Time.timeScale = 1f;          
-        SceneManager.LoadScene(""); 
+        Time.timeScale = 1f;
+        LoadManager.Instance.Load("Test");
+    }
+
+    public void Options()
+    {
+        panelParametres.SetActive(true);
+    }
+
+    public void Retour()
+    {
+        panelParametres.SetActive(false);
     }
 }

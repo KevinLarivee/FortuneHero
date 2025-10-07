@@ -7,7 +7,7 @@ public class LoadManager : MonoBehaviour
 {
     [SerializeField] float loadingTime = 1f;
 
-    [SerializeField] FadeInOut fadeManager;
+    FadeInOut fadeManager;
 
     bool isLoading = false;
 
@@ -20,6 +20,8 @@ public class LoadManager : MonoBehaviour
             Destroy(this.gameObject);
         else
             instance = this;
+        fadeManager = GetComponentInChildren<FadeInOut>();
+        DontDestroyOnLoad(gameObject);
     }
     public void Load(params string[] scenesToLoad)
     {
@@ -41,8 +43,11 @@ public class LoadManager : MonoBehaviour
             //float progress = asyncOps[0].progress;
             ////update le fill amount de notre loading bar
             //yield return new WaitWhile(() => asyncOps[0].progress - progress < 0.1);
+            if(!isLoading)
+                asyncOps[0].allowSceneActivation = true;
             yield return null;
-        } while (isLoading && !asyncOps.All(o => o.isDone));
+        } while (asyncOps.Any(o => !o.isDone));
+        yield return StartCoroutine(fadeManager.FadeOut());
     }
 
     //Idée, peut-être déplacer dans FadeInOut

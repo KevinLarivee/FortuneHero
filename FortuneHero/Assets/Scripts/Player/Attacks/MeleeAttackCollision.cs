@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class MeleeAttackCollision : MonoBehaviour
 {
-    [SerializeField] GameObject player;
+    PlayerActions player;
     float meleeDmg;
     
-    private void Start()
+    void Start()
     {
-
+        player = PlayerActions.Instance;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -15,13 +15,7 @@ public class MeleeAttackCollision : MonoBehaviour
         {
             Debug.Log("You have attacked the enemy !!!");
             var enemyHealthComponent = other.gameObject.GetComponent<HealthComponent>();
-            enemyHealthComponent.Hit(player.GetComponent<PlayerActions>().meleeAtkDmg);
-            //if (enemyHealthComponent.hp <= 0)
-            //    enemyHealthComponent.Die();   OU Appeler Die dans Hit ? + Appeler SpawnDrops dans Die
-            enemyHealthComponent.gameObject.GetComponentInParent<Animator>().SetTrigger("isHit");
-
-            //Trop de getComponent ?
-            //Pas getComponent dans start pour que si ya un upgrade au dmg, le nb de dmg s'update
+            enemyHealthComponent.Hit(player.meleeAtkDmg);
         }
     }
 }

@@ -10,6 +10,8 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] float enterRadius = 20f;
 
     Collider[] cols;
+
+    public bool isPaused = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,6 +33,8 @@ public class PlayerInteractions : MonoBehaviour
 
     public void Interact(InputAction.CallbackContext ctx)
     {
+        if (isPaused) return;
+
         if (ctx.started)
         {
             if(cols != null && cols.Length > 0)

@@ -23,6 +23,7 @@ public class DeathUiManager : MonoBehaviour
         restartLevelButton.onClick.AddListener(OnRestartLevel);
         restartBossButton.onClick.AddListener(OnRestartBoss);
         lobbyButton.onClick.AddListener(OnReturnToLobby);
+
     }
 
     public void ShowDeathUI(bool isBossFight)
@@ -30,12 +31,14 @@ public class DeathUiManager : MonoBehaviour
         if (deathPanel == null) return;
         deathPanel.SetActive(true);
         restartBossButton.gameObject.SetActive(isBossFight);
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void HideDeathUI()
     {
         if (deathPanel == null) return;
         deathPanel.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void OnRestartLevel()

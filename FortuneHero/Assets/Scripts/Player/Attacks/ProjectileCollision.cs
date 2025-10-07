@@ -2,24 +2,15 @@ using UnityEngine;
 
 public class ProjectileCollision : MonoBehaviour
 {
-    [SerializeField] GameObject player;
-    void Start()
-    {
-        
-    }
+    public int dmg = 2;
+    public string target = "Enemy";
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag(target))
         {
             var enemyHealthComponent = collision.gameObject.GetComponent<HealthComponent>();
-            enemyHealthComponent.Hit(player.GetComponent<PlayerActions>().rangedAtkDmg);
-            //if (enemyHealthComponent.hp <= 0)
-            //    enemyHealthComponent.Die();   OU Appeler Die dans Hit ? + Appeler SpawnDrops dans Die
-            enemyHealthComponent.gameObject.GetComponentInParent<Animator>().SetTrigger("isHit");
-
-            //Trop de getComponent ?
-            //Pas getComponent dans start pour que si ya un upgrade au dmg, le nb de dmg s'update
+            enemyHealthComponent.Hit(dmg);
         }
 
         Destroy(gameObject);

@@ -3,6 +3,10 @@ using UnityEngine.InputSystem;
 
 public class PlayerActions : MonoBehaviour
 {
+
+    static PlayerActions instance;
+    public static PlayerActions Instance { get { return instance; } }
+
     Animator animator;
 
     [SerializeField] Collider weaponCollider;
@@ -27,10 +31,16 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] float meleeAtkTimer = 0f;
     bool canMeleeAtk = false;
 
-    void Start()
+    PlayerOverlayComponent overlay;
+
+    public bool isPaused = false;
+
+    void Awake()
     {
+        instance = this;
         animator = GetComponent<Animator>();
         defenceCurrentCharge = defenceMaxCharge;
+        overlay = GetComponent<PlayerOverlayComponent>();
     }
 
     void Update()
@@ -59,15 +69,19 @@ public class PlayerActions : MonoBehaviour
         if (showShield)
         {
             defenceCurrentCharge = Mathf.Max(defenceCurrentCharge - Time.deltaTime, 0);
+            overlay.UseShield(defenceCurrentCharge);
         }
         else if (defenceCurrentCharge < defenceMaxCharge)
         {
             defenceCurrentCharge = Mathf.Min(defenceCurrentCharge + Time.deltaTime, defenceMaxCharge);
+            overlay.UseShield(defenceCurrentCharge);
         }
     }
 
     public void MeleeAttack(InputAction.CallbackContext ctx)
     {
+        if(isPaused) return;
+
         if (ctx.performed && canMeleeAtk)
         {
             animator.SetTrigger("MeleeAttack");
@@ -77,6 +91,8 @@ public class PlayerActions : MonoBehaviour
     }
     public void RangedAttack(InputAction.CallbackContext ctx)
     {
+        if (isPaused) return;
+
         if (ctx.performed && canRangedAtk)
         {
             animator.SetTrigger("RangedAttack");
@@ -86,19 +102,22 @@ public class PlayerActions : MonoBehaviour
     }
     public void Defend(InputAction.CallbackContext ctx)
     {
-        if (ctx.performed && canDefend)
-        {
-            ShowShield(true);
-        }
-        else if (ctx.canceled && showShield)
+        //if(isPaused) return;
+
+        if (isPaused || (ctx.canceled && showShield))
         {
             ShowShield(false);
+        }
+
+        else if (ctx.performed && canDefend)
+        {
+            ShowShield(true);
         }
     }
     public void ShootProjectile()
     {
-        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
-        Instantiate(projectilePrefab, exitPoint.transform.position, Quaternion.LookRotation(aimCamera.ScreenPointToRay(screenCenter).direction));
+        Vector3 screenCenter =  new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+        Instantiate(projectilePrefab, exitPoint.transform.position, PlayerMovement.Instance.isAiming ? Quaternion.LookRotation(aimCamera.ScreenPointToRay(screenCenter).direction) : transform.rotation);
     }
     public void ShowShield(bool show)
     {
