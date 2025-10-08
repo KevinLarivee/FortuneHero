@@ -15,10 +15,10 @@ public class SkillComponent : MonoBehaviour
         SpeedPlus         // vitesse +
     }
 
-  
+
     // === Paramètres simples pour acheter/appliquer les skills ===
     [Header("Monnaie des skills")]
-    [SerializeField] public int skillPoints = PlayerPrefs.GetInt("skill");
+    public int skillPoints = 0;
 
     [Header("Coûts de base par skill")]
     [SerializeField] private int meleeCost = 1;
@@ -61,6 +61,7 @@ public class SkillComponent : MonoBehaviour
     // Start est appelé avant la 1re frame
     void Start()
     {
+        //skillPoints = PlayerPrefs.GetInt("skill", skillPoints);
         _costs = new Dictionary<SkillType, int>
         {
             { SkillType.MeleeAtkPlus, meleeCost },
@@ -70,6 +71,12 @@ public class SkillComponent : MonoBehaviour
             { SkillType.MaxHealthPlus, healthCost },
             { SkillType.SpeedPlus, speedCost }
         };
+    }
+
+    void OnDisable()
+    {
+        PlayerPrefs.SetInt("skill", skillPoints);
+        PlayerPrefs.Save();
     }
 
     // Exemple d’API très simple : choisir/acheter un skill par type
@@ -203,7 +210,10 @@ public class SkillComponent : MonoBehaviour
         if (amount <= 0) return;
         skillPoints += amount;
     }
-
+    public int GetBuys(SkillType type)
+    {
+        return _buys[type];
+    }
     // Update est appelé une fois par frame
     void Update()
     {

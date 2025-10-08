@@ -251,8 +251,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4199309781050396456}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.2464533, y: -0.6479561, z: 0.2343043, w: 0.6815536}
-  m_LocalPosition: {x: 0.9632697, y: -0.10099983, z: -0.98072153}
+  m_LocalRotation: {x: 0.19506702, y: -0.32523102, z: 0.06876846, w: 0.92273754}
+  m_LocalPosition: {x: 4.094936, y: 2.7858214, z: -5.7663884}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -648,6 +648,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvaSkill
       objectReference: {fileID: 0}
+    - target: {fileID: 2079905749142443610, guid: 82245d04093b8424492a9ac576397762, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6225374881660348020, guid: 82245d04093b8424492a9ac576397762, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -743,7 +747,54 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8621793093583331245, guid: 82245d04093b8424492a9ac576397762, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8528123456159715319}
+    - targetCorrespondingSourceObject: {fileID: 8621793093583331245, guid: 82245d04093b8424492a9ac576397762, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4616310008237832444}
   m_SourcePrefab: {fileID: 100100000, guid: 82245d04093b8424492a9ac576397762, type: 3}
+--- !u!114 &329959841735815355 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 971296171511408022, guid: 82245d04093b8424492a9ac576397762, type: 3}
+  m_PrefabInstance: {fileID: 715786478976554285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &372044390611947684 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 920766652872050057, guid: 82245d04093b8424492a9ac576397762, type: 3}
+  m_PrefabInstance: {fileID: 715786478976554285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1488121743288982580 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2109974727088572697, guid: 82245d04093b8424492a9ac576397762, type: 3}
+  m_PrefabInstance: {fileID: 715786478976554285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+--- !u!114 &3136687247333493828 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2479579504979433833, guid: 82245d04093b8424492a9ac576397762, type: 3}
+  m_PrefabInstance: {fileID: 715786478976554285}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &4552968353314561033 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3945602538472212772, guid: 82245d04093b8424492a9ac576397762, type: 3}
@@ -777,32 +828,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b0d310e710472499611312459949c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Skill
-  skillComponent: {fileID: 0}
+  skillComponent: {fileID: 4616310008237832444}
   skillPointsText: {fileID: 4552968353314561033}
-  addAttackBtn: {fileID: 0}
-  removeAttackBtn: {fileID: 0}
-  attackUsedText: {fileID: 0}
-  attackValueText: {fileID: 0}
-  addDefenseBtn: {fileID: 0}
-  removeDefenseBtn: {fileID: 0}
-  defenseUsedText: {fileID: 0}
-  defenseValueText: {fileID: 0}
-  addHPBtn: {fileID: 0}
-  removeHPBtn: {fileID: 0}
-  hpUsedText: {fileID: 0}
-  hpValueText: {fileID: 0}
-  addDashBtn: {fileID: 0}
-  removeDashBtn: {fileID: 0}
-  dashUsedText: {fileID: 0}
-  dashValueText: {fileID: 0}
-  addSpeedBtn: {fileID: 0}
-  removeSpeedBtn: {fileID: 0}
-  speedUsedText: {fileID: 0}
-  speedValueText: {fileID: 0}
-  addDistanceBtn: {fileID: 0}
-  removeDistanceBtn: {fileID: 0}
-  distanceUsedText: {fileID: 0}
-  distanceValueText: {fileID: 0}
+  addAttackBtn: {fileID: 372044390611947684}
+  removeAttackBtn: {fileID: 329959841735815355}
+  attackUsedText: {fileID: 1488121743288982580}
+  attackValueText: {fileID: 3136687247333493828}
+--- !u!114 &4616310008237832444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9099592462155876992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd5136d30c5046e4e881151057eb8721, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillComponent
+  skillPoints: 30
+  meleeCost: 0
+  rangeCost: 0
+  shieldCost: 0
+  dashCost: 0
+  healthCost: 0
+  speedCost: 0
+  meleeAtkPerBuy: 0
+  rangeAtkPerBuy: 0
+  shieldBlockTimePerBuy: 0
+  dashCooldownMinusPerBuy: 0
+  maxHealthPerBuy: 0
+  speedPerBuy: 0
 --- !u!1001 &2157630687998479883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1354,11 +1410,11 @@ PrefabInstance:
       objectReference: {fileID: 2372103120546118006}
     - target: {fileID: 3268682954747031340, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: VerticalAxis.Value
-      value: 45
+      value: 17.352114
       objectReference: {fileID: 0}
     - target: {fileID: 3268682954747031340, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: HorizontalAxis.Value
-      value: -87.10481
+      value: -72.95699
       objectReference: {fileID: 0}
     - target: {fileID: 3288302976710426708, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1386,31 +1442,31 @@ PrefabInstance:
       objectReference: {fileID: 6638634585467495497}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.705982
+      value: 5.4640703
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.25
+      value: 2.5524335
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 6.4693856
+      value: 5.3161874
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6815536
+      value: 0.7975036
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.24645333
+      value: 0.10262999
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.6479561
+      value: -0.58965844
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.23430426
+      value: 0.0758826
       objectReference: {fileID: 0}
     - target: {fileID: 6856785937392868880, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_ControllerManager.Controllers.Array.data[1].InputValue
