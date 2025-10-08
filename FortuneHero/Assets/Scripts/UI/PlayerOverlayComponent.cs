@@ -22,22 +22,32 @@ public class PlayerOverlayComponent : MonoBehaviour
         currentShield = maxShield;
         shieldBar.fillAmount = 1f;
         xpBar.fillAmount = 0f;
+
+        level = PlayerPrefs.GetInt("Level", 1);
+        currentXP = PlayerPrefs.GetInt("XP", 0);
+        coins = PlayerPrefs.GetInt("coins", 0);
+
+        levelText.text = "Niveau: " + level;
+        coinText.text = "" + coins;
+        xpBar.fillAmount = (float)currentXP / RequiredXpForLevel(level);
     }
 
     void Update()
     {
-      /* health.Hit(10); */// -10 HP
+        int newLevel = PlayerPrefs.GetInt("Level", level);
+        int newXP = PlayerPrefs.GetInt("XP", currentXP);
+        int newCoins = PlayerPrefs.GetInt("coins", coins);
 
-        //// Test : utiliser le bouclier
+        if (newLevel != level || newXP != currentXP || newCoins != coins)
+        {
+            level = newLevel;
+            currentXP = newXP;
+            coins = newCoins;
 
-        //// Test : recharger le bouclier
-        //if (Input.GetKeyDown(KeyCode.R))
-        //{
-        //    RechargeShield(10);
-        //}
-        //GainXP(30);
-
-            //AddCoins(5);
+            levelText.text = "Niveau: " + level;
+            coinText.text = "" + coins;
+            xpBar.fillAmount = (float)currentXP / RequiredXpForLevel(level);
+        }
     }
 
     public void AddCoins(int amount)
@@ -70,10 +80,17 @@ public class PlayerOverlayComponent : MonoBehaviour
         xpBar.fillAmount = (float)currentXP / xpToNextLevel;
     }
 
-    private void LevelUp()
+    void LevelUp()
     {
         level++;
         xpToNextLevel += 50; 
         levelText.text = "Niveau: " + level;
+    }
+
+    private int RequiredXpForLevel(int level)
+    {
+        level = Mathf.Max(1, level);
+        float need = 100f * Mathf.Pow(1.1f, level - 1);
+        return Mathf.CeilToInt(need);
     }
 }
