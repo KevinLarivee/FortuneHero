@@ -76,4 +76,9 @@ public class XpOrb : MonoBehaviour
         float need = 100f * Mathf.Pow(1.1f, level - 1);
         return Mathf.CeilToInt(need);
     }
+    protected void ClearXp()
+    {
+        PlayerPrefs.SetInt("XP", 0);
+        PlayerPrefs.Save();
+    }
 }

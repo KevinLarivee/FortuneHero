@@ -217,6 +217,33 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Selector1"",
+                    ""type"": ""Button"",
+                    ""id"": ""9b98cff6-b52c-4d0e-9a92-3af3db312bde"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Selector2"",
+                    ""type"": ""Button"",
+                    ""id"": ""75380298-8df5-4ac4-958f-5067cd87d338"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Selector3"",
+                    ""type"": ""Button"",
+                    ""id"": ""0aee5828-186f-45dd-a467-8b3305e50858"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -657,6 +684,39 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Skill"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c340df8-192d-4999-bbc3-fd11b5e1d2bc"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Selector1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a301d9d2-54f6-44d8-a058-3c61da588940"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Selector2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2956e300-071b-4ab4-b97a-72621b6f7ed2"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Selector3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1258,6 +1318,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_SwitchShoulder = m_Player.FindAction("SwitchShoulder", throwIfNotFound: true);
         m_Player_Skill = m_Player.FindAction("Skill", throwIfNotFound: true);
+        m_Player_Selector1 = m_Player.FindAction("Selector1", throwIfNotFound: true);
+        m_Player_Selector2 = m_Player.FindAction("Selector2", throwIfNotFound: true);
+        m_Player_Selector3 = m_Player.FindAction("Selector3", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1365,6 +1428,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_SwitchShoulder;
     private readonly InputAction m_Player_Skill;
+    private readonly InputAction m_Player_Selector1;
+    private readonly InputAction m_Player_Selector2;
+    private readonly InputAction m_Player_Selector3;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1433,6 +1499,18 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Skill => m_Wrapper.m_Player_Skill;
         /// <summary>
+        /// Provides access to the underlying input action "Player/Selector1".
+        /// </summary>
+        public InputAction @Selector1 => m_Wrapper.m_Player_Selector1;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Selector2".
+        /// </summary>
+        public InputAction @Selector2 => m_Wrapper.m_Player_Selector2;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Selector3".
+        /// </summary>
+        public InputAction @Selector3 => m_Wrapper.m_Player_Selector3;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1500,6 +1578,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Skill.started += instance.OnSkill;
             @Skill.performed += instance.OnSkill;
             @Skill.canceled += instance.OnSkill;
+            @Selector1.started += instance.OnSelector1;
+            @Selector1.performed += instance.OnSelector1;
+            @Selector1.canceled += instance.OnSelector1;
+            @Selector2.started += instance.OnSelector2;
+            @Selector2.performed += instance.OnSelector2;
+            @Selector2.canceled += instance.OnSelector2;
+            @Selector3.started += instance.OnSelector3;
+            @Selector3.performed += instance.OnSelector3;
+            @Selector3.canceled += instance.OnSelector3;
         }
 
         /// <summary>
@@ -1553,6 +1640,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @Skill.started -= instance.OnSkill;
             @Skill.performed -= instance.OnSkill;
             @Skill.canceled -= instance.OnSkill;
+            @Selector1.started -= instance.OnSelector1;
+            @Selector1.performed -= instance.OnSelector1;
+            @Selector1.canceled -= instance.OnSelector1;
+            @Selector2.started -= instance.OnSelector2;
+            @Selector2.performed -= instance.OnSelector2;
+            @Selector2.canceled -= instance.OnSelector2;
+            @Selector3.started -= instance.OnSelector3;
+            @Selector3.performed -= instance.OnSelector3;
+            @Selector3.canceled -= instance.OnSelector3;
         }
 
         /// <summary>
@@ -1951,6 +2047,27 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSkill(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Selector1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSelector1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Selector2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSelector2(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Selector3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSelector3(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

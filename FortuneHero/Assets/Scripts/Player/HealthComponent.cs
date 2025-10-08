@@ -12,8 +12,11 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] float maxHp = 100;
     public float hp = 10;
     public bool alive = true;
-    public Action OnDeath;
-    public Action OnHit;
+
+    public delegate void OnDeath();
+    public OnDeath onDeath;
+    public delegate void OnHit();
+    public OnHit onHit;
     // Événement optionnel pour écouter les coups ailleurs (UI, sons, etc.)
     //public UnityAction<int, StatusEffect> OnHit;
 
@@ -57,11 +60,11 @@ public class HealthComponent : MonoBehaviour
     public void Hit(float dmg)
     {
         hp -= dmg;
-        //OnHit();
+        onHit?.Invoke();
         SetBar(hp / maxHp);
         alive = hp > 0;
         if (!alive)
-            OnDeath();
+            onDeath?.Invoke();
     }
     public void ResetHealth()
     {

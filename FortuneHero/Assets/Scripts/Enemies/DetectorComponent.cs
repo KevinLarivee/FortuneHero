@@ -23,6 +23,8 @@ public class DetectorComponent : MonoBehaviour
 
     public Action<Vector3> targetDetected;
 
+    Quaternion originalRotation;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,6 +32,8 @@ public class DetectorComponent : MonoBehaviour
         angleIncreaseV = fovVertical / rayCountVertical;
 
         player = PlayerMovement.Instance;
+
+        originalRotation = transform.localRotation;
     }
 
     // Update is called once per frame
@@ -55,6 +59,7 @@ public class DetectorComponent : MonoBehaviour
                         if (hit.collider.CompareTag(target))
                         {
                             Debug.DrawLine(origin, hit.point, Color.green); // touche la cible
+                            transform.LookAt(hit.transform);
                             targetDetected(hit.transform.position);
                             return;
                         }
@@ -70,6 +75,8 @@ public class DetectorComponent : MonoBehaviour
 
                 }
             }
+            //Seulement si rien trouvé
+            transform.localRotation = originalRotation;
         }
     }
 }

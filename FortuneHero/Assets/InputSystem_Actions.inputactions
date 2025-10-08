@@ -131,6 +131,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Selector1",
+                    "type": "Button",
+                    "id": "9b98cff6-b52c-4d0e-9a92-3af3db312bde",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Selector2",
+                    "type": "Button",
+                    "id": "75380298-8df5-4ac4-958f-5067cd87d338",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Selector3",
+                    "type": "Button",
+                    "id": "0aee5828-186f-45dd-a467-8b3305e50858",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -571,6 +598,39 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Skill",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c340df8-192d-4999-bbc3-fd11b5e1d2bc",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Selector1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a301d9d2-54f6-44d8-a058-3c61da588940",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Selector2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2956e300-071b-4ab4-b97a-72621b6f7ed2",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Selector3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -11,6 +11,9 @@ public class MovingPlatform : MonoBehaviour
     private float _speed = 1f;
 
     [SerializeField]
+    private float delayToStart = 0f;
+
+    [SerializeField]
     private Transform _previousTarget;
 
     private float _timeToTarget;
@@ -42,6 +45,11 @@ public class MovingPlatform : MonoBehaviour
 
     private void Move(Transform destination)
     {
+        if (delayToStart > 0)
+        {
+            delayToStart -= Time.deltaTime;
+            return;
+        }
         _elapsedTime += Time.deltaTime;
         //pas optimisé, à revoir
         float distanceToTarget = Vector3.Distance(_previousTarget.position, destination.position);
