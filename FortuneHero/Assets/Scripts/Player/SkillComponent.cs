@@ -97,11 +97,57 @@ public class SkillComponent : MonoBehaviour
         return true;
     }
 
+    // Retirer un skill (optionnel, si tu veux permettre de "déséquipe" un skill)
+    public bool RemoveSkill(SkillType type)
+    {
+        if (_buys[type] <= 0)
+        {
+            Debug.LogWarning($"[SkillComponent] Impossible de retirer {type} car aucun achat n’a été fait.");
+            return false;
+        }
+        int cost = _costs[type];
+        // Rembourser
+        skillPoints += cost;
+        // Retirer l’effet (inverse de ApplySkillEffect)
+        switch (type)
+        {
+            case SkillType.MeleeAtkPlus:
+                meleeAtkBonus -= meleeAtkPerBuy;
+                break;
+            case SkillType.RangeAtkPlus:
+                rangeAtkBonus -= rangeAtkPerBuy;
+                break;
+            case SkillType.ShieldBlockTime:
+                shieldBlockTimeBonus -= shieldBlockTimePerBuy;
+                break;
+            case SkillType.DashCooldownMinus:
+                dashCooldownReduction -= dashCooldownMinusPerBuy;
+                break;
+            case SkillType.MaxHealthPlus:
+                maxHealthBonus -= maxHealthPerBuy;
+                break;
+            case SkillType.SpeedPlus:
+                speedBonus -= speedPerBuy;
+                break;
+        }
+        // Compter le retrait
+        _buys[type]--;
+        Debug.Log($"[SkillComponent] Retrait de {type} réussi. Restant: {skillPoints} SP.");
+        return true;
+    }
+
     // Variante: une méthode "ChooseSkill" qui pourrait être appelée depuis des boutons UI
     // (ex: binder un bouton par skill et lui passer le type voulu)
-    public void ChooseSkill(SkillType type)
+    public void ChooseSkill(SkillType type, bool remove)
     {
-        TryBuySkill(type);
+        if (remove)
+        {
+            RemoveSkill(type);
+        }
+        else
+        {
+            TryBuySkill(type);
+        }
     }
 
     // Applique le bonus correspondant
@@ -128,23 +174,6 @@ public class SkillComponent : MonoBehaviour
                 speedBonus += speedPerBuy;
                 break;
         }
-
-        // Si tu as des composants Player* séparés, tu peux pousser la valeur ici:
-        // ex:
-        // var combat = GetComponent<PlayerCombat>();
-        // if (combat) combat.SetMeleeBonus(meleeAtkBonus, rangeAtkBonus);
-        //
-        // var shield = GetComponent<PlayerShield>();
-        // if (shield) shield.SetBlockTimeBonus(shieldBlockTimeBonus);
-        //
-        // var dash = GetComponent<PlayerDash>();
-        // if (dash) dash.SetCooldownModifier(-dashCooldownReduction);
-        //
-        // var hp = GetComponent<PlayerHealth>();
-        // if (hp) hp.SetMaxHealthBonus(maxHealthBonus);
-        //
-        // var move = GetComponent<PlayerMovement>();
-        // if (move) move.SetSpeedBonus(speedBonus);
     }
 
     // À appeler en fin de niveau pour effacer tous les buffs temporaires
