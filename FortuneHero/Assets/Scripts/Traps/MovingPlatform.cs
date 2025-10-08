@@ -10,20 +10,28 @@ public class MovingPlatform : MonoBehaviour
     [SerializeField]
     private float _speed = 1f;
 
+
     [SerializeField]
     private float delayToStart = 0f;
+    [SerializeField] bool randomStart = false;
+
 
     [SerializeField]
     private Transform _previousTarget;
 
     private float _timeToTarget;
+    private float _remainingDelay;
     private float _elapsedTime;
+    private float _segmentDuration;
+
 
     void Start()
     {
         _patrol = GetComponent<PatrolComponent>();
         _patrol.move = Move;
         _patrol.isActive = true;
+
+        _remainingDelay = randomStart ? Random.Range(0f, delayToStart) : delayToStart;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,11 +53,12 @@ public class MovingPlatform : MonoBehaviour
 
     private void Move(Transform destination)
     {
-        if (delayToStart > 0)
+        if (_remainingDelay > 0f)
         {
-            delayToStart -= Time.deltaTime;
+            _remainingDelay -= Time.deltaTime;
             return;
         }
+
         _elapsedTime += Time.deltaTime;
         //pas optimisé, à revoir
         float distanceToTarget = Vector3.Distance(_previousTarget.position, destination.position);
