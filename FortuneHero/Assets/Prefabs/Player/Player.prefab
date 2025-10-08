@@ -251,8 +251,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4199309781050396456}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.19506702, y: -0.32523102, z: 0.06876846, w: 0.92273754}
-  m_LocalPosition: {x: 4.094936, y: 2.7858214, z: -5.7663884}
+  m_LocalRotation: {x: 0.10263, y: -0.5896585, z: 0.075882606, w: 0.7975035}
+  m_LocalPosition: {x: 2.4950206, y: -0.10100001, z: -1.6421711}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -847,18 +847,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SkillComponent
   skillPoints: 30
-  meleeCost: 0
-  rangeCost: 0
-  shieldCost: 0
-  dashCost: 0
-  healthCost: 0
-  speedCost: 0
-  meleeAtkPerBuy: 0
-  rangeAtkPerBuy: 0
-  shieldBlockTimePerBuy: 0
-  dashCooldownMinusPerBuy: 0
-  maxHealthPerBuy: 0
-  speedPerBuy: 0
+  meleeCost: 1
+  rangeCost: 1
+  shieldCost: 1
+  dashCost: 1
+  healthCost: 1
+  speedCost: 1
+  meleeAtkPerBuy: 1
+  rangeAtkPerBuy: 1
+  shieldBlockTimePerBuy: 1
+  dashCooldownMinusPerBuy: 1
+  maxHealthPerBuy: 1
+  speedPerBuy: 1
 --- !u!1001 &2157630687998479883
 PrefabInstance:
   m_ObjectHideFlags: 0
