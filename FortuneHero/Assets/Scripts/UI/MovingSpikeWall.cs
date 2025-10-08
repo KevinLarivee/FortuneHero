@@ -16,6 +16,7 @@ public class MovingSpikeWall : MonoBehaviour
     bool extending = true;
     public bool isActive = true;
 
+    DamageCollision script;
     Collider spikes;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,6 +26,7 @@ public class MovingSpikeWall : MonoBehaviour
         targetPos = initialPos + transform.right * extendDistance;
 
         spikes = GetComponentInChildren<Collider>();
+        script = GetComponent<DamageCollision>();
 
         StartCoroutine(AlternateSync());
     }
@@ -63,6 +65,8 @@ public class MovingSpikeWall : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player"))
             extending = false;
+        else if (collision.contacts.Any(c => c.thisCollider == spikes))
+            script.Damage(collision);
     }
 
 }
