@@ -4963,7 +4963,7 @@ GameObject:
   - component: {fileID: 8602835173732579868}
   - component: {fileID: 5278997998994782360}
   m_Layer: 0
-  m_Name: Paralise
+  m_Name: Paralyze
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
