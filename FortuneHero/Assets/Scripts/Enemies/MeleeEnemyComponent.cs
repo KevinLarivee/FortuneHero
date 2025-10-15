@@ -17,23 +17,10 @@ public class MeleeEnemyComponent : EnemyComponent
         patrol.move = Move;
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    if (enemyState == EnemyState.Chasing)
-    //        ChasingMove();
-    //    else if (enemyState == EnemyState.Attacking)
-    //        StartCoroutine(Attack());
-
-    //    timeUntilPatrolTimer += Time.deltaTime; //start le timer 
-
-    //    if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
-    //    {
-    //        //Enable le patrol
-    //        patrol.isActive = true;
-    //        enemyState = EnemyState.Patrol;
-    //    }
-    //}
+    void Update()
+    {
+        base.Update();
+    }
     protected override void PlayerDetected(Vector3 targetPosition)
     {
         //timeUntilPatrolTimer = 0;
@@ -69,9 +56,6 @@ public class MeleeEnemyComponent : EnemyComponent
     protected override void ChasingMove()
     {
        agent.destination = target;
-    
-            
-
        base.ChasingMove();
     }
     //protected override IEnumerator Attack()
