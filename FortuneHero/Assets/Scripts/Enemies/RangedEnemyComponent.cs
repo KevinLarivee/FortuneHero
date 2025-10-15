@@ -17,6 +17,10 @@ public class RangedEnemyComponent : EnemyComponent
         agent = GetComponent<NavMeshAgent>();
         patrol.move = Move;
     }
+    //void Update()
+    //{
+    //    //base.Update();    
+    //}
 
     protected override void Move(Transform newTarget)
     {
