@@ -2,6 +2,7 @@ using System.Collections;
 using System.Net;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(PatrolComponent))]
 public class FlyingEnemyComponent : EnemyComponent
@@ -17,48 +18,23 @@ public class FlyingEnemyComponent : EnemyComponent
 
     //void Update()
     //{
-    //    if (enemyState == EnemyState.Chasing)
-    //        ChasingMove();
-    //    else if (enemyState == EnemyState.Attacking)
-    //        StartCoroutine(Attack());
-
-    //    timeUntilPatrolTimer += Time.deltaTime; //start le timer 
-
-    //    if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
-    //    {
-    //        //Enable le patrol
-    //        patrol.isActive = true;
-    //        enemyState = EnemyState.Patrol;
-    //    }
-    //}
-
-    //protected override void PlayerDetected(Vector3 targetPosition)
-    //{
-    //    timeUntilPatrolTimer = 0;
-    //    patrol.isActive = false;
-    //    enemyState = EnemyState.Chasing;
-    //    target = targetPosition;
-    //    Vector3 posToTarget = target - transform.parent.position;
-
-    //    if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
-    //        enemyState = EnemyState.Attacking;
-    //    base.PlayerDetected(targetPosition);
+    //    base.Update();
     //}
 
 
-    //à cause du parent... à retravailler anyways
+    //ï¿½ cause du parent... ï¿½ retravailler anyways
     protected override void Move(Transform newTarget)
     {
-        //Déjà dans base
+        //Dï¿½jï¿½ dans base
         target = newTarget.position;
         Vector3 posToTarget = target - transform.position;
 
-        //À override
+        //ï¿½ override
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-        //Déjà dans base
+        //Dï¿½jï¿½ dans base
         if (posToTarget.sqrMagnitude <= stoppingDistance * stoppingDistance)
             newTarget = patrol.NextTarget();
         animator.SetBool("isPatrolling", true);
@@ -98,7 +74,7 @@ public class FlyingEnemyComponent : EnemyComponent
     //{
     //    //animator.SetTrigger("death");
     //    //agent.isStopped = true;
-    //    //À la fin de l'anim de mort
+    //    //ï¿½ la fin de l'anim de mort
     //    Destroy(gameObject);
     //    enemyDrops.SpawnDrops();
     //    base.Death();

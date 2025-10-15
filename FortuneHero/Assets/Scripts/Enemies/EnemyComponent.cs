@@ -3,17 +3,22 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 [RequireComponent(typeof(EnemyDrops), typeof(HealthComponent))]
 public class EnemyComponent : MonoBehaviour, IPoolable
 {
     //!!! Quoi mettre dans EnnemyComponent vs SpecificEnnemyComponent
     protected enum EnemyState { Patrol, Attacking, Chasing }
-
     protected EnemyState enemyState;
     public ObjectPoolComponent Pool { get; set; }
 
     public int dmg = 1;
     public int collisionDmg = 10;
+    
+    //paralyze
+    [SerializeField] GameObject paralyzePrefab;
+    public bool isParalyzed = false;
+    float paraTimer;
 
     [SerializeField] protected float moveSpeed = 5f;
     [SerializeField] protected float stoppingDistance = 0.5f;
@@ -22,7 +27,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     [SerializeField] protected float animationTime = 0.7f;
 
 
-    protected Animator animator;
+    [SerializeField] protected Animator animator;
     protected AnimationClip animClip;
     protected EnemyDrops enemyDrops;
     protected HealthComponent healthComponent;
@@ -41,7 +46,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
         patrol = GetComponent<PatrolComponent>();
         detector = GetComponentInChildren<DetectorComponent>();
         enemyDrops = GetComponent<EnemyDrops>();
@@ -57,22 +62,40 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         //agent.updateRotation = true;
     }
 
-    void Update()
+    protected void Update()
     {
-        if (enemyState == EnemyState.Chasing)
-            ChasingMove();
-        else if (enemyState == EnemyState.Attacking && !isAttacking){
-            Debug.Log("should attack");
-            StartCoroutine(Attack());
-        }
-
-        timeUntilPatrolTimer += Time.deltaTime; //start le timer 
-
-        if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
+        if (!isParalyzed)
         {
-            //Enable le patrol
-            patrol.isActive = true;
-            enemyState = EnemyState.Patrol;
+            if (enemyState == EnemyState.Chasing)
+                ChasingMove();
+            else if (enemyState == EnemyState.Attacking && !isAttacking)
+            {
+                Debug.Log("should attack");
+                StartCoroutine(Attack());
+            }
+
+            timeUntilPatrolTimer += Time.deltaTime; //start le timer 
+
+            if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
+            {
+                //Enable le patrol
+                patrol.isActive = true;
+                enemyState = EnemyState.Patrol;
+            }
+        }
+        else
+        {
+            //Debug.Log("Im paralyzed, helllppppp");
+            paraTimer -= Time.deltaTime;
+            paralyzePrefab.SetActive(true);
+            //animation on
+            if(paraTimer <= 0)
+            {
+                //Debug.Log("ohh shitt im back babyy");
+                paralyzePrefab.SetActive(false);
+                isParalyzed = false;
+                //animation off
+            }
         }
     }
 
@@ -116,7 +139,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
             animator.SetBool("isChasing", false);
         }
     }
-
     protected virtual IEnumerator Attack()
     {
         isAttacking = true;
@@ -133,7 +155,33 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
         yield return new WaitForSeconds(attackCd);
     }
+    public IEnumerator HitByIceBall(float speedChange, float slowDuration, NavMeshAgent agent, GameObject explosionObj) //si le agent passer est null, il n'est pas utiliser donc pg
+    {
+        SlowEnemy(speedChange, agent);
+        yield return new WaitForSeconds(slowDuration);
+        SpeedUpEnemy(speedChange, agent);
+        Destroy(explosionObj);
+    }
+    public void ToggleParalyze(float paraDuration)
+    {
+        isParalyzed = true;
+        paraTimer = paraDuration;
+    }
 
+    private void SlowEnemy(float divider, NavMeshAgent agent)
+    {
+        if (agent == null)
+            moveSpeed /= divider;
+        else
+            agent.speed /= divider;
+    }
+    private void SpeedUpEnemy(float multiplier, NavMeshAgent agent)
+    {
+        if (agent == null)
+            moveSpeed *= multiplier;
+        else
+            agent.speed *= multiplier;
+    }
     //private void OnEnable()
     //{
     //    agent.destination = patrol.NextTarget().position;
@@ -141,7 +189,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
     protected virtual void Hit()
     {
-        animator.SetTrigger("hit");
+        animator.SetTrigger("isHit");
     }
     protected virtual void Death()
     {
