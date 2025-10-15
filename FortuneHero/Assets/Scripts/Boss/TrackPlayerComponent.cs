@@ -19,37 +19,104 @@ public class Stat
 
 public class TrackPlayerComponent : MonoBehaviour
 {
+    PlayerComponent player;
+    HealthComponent playerHealth;
+
+    BossComponent boss;
+    HealthComponent bossHealth;
+
+    public float yThreshold = 15f;
+    public float nearFarThreshold = 8f;
+
+    public float phaseTime = 100f;
+
+    float previousPlayerHealth;
+    void Start()
+    {
+        player = PlayerComponent.Instance;
+        playerHealth = player.GetComponent<HealthComponent>();
+        previousPlayerHealth = playerHealth.hp;
+        playerHealth.onHit += OnPlayerHit;
+
+        boss = GetComponent<BossComponent>();
+        bossHealth = boss.GetComponent<HealthComponent>();
+        bossHealth.onHit += OnBossHit;
+
+        if (stats.ContainsKey("phaseElapsedTime"))
+            SetStat("phaseElapsedTime", phaseTime);
+    }
+    void Update()
+    {
+        if (presets["phaseElapsedTime"])
+            IncreaseStat("phaseElapsedTime", -Time.deltaTime);
+
+        //Doit gérer les scénarios inversé (2e boss)
+        if (presets["playerY"] && player.transform.position.y >= yThreshold)
+            IncreaseStat("playerY", Time.deltaTime);
+
+        float dist = Vector3.Distance(player.transform.position, transform.position);
+        if (presets["playerFar"] && dist > nearFarThreshold)
+            IncreaseStat("playerFar", Time.deltaTime);
+        if (presets["playerNear"] && dist <= nearFarThreshold)
+            IncreaseStat("playerNear", Time.deltaTime);
+    }
+
+    #region Stats
     Dictionary<string, Stat> stats = new();
     public void GetTopStats(int top)
     {
-        var temp = stats.OrderByDescending(s => s.Value.value * s.Value.multiplier).ToList();
+        if (top <= 0 || stats.Count <= top) return;
+
+        if (presets["playerHealth"])
+        {
+            //Éviter les divisions par 0
+            SetStat("playerHealth", 100f / (previousPlayerHealth + 1 - playerHealth.hp));
+            previousPlayerHealth = playerHealth.hp;
+        }
+
+        stats = stats.OrderByDescending(s => s.Value.value * s.Value.multiplier).ToDictionary(s => s.Key, s => s.Value);
         for (int i = 0; i < top; ++i)
         {
-            temp[0].Value.drawBack();
-            stats.Remove(temp[0].Key);
+            stats.First().Value.drawBack();
+            RemoveStat(stats.First().Key);
         }
+        //À réfléchir...
+        ResetStats();
+        SetStat("phaseElapsedTime", phaseTime);
     }
 
     public void IncreaseStat(string key, float value)
     {
-        stats[key].value += value;
+        if (stats.ContainsKey(key))
+            stats[key].value += value;
+    }
+    public void SetStat(string key, float value)
+    {
+        if (stats.ContainsKey(key))
+            stats[key].value = value;
+    }
+    public void ResetStats()
+    {
+        foreach (var stat in stats)
+            stat.Value.value = 0f;
     }
 
     public void AddStat(string key, float multiplier, Action drawBack)
     {
+        if (presets.ContainsKey(key))
+            presets[key] = true;
         stats.TryAdd(key, new(multiplier, drawBack));
     }
     public void RemoveStat(string key)
     {
+        if (presets.ContainsKey(key))
+            presets[key] = false;
         stats.Remove(key);
     }
+    #endregion
 
-    void Update()
-    {
 
-    }
-
-    //Preset de stats
+    #region Presets
     void PreSetStat(string key, float multiplier, Action drawBack, bool active)
     {
         presets[key] = active;
@@ -62,61 +129,162 @@ public class TrackPlayerComponent : MonoBehaviour
     public Dictionary<string, bool> presets = new Dictionary<string, bool>
     {
         //Boss
-        ["phaseElapsedTime"] = false,
+        ["phaseElapsedTime"] = false, //Augmenter def ou HP, bref ralonger le combat
 
-        ["bossMeleeMiss"] = false,
-        ["bossMeleeBlocked"] = false,
+        ["bossMeleeMiss"] = false, //Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
+        ["bossMeleeBlocked"] = false, //Obliger update via script Boss? (ou player)   Empêcher le block 
+        ["bossMeleeHit"] = false, //Obliger update via script ? Augmenter le dmg melee du boss
 
-        ["bossRangeMiss"] = false,
-        ["bossRangeBlocked"] = false,
+        ["bossRangeMiss"] = false, //Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
+        ["bossRangeBlocked"] = false, //Obliger update via script Boss? (ou player)    Empêcher le block
+        ["bossRangeHit"] = false, //Obliger update via script Boss? Augmenter le dmg range du boss
 
         //Player
-        ["playerY"] = false,
-        ["playerFar"] = false,
-        ["playerNear"] = false,
+        ["playerY"] = false, //Déclencher l'event pour les platformes/sable mouvant
+        ["playerFar"] = false, //Augmenter la vitesse du boss, ou les attaques le rapprochant du joueur, ou ralentir le joueur?
+        ["playerNear"] = false, //Déclencher un knockback périodique? Ou éloigner le boss du joueur.
 
-        ["playerHealth"] = false,
+        //Idée : Ultime debuff, car devrait seulement se déclencher si le joueur joue très bien.
+        ["playerHealth"] = false, // Si trop court, se déclenche avec phaseElapsedTime. Si trop long, + d'attaques boss donc ne sera pas déclenché
 
-        ["playerMoving"] = false,//hmmmm
-        ["playerBlocking"] = false,
-        ["playerDashing"] = false,
+        //["playerBlocking"] = false,
+        //["playerDashing"] = false,
 
-        ["playerMeleeDmg"] = false,
-        ["playerRangeDmg"] = false
+        ["playerMeleeDmg"] = false, //Obliger update via script Boss? Augmenter la defense melee du Boss
+        ["playerRangeDmg"] = false  //Obliger update via script Boss? Augmenter la defense range du Boss
     };
+    public void AllPresets()
+    {
+        PhaseElapsedTime(null);
+        BossMeleeMiss(null);
+        BossMeleeBlocked(null);
+        BossMeleeHit(null);
+        BossRangeMiss(null);
+        BossRangeBlocked(null);
+        BossRangeHit(null);
+        PlayerY(null);
+        PlayerFar(null);
+        PlayerNear(null);
+        PlayerHealth(null);
+        PlayerMeleeDmg(null);
+        PlayerRangeDmg(null);
+    }
     public void PhaseElapsedTime(Action drawBack, bool active = true) =>
-        PreSetStat("phaseElapsedTime", 0.001f, drawBack, active);
+        PreSetStat("phaseElapsedTime", 1f, drawBack ?? PhaseElapsedTimeDrawBack, active);
 
     public void BossMeleeMiss(Action drawBack, bool active = true) =>
-        PreSetStat("bossMeleeMiss", 1f, drawBack, active);
+        PreSetStat("bossMeleeMiss", 1f, drawBack ?? BossMeleeMissDrawBack, active);
     public void BossMeleeBlocked(Action drawBack, bool active = true) =>
-        PreSetStat("bossMeleeBlocked", 1f, drawBack, active);
+        PreSetStat("bossMeleeBlocked", 1f, drawBack ?? BossMeleeBlockedDrawBack, active);
+    public void BossMeleeHit(Action drawBack, bool active = true) =>
+        PreSetStat("bossMeleeHit", 1f, drawBack ?? BossMeleeHitDrawBack, active);
 
     public void BossRangeMiss(Action drawBack, bool active = true) =>
-        PreSetStat("bossRangeMiss", 1f, drawBack, active);
+        PreSetStat("bossRangeMiss", 1f, drawBack ?? BossRangeMissDrawBack, active);
     public void BossRangeBlocked(Action drawBack, bool active = true) =>
-        PreSetStat("bossRangeBlocked", 1f, drawBack, active);
+        PreSetStat("bossRangeBlocked", 1f, drawBack ?? BossRangeBlockedDrawBack, active);
+    public void BossRangeHit(Action drawBack, bool active = true) =>
+        PreSetStat("bossRangeHit", 1f, drawBack ?? BossRangeHitDrawBack, active);
 
 
     public void PlayerY(Action drawBack, bool active = true) =>
-        PreSetStat("PlayerY", 0.05f, drawBack, active);
+        PreSetStat("PlayerY", 0.05f, drawBack ?? PlayerYDrawBack, active);
     public void PlayerFar(Action drawBack, bool active = true) =>
-        PreSetStat("playerFar", 0.05f, drawBack, active);
+        PreSetStat("playerFar", 0.05f, drawBack ?? PlayerFarDrawBack, active);
     public void PlayerNear(Action drawBack, bool active = true) =>
-        PreSetStat("playerNear", 0.05f, drawBack, active);
+        PreSetStat("playerNear", 0.05f, drawBack ?? PlayerNearDrawBack, active);
 
     public void PlayerHealth(Action drawBack, bool active = true) =>
-        PreSetStat("playerHealth", 0.1f, drawBack, active);
+        PreSetStat("playerHealth", 1f, drawBack ?? PlayerHealthDrawBack, active);
 
-    public void PlayerMoving(Action drawBack, bool active = true) =>
-        PreSetStat("playerMoving", 0.05f, drawBack, active); //hmmmmmm
-    public void PlayerBlooking(Action drawBack, bool active = true) =>
-        PreSetStat("playerBlocking", 0.1f, drawBack, active);
-    public void PlayerDashing(Action drawBack, bool active = true) =>
-        PreSetStat("playerDashing", 0.5f, drawBack, active);
+    //public void PlayerBlooking(Action drawBack, bool active = true) =>
+    //    PreSetStat("playerBlocking", 0.1f, drawBa ?? ck, active);
+    //public void PlayerDashing(Action drawBack, bool active = true) =>
+    //    PreSetStat("playerDashing", 0.5f, drawBa ?? ck, active);
 
     public void PlayerMeleeDmg(Action drawBack, bool active = true) =>
-        PreSetStat("playerMeleeDmg", 0.2f, drawBack, active); //dépendrais de maxHp du boss?
+        PreSetStat("playerMeleeDmg", 0.2f, drawBack ?? PlayerMeleeDmgDrawBack, active); //dépendrais de maxHp du boss?
     public void PlayerRangeDmg(Action drawBack, bool active = true) =>
-        PreSetStat("playerRangeDmg", 0.2f, drawBack, active); //dépendrais de maxHp du boss?
+        PreSetStat("playerRangeDmg", 0.2f, drawBack ?? PlayerRangeDmgDrawBack, active); //dépendrais de maxHp du boss?
+    #endregion
+
+    #region Functions Utiles
+    void OnPlayerHit()
+    {
+        //Différencier quelles attaques a frappées le joueur?
+    }
+    void OnBossHit()
+    {
+        //Différencier quelles attaques a frappées le boss?
+    }
+    #endregion
+
+    #region Default DrawBacks
+    //Si je fais juste appeler une fonction différente pour chaque, ne sert à rien d'avoir des defaults values
+    void PhaseElapsedTimeDrawBack()
+    {
+        //Augmenter def ou HP, bref ralonger le combat
+        boss.meleeDefense *= 1.5f;
+        boss.rangeDefense *= 1.5f;
+        //Retirer des stats si déclenché?
+    }
+    void BossMeleeMissDrawBack()
+    {
+        //Accélérer l'attaque ou augmenter la hitbox
+    }
+    void BossMeleeBlockedDrawBack()
+    {
+        //Empêcher le block
+    }
+    void BossMeleeHitDrawBack()
+    {
+        //Augmenter le dmg melee du boss
+    }
+
+    void BossRangeMissDrawBack()
+    {
+        //Accélérer l'attaque ou augmenter la hitbox
+    }
+    void BossRangeBlockedDrawBack()
+    {
+        //Empêcher le block
+    }
+    void BossRangeHitDrawBack()
+    {
+        //Augmenter le dmg range du boss
+    }
+
+
+    void PlayerYDrawBack()
+    {
+        //Déclencher l'event pour les platformes/sable mouvant
+    }
+    void PlayerFarDrawBack()
+    {
+        //Augmenter la vitesse du boss, ou les attaques le rapprochant du joueur, ou ralentir le joueur?
+    }
+    void PlayerNearDrawBack()
+    {
+        //Déclencher un knockback périodique? Ou éloigner le boss du joueur.
+    }
+
+    void PlayerHealthDrawBack()
+    {
+        //Idée : Ultime debuff, car devrait seulement se déclencher si le joueur joue très bien.
+        // Si trop court, se déclenche avec phaseElapsedTime. Si trop long, + d'attaques boss donc ne sera pas déclenché
+    }
+
+    //void PlayerBlookingDrawBack()
+    //void PlayerDashingDrawBack()
+    void PlayerMeleeDmgDrawBack()
+    {
+        //Augmenter la defense melee du Boss
+        boss.meleeDefense *= 2f;
+    }
+    void PlayerRangeDmgDrawBack()
+    {
+        //Augmenter la defense range du Boss
+        boss.rangeDefense *= 2f;
+    }
+    #endregion
 }
