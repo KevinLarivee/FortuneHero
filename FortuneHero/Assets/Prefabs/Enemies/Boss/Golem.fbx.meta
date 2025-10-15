@@ -3,7 +3,82 @@ guid: f7299226d27dae84ab7441618ddaf11d
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EYES
+    second: {fileID: 2100000, guid: cd7ceb1fdbb4f1240b3950b7df0e0a1a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1001
+    second: {fileID: 2100000, guid: ac5c0379ba7f4cd4592830194b5f0a52, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1002
+    second: {fileID: 2100000, guid: 1f95552f6b728804c8a546dc97582c55, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1003
+    second: {fileID: 2100000, guid: f95a0a84f06219f4eb07806b2f8ffd68, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1011
+    second: {fileID: 2100000, guid: cc2fb91fc7990c74495384d2af90f503, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1012
+    second: {fileID: 2100000, guid: 0aadfe2df3beff34b83fad53ed8ea7c8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1013
+    second: {fileID: 2100000, guid: c9dda17154702f04b90e9bb615db92ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1021
+    second: {fileID: 2100000, guid: c9e8c3db8d774604c9595fd20e7d78dc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1022
+    second: {fileID: 2100000, guid: f90221fb15c0798488a635e0d1b68ab0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1031
+    second: {fileID: 2100000, guid: 533c480fbe1c11b419be83b2810a494d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1032
+    second: {fileID: 2100000, guid: 81d2a5d85061e17499907a62e9b0384e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1033
+    second: {fileID: 2100000, guid: b8e5bf9890610da428171e7a8049227a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1041
+    second: {fileID: 2100000, guid: 41b95a63483360d48904a72484a0b474, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1042
+    second: {fileID: 2100000, guid: f61db87e264e2ce4792184308b660f08, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: _1043
+    second: {fileID: 2100000, guid: 17e6d540f25561a4db47b66f591f8e80, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

@@ -8,7 +8,7 @@ public class FlyingEnemyComponent : EnemyComponent
 {
     void Start()
     {
-        animator = GetComponentInParent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         patrol.move = Move;
         //detector.targetDetected = PlayerDetected;
         //healthComponent.OnHit = Hit;
@@ -51,12 +51,12 @@ public class FlyingEnemyComponent : EnemyComponent
     {
         //Déjà dans base
         target = newTarget.position;
-        Vector3 posToTarget = target - transform.parent.position;
+        Vector3 posToTarget = target - transform.position;
 
         //À override
-        transform.parent.position = Vector3.MoveTowards(transform.parent.position, target, moveSpeed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        transform.parent.rotation = Quaternion.Slerp(transform.parent.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         //Déjà dans base
         if (posToTarget.sqrMagnitude <= stoppingDistance * stoppingDistance)
@@ -67,11 +67,11 @@ public class FlyingEnemyComponent : EnemyComponent
 
     protected override void ChasingMove()
     {
-        Vector3 posToTarget = target - transform.parent.position;
-        transform.parent.position = Vector3.MoveTowards(transform.parent.position, target, moveSpeed * Time.deltaTime);
+        Vector3 posToTarget = target - transform.position;
+        transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         //Envoie un message dans la console si posToTarget est 0...
         Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        transform.parent.rotation = Quaternion.Slerp(transform.parent.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
 
         base.ChasingMove();

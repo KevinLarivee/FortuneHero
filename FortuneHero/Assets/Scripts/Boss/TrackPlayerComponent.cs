@@ -272,6 +272,7 @@ public class TrackPlayerComponent : MonoBehaviour
     {
         //Idée : Ultime debuff, car devrait seulement se déclencher si le joueur joue très bien.
         // Si trop court, se déclenche avec phaseElapsedTime. Si trop long, + d'attaques boss donc ne sera pas déclenché
+        //changer time.scale?
     }
 
     //void PlayerBlookingDrawBack()
