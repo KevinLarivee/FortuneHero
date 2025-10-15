@@ -139,7 +139,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
             animator.SetBool("isChasing", false);
         }
     }
-
     protected virtual IEnumerator Attack()
     {
         isAttacking = true;
@@ -156,7 +155,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
         yield return new WaitForSeconds(attackCd);
     }
-
     public IEnumerator HitByIceBall(float speedChange, float slowDuration, NavMeshAgent agent, GameObject explosionObj) //si le agent passer est null, il n'est pas utiliser donc pg
     {
         SlowEnemy(speedChange, agent);
@@ -164,14 +162,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         SpeedUpEnemy(speedChange, agent);
         Destroy(explosionObj);
     }
-    //public IEnumerator HitByAoePara(float paraDuration)
-    //{
-    //    isParalyzed = true;
-    //    paralyzePrefab.SetActive(isParalyzed);
-    //    yield return new WaitForSeconds(paraDuration);
-    //    isParalyzed = false;
-    //    paralyzePrefab.SetActive(isParalyzed);
-    //}
     public void ToggleParalyze(float paraDuration)
     {
         isParalyzed = true;

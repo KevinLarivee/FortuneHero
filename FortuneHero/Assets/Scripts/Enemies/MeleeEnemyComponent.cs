@@ -17,10 +17,10 @@ public class MeleeEnemyComponent : EnemyComponent
         patrol.move = Move;
     }
 
-    void Update()
-    {
-        base.Update();
-    }
+    //void Update()
+    //{
+    //    base.Update();
+    //}
     protected override void PlayerDetected(Vector3 targetPosition)
     {
         //timeUntilPatrolTimer = 0;

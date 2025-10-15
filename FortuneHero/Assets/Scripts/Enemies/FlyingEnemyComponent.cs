@@ -16,10 +16,10 @@ public class FlyingEnemyComponent : EnemyComponent
         //healthComponent.OnDeath = Death;
     }
 
-    void Update()
-    {
-        base.Update();
-    }
+    //void Update()
+    //{
+    //    base.Update();
+    //}
 
 
     //à cause du parent... à retravailler anyways

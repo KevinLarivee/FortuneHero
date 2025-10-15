@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     CharacterController player;
     Animator animator;
     HealthComponent health;
+    PlayerComponent playerInstance;
 
     Vector3 jump;
     Vector3 knockBackDirection;
@@ -98,6 +99,7 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         instance = this;
+        playerInstance = PlayerComponent.Instance;
 
         player = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -118,7 +120,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (knockBackCounter <= 0)
         {
-            if (!PlayerComponent.Instance.isParalysed)
+            if (!playerInstance.isParalysed)
                 Movement();
             else
             {
@@ -129,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     lightningVFX.SetActive(false);
                     //paralyseTimer = paralyseTime;
-                    PlayerComponent.Instance.isParalysed = false;
+                    playerInstance.isParalysed = false;
                     animator.SetBool("isParalysed", false);
                 }
             }
@@ -141,7 +143,7 @@ public class PlayerMovement : MonoBehaviour
             knockBackCounter -= Time.deltaTime;
             player.Move(knockBackDirection * Time.deltaTime);
         }
-        if (PlayerComponent.Instance.isBurning)
+        if (playerInstance.isBurning)
         {
             fireVFX.SetActive(true);
             burnTimer += Time.deltaTime;
@@ -157,7 +159,6 @@ public class PlayerMovement : MonoBehaviour
             fireVFX.SetActive(false);
 
     }
-
     public void Movement()
     {
         Vector3 forward = isAiming ? transform.forward : freelookCam.transform.forward;
@@ -178,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            jump.y += Mathf.Max(gravity * PlayerComponent.Instance.gravityMultiplier * Time.deltaTime, -15);
+            jump.y += Mathf.Max(gravity * playerInstance.gravityMultiplier * Time.deltaTime, -15);
             coyoteTimeCounter -= Time.deltaTime;
             animator.SetBool("isGrounded", false);
         }
@@ -190,14 +191,14 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded() || coyoteTimeCounter > 0f)
             {
                 coyoteTimeCounter = 0f;
-                jump = transform.up * (jumpForce * PlayerComponent.Instance.jumpMultiplier);
+                jump = transform.up * (jumpForce * playerInstance.jumpMultiplier);
                 jumpBufferCounter = 0f;
                 animator.SetBool("hasJumped", true);
                 StartCoroutine(StartJumpVFX());
             }
             else if (coyoteTimeCounter <= 0f && !doubleJumped)
             {
-                jump = transform.up * (jumpForce * PlayerComponent.Instance.jumpMultiplier);
+                jump = transform.up * (jumpForce * playerInstance.jumpMultiplier);
                 jumpBufferCounter = 0f;
                 doubleJumped = true;
                 doubleJumpStartTimer = true;
@@ -220,10 +221,10 @@ public class PlayerMovement : MonoBehaviour
         if (direction.sqrMagnitude > 0.001f) //si ya input
         {
             float drag = IsGrounded() ? groundDrag : airDrag;
-            if (moveSpeed <= maxSpeed * PlayerComponent.Instance.speedMultiplier)
-                moveSpeed = Mathf.Min(moveSpeed + acceleration * drag * Time.deltaTime, maxSpeed * PlayerComponent.Instance.speedMultiplier); //accelere
-            else if (moveSpeed > maxSpeed * PlayerComponent.Instance.speedMultiplier && !isDashing) //S'il est deja plus vite (ex.: il se fait slow mais deja full speed)
-                moveSpeed = maxSpeed * PlayerComponent.Instance.speedMultiplier;
+            if (moveSpeed <= maxSpeed * playerInstance.speedMultiplier)
+                moveSpeed = Mathf.Min(moveSpeed + acceleration * drag * Time.deltaTime, maxSpeed * playerInstance.speedMultiplier); //accelere
+            else if (moveSpeed > maxSpeed * playerInstance.speedMultiplier && !isDashing) //S'il est deja plus vite (ex.: il se fait slow mais deja full speed)
+                moveSpeed = maxSpeed * playerInstance.speedMultiplier;
         }
         else
             if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
@@ -304,7 +305,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Dash(InputAction.CallbackContext ctx)
     {
-        if (isPaused || PlayerComponent.Instance.bossDisableDash) return;
+        if (isPaused || playerInstance.bossDisableDash) return;
 
         if (ctx.performed && canDash)
         {
@@ -357,23 +358,23 @@ public class PlayerMovement : MonoBehaviour
 
         float originalGravity = gravity;
         gravity = 0f;
-        moveSpeed = maxSpeed * PlayerComponent.Instance.speedMultiplier * PlayerComponent.Instance.dashSpeed;
+        moveSpeed = maxSpeed * playerInstance.speedMultiplier * playerInstance.dashSpeed;
         yield return new WaitForSeconds(dashTime);
 
         gravity = originalGravity;
-        moveSpeed = maxSpeed * PlayerComponent.Instance.speedMultiplier;
+        moveSpeed = maxSpeed * playerInstance.speedMultiplier;
         isDashing = false;
-        yield return new WaitForSeconds(PlayerComponent.Instance.dashCooldown);
+        yield return new WaitForSeconds(playerInstance.dashCooldown);
 
         canDash = true;
     }
     public void SlowPlayer(float divider) // les mettres dans playerComponent ???
     {
-        PlayerComponent.Instance.speedMultiplier /= divider;
+        playerInstance.speedMultiplier /= divider;
     }
     public void SpeedUpPlayer(float multiplier)
     {
-        PlayerComponent.Instance.speedMultiplier *= multiplier;
+        playerInstance.speedMultiplier *= multiplier;
     }
 
     public void KnockBack(Vector3 direction, float knockForce)
@@ -384,11 +385,11 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ToggleBurn(bool burning)
     {
-        PlayerComponent.Instance.isBurning = burning;
+        playerInstance.isBurning = burning;
     }
     public void ToggleParalyse(float paralyseTime)
     {
-        PlayerComponent.Instance.isParalysed = true;
+        playerInstance.isParalysed = true;
         paralyseTimer = paralyseTime;
     }
     

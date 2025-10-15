@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -193,7 +194,15 @@ public class PlayerActions : MonoBehaviour
                 prefab = defaultProjectilePrefab;
                 break;
         }
-        Instantiate(prefab, exitPoint.transform.position, PlayerMovement.Instance.isAiming ? Quaternion.LookRotation(aimCamera.ScreenPointToRay(screenCenter).direction) : transform.rotation);
+
+        RaycastHit hit;
+        Quaternion rotation;
+        if (Physics.Raycast(aimCamera.transform.position + aimCamera.transform.forward * .5f, aimCamera.transform.forward, out hit, 500))
+            rotation = Quaternion.LookRotation(hit.point - exitPoint.transform.position, Vector3.up);
+        else
+            rotation = Quaternion.LookRotation((aimCamera.transform.position + aimCamera.transform.forward * 500) - exitPoint.transform.position, Vector3.up);
+
+        Instantiate(prefab, exitPoint.transform.position, PlayerMovement.Instance.isAiming ? rotation : transform.rotation);
     }
     public void ShowShield(bool show)
     {
