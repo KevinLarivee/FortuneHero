@@ -17,18 +17,15 @@ public class RangedEnemyComponent : EnemyComponent
         agent = GetComponent<NavMeshAgent>();
         patrol.move = Move;
     }
-    //void Update()
-    //{
-    //    //base.Update();    
-    //}
 
     protected override void Move(Transform newTarget)
     {
-        if (agent != null) agent.destination = newTarget.position;
+        if (agent != null) 
+            agent.destination = newTarget.position;
         base.Move(newTarget);
     }
 
-    private void FireProjectile()
+    public void FireProjectile()
     {
 
         // Direction vers la dernière position connue du joueur (stockée dans 'target' par EnemyComponent)
@@ -48,21 +45,31 @@ public class RangedEnemyComponent : EnemyComponent
         }
     }
 
-    protected override IEnumerator Attack()
+    //protected override IEnumerator Attack()
+    //{
+    //    animator.SetBool("isChasing", false);
+    //    animator.SetTrigger("Attack");
+
+    //    float fireAt = Mathf.Clamp(fireDelayInAnim, 0f, animationTime);
+    //    if (fireAt > 0f) yield return new WaitForSeconds(fireAt);
+
+    //    FireProjectile();
+
+    //    float rest = Mathf.Max(0f, animationTime - fireAt);
+    //    if (rest > 0f) yield return new WaitForSeconds(rest);
+
+    //    enemyState = EnemyState.Chasing;
+
+    //    if (attackCd > 0f) yield return new WaitForSeconds(attackCd);
+    //}
+    protected override void SlowEnemy(float divider)
     {
-        animator.SetBool("isChasing", false);
-        animator.SetTrigger("Attack");
-
-        float fireAt = Mathf.Clamp(fireDelayInAnim, 0f, animationTime);
-        if (fireAt > 0f) yield return new WaitForSeconds(fireAt);
-
-        FireProjectile();
-
-        float rest = Mathf.Max(0f, animationTime - fireAt);
-        if (rest > 0f) yield return new WaitForSeconds(rest);
-
-        enemyState = EnemyState.Chasing;
-
-        if (attackCd > 0f) yield return new WaitForSeconds(attackCd);
+        base.SlowEnemy(divider);
+        agent.speed = moveSpeed;
+    }
+    protected override void SpeedUpEnemy(float multiplier)
+    {
+        base.SpeedUpEnemy(multiplier);
+        agent.speed = moveSpeed;
     }
 }

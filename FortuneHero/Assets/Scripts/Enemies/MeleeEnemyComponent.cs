@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(PatrolComponent))]
 public class MeleeEnemyComponent : EnemyComponent
@@ -14,6 +15,7 @@ public class MeleeEnemyComponent : EnemyComponent
         agent = GetComponent<NavMeshAgent>();
         //Si besoin de remplacer ceux du parent (probablement)
         //detector.targetDetected = PlayerDetected;
+        agent.speed = moveSpeed;
         patrol.move = Move;
     }
 
@@ -58,9 +60,19 @@ public class MeleeEnemyComponent : EnemyComponent
        agent.destination = target;
        base.ChasingMove();
     }
+    protected override void SlowEnemy(float divider)
+    {
+        base.SlowEnemy(divider);
+        agent.speed = moveSpeed;
+    }
+    protected override void SpeedUpEnemy(float multiplier)
+    {
+        base.SpeedUpEnemy(multiplier);
+        agent.speed = moveSpeed;
+    }
     //protected override IEnumerator Attack()
     //{
-        
+
 
     //}
 

@@ -14,7 +14,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
     public int dmg = 1;
     public int collisionDmg = 10;
-    
+
     //paralyze
     [SerializeField] GameObject paralyzePrefab;
     public bool isParalyzed = false;
@@ -27,7 +27,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     [SerializeField] protected float animationTime = 0.7f;
 
 
-    [SerializeField] protected Animator animator;
+    protected Animator animator;
     protected AnimationClip animClip;
     protected EnemyDrops enemyDrops;
     protected HealthComponent healthComponent;
@@ -46,7 +46,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
         patrol = GetComponent<PatrolComponent>();
         detector = GetComponentInChildren<DetectorComponent>();
         enemyDrops = GetComponent<EnemyDrops>();
@@ -89,7 +89,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
             paraTimer -= Time.deltaTime;
             paralyzePrefab.SetActive(true);
             //animation on
-            if(paraTimer <= 0)
+            if (paraTimer <= 0)
             {
                 //Debug.Log("ohh shitt im back babyy");
                 paralyzePrefab.SetActive(false);
@@ -134,7 +134,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     {
         animator.SetBool("isChasing", true);
         animator.SetBool("isPatrolling", false);
-        if(Vector3.Distance(target, transform.position) <= stoppingDistance)
+        if (Vector3.Distance(target, transform.position) <= stoppingDistance)
         {
             animator.SetBool("isChasing", false);
         }
@@ -155,11 +155,11 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
         yield return new WaitForSeconds(attackCd);
     }
-    public IEnumerator HitByIceBall(float speedChange, float slowDuration, NavMeshAgent agent, GameObject explosionObj) //si le agent passer est null, il n'est pas utiliser donc pg
+    public IEnumerator HitByIceBall(float speedChange, float slowDuration, GameObject explosionObj)
     {
-        SlowEnemy(speedChange, agent);
+        SlowEnemy(speedChange);
         yield return new WaitForSeconds(slowDuration);
-        SpeedUpEnemy(speedChange, agent);
+        SpeedUpEnemy(speedChange);
         Destroy(explosionObj);
     }
     public void ToggleParalyze(float paraDuration)
@@ -168,20 +168,15 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         paraTimer = paraDuration;
     }
 
-    private void SlowEnemy(float divider, NavMeshAgent agent)
+    protected virtual void SlowEnemy(float divider)
     {
-        if (agent == null)
-            moveSpeed /= divider;
-        else
-            agent.speed /= divider;
+        moveSpeed /= divider;
     }
-    private void SpeedUpEnemy(float multiplier, NavMeshAgent agent)
+    protected virtual void SpeedUpEnemy(float multiplier)
     {
-        if (agent == null)
-            moveSpeed *= multiplier;
-        else
-            agent.speed *= multiplier;
+        moveSpeed *= multiplier;
     }
+
     //private void OnEnable()
     //{
     //    agent.destination = patrol.NextTarget().position;
