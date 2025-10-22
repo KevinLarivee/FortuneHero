@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:FortuneHero/Assets/Lava_Flowing_Shader/Scenes/FLowingLavaSettings.lighting.meta
 guid: 0f84947a37058c84688be93e84327c67
-========
-guid: 98d1b0264db83644e87775d8d5ec943c
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/Imports/MapImports/Lava/Materials/Unique/Depth Mask Edge Detection.mat.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 4890085278179872738

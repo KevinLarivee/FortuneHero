@@ -1,13 +1,7 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/3D Models/Grass_Mesh.fbx.meta
 guid: 446648e11dc37c4458f9af0b19ebb9d1
 ModelImporter:
   serializedVersion: 19300
-========
-guid: eb688111da06931409617c133516c608
-ModelImporter:
-  serializedVersion: 20200
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Models/Cards/Card_Club10.fbx.meta
   internalIDToNameTable: []
   externalObjects: {}
   materials:
@@ -49,10 +43,6 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/3D Models/Grass_Mesh.fbx.meta
-========
-    fileIdsGeneration: 2
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Models/Cards/Card_Club10.fbx.meta
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -100,26 +90,14 @@ ModelImporter:
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/3D Models/Grass_Mesh.fbx.meta
-========
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Models/Cards/Card_Club10.fbx.meta
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/3D Models/Grass_Mesh.fbx.meta
   productId: 168611
   packageName: Ultimate 10+ Shaders
   packageVersion: 1.0.2
   assetPath: Assets/IgnoredAssets/Ultimate 10 Plus Shaders/3D Models/Grass_Mesh.fbx
   uploadId: 385061
-========
-  productId: 237164
-  packageName: PBR Little Games Pack - 4K
-  packageVersion: 1.0
-  assetPath: Assets/SubstanceAssets/LittleGamesPack/Models/Cards/Card_Club10.fbx
-  uploadId: 538269
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Models/Cards/Card_Club10.fbx.meta

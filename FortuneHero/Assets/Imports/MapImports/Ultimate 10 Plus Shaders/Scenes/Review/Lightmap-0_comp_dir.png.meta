@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scenes/Review/Lightmap-0_comp_dir.png.meta
 guid: 4b4607cbd6e801646b704e4fb44ac8c7
-========
-guid: 03159f8be35accb4883befca9d0641e1
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Metallic.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -27,10 +23,6 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 1
   streamingMipmapsPriority: 0
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scenes/Review/Lightmap-0_comp_dir.png.meta
-========
-  vTOnly: 0
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Metallic.png.meta
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -81,11 +73,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scenes/Review/Lightmap-0_comp_dir.png.meta
     maxTextureSize: 8192
-========
-    maxTextureSize: 4096
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Metallic.png.meta
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -97,11 +85,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: iPhone
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scenes/Review/Lightmap-0_comp_dir.png.meta
     maxTextureSize: 8192
-========
-    maxTextureSize: 4096
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Metallic.png.meta
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -112,13 +96,8 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scenes/Review/Lightmap-0_comp_dir.png.meta
     buildTarget: Android
     maxTextureSize: 8192
-========
-    buildTarget: WebGL
-    maxTextureSize: 4096
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Metallic.png.meta
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -149,16 +128,8 @@ TextureImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scenes/Review/Lightmap-0_comp_dir.png.meta
   productId: 168611
   packageName: Ultimate 10+ Shaders
   packageVersion: 1.0.2
   assetPath: Assets/IgnoredAssets/Ultimate 10 Plus Shaders/Scenes/Review/Lightmap-0_comp_dir.png
   uploadId: 385061
-========
-  productId: 237164
-  packageName: PBR Little Games Pack - 4K
-  packageVersion: 1.0
-  assetPath: Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Metallic.png
-  uploadId: 538269
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Metallic.png.meta

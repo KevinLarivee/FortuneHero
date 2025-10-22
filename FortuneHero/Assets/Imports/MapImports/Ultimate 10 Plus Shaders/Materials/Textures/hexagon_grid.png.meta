@@ -1,16 +1,12 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Materials/Textures/hexagon_grid.png.meta
 guid: e61a550a7ddc3304fbfe0a01919efe9c
-========
-guid: 14a1d5424cea61f4da549fe97e99e456
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Height.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -35,19 +31,13 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Materials/Textures/hexagon_grid.png.meta
     filterMode: 2
     aniso: 2
     mipBias: -100
-========
-    filterMode: 1
-    aniso: 1
-    mipBias: 0
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Height.png.meta
     wrapU: 0
     wrapV: 0
     wrapW: 0
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
   spriteMode: 1
@@ -59,13 +49,9 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Materials/Textures/hexagon_grid.png.meta
   textureType: 8
-========
-  textureType: 0
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Height.png.meta
   textureShape: 1
   singleChannelComponent: 0
   maxTextureSizeSet: 0
@@ -75,11 +61,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Materials/Textures/hexagon_grid.png.meta
     maxTextureSize: 256
-========
-    maxTextureSize: 4096
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Height.png.meta
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -91,10 +73,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Materials/Textures/hexagon_grid.png.meta
     maxTextureSize: 256
-========
-    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -105,20 +84,6 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
-    buildTarget: iPhone
-    maxTextureSize: 4096
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Height.png.meta
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Materials/Textures/hexagon_grid.png.meta
     buildTarget: iPhone
     maxTextureSize: 8192
     resizeAlgorithm: 0
@@ -133,10 +98,6 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 8192
-========
-    buildTarget: WebGL
-    maxTextureSize: 4096
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Height.png.meta
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -167,16 +128,8 @@ TextureImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Materials/Textures/hexagon_grid.png.meta
   productId: 168611
   packageName: Ultimate 10+ Shaders
   packageVersion: 1.0.2
   assetPath: Assets/Ultimate 10 Plus Shaders/Materials/Textures/hexagon_grid.png
   uploadId: 385061
-========
-  productId: 237164
-  packageName: PBR Little Games Pack - 4K
-  packageVersion: 1.0
-  assetPath: Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Height.png
-  uploadId: 538269
->>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/SubstanceAssets/LittleGamesPack/Textures/GamePieces/GamePieces_Height.png.meta
