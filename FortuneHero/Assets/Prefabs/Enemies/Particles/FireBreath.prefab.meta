@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Enemies/Particles/FireBreath.prefab.meta
 guid: cff14cdc86e566642855eaf0c0f16696
+========
+guid: 67545720dad2e43448a0324e4b42a22b
+>>>>>>>> e3ba71672bfab3ea716eac61ea5b256e45fbe5b1:FortuneHero/Assets/Prefabs/Player/Particles/AttackParticles/ShopVariant/ShopItem_IceMagic.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

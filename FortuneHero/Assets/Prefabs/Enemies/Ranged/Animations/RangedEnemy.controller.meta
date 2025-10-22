@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Enemies/Ranged/Animations/RangedEnemy.controller.meta
 guid: 89a646e425c551e468d47ebcbe722ede
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 9100000
+========
+guid: a2b55a769f741314fbe935b337cdd82c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+>>>>>>>> e3ba71672bfab3ea716eac61ea5b256e45fbe5b1:FortuneHero/Assets/Prefabs/Enemies/Melee/Animations/Atak_2.anim.meta
   userData: 
   assetBundleName: 
   assetBundleVariant: 

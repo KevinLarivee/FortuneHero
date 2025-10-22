@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: c25dd15616056bf40b5fef0db3d448da
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 168611
+  packageName: Ultimate 10+ Shaders
+  packageVersion: 1.0.2
+  assetPath: Assets/IgnoredAssets/Ultimate 10 Plus Shaders/Scripts/U10PS_SnowOverTime.cs
+  uploadId: 385061

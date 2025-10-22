@@ -1,9 +1,17 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/LavaCrystal.png.meta
 guid: b9c27b8c5c6629444918abe2b8907ac9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
+========
+guid: a599596546e2a9b4fb10db5745ae8a68
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 12
+>>>>>>>> e3ba71672bfab3ea716eac61ea5b256e45fbe5b1:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Textures/Bottle2_DefaultMaterial_AO.png.meta
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
@@ -25,7 +33,11 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/LavaCrystal.png.meta
   ignoreMipmapLimit: 0
+========
+  ignoreMasterTextureLimit: 0
+>>>>>>>> e3ba71672bfab3ea716eac61ea5b256e45fbe5b1:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Textures/Bottle2_DefaultMaterial_AO.png.meta
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -64,7 +76,10 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/LavaCrystal.png.meta
   swizzle: 50462976
+========
+>>>>>>>> e3ba71672bfab3ea716eac61ea5b256e45fbe5b1:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Textures/Bottle2_DefaultMaterial_AO.png.meta
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 4
@@ -93,8 +108,13 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/LavaCrystal.png.meta
   - serializedVersion: 4
     buildTarget: WindowsStoreApps
+========
+  - serializedVersion: 3
+    buildTarget: Server
+>>>>>>>> e3ba71672bfab3ea716eac61ea5b256e45fbe5b1:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Textures/Bottle2_DefaultMaterial_AO.png.meta
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -120,11 +140,26 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/LavaCrystal.png.meta
     spriteCustomMetadata:
       entries: []
     nameFileIdTable: {}
   mipmapLimitGroupName: 
+========
+    nameFileIdTable: {}
+  spritePackingTag: 
+>>>>>>>> e3ba71672bfab3ea716eac61ea5b256e45fbe5b1:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Textures/Bottle2_DefaultMaterial_AO.png.meta
   pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/LavaCrystal.png.meta
+========
+AssetOrigin:
+  serializedVersion: 1
+  productId: 248712
+  packageName: RPG Food Props DEMO
+  packageVersion: 1.1
+  assetPath: Assets/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Textures/Bottle2_DefaultMaterial_AO.png
+  uploadId: 580472
+>>>>>>>> e3ba71672bfab3ea716eac61ea5b256e45fbe5b1:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Textures/Bottle2_DefaultMaterial_AO.png.meta
