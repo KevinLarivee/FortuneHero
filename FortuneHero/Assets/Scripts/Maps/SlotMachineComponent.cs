@@ -191,10 +191,10 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
             int multiplier = 0;
             switch (reels[0])
             {
-                case Symbol.Cerise: multiplier = 2; break;
-                case Symbol.Cloche: multiplier = 5; break;
-                case Symbol.BAR: multiplier = 7; break;
-                case Symbol.Sept: multiplier = 10; break;
+                case Symbol.Cerise: multiplier = 3; break;
+                case Symbol.Cloche: multiplier = 7; break;
+                case Symbol.BAR: multiplier = 10; break;
+                case Symbol.Sept: multiplier = 20; break;
             }
 
             int gain = currentBet * multiplier;
