@@ -7,7 +7,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(EnemyDrops), typeof(HealthComponent))]
 public class EnemyComponent : MonoBehaviour, IPoolable
 {
-    //!!! Quoi mettre dans EnnemyComponent vs SpecificEnnemyComponent
     protected enum EnemyState { Patrol, Attacking, Chasing }
     protected EnemyState enemyState;
     public ObjectPoolComponent Pool { get; set; }
@@ -15,7 +14,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     public int dmg = 1;
     public int collisionDmg = 10;
 
-    //paralyze
     [SerializeField] GameObject paralyzePrefab;
     public bool isParalyzed = false;
     float paraTimer;
@@ -41,9 +39,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     protected Vector3 target;
     protected bool isAttacking = false;
 
-    //NavMeshAgent agent;
-    //bool _isDead = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -57,9 +52,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
         detector.targetDetected = PlayerDetected;
         patrol.move = Move;
-        //agent = GetComponent<NavMeshAgent>();
-        //agent.updatePosition = false;
-        //agent.updateRotation = true;
     }
 
     protected void Update()
@@ -70,7 +62,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
                 ChasingMove();
             else if (enemyState == EnemyState.Attacking && !isAttacking)
             {
-                Debug.Log("should attack");
                 StartCoroutine(Attack());
             }
 
@@ -85,13 +76,11 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         }
         else
         {
-            //Debug.Log("Im paralyzed, helllppppp");
             paraTimer -= Time.deltaTime;
             paralyzePrefab.SetActive(true);
             //animation on
             if (paraTimer <= 0)
             {
-                //Debug.Log("ohh shitt im back babyy");
                 paralyzePrefab.SetActive(false);
                 isParalyzed = false;
                 //animation off
@@ -105,10 +94,12 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         patrol.isActive = false;
         enemyState = EnemyState.Chasing;
         target = targetPosition;
-        //agent.destination = target;
-        Vector3 posToTarget = target - transform.position;
 
-        if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
+        Vector3 posToTarget = target - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        if (IsInAttackDistance())
         {
             enemyState = EnemyState.Attacking;
         }
@@ -120,12 +111,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
             newTarget = patrol.NextTarget();
 
         target = newTarget.position;
-        //agent.destination = newTarget.position;
-        //Vector3 posToTarget = target - transform.position;
-        //transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        //Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
+    
         animator.SetBool("isPatrolling", true);
         animator.SetBool("isChasing", false);
     }
@@ -143,13 +129,14 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     {
         isAttacking = true;
         animator.SetBool("isChasing", false);
-        //animator.SetTrigger("Attack");
         animator.SetBool("isAttacking", isAttacking);
 
-        //yield return new WaitForSeconds(0.1f);
         yield return new WaitForNextFrameUnit();
         yield return new WaitUntil(() => !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
-        enemyState = EnemyState.Chasing;
+
+        if (!IsInAttackDistance())
+            enemyState = EnemyState.Chasing;
+        
         isAttacking = false;
         animator.SetBool("isAttacking", isAttacking);
 
@@ -177,24 +164,31 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         moveSpeed *= multiplier;
     }
 
-    //private void OnEnable()
-    //{
-    //    agent.destination = patrol.NextTarget().position;
-    //}
-
     protected virtual void Hit()
     {
         animator.SetTrigger("isHit");
     }
     protected virtual void Death()
     {
-        //animator.SetTrigger("death");
-        //agent.isStopped = true;
+
+        animator.SetTrigger("isDead"); //faudra wait ou qqchose 
         //À la fin de l'anim de mort
         enemyDrops.SpawnDrops();
-        animator.SetTrigger("isDead");
         Destroy(gameObject);
     }
+    protected bool IsInAttackDistance()
+    {
+        Vector3 posToTarget = target - transform.position;
+        if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
+
+
     //À revoir...
     //void Move(Transform destination)
     //{

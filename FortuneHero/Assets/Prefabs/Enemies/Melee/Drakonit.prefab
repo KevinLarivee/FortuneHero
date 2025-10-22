@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2447655029214697455}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.744, z: 0.16}
+  m_LocalRotation: {x: 0.45509693, y: -0.5411902, z: 0.45509693, w: 0.5411902}
+  m_LocalPosition: {x: -0.14321874, y: -0.19712955, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6377055221343458369}
+  m_Father: {fileID: 4615963904975741451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1581976572568983345
 MonoBehaviour:
@@ -880,7 +880,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
       propertyPath: m_Name
-      value: Drakonit 1
+      value: Drakonit
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
       propertyPath: m_Layer
@@ -1290,10 +1290,10 @@ PrefabInstance:
       addedObject: {fileID: 5183925534856609452}
     - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5488110969787173539}
-    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 956072052348514759}
+    - targetCorrespondingSourceObject: {fileID: 2304244481032835489, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5488110969787173539}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
       insertIndex: -1
@@ -1326,6 +1326,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 12989361126903954}
   m_SourcePrefab: {fileID: 100100000, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
+--- !u!4 &4615963904975741451 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2304244481032835489, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}
+  m_PrefabInstance: {fileID: 6914538986090754986}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5149319189389997098 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1766376526291797888, guid: d5383aff41ea14648965e3e5484ce35d, type: 3}

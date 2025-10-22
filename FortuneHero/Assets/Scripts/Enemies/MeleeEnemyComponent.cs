@@ -7,7 +7,10 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(PatrolComponent))]
 public class MeleeEnemyComponent : EnemyComponent
 {
+    [SerializeField] Collider rightHandCollider;
+    [SerializeField] Collider leftHandCollider;
     NavMeshAgent agent;
+    int atkCount = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,47 +21,25 @@ public class MeleeEnemyComponent : EnemyComponent
         agent.speed = moveSpeed;
         patrol.move = Move;
     }
-
-    //void Update()
-    //{
-    //    base.Update();
-    //}
     protected override void PlayerDetected(Vector3 targetPosition)
     {
-        //timeUntilPatrolTimer = 0;
-        //patrol.isActive = false;
-        //enemyState = EnemyState.Chasing;
-        //target = targetPosition;
-        //agent.destination = target;
-        //Vector3 posToTarget = target - transform.position;
-
-        //if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
-        //    enemyState = EnemyState.Attacking;
         base.PlayerDetected(targetPosition);
         agent.isStopped = enemyState == EnemyState.Attacking;
-
     }
     protected override void Move(Transform newTarget)
     {
-        //if (agent.remainingDistance <= agent.stoppingDistance)
-        //{
-        //    newTarget = patrol.NextTarget();
-        //}
-        //target = newTarget.position;
         agent.destination = newTarget.position;
-        //Vector3 posToTarget = target - transform.position;
-        //transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        //Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
-        //animator.SetBool("isPatrolling", true);
-        //animator.SetBool("isChasing", false);
+        if(agent.speed != moveSpeed / 2)
+            agent.speed = moveSpeed / 2;
+        
         base.Move(newTarget);
     }
     protected override void ChasingMove()
     {
        agent.destination = target;
-       base.ChasingMove();
+        if (agent.speed != moveSpeed)
+            agent.speed = moveSpeed;
+        base.ChasingMove();
     }
     protected override void SlowEnemy(float divider)
     {
@@ -70,24 +51,32 @@ public class MeleeEnemyComponent : EnemyComponent
         base.SpeedUpEnemy(multiplier);
         agent.speed = moveSpeed;
     }
-    //protected override IEnumerator Attack()
-    //{
 
+    public void EnableRightHandCollider()
+    {
+        if (rightHandCollider == null) { Debug.LogError("EnableRightHandCollider: rightHandCollider is NULL"); return; }
+        rightHandCollider.enabled = true;
+        Debug.Log("EnableRightHandCollider called — enabled right collider");
+    }
 
-    //}
+    public void DisableRightHandCollider()
+    {
+        if (rightHandCollider == null) { Debug.LogError("DisableRightHandCollider: rightHandCollider is NULL"); return; }
+        rightHandCollider.enabled = false;
+        Debug.Log("DisableRightHandCollider called — disabled right collider");
+    }
 
-    //protected override void Hit()
-    //{
-    //    animator.SetTrigger("hit");
-    //    base.Hit();
-    //}
-    //protected override void Death()
-    //{
-    //    //animator.SetTrigger("death");
-    //    //agent.isStopped = true;
-    //    //À la fin de l'anim de mort
-    //    Destroy(gameObject);
-    //    enemyDrops.SpawnDrops();
-    //    base.Death();
-    //}
+    public void EnableLeftHandCollider()
+    {
+        if (leftHandCollider == null) { Debug.LogError("EnableLeftHandCollider: leftHandCollider is NULL"); return; }
+        leftHandCollider.enabled = true;
+        Debug.Log("EnableLeftHandCollider called — enabled left collider");
+    }
+
+    public void DisableLeftHandCollider()
+    {
+        if (leftHandCollider == null) { Debug.LogError("DisableLeftHandCollider: leftHandCollider is NULL"); return; }
+        leftHandCollider.enabled = false;
+        Debug.Log("DisableLeftHandCollider called — disabled left collider");
+    }
 }
