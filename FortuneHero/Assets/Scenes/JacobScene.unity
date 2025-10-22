@@ -1611,7 +1611,7 @@ PrefabInstance:
       objectReference: {fileID: 1422877567}
     - target: {fileID: 1971819487942980329, guid: abb4117c5bdb11545a806c28508591c2, type: 3}
       propertyPath: m_VersionIndex
-      value: 26
+      value: 29
       objectReference: {fileID: 0}
     - target: {fileID: 4014193213424546650, guid: abb4117c5bdb11545a806c28508591c2, type: 3}
       propertyPath: panelPlayer
