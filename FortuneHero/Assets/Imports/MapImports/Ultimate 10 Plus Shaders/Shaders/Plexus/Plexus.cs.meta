@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 7c4c3c6f3a31af740b61872fe6ce61f9
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 168611
+  packageName: Ultimate 10+ Shaders
+  packageVersion: 1.0.2
+  assetPath: Assets/IgnoredAssets/Ultimate 10 Plus Shaders/Shaders/Plexus/Plexus.cs
+  uploadId: 385061
