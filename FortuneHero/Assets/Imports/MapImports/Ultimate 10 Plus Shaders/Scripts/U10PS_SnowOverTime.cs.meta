@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scripts/U10PS_SnowOverTime.cs.meta
 guid: 6bf5881fe14c014498ac5184f5f44107
+========
+guid: 3dffc6d8954c2c24ea4c32f8fb1118f0
+>>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scripts/U10PS_ExampleReview.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -14,5 +18,9 @@ AssetOrigin:
   productId: 168611
   packageName: Ultimate 10+ Shaders
   packageVersion: 1.0.2
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scripts/U10PS_SnowOverTime.cs.meta
   assetPath: Assets/IgnoredAssets/Ultimate 10 Plus Shaders/Scripts/U10PS_SnowOverTime.cs
+========
+  assetPath: Assets/IgnoredAssets/Ultimate 10 Plus Shaders/Scripts/U10PS_ExampleReview.cs
+>>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scripts/U10PS_ExampleReview.cs.meta
   uploadId: 385061
