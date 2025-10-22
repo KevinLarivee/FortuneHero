@@ -1,4 +1,6 @@
+using NUnit.Framework;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,6 +16,10 @@ public class PlayerActions : MonoBehaviour
 
     static PlayerActions instance;
     public static PlayerActions Instance { get { return instance; } }
+
+    public List<PowerUp> powerUps;
+
+
 
     [SerializeField] Collider weaponCollider;
     [SerializeField] GameObject exitPoint;
@@ -47,8 +53,8 @@ public class PlayerActions : MonoBehaviour
     [Header("PowerUps")]
     public float slowDuration = 5f;
     public float speedDrop = 2f;
-    public bool isIceBall = false; 
     public bool AoeParaActivated = false;
+    bool isIceBall = false;
     [SerializeField] float aoeRadius = 4f;
     [SerializeField] float aoeOffset = 2f;
     [SerializeField] float aoeDuration = 4f;
@@ -73,9 +79,9 @@ public class PlayerActions : MonoBehaviour
     void Update()
     {
         if (AoeParaActivated)
-            StartCoroutine(AoeParalyse());
+            StartAoeParalyze();
 
-        if(isIceBall)
+        if (isIceBall) //Issue de quand tu active, tant que la ice ball a pas toucher l'ennemi, isIceBall est pas mis a false, donc si elle vole longtemps, tu pourrais retirer une iceBall
             currentType = ProjectileType.IceBall;
         else
             currentType = ProjectileType.Default;
@@ -150,7 +156,11 @@ public class PlayerActions : MonoBehaviour
             ShowShield(true);
         }
     }
-    public IEnumerator AoeParalyse()
+    public void StartAoeParalyze()
+    {
+        StartCoroutine(AoeParalyze());
+    }
+    private IEnumerator AoeParalyze()
     {
         AoeParaActivated = false;
         Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
@@ -160,26 +170,20 @@ public class PlayerActions : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             if (collider.CompareTag("Enemy"))//Temp pcq melee a des colliders sur les mains et sa fuck tt et j'ai besoin quil soit sur enemy layer pour les dmgs
+                                             //Changer la methode d'attaque, faire apparaitre hitbox quand il attaque a la place pour eviter se probleme
             {
                 Debug.Log($"Hit: {collider.name} | Root: {collider.transform.root.name}");
-                collider.gameObject.GetComponent<EnemyComponent>().ToggleParalyze(aoeDuration);
+                Debug.Log(collider.transform.root.GetComponent<EnemyComponent>());
+                collider.transform.root.GetComponent<EnemyComponent>().ToggleParalyze(aoeDuration);
             }
         }
 
         yield return new WaitForSeconds(aoeDuration);
         Destroy(obj);
-    }
-    private void OnDrawGizmosSelected()
+    } //OverlapSphere check juste quand on active le power up, pt changer le prefab ou ajuster le code 
+    public void SetToIceBall(bool trueOrFalse)
     {
-        Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 1.7f, transform.position.z);
-
-        // translucent fill
-        Gizmos.color = new Color(0.2f, 0.6f, 1f, 0.15f);
-        Gizmos.DrawSphere(spawnPos, aoeRadius);
-
-        // outline
-        Gizmos.color = new Color(0.2f, 0.6f, 1f, 0.9f);
-        Gizmos.DrawWireSphere(spawnPos, aoeRadius);
+        isIceBall = trueOrFalse;
     }
     public void ShootProjectile()
     {
