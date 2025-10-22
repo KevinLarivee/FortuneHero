@@ -34,7 +34,7 @@ public class BossMove_Action : Behaviour_Node
         {
             animator.SetBool("isRunning", false);
             agent.isStopped = true; //???
-            FinishAction();
+            FinishAction(true);
         }
     }
 }

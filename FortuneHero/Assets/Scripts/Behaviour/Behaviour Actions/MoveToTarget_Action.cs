@@ -20,7 +20,7 @@ public class MoveToTarget_Action : Behaviour_Node
     public override void Tick(float deltaTime)
     {
         if (agent.remainingDistance <= agent.stoppingDistance)
-            FinishAction();
+            FinishAction(true);
         base.Tick(deltaTime);
     }
 }

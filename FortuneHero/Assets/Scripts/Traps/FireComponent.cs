@@ -1,40 +1,53 @@
+using NaughtyAttributes;
 using System.Collections;
-using UnityEditor.Build;
+using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class FireComponent : MonoBehaviour
 {
-    /*!!!!! Problèmes : entre plusieurs fois dans le trigger et 1 StopBurn si on sort et rerentre*/
+    //!!!!! Problèmes : entre plusieurs fois dans le trigger et 1 StopBurn si on sort et rerentre
+    //Ne fonctionne que avec Player pour l'instant
 
-    [SerializeField] float dmg = 1f;
-    [SerializeField] float afterBurnTime = 3f;
-    [SerializeField] float slownessValue = 2f;
-    [SerializeField] bool slowness = true;
-    [SerializeField] bool preventDash = true;
+    //[SerializeField] float dmg = 1f;
     [SerializeField] string target = "Player";
+    [SerializeField] GameObject firePrefab;
+    [SerializeField] float fireRate = 0.1f;
+    [SerializeField] float afterBurnTime = 3f;
+    [SerializeField] bool slowness = true;
+    [SerializeField, ShowIf(nameof(slowness))] float slownessValue = 2f;
+    [SerializeField] bool preventDash = true;
+    [SerializeField] GameObject lavaPrefab;
+    [SerializeField, ShowIf(nameof(ShowDelay))] float lavaDelay = 0.5f;
 
     Coroutine afterBurn;
     ParticleSystem[] effects;
-    Collider collider;
-    bool playerIsEnter = false;
-
-    LayerMask ignoreTrigger;
+    //List<ParticleCollisionEvent> collisionEvents;
+    public static bool playerIsEnter = false;
+    float elapsedTime = 0f;
 
     void Awake()
     {
         effects = GetComponents<ParticleSystem>();
-        collider = GetComponent<Collider>();
-        ignoreTrigger = LayerMask.GetMask("IgnoreTrigger");
+        //collisionEvents = new List<ParticleCollisionEvent>();
+    }
+    void OnEnable()
+    {
+        PlayFire();
+    }
+
+    void Update()
+    {
+        //if(elapsedTime > 0f)
+        //    elapsedTime -= Time.deltaTime;
+
     }
 
     public void PlayFire()
     {
-        foreach(ParticleSystem p in effects)
+        foreach (ParticleSystem p in effects)
         {
             p.Play();
         }
-        collider.enabled = true;
     }
 
     public void StopFire()
@@ -45,70 +58,86 @@ public class FireComponent : MonoBehaviour
         }
         if (playerIsEnter)
         {
-            ExitFire(PlayerMovement.Instance.gameObject.GetComponent<Collider>());
+            ExitFire();
         }
-        collider.enabled = false;
     }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(target) && other.excludeLayers != ignoreTrigger)
-        {
-            playerIsEnter = true;
-            if (afterBurn != null)
-                StopCoroutine(afterBurn);
+    //private void OnParticleCollision(GameObject other)
+    //{
+    //    if (other.CompareTag(target))
+    //    {
+    //        if (afterBurn != null)
+    //            StopCoroutine(afterBurn);
+    //        afterBurn = StartCoroutine(AfterBurn());
+    //        if (!playerIsEnter)
+    //        {
+    //            playerIsEnter = true;
+    //            Debug.Log("Start Burn");
+    //            //Appliquer Effet de feu à la cible
+    //            PlayerMovement.Instance.ToggleBurn(true);
+    //            if (slowness)
+    //            {
+    //                Debug.Log("Start Slowness");
+    //                //Appliquer l'effet de slowness à la cible
+    //                PlayerMovement.Instance.SlowPlayer(slownessValue);
+    //            }
+    //            if (preventDash)
+    //            {
+    //                Debug.Log("Start Prevent Dash");
+    //                //Appliquer l'effet de slowness à la cible
+    //                PlayerMovement.Instance.ToggleDash(false);
+    //            }
+    //        }
+    //    }
+    //    if (lavaPrefab != null && elapsedTime <= 0)
+    //    {
+    //        elapsedTime = lavaDelay;
 
-            Debug.Log("Start Burn");
-            //Appliquer Effet de feu à la cible
-            PlayerMovement.Instance.ToggleBurn(true);
+    //        //Instancier de la lave au point d'impact
+    //        int numCollisionEvents = effects[0].GetCollisionEvents(other, collisionEvents);
+            
+    //        Vector3 pos = collisionEvents[0].intersection + Vector3.up / 10f;
+
+    //        if (Physics.Raycast(pos, Vector3.down, out RaycastHit hit, 100f, LayerMask.GetMask("Default")))
+    //        {
+    //            pos = hit.point;
+    //        }
+    //        //À tester
+    //        GameObject lava = Instantiate(lavaPrefab, pos, Quaternion.Euler(collisionEvents[0].normal));
+    //    }
+    //}
+
+    void ExitFire()
+    {
+        if (playerIsEnter)
+        {
             if (slowness)
             {
-                Debug.Log("Start Slowness");
-                //Appliquer l'effet de slowness à la cible
-                PlayerMovement.Instance.SlowPlayer(slownessValue);
+                Debug.Log("Stop slowness");
+                //Retirer slowness
+                PlayerMovement.Instance.SpeedUpPlayer(slownessValue);
             }
             if (preventDash)
             {
-                Debug.Log("Start Prevent Dash");
-                //Appliquer l'effet de slowness à la cible
-                PlayerMovement.Instance.ToggleDash(false);
+                Debug.Log("Stop prevent dash");
+                //Retirer slowness
+                PlayerMovement.Instance.ToggleDash(true);
             }
-        }
-    }
-    void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(target) && other.excludeLayers != ignoreTrigger)
-        {
-            ExitFire(other);
+            playerIsEnter = false;
         }
     }
 
-    void ExitFire(Collider other)
+    IEnumerator AfterBurn()
     {
-        if (slowness)
-        {
-            Debug.Log("Stop slowness");
-            //Retirer slowness
-            PlayerMovement.Instance.SpeedUpPlayer(slownessValue);
-        }
-        if (preventDash)
-        {
-            Debug.Log("Stop prevent dash");
-            //Retirer slowness
-            PlayerMovement.Instance.ToggleDash(true);
-        }
-        if (afterBurn != null)
-            StopCoroutine(afterBurn);
-        afterBurn = StartCoroutine(AfterBurn(other));
-        playerIsEnter = false;
-    }
-
-    IEnumerator AfterBurn(Collider other)
-    {
+        //Pour essayer avec des particles systems
+        yield return new WaitForSeconds(0.1f);
+        ExitFire();
         yield return new WaitForSeconds(afterBurnTime);
         Debug.Log("Stop Burn");
         //Retirer burning de la target
         PlayerMovement.Instance.ToggleBurn(false);
         afterBurn = null;
     }
+
+    bool ShowDelay => lavaPrefab != null;
 }

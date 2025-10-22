@@ -99,7 +99,6 @@ public class PlayerMovement : MonoBehaviour
     void Awake()
     {
         instance = this;
-        playerInstance = PlayerComponent.Instance;
 
         player = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
@@ -114,6 +113,10 @@ public class PlayerMovement : MonoBehaviour
         pitch = angles.x;
 
         Cursor.lockState = CursorLockMode.Locked;
+    }
+    void Start()
+    {
+        playerInstance = PlayerComponent.Instance;
     }
 
     void Update()

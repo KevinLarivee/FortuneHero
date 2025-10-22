@@ -4,10 +4,14 @@ public class Attack_Action : Behaviour_Node
 {
     Animator animator;
     string attackName;
-    public Attack_Action(Behaviour_Condition[] behaviour_Conditions, Animator animator, string attackName) : base(behaviour_Conditions)
+    GameObject target;
+    //GameObject attackPrefab;
+
+    public Attack_Action(Behaviour_Condition[] behaviour_Conditions, Animator animator, string attackName/*, GameObject attackPrefab = null*/) : base(behaviour_Conditions)
     {
         this.animator = animator;
         this.attackName = attackName;
+        //this.attackPrefab = attackPrefab;
     }
 
     public override void ExecuteAction(Behaviour_Composite parent_composite)
@@ -22,7 +26,7 @@ public class Attack_Action : Behaviour_Node
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName(attackName))
         {
-            FinishAction();
+            FinishAction(true);
         }
     }
 }
@@ -47,7 +51,7 @@ public class JumpAttack_Action : Behaviour_Node
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("JumpAttack"))
         {
             //Faire spawn whatever particle effect (pour wave quand il atterit)
-            FinishAction();
+            FinishAction(true);
         }
     }
 }
@@ -73,7 +77,7 @@ public class FireBreath_Action : Behaviour_Node
 
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("FireBreath"))
         {
-            FinishAction();
+            FinishAction(true);
         }
     }
 }
