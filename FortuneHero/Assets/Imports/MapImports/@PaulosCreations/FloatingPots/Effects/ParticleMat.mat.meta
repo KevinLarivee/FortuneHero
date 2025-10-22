@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 935b3756c8c387e4582d35be185cbe3d
+timeCreated: 1551444829
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 141013
+  packageName: FloatingPlantPots
+  packageVersion: 2.0
+  assetPath: Assets/@PaulosCreations/FloatingPots/Effects/ParticleMat.mat
+  uploadId: 344820

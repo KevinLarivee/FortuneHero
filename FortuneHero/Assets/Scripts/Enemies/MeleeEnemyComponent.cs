@@ -15,6 +15,8 @@ public class MeleeEnemyComponent : EnemyComponent
         //Si besoin de remplacer ceux du parent (probablement)
         //detector.targetDetected = PlayerDetected;
         patrol.move = Move;
+
+
     }
 
     // Update is called once per frame
@@ -34,21 +36,19 @@ public class MeleeEnemyComponent : EnemyComponent
     //        enemyState = EnemyState.Patrol;
     //    }
     //}
-    protected override void PlayerDetected(Vector3 targetPosition)
-    {
-        //timeUntilPatrolTimer = 0;
-        //patrol.isActive = false;
-        //enemyState = EnemyState.Chasing;
-        //target = targetPosition;
-        //agent.destination = target;
-        //Vector3 posToTarget = target - transform.position;
+    //protected override void PlayerDetected(Vector3 targetPosition)
+    //{
+    //    //timeUntilPatrolTimer = 0;
+    //    //patrol.isActive = false;
+    //    //enemyState = EnemyState.Chasing;
+    //    //target = targetPosition;
+    //    //agent.destination = target;
+    //    //Vector3 posToTarget = target - transform.position;
 
-        //if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
-        //    enemyState = EnemyState.Attacking;
-        base.PlayerDetected(targetPosition);
-        agent.isStopped = enemyState == EnemyState.Attacking;
-
-    }
+    //    //if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
+    //    //    enemyState = EnemyState.Attacking;
+    //    //base.PlayerDetected(targetPosition);
+    //}
     protected override void Move(Transform newTarget)
     {
         //if (agent.remainingDistance <= agent.stoppingDistance)
@@ -66,17 +66,26 @@ public class MeleeEnemyComponent : EnemyComponent
         //animator.SetBool("isChasing", false);
         base.Move(newTarget);
     }
-    protected override void ChasingMove()
-    {
-       agent.destination = target;
-    
-            
+    //protected override void ChasingMove()
+    //{
+    //    //Vector3 posToTarget = target - transform.position;
+    //    //transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+    //    //Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
+    //    //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-       base.ChasingMove();
-    }
+    //    animator.SetBool("isChasing", true);
+    //    animator.SetBool("isPatrolling", false);
+    //    base.ChasingMove();
+    //}
     //protected override IEnumerator Attack()
     //{
-        
+    //    animator.SetBool("isChasing", false);
+    //    animator.SetTrigger("Attack");
+
+    //    yield return new WaitForSeconds(animationTime);
+    //    enemyState = EnemyState.Chasing;
+
+    //    yield return new WaitForSeconds(attackCd);
 
     //}
 

@@ -37,7 +37,6 @@ public class PatrolComponent : MonoBehaviour
 
     //Modifié par d'autres scripts
     public bool isActive = false;
-    bool isWaiting = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,7 +47,7 @@ public class PatrolComponent : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(isActive && !isWaiting)
+        if(isActive)
         {
             move(targets[currentTarget]);
         }
@@ -76,9 +75,9 @@ public class PatrolComponent : MonoBehaviour
     }
     IEnumerator Waiting(float seconds)
     {
-        isWaiting = true;
+        isActive = false;
         yield return new WaitForSeconds(seconds);
-        isWaiting = false;
+        isActive = true;
     }
     IEnumerator LookAround()
     {

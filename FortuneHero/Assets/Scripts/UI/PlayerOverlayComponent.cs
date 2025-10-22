@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,9 +8,6 @@ public class PlayerOverlayComponent : MonoBehaviour
     private float currentShield;
     [SerializeField] Image xpBar;
     [SerializeField] TMPro.TextMeshProUGUI levelText;
-    [SerializeField] TMPro.TextMeshProUGUI resultText; // ton texte UI pour victoire/défaite
-    [SerializeField] Color victoryColor = Color.green;
-    [SerializeField] Color defeatColor = Color.red;
 
     private int level = 1;
     private int currentXP = 0;

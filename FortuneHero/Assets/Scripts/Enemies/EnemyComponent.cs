@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,7 +22,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
 
     protected Animator animator;
-    protected AnimationClip animClip;
     protected EnemyDrops enemyDrops;
     protected HealthComponent healthComponent;
     protected PatrolComponent patrol;
@@ -34,7 +32,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     protected float rotationSpeed = 5f;
 
     protected Vector3 target;
-    protected bool isAttacking = false;
 
     //NavMeshAgent agent;
     //bool _isDead = false;
@@ -47,8 +44,8 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         enemyDrops = GetComponent<EnemyDrops>();
         healthComponent = GetComponent<HealthComponent>();
 
-        healthComponent.onHit += Hit;
-        healthComponent.onDeath += Death;
+        healthComponent.OnHit = Hit;
+        healthComponent.OnDeath = Death;
 
         detector.targetDetected = PlayerDetected;
         patrol.move = Move;
@@ -61,10 +58,8 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     {
         if (enemyState == EnemyState.Chasing)
             ChasingMove();
-        else if (enemyState == EnemyState.Attacking && !isAttacking){
-            Debug.Log("should attack");
+        else if (enemyState == EnemyState.Attacking)
             StartCoroutine(Attack());
-        }
 
         timeUntilPatrolTimer += Time.deltaTime; //start le timer 
 
@@ -86,9 +81,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         Vector3 posToTarget = target - transform.position;
 
         if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
-        {
             enemyState = EnemyState.Attacking;
-        }
     }
 
     protected virtual void Move(Transform newTarget)
@@ -111,25 +104,15 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     {
         animator.SetBool("isChasing", true);
         animator.SetBool("isPatrolling", false);
-        if(Vector3.Distance(target, transform.position) <= stoppingDistance)
-        {
-            animator.SetBool("isChasing", false);
-        }
     }
 
     protected virtual IEnumerator Attack()
     {
-        isAttacking = true;
         animator.SetBool("isChasing", false);
-        //animator.SetTrigger("Attack");
-        animator.SetBool("isAttacking", isAttacking);
+        animator.SetTrigger("Attack");
 
-        //yield return new WaitForSeconds(0.1f);
-        yield return new WaitForNextFrameUnit();
-        yield return new WaitUntil(() => !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
+        yield return new WaitForSeconds(animationTime);
         enemyState = EnemyState.Chasing;
-        isAttacking = false;
-        animator.SetBool("isAttacking", isAttacking);
 
         yield return new WaitForSeconds(attackCd);
     }
@@ -149,7 +132,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         //agent.isStopped = true;
         //À la fin de l'anim de mort
         enemyDrops.SpawnDrops();
-        animator.SetTrigger("isDead");
         Destroy(gameObject);
     }
     //À revoir...
