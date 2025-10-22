@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Shaders/Plexus/Plexus.cs.meta
+guid: 66bd5c73cd1c467458a55f95ff648743
+========
+guid: 6bf5881fe14c014498ac5184f5f44107
+>>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scripts/U10PS_SnowOverTime.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 168611
+  packageName: Ultimate 10+ Shaders
+  packageVersion: 1.0.2
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Shaders/Plexus/Plexus.cs.meta
+  assetPath: Assets/IgnoredAssets/Ultimate 10 Plus Shaders/Shaders/Plexus/Plexus.cs
+========
+  assetPath: Assets/IgnoredAssets/Ultimate 10 Plus Shaders/Scripts/U10PS_SnowOverTime.cs
+>>>>>>>> 1cd7ed6cf4d422fb4950af3f8c118f6b9d6d1eb3:FortuneHero/Assets/Imports/MapImports/Ultimate 10 Plus Shaders/Scripts/U10PS_SnowOverTime.cs.meta
+  uploadId: 385061
