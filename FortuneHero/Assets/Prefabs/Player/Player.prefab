@@ -1547,6 +1547,10 @@ PrefabInstance:
       value: Wizard
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: shield
+      value: 
+      objectReference: {fileID: 2329611056791295409, guid: 5d1f05241202d384e9c3fbc1b40e72a5, type: 3}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: aimCamera
       value: 
       objectReference: {fileID: 7887299915373100978}
@@ -1722,6 +1726,10 @@ PrefabInstance:
       propertyPath: aimCam
       value: 
       objectReference: {fileID: 8552383156929210986}
+    - target: {fileID: 8964794528452801434, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: jumpVFX
+      value: 
+      objectReference: {fileID: 6813416509558619124, guid: 3a248b1630e248e43b43b1d764a5e4bf, type: 3}
     - target: {fileID: 8964794528452801434, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: crossHair
       value: 
