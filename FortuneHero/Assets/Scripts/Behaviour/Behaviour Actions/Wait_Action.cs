@@ -22,7 +22,7 @@ public class Wait_Action : Behaviour_Node
         timer += deltaTime;
         if (timer >= secondsToWait)
         {
-            FinishAction();
+            FinishAction(true);
         }
     }
 }

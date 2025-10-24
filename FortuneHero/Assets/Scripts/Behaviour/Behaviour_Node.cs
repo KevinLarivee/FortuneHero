@@ -4,7 +4,8 @@ public class Behaviour_Node
 {
     protected Behaviour_Condition[] behaviour_Conditions;
     protected Behaviour_Composite parent_Composite;
-    //Interupt
+
+    protected bool interupted = false;
 
     public Behaviour_Node(Behaviour_Condition[] behaviour_Conditions)
     {
@@ -25,6 +26,7 @@ public class Behaviour_Node
     virtual public void ExecuteAction(Behaviour_Composite parent_composite)
     {
         this.parent_Composite = parent_composite;
+        interupted = true;
         SetNodeAsActive();
 
 
@@ -32,15 +34,22 @@ public class Behaviour_Node
     }
 
 
-    virtual public void FinishAction()
+    virtual public void FinishAction(bool result)
     {
-        parent_Composite.FinishAction();
+        if(!interupted)
+            parent_Composite.FinishAction(result);
     }
 
 
     virtual public void Tick(float deltaTime)
     {
 
+    }
+
+    virtual public void InteruptAction()
+    {
+        interupted = true;
+        FinishAction(false);
     }
 
 

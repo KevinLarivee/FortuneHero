@@ -3,7 +3,6 @@ using UnityEngine;
 public class MeleeAttackCollision : MonoBehaviour
 {
     PlayerActions player;
-    float meleeDmg;
     
     void Start()
     {
@@ -15,7 +14,7 @@ public class MeleeAttackCollision : MonoBehaviour
         {
             Debug.Log("You have attacked the enemy !!!");
             var enemyHealthComponent = other.gameObject.GetComponent<HealthComponent>();
-            enemyHealthComponent.Hit(player.meleeAtkDmg);
+            enemyHealthComponent.Hit(PlayerComponent.Instance.meleeAtkDmg);
         }
     }
 }
