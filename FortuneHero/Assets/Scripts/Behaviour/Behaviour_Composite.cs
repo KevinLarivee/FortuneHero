@@ -10,6 +10,7 @@ public class Behaviour_Composite : Behaviour_Node
     public BehaviourTree behaviourTree;
 
     int sequenceIndex = 0;
+    int selectorIndex = 0;
 
     public Behaviour_Composite(Behaviour_Condition[] behaviour_Conditions, CompositeType compositeType, BehaviourTree behaviourTree, Behaviour_Node[] nodes) : base(behaviour_Conditions)
     {
@@ -25,47 +26,73 @@ public class Behaviour_Composite : Behaviour_Node
         switch(compositeType)
         {
             case CompositeType.Selector:
-                SelectorStart();
+                SelectorStart(0);
                 break;
             case CompositeType.Sequence:
                 SequenceContinue(0);
                 break;
         }
     }
-    public override void FinishAction()
+    public override void FinishAction(bool result)
     {
         if(compositeType == CompositeType.Sequence && sequenceIndex < nodes.Length - 1)
         {
+            if (!result)
+            {
+                EndComposite(false);
+                return;
+            }
             SequenceContinue(sequenceIndex + 1);
             return;
         }
-        
-        if(parent_Composite != null)
-            parent_Composite.FinishAction();
+        else if (compositeType == CompositeType.Selector && !result)
+        {
+            if(selectorIndex < nodes.Length - 1)
+            {
+                SelectorStart(selectorIndex + 1);
+                return;
+            }
+            EndComposite(false);
+            return;
+        }
+
+
+
+        EndComposite(true);
+    }
+
+    void EndComposite(bool result)
+    {
+        if (parent_Composite != null)
+            parent_Composite.FinishAction(result);
 
         else
             behaviourTree.RunTree();
     }
+
     void SequenceContinue(int index)
     {
         sequenceIndex = index;
         if (!nodes[sequenceIndex].EvaluateConditions())
-            FinishAction();
+            FinishAction(false);
         else
             nodes[sequenceIndex].ExecuteAction(this);
 
     }
 
-    void SelectorStart()
+    void SelectorStart(int index)
     {
-        foreach(Behaviour_Node node in nodes)
+        for(int i = selectorIndex; i < nodes.Length; i++)
         {
-            if (!node.EvaluateConditions())
+            if (!nodes[i].EvaluateConditions())
                 continue;
             else
             {
-                node.ExecuteAction(this);
+                selectorIndex = index;
+                nodes[i].ExecuteAction(this);
+                return;
             }
         }
+        FinishAction(false);
     }
 }

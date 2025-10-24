@@ -18,8 +18,7 @@ public class PlayerMovement : MonoBehaviour
     CharacterController player;
     Animator animator;
     HealthComponent health;
-    PlayerComponent playerComponent;
-
+    PlayerComponent playerInstance;
 
     Vector3 jump;
     Vector3 knockBackDirection;
@@ -50,23 +49,23 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] LayerMask playerLayer;
 
-    [SerializeField] float dashCooldown = 0.75f;
+    //[SerializeField] float dashCooldown = 0.75f;
     [SerializeField] float dashTime = 0.2f;
-    [SerializeField] float dashSpeed = 2f;
+    //[SerializeField] float dashSpeed = 2f;
     bool canDash = true;
     bool isDashing = false;
 
     #region Jump
     [Header("Jump")]
-    public float jumpMultiplier = 1f;
+    //public float jumpMultiplier = 1f;
     [SerializeField] float jumpForce = 5f;
     [SerializeField] float gravity = -13;
-    [SerializeField] float gravityMultiplier = 2;
+    //[SerializeField] float gravityMultiplier = 2;
     [SerializeField] float coyoteTime = 0.2f;
     [SerializeField] float jumpBufferTime = 0.2f;
     [SerializeField] float doubleJumpAnimDelay = 0.5f;
     [SerializeField] float doubleJumpAnimTimer;
-    float jumpVFXCd = 0.4f;
+    float jumpVFXCd = 0.4f; 
     float coyoteTimeCounter;
     float jumpBufferCounter;
     bool doubleJumpStartTimer = false;
@@ -76,26 +75,24 @@ public class PlayerMovement : MonoBehaviour
     [Header("Speed")]
     [SerializeField] float moveSpeed = 0f;
     [SerializeField] float maxSpeed = 12f;
-    [SerializeField] float slowedAcceleration = 9f;
     [SerializeField] float acceleration = 12f;
     [SerializeField] float deceleration = 10f;
-    [SerializeField] float slowedDownSpeed = 6f;
-    [SerializeField] float speedWhileDefending = 3f;
-    float speedMultiplier = 1f;
+    float groundDrag = 1f;
+    float airDrag = 0.5f;
+    //float speedMultiplier = 1f; //Utiliser speedMulti. partout ferait que si player est super vite, son dash va etre vrm plus vite, etc.
 
     #region Status
-    float knockBackTime;
-    float knockBackCounter;
 
-    [SerializeField] bool isParalysed = false;
-    [SerializeField] bool isBurning = false;
+    //[SerializeField] bool isParalysed = false;
+    //[SerializeField] bool isBurning = false;
     //[SerializeField] float paralyseTime = 3f;
     [SerializeField] float burnTimeUntilDmgTick = 1f;
 
+    float knockBackTime;
+    float knockBackCounter;
     float burnDmgPerTick = 2f; //Temp ? (envoye par fireComponent potentiellement)
     float burnTimer;
     float paralyseTimer;
-
     bool canJump = true;
     #endregion
 
@@ -106,7 +103,6 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         health = GetComponent<HealthComponent>();
-        playerComponent = GetComponent<PlayerComponent>();
 
         inputAxisController = freelookCam.GetComponent<CinemachineInputAxisController>();
         aimingCamera = aimCam.GetComponent<CinemachineThirdPersonFollow>();
@@ -118,16 +114,19 @@ public class PlayerMovement : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
     }
+    void Start()
+    {
+        playerInstance = PlayerComponent.Instance;
+    }
 
     void Update()
     {
         if (knockBackCounter <= 0)
         {
-            if (!isParalysed)
+            if (!playerInstance.isParalysed)
                 Movement();
             else
             {
-                //playerComponent.PausePlayer(true);
                 paralyseTimer -= Time.deltaTime;
                 lightningVFX.SetActive(true);
                 animator.SetBool("isParalysed", true);
@@ -135,9 +134,8 @@ public class PlayerMovement : MonoBehaviour
                 {
                     lightningVFX.SetActive(false);
                     //paralyseTimer = paralyseTime;
-                    isParalysed = false;
+                    playerInstance.isParalysed = false;
                     animator.SetBool("isParalysed", false);
-                    //playerComponent.PausePlayer(false);
                 }
             }
 
@@ -148,7 +146,7 @@ public class PlayerMovement : MonoBehaviour
             knockBackCounter -= Time.deltaTime;
             player.Move(knockBackDirection * Time.deltaTime);
         }
-        if (isBurning)
+        if (playerInstance.isBurning)
         {
             fireVFX.SetActive(true);
             burnTimer += Time.deltaTime;
@@ -164,7 +162,6 @@ public class PlayerMovement : MonoBehaviour
             fireVFX.SetActive(false);
 
     }
-
     public void Movement()
     {
         Vector3 forward = isAiming ? transform.forward : freelookCam.transform.forward;
@@ -185,7 +182,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            jump.y += Mathf.Max(gravity * gravityMultiplier * Time.deltaTime, -15);
+            jump.y += Mathf.Max(gravity * playerInstance.gravityMultiplier * Time.deltaTime, -15);
             coyoteTimeCounter -= Time.deltaTime;
             animator.SetBool("isGrounded", false);
         }
@@ -197,14 +194,14 @@ public class PlayerMovement : MonoBehaviour
             if (IsGrounded() || coyoteTimeCounter > 0f)
             {
                 coyoteTimeCounter = 0f;
-                jump = transform.up * (jumpForce * jumpMultiplier);
+                jump = transform.up * (jumpForce * playerInstance.jumpMultiplier);
                 jumpBufferCounter = 0f;
                 animator.SetBool("hasJumped", true);
                 StartCoroutine(StartJumpVFX());
             }
             else if (coyoteTimeCounter <= 0f && !doubleJumped)
             {
-                jump = transform.up * (jumpForce * jumpMultiplier);
+                jump = transform.up * (jumpForce * playerInstance.jumpMultiplier);
                 jumpBufferCounter = 0f;
                 doubleJumped = true;
                 doubleJumpStartTimer = true;
@@ -222,19 +219,19 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("hasDoubleJumped", false);
             doubleJumpAnimTimer = doubleJumpAnimDelay;
         }
+
+        //Movement
         if (direction.sqrMagnitude > 0.001f) //si ya input
         {
-            float drag = IsGrounded() ? 1f : 0.5f;
-            if (moveSpeed <= maxSpeed)
-                moveSpeed = Mathf.Min(moveSpeed + acceleration * drag * Time.deltaTime, maxSpeed * speedMultiplier); //accelere
-            //else if (move.y <= 0)
-            //    moveSpeed = Mathf.Min(moveSpeed + slowedAcceleration * drag * Time.deltaTime, slowedDownSpeed * speedMultiplier); //pas forward = ralenti
+            float drag = IsGrounded() ? groundDrag : airDrag;
+            if (moveSpeed <= maxSpeed * playerInstance.speedMultiplier)
+                moveSpeed = Mathf.Min(moveSpeed + acceleration * drag * Time.deltaTime, maxSpeed * playerInstance.speedMultiplier); //accelere
+            else if (moveSpeed > maxSpeed * playerInstance.speedMultiplier && !isDashing) //S'il est deja plus vite (ex.: il se fait slow mais deja full speed)
+                moveSpeed = maxSpeed * playerInstance.speedMultiplier;
         }
         else
-        {
             if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
-                moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere
-        }
+                moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere (si arrete pour bref moment, recommence avec vitesse et non 0)
 
 
         if (!isAiming && direction.sqrMagnitude > 0.001f)
@@ -311,7 +308,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void Dash(InputAction.CallbackContext ctx)
     {
-        if (isPaused) return;
+        if (isPaused || playerInstance.bossDisableDash) return;
 
         if (ctx.performed && canDash)
         {
@@ -358,28 +355,29 @@ public class PlayerMovement : MonoBehaviour
 
     public IEnumerator Dash()
     {
+        isDashing = true;
         canDash = false;
+        yield return new WaitForEndOfFrame();
+
         float originalGravity = gravity;
         gravity = 0f;
-        moveSpeed = maxSpeed * dashSpeed;
-        isDashing = true;
-        //animation.setBool("isDashing", true);
+        moveSpeed = maxSpeed * playerInstance.speedMultiplier * playerInstance.dashSpeed;
         yield return new WaitForSeconds(dashTime);
 
         gravity = originalGravity;
-        moveSpeed = maxSpeed;
+        moveSpeed = maxSpeed * playerInstance.speedMultiplier;
         isDashing = false;
-        //animation.setBool("isDashing", false);
-        yield return new WaitForSeconds(dashCooldown);
+        yield return new WaitForSeconds(playerInstance.dashCooldown);
+
         canDash = true;
     }
-    public void SlowPlayer(float divider)
+    public void SlowPlayer(float divider) // les mettres dans playerComponent ???
     {
-        speedMultiplier /= divider;
+        playerInstance.speedMultiplier /= divider;
     }
     public void SpeedUpPlayer(float multiplier)
     {
-        speedMultiplier *= multiplier;
+        playerInstance.speedMultiplier *= multiplier;
     }
 
     public void KnockBack(Vector3 direction, float knockForce)
@@ -390,28 +388,14 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ToggleBurn(bool burning)
     {
-        isBurning = burning;
+        playerInstance.isBurning = burning;
     }
     public void ToggleParalyse(float paralyseTime)
     {
-        isParalysed = true;
+        playerInstance.isParalysed = true;
         paralyseTimer = paralyseTime;
-        //if (isParalysed)
-        //    StartCoroutine(ApplyParalyse());
     }
-    //public IEnumerator ApplyParalyse() //A appeler ailleur plus tard ?
-    //{
-    //    isInCoroutine = true;
-    //    Debug.Log("Started Paralyse Coroutine");
-    //    animator.SetBool("isParalysed", true);
-    //    //Activer le particleSystem
-    //    yield return new WaitForSeconds(paralyseTime);
-    //    animator.SetBool("isParalysed", false);
-    //    //Desactiver le particleSystem
-    //    ToggleParalyse(false);
-    //    isInCoroutine = false;
-        
-    //}
+    
     public void ToggleDash(bool dash)
     {
         canDash = dash;

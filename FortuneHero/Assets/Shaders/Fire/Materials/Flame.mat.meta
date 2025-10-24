@@ -1,8 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Enemies/Melee/Animations/Atak_2.anim.meta
+guid: 2c9757bf7b72d3c48affae7d608177b1
+========
 guid: 7342961fc00333c46b80108a73e742a8
+>>>>>>>> e3ba71672bfab3ea716eac61ea5b256e45fbe5b1:FortuneHero/Assets/Shaders/Fire/Materials/Flame.mat.meta
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 2100000
+  mainObjectFileID: 7400000
   userData: 
   assetBundleName: 
   assetBundleVariant: 
