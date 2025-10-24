@@ -54,6 +54,13 @@ public class FlyingEnemyComponent : EnemyComponent
         //animator.SetBool("isChasing", true);
         //animator.SetBool("isPatrolling", false);
     }
+
+    public override void ToggleParalyze(float aoeDuration)
+    {
+        base.ToggleParalyze(aoeDuration);
+        //moveSpeed = 0;
+        target = transform.position;
+    }
     //protected override IEnumerator Attack()
     //{
     //    animator.SetBool("isChasing", false);

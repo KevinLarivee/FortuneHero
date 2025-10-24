@@ -779,7 +779,7 @@ MonoBehaviour:
   target: Player
   mask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 63
   activeDistance: 50
   fovHorizontal: 90
   fovVertical: 90

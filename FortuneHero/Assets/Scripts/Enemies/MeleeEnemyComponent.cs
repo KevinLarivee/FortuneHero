@@ -10,9 +10,7 @@ public class MeleeEnemyComponent : EnemyComponent
     [SerializeField] Collider rightHandCollider;
     [SerializeField] Collider leftHandCollider;
     NavMeshAgent agent;
-    int atkCount = 0;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -21,6 +19,7 @@ public class MeleeEnemyComponent : EnemyComponent
         agent.speed = moveSpeed;
         patrol.move = Move;
     }
+    
     protected override void PlayerDetected(Vector3 targetPosition)
     {
         base.PlayerDetected(targetPosition);
@@ -51,32 +50,16 @@ public class MeleeEnemyComponent : EnemyComponent
         base.SpeedUpEnemy(multiplier);
         agent.speed = moveSpeed;
     }
-
-    public void EnableRightHandCollider()
+    public override void ToggleParalyze(float aoeDuration)
     {
-        if (rightHandCollider == null) { Debug.LogError("EnableRightHandCollider: rightHandCollider is NULL"); return; }
-        rightHandCollider.enabled = true;
-        Debug.Log("EnableRightHandCollider called — enabled right collider");
+        base.ToggleParalyze(aoeDuration);
+        agent.destination = transform.position;
     }
+    public void EnableRightHandCollider() => rightHandCollider.enabled = true;
 
-    public void DisableRightHandCollider()
-    {
-        if (rightHandCollider == null) { Debug.LogError("DisableRightHandCollider: rightHandCollider is NULL"); return; }
-        rightHandCollider.enabled = false;
-        Debug.Log("DisableRightHandCollider called — disabled right collider");
-    }
+    public void DisableRightHandCollider() => rightHandCollider.enabled = false;
 
-    public void EnableLeftHandCollider()
-    {
-        if (leftHandCollider == null) { Debug.LogError("EnableLeftHandCollider: leftHandCollider is NULL"); return; }
-        leftHandCollider.enabled = true;
-        Debug.Log("EnableLeftHandCollider called — enabled left collider");
-    }
+    public void EnableLeftHandCollider() => leftHandCollider.enabled = true;
 
-    public void DisableLeftHandCollider()
-    {
-        if (leftHandCollider == null) { Debug.LogError("DisableLeftHandCollider: leftHandCollider is NULL"); return; }
-        leftHandCollider.enabled = false;
-        Debug.Log("DisableLeftHandCollider called — disabled left collider");
-    }
+    public void DisableLeftHandCollider() => leftHandCollider.enabled = false;
 }

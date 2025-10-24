@@ -64,7 +64,11 @@ public class RangedEnemyComponent : EnemyComponent
         //    rb.linearVelocity = dir * rb.linearVelocity.magnitude; // conserve la magnitude si définie sur le prefab
         //}
     }
-
+    public override void ToggleParalyze(float aoeDuration)
+    {
+        base.ToggleParalyze(aoeDuration);
+        agent.destination = transform.position;
+    }
     //protected override IEnumerator Attack()
     //{
     //    animator.SetBool("isChasing", false);

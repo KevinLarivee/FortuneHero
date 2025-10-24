@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public enum ProjectileType //Potentiel d'en ajouter
-{ 
+{
     Default,
     IceBall
 }
@@ -54,11 +54,11 @@ public class PlayerActions : MonoBehaviour
     public float slowDuration = 5f;
     public float speedDrop = 2f;
     public bool AoeParaActivated = false;
-    bool isIceBall = false;
-    [SerializeField] float aoeRadius = 4f;
-    [SerializeField] float aoeOffset = 2f;
-    [SerializeField] float aoeDuration = 4f;
     [SerializeField] LayerMask layersAffectedByAoe;
+    [SerializeField] float aoeDuration = 4f;
+    [SerializeField] float paralyzeDuration = 2f;
+    bool isIceBall = false;
+    float aoeTimer;
 
 
 
@@ -80,6 +80,8 @@ public class PlayerActions : MonoBehaviour
     {
         if (AoeParaActivated)
             StartAoeParalyze();
+        if (aoeTimer > 0)
+            aoeTimer -= Time.deltaTime;
 
         if (isIceBall) //Issue de quand tu active, tant que la ice ball a pas toucher l'ennemi, isIceBall est pas mis a false, donc si elle vole longtemps, tu pourrais retirer une iceBall
             currentType = ProjectileType.IceBall;
@@ -121,7 +123,7 @@ public class PlayerActions : MonoBehaviour
 
     public void MeleeAttack(InputAction.CallbackContext ctx)
     {
-        if(isPaused) return;
+        if (isPaused) return;
 
         if (ctx.performed && canMeleeAtk)
         {
@@ -162,32 +164,35 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator AoeParalyze()
     {
-        AoeParaActivated = false;
+        AoeParaActivated = false; //Quand fct appeler, on veut pas refaire
+
         Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
         var obj = Instantiate(aoeParaPrefab, spawnPos, Quaternion.identity);
+        aoeTimer = aoeDuration;
 
-        Collider[] colliders = Physics.OverlapSphere(new Vector3(spawnPos.x, spawnPos.y + 1.6f, spawnPos.z), 4, layersAffectedByAoe);
-        foreach (Collider collider in colliders)
+        while (aoeTimer > 0)
         {
-            if (collider.CompareTag("Enemy"))//Temp pcq melee a des colliders sur les mains et sa fuck tt et j'ai besoin quil soit sur enemy layer pour les dmgs
-                                             //Changer la methode d'attaque, faire apparaitre hitbox quand il attaque a la place pour eviter se probleme
-            {
-                Debug.Log($"Hit: {collider.name} | Root: {collider.transform.root.name}");
-                Debug.Log(collider.transform.root.GetComponent<EnemyComponent>());
-                collider.transform.root.GetComponent<EnemyComponent>().ToggleParalyze(aoeDuration);
-            }
+            CheckForEnemies(spawnPos);
+            yield return new WaitForSeconds(0.3f);
         }
 
-        yield return new WaitForSeconds(aoeDuration);
         Destroy(obj);
-    } //OverlapSphere check juste quand on active le power up, pt changer le prefab ou ajuster le code 
+    }
+
+    private void CheckForEnemies(Vector3 spawnPos)
+    {
+        Collider[] colliders = Physics.OverlapSphere(new Vector3(spawnPos.x, spawnPos.y + 1.6f, spawnPos.z), 4, layersAffectedByAoe);
+        foreach (Collider collider in colliders)
+            collider.transform.root.GetComponent<EnemyComponent>().ToggleParalyze(paralyzeDuration);
+    }
+
     public void SetToIceBall(bool trueOrFalse)
     {
         isIceBall = trueOrFalse;
     }
     public void ShootProjectile()
     {
-        Vector3 screenCenter =  new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+        Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
         GameObject prefab;
         switch (currentType)
         {

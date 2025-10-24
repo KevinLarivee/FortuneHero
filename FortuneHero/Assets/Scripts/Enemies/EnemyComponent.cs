@@ -107,40 +107,52 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
     protected virtual void Move(Transform newTarget)
     {
-        if (Vector3.Distance(target, transform.position) <= stoppingDistance)
-            newTarget = patrol.NextTarget();
+        if (!isParalyzed)
+        {
+            if (Vector3.Distance(target, transform.position) <= stoppingDistance)
+                newTarget = patrol.NextTarget();
 
-        target = newTarget.position;
-    
-        animator.SetBool("isPatrolling", true);
-        animator.SetBool("isChasing", false);
+            target = newTarget.position;
+
+            animator.SetBool("isPatrolling", true);
+            animator.SetBool("isChasing", false);
+        }
+       
     }
 
     protected virtual void ChasingMove()
     {
-        animator.SetBool("isChasing", true);
-        animator.SetBool("isPatrolling", false);
-        if (Vector3.Distance(target, transform.position) <= stoppingDistance)
+        if (!isParalyzed)
         {
-            animator.SetBool("isChasing", false);
+            animator.SetBool("isChasing", true);
+            animator.SetBool("isPatrolling", false);
+            if (Vector3.Distance(target, transform.position) <= stoppingDistance)
+            {
+                animator.SetBool("isChasing", false);
+            }
         }
+       
     }
     protected virtual IEnumerator Attack()
     {
-        isAttacking = true;
-        animator.SetBool("isChasing", false);
-        animator.SetBool("isAttacking", isAttacking);
+        if (!isParalyzed)
+        {
+            isAttacking = true;
+            animator.SetBool("isChasing", false);
+            animator.SetBool("isAttacking", isAttacking);
 
-        yield return new WaitForNextFrameUnit();
-        yield return new WaitUntil(() => !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
+            yield return new WaitForNextFrameUnit();
+            yield return new WaitUntil(() => !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
 
-        if (!IsInAttackDistance())
-            enemyState = EnemyState.Chasing;
+            if (!IsInAttackDistance())
+                enemyState = EnemyState.Chasing;
+
+            isAttacking = false;
+            animator.SetBool("isAttacking", isAttacking);
+
+            yield return new WaitForSeconds(attackCd);
+        }
         
-        isAttacking = false;
-        animator.SetBool("isAttacking", isAttacking);
-
-        yield return new WaitForSeconds(attackCd);
     }
     public IEnumerator HitByIceBall(float speedChange, float slowDuration, GameObject explosionObj)
     {
@@ -149,10 +161,12 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         SpeedUpEnemy(speedChange);
         Destroy(explosionObj);
     }
-    public void ToggleParalyze(float paraDuration)
+    public virtual void ToggleParalyze(float paraDuration)
     {
         isParalyzed = true;
         paraTimer = paraDuration;
+        animator.SetBool("isPatrolling", false);
+        animator.SetBool("isChasing", false);
     }
 
     protected virtual void SlowEnemy(float divider)
@@ -185,8 +199,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         }
         return false;
     }
-
-
 
 
     //À revoir...

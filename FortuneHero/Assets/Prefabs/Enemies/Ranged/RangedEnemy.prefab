@@ -57,7 +57,7 @@ Transform:
   m_GameObject: {fileID: 730381391218851466}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.3048859, y: -0.25, z: -3.611578}
+  m_LocalPosition: {x: 0, y: 1.63, z: 0.404}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -82,9 +82,9 @@ MonoBehaviour:
   activeDistance: 50
   fovHorizontal: 90
   fovVertical: 90
-  viewDistance: 20
+  viewDistance: 30
   rayCountHorizontal: 10
-  rayCountVertical: 10
+  rayCountVertical: 20
 --- !u!1001 &2404421950192128914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -119,7 +119,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7958345ae2c9f324f9dfb57fef5ea4a6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -28.49184
+      value: -24.09
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7958345ae2c9f324f9dfb57fef5ea4a6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -659,7 +659,7 @@ MonoBehaviour:
   isParalyzed: 0
   moveSpeed: 5
   stoppingDistance: 1
-  attackStopDistance: 3
+  attackStopDistance: 15
   attackCd: 1
   animationTime: 0.7
   projectilePrefab: {fileID: 4546562718983528009, guid: c7bca65d127fffc49bf72a11a7ea346e, type: 3}
