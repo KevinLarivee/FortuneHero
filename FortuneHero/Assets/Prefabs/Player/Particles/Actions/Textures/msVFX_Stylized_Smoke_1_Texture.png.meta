@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Player/Particles/Actions/Textures/msVFX_Stylized_Smoke_1_Texture.png.meta
 guid: 7e093a5ac2569a744aea8e7409da4e75
+========
+guid: b08df4f4311c2dc42a19dcd6446f81b0
+>>>>>>>> Jacob:FortuneHero/Assets/Materials/ShieldBase_DARK_DF.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

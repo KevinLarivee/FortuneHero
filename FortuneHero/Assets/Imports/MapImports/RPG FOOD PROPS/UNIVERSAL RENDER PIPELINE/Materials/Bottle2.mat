@@ -20,7 +20,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Materials/Bottle2.mat
   m_Name: Bottle2
+========
+  m_Name: Bottle1
+>>>>>>>> Jacob:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Materials/Bottle1.mat
   m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -42,11 +46,19 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Materials/Bottle2.mat
         m_Texture: {fileID: 2800000, guid: 08304de315af6d042bd1858faa3c0bb5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 2800000, guid: 7d27142b6fe2e284db980fc873ad54e3, type: 3}
+========
+        m_Texture: {fileID: 2800000, guid: b4ee56be0109a6a408c42e8a860ddc21, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpMap:
+        m_Texture: {fileID: 2800000, guid: 26c8556bccba9b44184270ab092e42b0, type: 3}
+>>>>>>>> Jacob:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Materials/Bottle1.mat
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
@@ -66,6 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Materials/Bottle2.mat
         m_Texture: {fileID: 2800000, guid: 08304de315af6d042bd1858faa3c0bb5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -75,6 +88,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 2800000, guid: a599596546e2a9b4fb10db5745ae8a68, type: 3}
+========
+        m_Texture: {fileID: 2800000, guid: b4ee56be0109a6a408c42e8a860ddc21, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 2800000, guid: f8ea441d9c4f3214bb009265a946eb7f, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 2800000, guid: e746e5aec7b8efd4ca2ff6e3f4e127bb, type: 3}
+>>>>>>>> Jacob:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Materials/Bottle1.mat
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
