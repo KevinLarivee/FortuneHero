@@ -11,5 +11,5 @@ AssetOrigin:
   productId: 310065
   packageName: 3D Volcanic Rocks
   packageVersion: 1.0
-  assetPath: Assets/3D_Sci-fi_volcanic_rocks_01/URP/URPDefaultResources/UniversalRenderPipelineAsset.asset
+  assetPath: Assets/Imports/MapImports/Lava/URP/URPDefaultResources/UniversalRenderPipelineAsset.asset
   uploadId: 730028

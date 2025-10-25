@@ -3,17 +3,20 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
+
 [RequireComponent(typeof(EnemyDrops), typeof(HealthComponent))]
 public class EnemyComponent : MonoBehaviour, IPoolable
 {
-    //!!! Quoi mettre dans EnnemyComponent vs SpecificEnnemyComponent
     protected enum EnemyState { Patrol, Attacking, Chasing }
-
     protected EnemyState enemyState;
     public ObjectPoolComponent Pool { get; set; }
 
     public int dmg = 1;
     public int collisionDmg = 10;
+
+    [SerializeField] GameObject paralyzePrefab;
+    public bool isParalyzed = false;
+    float paraTimer;
 
     [SerializeField] protected float moveSpeed = 5f;
     [SerializeField] protected float stoppingDistance = 0.5f;
@@ -36,9 +39,6 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     protected Vector3 target;
     protected bool isAttacking = false;
 
-    //NavMeshAgent agent;
-    //bool _isDead = false;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         animator = GetComponent<Animator>();
@@ -52,27 +52,39 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
         detector.targetDetected = PlayerDetected;
         patrol.move = Move;
-        //agent = GetComponent<NavMeshAgent>();
-        //agent.updatePosition = false;
-        //agent.updateRotation = true;
     }
 
-    void Update()
+    protected void Update()
     {
-        if (enemyState == EnemyState.Chasing)
-            ChasingMove();
-        else if (enemyState == EnemyState.Attacking && !isAttacking){
-            Debug.Log("should attack");
-            StartCoroutine(Attack());
-        }
-
-        timeUntilPatrolTimer += Time.deltaTime; //start le timer 
-
-        if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
+        if (!isParalyzed)
         {
-            //Enable le patrol
-            patrol.isActive = true;
-            enemyState = EnemyState.Patrol;
+            if (enemyState == EnemyState.Chasing)
+                ChasingMove();
+            else if (enemyState == EnemyState.Attacking && !isAttacking)
+            {
+                StartCoroutine(Attack());
+            }
+
+            timeUntilPatrolTimer += Time.deltaTime; //start le timer 
+
+            if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
+            {
+                //Enable le patrol
+                patrol.isActive = true;
+                enemyState = EnemyState.Patrol;
+            }
+        }
+        else
+        {
+            paraTimer -= Time.deltaTime;
+            paralyzePrefab.SetActive(true);
+            //animation on
+            if (paraTimer <= 0)
+            {
+                paralyzePrefab.SetActive(false);
+                isParalyzed = false;
+                //animation off
+            }
         }
     }
 
@@ -82,10 +94,12 @@ public class EnemyComponent : MonoBehaviour, IPoolable
         patrol.isActive = false;
         enemyState = EnemyState.Chasing;
         target = targetPosition;
-        //agent.destination = target;
-        Vector3 posToTarget = target - transform.position;
 
-        if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
+        Vector3 posToTarget = target - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        if (IsInAttackDistance())
         {
             enemyState = EnemyState.Attacking;
         }
@@ -93,65 +107,100 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
     protected virtual void Move(Transform newTarget)
     {
-        if (Vector3.Distance(target, transform.position) <= stoppingDistance)
-            newTarget = patrol.NextTarget();
+        if (!isParalyzed)
+        {
+            if (Vector3.Distance(target, transform.position) <= stoppingDistance)
+                newTarget = patrol.NextTarget();
 
-        target = newTarget.position;
-        //agent.destination = newTarget.position;
-        //Vector3 posToTarget = target - transform.position;
-        //transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        //Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            target = newTarget.position;
 
-        animator.SetBool("isPatrolling", true);
-        animator.SetBool("isChasing", false);
+            animator.SetBool("isPatrolling", true);
+            animator.SetBool("isChasing", false);
+        }
+       
     }
 
     protected virtual void ChasingMove()
     {
-        animator.SetBool("isChasing", true);
-        animator.SetBool("isPatrolling", false);
-        if(Vector3.Distance(target, transform.position) <= stoppingDistance)
+        if (!isParalyzed)
         {
-            animator.SetBool("isChasing", false);
+            animator.SetBool("isChasing", true);
+            animator.SetBool("isPatrolling", false);
+            if (Vector3.Distance(target, transform.position) <= stoppingDistance)
+            {
+                animator.SetBool("isChasing", false);
+            }
         }
+       
     }
-
     protected virtual IEnumerator Attack()
     {
-        isAttacking = true;
+        if (!isParalyzed)
+        {
+            isAttacking = true;
+            animator.SetBool("isChasing", false);
+            animator.SetBool("isAttacking", isAttacking);
+
+            yield return new WaitForNextFrameUnit();
+            yield return new WaitUntil(() => !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
+
+            if (!IsInAttackDistance())
+                enemyState = EnemyState.Chasing;
+
+            isAttacking = false;
+            animator.SetBool("isAttacking", isAttacking);
+
+            yield return new WaitForSeconds(attackCd);
+        }
+        
+    }
+    public IEnumerator HitByIceBall(float speedChange, float slowDuration, GameObject explosionObj)
+    {
+        SlowEnemy(speedChange);
+        yield return new WaitForSeconds(slowDuration);
+        SpeedUpEnemy(speedChange);
+        Destroy(explosionObj);
+    }
+    public virtual void ToggleParalyze(float paraDuration)
+    {
+        isParalyzed = true;
+        paraTimer = paraDuration;
+        animator.SetBool("isPatrolling", false);
         animator.SetBool("isChasing", false);
-        //animator.SetTrigger("Attack");
-        animator.SetBool("isAttacking", isAttacking);
-
-        //yield return new WaitForSeconds(0.1f);
-        yield return new WaitForNextFrameUnit();
-        yield return new WaitUntil(() => !animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"));
-        enemyState = EnemyState.Chasing;
-        isAttacking = false;
-        animator.SetBool("isAttacking", isAttacking);
-
-        yield return new WaitForSeconds(attackCd);
     }
 
-    //private void OnEnable()
-    //{
-    //    agent.destination = patrol.NextTarget().position;
-    //}
+    protected virtual void SlowEnemy(float divider)
+    {
+        moveSpeed /= divider;
+    }
+    protected virtual void SpeedUpEnemy(float multiplier)
+    {
+        moveSpeed *= multiplier;
+    }
 
     protected virtual void Hit()
     {
-        animator.SetTrigger("hit");
+        animator.SetTrigger("isHit");
     }
     protected virtual void Death()
     {
-        //animator.SetTrigger("death");
-        //agent.isStopped = true;
+
+        animator.SetTrigger("isDead"); //faudra wait ou qqchose 
         //À la fin de l'anim de mort
         enemyDrops.SpawnDrops();
-        animator.SetTrigger("isDead");
         Destroy(gameObject);
     }
+    protected bool IsInAttackDistance()
+    {
+        Vector3 posToTarget = target - transform.position;
+        if (posToTarget.sqrMagnitude <= attackStopDistance * attackStopDistance)
+        {
+            return true;
+        }
+        return false;
+    }
+
+
     //À revoir...
     //void Move(Transform destination)
     //{

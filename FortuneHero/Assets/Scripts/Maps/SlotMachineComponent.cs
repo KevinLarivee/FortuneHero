@@ -217,7 +217,7 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
 
     void UpdateBetText()
     {
-        betText.text = $"Mise : {currentBet} coins";
+        betText.text = $"{currentBet}";
     }
 
     void UpdateBalanceText()

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b1c45ddf5f67c2a4ab4720f6cbf7bdee
+guid: 1a41c3e209ba51c4fbb25b4d4613c183
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -126,3 +126,10 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 168611
+  packageName: Ultimate 10+ Shaders
+  packageVersion: 1.0.2
+  assetPath: Assets/Ultimate 10 Plus Shaders/Materials/Textures/hologram_lines.png
+  uploadId: 385061

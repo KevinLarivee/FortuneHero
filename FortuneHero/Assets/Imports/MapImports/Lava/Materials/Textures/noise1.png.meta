@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e115cd3445a3ad54abff14e578ee6e02
+guid: 39a00f3a4d887cc448b5d165b19938eb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -126,3 +126,10 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 168611
+  packageName: Ultimate 10+ Shaders
+  packageVersion: 1.0.2
+  assetPath: Assets/Ultimate 10 Plus Shaders/Materials/Textures/noise1.png
+  uploadId: 385061

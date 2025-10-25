@@ -25,4 +25,11 @@ abstract public class BehaviourTree : MonoBehaviour
         if (activeNode != null)
             activeNode.Tick(Time.deltaTime);
     }
+
+    public void Interupt()
+    {
+        if(activeNode != null)
+            activeNode.InteruptAction();
+        RunTree();
+    }
 }

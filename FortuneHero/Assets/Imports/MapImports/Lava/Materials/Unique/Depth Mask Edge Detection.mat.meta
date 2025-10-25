@@ -1,8 +1,15 @@
 fileFormatVersion: 2
-guid: 98d1b0264db83644e87775d8d5ec943c
+guid: 2f061bfba2b77e54685a046a3d6fa766
 NativeFormatImporter:
   externalObjects: {}
-  mainObjectFileID: 2100000
+  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 168611
+  packageName: Ultimate 10+ Shaders
+  packageVersion: 1.0.2
+  assetPath: Assets/Ultimate 10 Plus Shaders/Materials/Unique/Depth Mask Edge Detection.mat
+  uploadId: 385061

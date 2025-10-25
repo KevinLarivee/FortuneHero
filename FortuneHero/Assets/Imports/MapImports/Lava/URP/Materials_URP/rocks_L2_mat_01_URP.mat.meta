@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ea0b4607f3cc23447b8bff377bab21cd
+guid: bd7472b0e908a8a48ba3adf18d07261a
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000
@@ -8,8 +8,8 @@ NativeFormatImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 310065
-  packageName: 3D Volcanic Rocks
+  productId: 292126
+  packageName: Orbs Effects FREE
   packageVersion: 1.0
-  assetPath: Assets/3D_Sci-fi_volcanic_rocks_01/URP/Materials_URP/rocks_L2_mat_01_URP.mat
-  uploadId: 730028
+  assetPath: Assets/Matthew Guz/Orbs Effects FREE/Materials/Light Orb/Orb 2.mat
+  uploadId: 693328
