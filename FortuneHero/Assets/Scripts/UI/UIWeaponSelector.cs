@@ -66,10 +66,9 @@ public class UIWeaponSelector : MonoBehaviour
 
     }
 
-    void BuyPowerUp(PowerUp power)
+    public void GainPowerUp(PowerUp power)
     {
         currentSelected = (int)power.Type + 1; //(ex.: Melee = 1, Distance = 2, etc.)
-        PlayerComponent.Instance.GetXpAndCoins(0, -power.Price);
 
         if (!currentPowerUps.ContainsValue(power))
         {

@@ -18,7 +18,7 @@ public class PlayerActions : MonoBehaviour
     public static PlayerActions Instance { get { return instance; } }
 
     public List<PowerUp> powerUps;
-
+    
 
 
     [SerializeField] Collider weaponCollider;

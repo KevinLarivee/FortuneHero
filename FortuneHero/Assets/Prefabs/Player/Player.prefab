@@ -1583,16 +1583,32 @@ PrefabInstance:
       value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[0].Name
+      value: LightningRain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[0].Type
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[1].Name
+      value: SnowBall
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[1].Type
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[0].Price
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[1].Image
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[1].Price
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[0].Prefab
@@ -1626,6 +1642,15 @@ PrefabInstance:
       propertyPath: powerUps.Array.data[1].shopPrefab
       value: 
       objectReference: {fileID: 8194489303407043045, guid: 67545720dad2e43448a0324e4b42a22b, type: 3}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[0].Description
+      value: Makes lightning rain down on your enemies and paralyze them for a certain
+        duration
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[1].Description
+      value: Throws a snow ball at an enemy and slows it for a certain duration
+      objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[0].Action.m_PersistentCalls.m_Calls.Array.size
       value: 1
