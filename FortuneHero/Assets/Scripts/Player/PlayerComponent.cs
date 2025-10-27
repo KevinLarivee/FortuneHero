@@ -36,6 +36,7 @@ public class PlayerComponent : MonoBehaviour
     PlayerInteractions playerI;
     HealthComponent healthComponent;
     Animator animator;
+    PlayerOverlayComponent playerOverlay;
 
     InputSystem_Actions.PlayerActions actions;
     void Awake()
@@ -47,6 +48,8 @@ public class PlayerComponent : MonoBehaviour
         playerI = GetComponent<PlayerInteractions>();
         animator = GetComponent<Animator>();
         healthComponent = GetComponent<HealthComponent>();
+        playerOverlay = GetComponent<PlayerOverlayComponent>();
+
         actions = new InputSystem_Actions.PlayerActions();
 
         healthComponent.onDeath = PlayerDeath;
@@ -56,6 +59,7 @@ public class PlayerComponent : MonoBehaviour
     {
         currentXp += xpGain;
         currentCoins += coinGain;
+        playerOverlay.AddCoins(coinGain);
         //Faire autre logique: sound effects, Ui updates (?), etc.
     }
     public void PausePlayer(bool paused)

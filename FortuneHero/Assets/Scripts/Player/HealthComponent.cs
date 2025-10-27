@@ -2,7 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 
-public enum StatusEffect { None, Burn, Freeze, Paralyze, Knockback }
+[System.Flags]
+public enum StatusEffect { None = 0, Burn = 1, Freeze = 1 << 1, Paralyze = 1 << 2, Knockback = 1 << 3 }
 
 //Code a revoir (chat)
 public class HealthComponent : MonoBehaviour
@@ -57,7 +58,7 @@ public class HealthComponent : MonoBehaviour
     {
         bar.fillAmount = fraction;
     }
-    public void Hit(float dmg)
+    public void Hit(float dmg, params StatusEffect[] status)
     {
         hp -= dmg;
         onHit?.Invoke();

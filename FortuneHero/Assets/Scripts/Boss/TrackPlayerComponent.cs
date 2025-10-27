@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,18 @@ public class TrackPlayerComponent : MonoBehaviour
     HealthComponent bossHealth;
 
     public float yThreshold = 15f;
-    public float nearFarThreshold = 8f;
+    public float farThreshold = 15f;
 
     public float phaseTime = 100f;
+    public StatusEffect statusDrawBack = StatusEffect.None;
+    [HideIf(nameof(statusDrawBack), StatusEffect.None)] public GameObject statusEffectPrefab;
 
     float previousPlayerHealth;
+
+    [SerializeField] GameObject nearZoneDebuff;
+    [SerializeField] TriggerProjectile[] rangedProjectile;
+    [SerializeField] DamageCollision[] meleeCollision;
+
     void Start()
     {
         player = PlayerComponent.Instance;
@@ -41,9 +49,6 @@ public class TrackPlayerComponent : MonoBehaviour
         boss = GetComponent<BossComponent>();
         bossHealth = boss.GetComponent<HealthComponent>();
         bossHealth.onHit += OnBossHit;
-
-        if (stats.ContainsKey("phaseElapsedTime"))
-            SetStat("phaseElapsedTime", phaseTime);
     }
     void Update()
     {
@@ -54,10 +59,10 @@ public class TrackPlayerComponent : MonoBehaviour
         if (presets["playerY"] && player.transform.position.y >= yThreshold)
             IncreaseStat("playerY", Time.deltaTime);
 
-        float dist = Vector3.Distance(player.transform.position, transform.position);
-        if (presets["playerFar"] && dist > nearFarThreshold)
+        float sqrDistance = (player.transform.position - boss.transform.position).sqrMagnitude;
+        if (presets["playerFar"] && sqrDistance > farThreshold * farThreshold)
             IncreaseStat("playerFar", Time.deltaTime);
-        if (presets["playerNear"] && dist <= nearFarThreshold)
+        if (presets["playerNear"] && sqrDistance <= farThreshold * farThreshold)
             IncreaseStat("playerNear", Time.deltaTime);
     }
 
@@ -131,18 +136,18 @@ public class TrackPlayerComponent : MonoBehaviour
         //Boss
         ["phaseElapsedTime"] = false, //Augmenter def ou HP, bref ralonger le combat
 
-        ["bossMeleeMiss"] = false, //Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
-        ["bossMeleeBlocked"] = false, //Obliger update via script Boss? (ou player)   Empêcher le block 
-        ["bossMeleeHit"] = false, //Obliger update via script ? Augmenter le dmg melee du boss
+        ["bossMeleeMiss"] = false, //*Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
+        ["bossMeleeBlocked"] = false, //*Obliger update via script Boss? (ou player)   Empêcher le block 
+        ["bossMeleeHit"] = false, //*Obliger update via script ? Augmenter le dmg melee du boss
 
-        ["bossRangeMiss"] = false, //Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
-        ["bossRangeBlocked"] = false, //Obliger update via script Boss? (ou player)    Empêcher le block
-        ["bossRangeHit"] = false, //Obliger update via script Boss? Augmenter le dmg range du boss
+        ["bossRangeMiss"] = false, //*Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
+        ["bossRangeBlocked"] = false, //*Obliger update via script Boss? (ou player)    Empêcher le block
+        ["bossRangeHit"] = false, //*Obliger update via script Boss? Augmenter le dmg range du boss
 
         //Player
         ["playerY"] = false, //Déclencher l'event pour les platformes/sable mouvant
         ["playerFar"] = false, //Augmenter la vitesse du boss, ou les attaques le rapprochant du joueur, ou ralentir le joueur?
-        ["playerNear"] = false, //Déclencher un knockback périodique? Ou éloigner le boss du joueur.
+        ["playerNear"] = false, //Déclencher plus d'attaques de déplacement
 
         //Idée : Ultime debuff, car devrait seulement se déclencher si le joueur joue très bien.
         ["playerHealth"] = false, // Si trop court, se déclenche avec phaseElapsedTime. Si trop long, + d'attaques boss donc ne sera pas déclenché
@@ -150,8 +155,8 @@ public class TrackPlayerComponent : MonoBehaviour
         //["playerBlocking"] = false,
         //["playerDashing"] = false,
 
-        ["playerMeleeDmg"] = false, //Obliger update via script Boss? Augmenter la defense melee du Boss
-        ["playerRangeDmg"] = false  //Obliger update via script Boss? Augmenter la defense range du Boss
+        ["playerMeleeDmg"] = false, //Augmenter la defense melee du Boss
+        ["playerRangeDmg"] = false  //Augmenter la defense range du Boss
     };
     public void AllPresets()
     {
@@ -169,8 +174,11 @@ public class TrackPlayerComponent : MonoBehaviour
         PlayerMeleeDmg(null);
         PlayerRangeDmg(null);
     }
-    public void PhaseElapsedTime(Action drawBack, bool active = true) =>
+    public void PhaseElapsedTime(Action drawBack, bool active = true)
+    {
         PreSetStat("phaseElapsedTime", 1f, drawBack ?? PhaseElapsedTimeDrawBack, active);
+        SetStat("phaseElapsedTime", phaseTime);
+    }
 
     public void BossMeleeMiss(Action drawBack, bool active = true) =>
         PreSetStat("bossMeleeMiss", 1f, drawBack ?? BossMeleeMissDrawBack, active);
@@ -234,11 +242,17 @@ public class TrackPlayerComponent : MonoBehaviour
     }
     void BossMeleeBlockedDrawBack()
     {
-        //Empêcher le block
+        //Empêcher le block (Dans boss component)
+        foreach(var melee in meleeCollision)
+        {
+            //melee.statusEffect = statusDrawBack;
+            
+        }
     }
     void BossMeleeHitDrawBack()
     {
         //Augmenter le dmg melee du boss
+        boss.meleeDmg *= 2; //trop?
     }
 
     void BossRangeMissDrawBack()
@@ -247,25 +261,31 @@ public class TrackPlayerComponent : MonoBehaviour
     }
     void BossRangeBlockedDrawBack()
     {
-        //Empêcher le block
+        //Empêcher le block (Dans boss component)
     }
     void BossRangeHitDrawBack()
     {
         //Augmenter le dmg range du boss
+        boss.rangeDmg *= 2; //trop?
     }
 
 
     void PlayerYDrawBack()
     {
-        //Déclencher l'event pour les platformes/sable mouvant
+        //Déclencher l'event pour les platformes/sable mouvant (Dans boss component)
     }
     void PlayerFarDrawBack()
     {
         //Augmenter la vitesse du boss, ou les attaques le rapprochant du joueur, ou ralentir le joueur?
+        if(nearZoneDebuff != null)
+            nearZoneDebuff.SetActive(true);
+        RemoveStat("playerFar");
     }
     void PlayerNearDrawBack()
     {
         //Déclencher un knockback périodique? Ou éloigner le boss du joueur.
+        boss.movementProbability *= 1.5f;
+        RemoveStat("playerFar");
     }
 
     void PlayerHealthDrawBack()
@@ -273,6 +293,7 @@ public class TrackPlayerComponent : MonoBehaviour
         //Idée : Ultime debuff, car devrait seulement se déclencher si le joueur joue très bien.
         // Si trop court, se déclenche avec phaseElapsedTime. Si trop long, + d'attaques boss donc ne sera pas déclenché
         //changer time.scale?
+        Time.timeScale *= 1.2f;
     }
 
     //void PlayerBlookingDrawBack()
@@ -281,11 +302,13 @@ public class TrackPlayerComponent : MonoBehaviour
     {
         //Augmenter la defense melee du Boss
         boss.meleeDefense *= 2f;
+        RemoveStat("playerRangeDmg");
     }
     void PlayerRangeDmgDrawBack()
     {
         //Augmenter la defense range du Boss
         boss.rangeDefense *= 2f;
+        RemoveStat("playerMeleeDmg");
     }
     #endregion
 }

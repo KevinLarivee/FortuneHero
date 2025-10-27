@@ -22,30 +22,27 @@ public class UIWeaponSelector : MonoBehaviour
 
     void Start()
     {
-        //melee.gameObject.SetActive(false);
-        //distance.gameObject.SetActive(false);
-        //defence.gameObject.SetActive(false);
-       /* meleeDefaultTexture = melee.texture;
+        meleeDefaultTexture = melee.texture;
         distDefaultTexture = distance.texture;
-        defDefaultTexture = defence.texture;*/
+        defDefaultTexture = defence.texture;
     }
 
     public void OnSelectSlot(InputAction.CallbackContext context)
     {
-        if (!context.performed)
-            return;
-
         int key = int.Parse(context.control.name);
+        bool containsKey = currentPowerUps.ContainsKey(key);
+        if (context.performed && containsKey)
+        {
+            if (currentSelected != 0)
+                currentPowerUps[currentSelected].Image.color = defaultColor;
 
-        if (currentSelected != 0)
-            currentPowerUps[currentSelected].Image.color = defaultColor;
-        
-        currentSelected = key;
-        currentPowerUps[currentSelected].Image.color = selectedColor;
+            currentSelected = key;
+            currentPowerUps[currentSelected].Image.color = selectedColor; //changement de couleur fonctionne pas ?
 
-        if (!currentPowerUps.ContainsValue(currentPowerUps[currentSelected]))
-            currentPowerUps[currentSelected].Action?.Invoke();
-        UsePowerUp(currentSelected);
+            if (containsKey)
+                currentPowerUps[currentSelected].Action?.Invoke();
+            UsePowerUp(currentSelected);
+        }
     }
 
     void UsePowerUp(int key)
@@ -63,13 +60,11 @@ public class UIWeaponSelector : MonoBehaviour
                 defence.texture = defDefaultTexture;
                 break;
         }
-
     }
 
-    void BuyPowerUp(PowerUp power)
+    public void GainPowerUp(PowerUp power)
     {
         currentSelected = (int)power.Type + 1; //(ex.: Melee = 1, Distance = 2, etc.)
-        PlayerComponent.Instance.GetXpAndCoins(0, -power.Price);
 
         if (!currentPowerUps.ContainsValue(power))
         {
@@ -87,24 +82,7 @@ public class UIWeaponSelector : MonoBehaviour
                     break;
             }
         }
-    }    
-
-
-    //public void UnlockSlot(int slotIndex)
-    //{
-    //    switch (slotIndex)
-    //    {
-    //        case 1:
-    //            swordSlot.gameObject.SetActive(true);
-    //            break;
-    //        case 2:
-    //            bowSlot.gameObject.SetActive(true);
-    //            break;
-    //        case 3:
-    //            powerSlot.gameObject.SetActive(true);
-    //            break;
-    //    }
-    //}
+    }
 }
 
 

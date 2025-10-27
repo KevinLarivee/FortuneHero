@@ -14,6 +14,8 @@ public class PowerUp
     public GameObject Prefab;
     public GameObject ShopPrefab;
     public int Price;
+    public string Name;
+    public string Description;
 
 }
 

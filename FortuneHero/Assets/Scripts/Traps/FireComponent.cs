@@ -17,29 +17,40 @@ public class FireComponent : MonoBehaviour
     [SerializeField, ShowIf(nameof(slowness))] float slownessValue = 2f;
     [SerializeField] bool preventDash = true;
     [SerializeField] GameObject lavaPrefab;
-    [SerializeField, ShowIf(nameof(ShowDelay))] float lavaDelay = 0.5f;
+    [SerializeField, ShowIf(nameof(ShowDelay))] float lavaDelay = 10f;
 
     Coroutine afterBurn;
     ParticleSystem[] effects;
     //List<ParticleCollisionEvent> collisionEvents;
     public static bool playerIsEnter = false;
     float elapsedTime = 0f;
+    float elapsedTimeLava = 0f;
+    LayerMask ignoreTrigger;
 
     void Awake()
     {
         effects = GetComponents<ParticleSystem>();
+        ignoreTrigger = LayerMask.GetMask("IgnoreTrigger");
         //collisionEvents = new List<ParticleCollisionEvent>();
     }
     void OnEnable()
     {
         PlayFire();
+        elapsedTime = fireRate;
     }
 
     void Update()
     {
-        //if(elapsedTime > 0f)
-        //    elapsedTime -= Time.deltaTime;
-
+        if (elapsedTime > 0f)
+            elapsedTime -= Time.deltaTime;
+        else
+        {
+            GameObject fireCollision = Instantiate(firePrefab, transform.position, transform.rotation);
+            fireCollision.GetComponent<TriggerProjectile>().onTrigger.AddListener(EnterFire);
+            elapsedTime = fireRate;
+        }
+        if(elapsedTimeLava > 0f)
+            elapsedTimeLava -= Time.deltaTime;
     }
 
     public void PlayFire()
@@ -106,7 +117,49 @@ public class FireComponent : MonoBehaviour
     //        GameObject lava = Instantiate(lavaPrefab, pos, Quaternion.Euler(collisionEvents[0].normal));
     //    }
     //}
+    public void EnterFire(CSquareEvent c2)
+    {
+        if (c2.other.CompareTag(target) && c2.other.excludeLayers != ignoreTrigger)
+        {
+            if (afterBurn != null)
+                StopCoroutine(afterBurn);
+            afterBurn = StartCoroutine(AfterBurn());
+            if (!playerIsEnter)
+            {
+                playerIsEnter = true;
+                Debug.Log("Start Burn");
+                //Appliquer Effet de feu à la cible
+                PlayerMovement.Instance.ToggleBurn(true);
+                if (slowness)
+                {
+                    Debug.Log("Start Slowness");
+                    //Appliquer l'effet de slowness à la cible
+                    PlayerMovement.Instance.SlowPlayer(slownessValue);
+                }
+                if (preventDash)
+                {
+                    Debug.Log("Start Prevent Dash");
+                    //Appliquer l'effet de slowness à la cible
+                    PlayerMovement.Instance.ToggleDash(false);
+                }
+            }
+        }
+        if (lavaPrefab != null && elapsedTimeLava <= 0)
+        {
 
+            Vector3 pos = c2.other.ClosestPoint(c2.self.transform.position) + Vector3.up / 10f;
+
+            RaycastHit hit;
+            if (Physics.Raycast(pos, Vector3.down, out hit, 100f, LayerMask.GetMask("Default")))
+            {
+                pos = hit.point;
+            }
+            //À tester
+            GameObject lava = Instantiate(lavaPrefab, pos, Quaternion.Euler(hit.normal));
+
+            elapsedTimeLava = lavaDelay;
+        }
+    }
     void ExitFire()
     {
         if (playerIsEnter)

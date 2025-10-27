@@ -19,6 +19,9 @@ public class ProjectileCollision : MonoBehaviour
                 enemyComponent.StartCoroutine(enemyComponent.HitByIceBall(PlayerActions.Instance.speedDrop, PlayerActions.Instance.slowDuration, iceExplosionObj));
             }
             enemyHealthComponent.Hit(PlayerComponent.Instance.rangedAtkDmg);
+            TrackPlayerComponent tracker;
+            if ((tracker = collision.gameObject.GetComponent<TrackPlayerComponent>()) != null)
+                tracker.IncreaseStat("playerRangeDmg", PlayerComponent.Instance.meleeAtkDmg);
         }
 
         Destroy(gameObject);

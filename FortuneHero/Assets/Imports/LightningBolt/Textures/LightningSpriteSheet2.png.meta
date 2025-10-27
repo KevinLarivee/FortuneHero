@@ -1,13 +1,17 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/LightningBolt/Textures/LightningSpriteSheet2.png.meta
 guid: de8441ebd70dca84c927b1f763a03eea
+========
+guid: 04e275286e81d1b4e9f652ed4612b151
+>>>>>>>> Jacob:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/CraterFree1.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
-    sRGBTexture: 1
+    sRGBTexture: 0
     linearTexture: 0
     fadeOut: 0
     borderMipMap: 0
@@ -20,9 +24,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -31,12 +38,21 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/LightningBolt/Textures/LightningSpriteSheet2.png.meta
     filterMode: -1
     aniso: 2
     mipBias: -100
     wrapU: -1
     wrapV: -1
     wrapW: -1
+========
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+>>>>>>>> Jacob:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/CraterFree1.png.meta
   nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
@@ -48,16 +64,21 @@ TextureImporter:
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
-  alphaUsage: 1
+  alphaUsage: 2
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 0
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -69,11 +90,12 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Standalone
-    maxTextureSize: 1024
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -81,9 +103,11 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/LightningBolt/Textures/LightningSpriteSheet2.png.meta
     buildTarget: iPhone
     maxTextureSize: 8192
     resizeAlgorithm: 0
@@ -98,6 +122,10 @@ TextureImporter:
   - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 8192
+========
+    buildTarget: Server
+    maxTextureSize: 2048
+>>>>>>>> Jacob:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/CraterFree1.png.meta
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -105,6 +133,7 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+    ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
@@ -120,16 +149,24 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-  spritePackingTag: 
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
   pSDRemoveMatte: 0
-  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/LightningBolt/Textures/LightningSpriteSheet2.png.meta
   productId: 168611
   packageName: Ultimate 10+ Shaders
   packageVersion: 1.0.2
   assetPath: Assets/Ultimate 10 Plus Shaders/Materials/Textures/noise1.png
   uploadId: 385061
+========
+  productId: 247933
+  packageName: Magic Effects FREE
+  packageVersion: 1.6
+  assetPath: Assets/Hovl Studio/Magic effects pack/Textures/CraterFree1.png
+  uploadId: 762116
+>>>>>>>> Jacob:FortuneHero/Assets/Prefabs/Particles/Hovl Studio/Magic effects pack/Textures/CraterFree1.png.meta

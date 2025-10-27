@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Imports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Textures.meta
 guid: e1ff5909b53ae9148b80dd2e75cbb924
+========
+guid: c645b2b478e5b2c429cc1791c93cd8f4
+>>>>>>>> Jacob:FortuneHero/Assets/Imports/MapImports/RPG FOOD PROPS/UNIVERSAL RENDER PIPELINE/Textures.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

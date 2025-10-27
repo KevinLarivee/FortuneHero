@@ -15,6 +15,9 @@ public class MeleeAttackCollision : MonoBehaviour
             Debug.Log("You have attacked the enemy !!!");
             var enemyHealthComponent = other.gameObject.GetComponent<HealthComponent>();
             enemyHealthComponent.Hit(PlayerComponent.Instance.meleeAtkDmg);
+            TrackPlayerComponent tracker;
+            if ((tracker = other.gameObject.GetComponent<TrackPlayerComponent>()) != null)
+                tracker.IncreaseStat("playerMeleeDmg", PlayerComponent.Instance.meleeAtkDmg);
         }
     }
 }

@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Enemies/Ranged/Animations/Standing Melee Attack Backhand.anim.meta
 guid: 991bce22050248b44a6a4b485b796957
+========
+guid: 103cdf2b24b4d4940a8a02b4f5e90ad8
+>>>>>>>> Jacob:FortuneHero/Assets/Prefabs/Enemies/Walking.anim.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000
@@ -11,5 +15,9 @@ AssetOrigin:
   productId: 313024
   packageName: Scary_Evil
   packageVersion: 1.0.0
+<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Enemies/Ranged/Animations/Standing Melee Attack Backhand.anim.meta
   assetPath: Assets/Scary_Evil/Animations/Standing Melee Attack Backhand.anim
+========
+  assetPath: Assets/Scary_Evil/Animations/Walking.anim
+>>>>>>>> Jacob:FortuneHero/Assets/Prefabs/Enemies/Walking.anim.meta
   uploadId: 738040

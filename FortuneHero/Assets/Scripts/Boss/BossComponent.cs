@@ -7,6 +7,7 @@ public class BossComponent : MonoBehaviour
 {
     public float meleeDefense = 1f;
     public float rangeDefense = 1f;
+    public float movementProbability = 0.3f;
 
     public int meleeDmg = 1;
     public int rangeDmg = 5;
