@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 6899527668280850583}
   - component: {fileID: 3326012152506636173}
   - component: {fileID: 2114934740800456221}
+  - component: {fileID: 6787008178455296978}
+  - component: {fileID: 1134804177895233063}
+  - component: {fileID: 6753992759198000883}
   m_Layer: 0
   m_Name: FireCollision
   m_TagString: Untagged
@@ -46,13 +49,13 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 54
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2114934740800456221
 MonoBehaviour:
@@ -66,3 +69,74 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aede95fcc5fb64e459c9da694687c6b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  onTrigger:
+    m_PersistentCalls:
+      m_Calls: []
+  speed: 10
+  slowStart: 0
+  accelerationTime: 0.5
+--- !u!114 &6787008178455296978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8049974088879247194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 075337c017cb1424782dcc05d3e45413, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TTL
+  timeToLive: 10
+--- !u!54 &1134804177895233063
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8049974088879247194}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 54
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &6753992759198000883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8049974088879247194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 020f0624cc307a44684e4680cc19067c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageCollision
+  damage: 1
+  targetTag: Player
+  statusEffects: 0
+  knockbackForce: 10
+  knockbackDuration: 0.25
+  verticalFactor: 1
+  burnDamage: 5
+  afterBurnTime: 3
+  paralyzeDamage: 1
+  paralyzeDuration: 0.1
+  freezeDamage: 1
+  freezeMultiplier: 2
+  freezeDuration: 2
