@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 166843321}
   - component: {fileID: 166843320}
   - component: {fileID: 166843322}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -590,7 +590,7 @@ GameObject:
   - component: {fileID: 421043196}
   - component: {fileID: 421043197}
   - component: {fileID: 421043198}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: DoorIsh
   m_TagString: Untagged
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
@@ -1584,6 +1584,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Watcher 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4583572862365802054, guid: 12f643ff5eb58b74d988e97a5d92ac5e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2057,9 +2061,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shop
       objectReference: {fileID: 0}
+    - target: {fileID: 221263441807415828, guid: 2ec094c489f7a16499750e4e9fa293ae, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 232389043435390047, guid: 2ec094c489f7a16499750e4e9fa293ae, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -450
+      objectReference: {fileID: 0}
+    - target: {fileID: 440387212962716571, guid: 2ec094c489f7a16499750e4e9fa293ae, type: 3}
+      propertyPath: detectionRadius
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1412674617329483164, guid: 2ec094c489f7a16499750e4e9fa293ae, type: 3}
       propertyPath: m_Color.a
@@ -2312,6 +2324,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangedEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3287435140092374723, guid: 00a373796e771044aba51f5e69abc2d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2328,6 +2344,10 @@ PrefabInstance:
     - target: {fileID: 5995427188773113595, guid: 825e0708492906d408b19c0c67bc630d, type: 3}
       propertyPath: m_Name
       value: Drakonit
+      objectReference: {fileID: 0}
+    - target: {fileID: 5995427188773113595, guid: 825e0708492906d408b19c0c67bc630d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6377055221343458369, guid: 825e0708492906d408b19c0c67bc630d, type: 3}
       propertyPath: m_LocalPosition.x
