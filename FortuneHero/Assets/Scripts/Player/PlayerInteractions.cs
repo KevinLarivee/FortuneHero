@@ -8,6 +8,7 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] LayerMask interactable;
     [SerializeField] float interactionRadius = 4f;
     [SerializeField] float enterRadius = 20f;
+    [SerializeField] float exitRadius = 25f;
 
     Collider[] cols;
 
@@ -22,11 +23,16 @@ public class PlayerInteractions : MonoBehaviour
     void Update()
     {
         
-        if ((cols = Physics.OverlapSphere(transform.position, enterRadius, interactable)) != null)
+        if ((cols = Physics.OverlapSphere(transform.position, exitRadius, interactable)).Length > 0)
         {
-            foreach(Collider c in cols)
+            cols = cols.OrderBy(c => Vector3.Distance(transform.position, c.transform.position)).ToArray();
+            if (Vector3.Distance(transform.position, cols[0].transform.position) <= enterRadius)
+                cols[0].GetComponent<IInteractable>().Enter();
+            else
+                cols[0].GetComponent<IInteractable>().Exit();
+            for (int i = 1; i < cols.Length; i++)
             {
-                c.GetComponent<IInteractable>().Enter();
+                cols[i].GetComponent<IInteractable>().Exit();
             }
         }
     }
@@ -39,9 +45,7 @@ public class PlayerInteractions : MonoBehaviour
         {
             if(cols != null && cols.Length > 0)
             {
-                var temp = cols.Where(c => Vector3.Distance(transform.position, c.transform.position) >= interactionRadius).ToArray();
-                if(temp != null && temp.Length > 0)
-                    temp[0].GetComponent<IInteractable>().Interact();
+                    cols[0].GetComponent<IInteractable>().Interact();
             }
         }
     }

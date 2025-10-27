@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 60, y: 60}
+  m_SizeDelta: {x: 72, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1182553798321633531
 CanvasRenderer:
@@ -107,7 +107,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 60, y: 60}
+  m_SizeDelta: {x: 72, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5254710931476439540
 CanvasRenderer:
@@ -632,6 +632,78 @@ Transform:
   - {fileID: 6297402807710752246}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6891214239249516086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 910607646943768901}
+  - component: {fileID: 5091853857379270030}
+  - component: {fileID: 1475800737703858016}
+  m_Layer: 5
+  m_Name: Shield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &910607646943768901
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6891214239249516086}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7284544152999884138}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.4, y: -0.8}
+  m_SizeDelta: {x: 73, y: 72}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5091853857379270030
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6891214239249516086}
+  m_CullTransparentMesh: 1
+--- !u!114 &1475800737703858016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6891214239249516086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.RawImage
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 2800000, guid: 60f2a49ba2bb5414f9625159fcd57ac6, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1001 &715786478976554285
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1583,16 +1655,36 @@ PrefabInstance:
       value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[0].Name
+      value: LightningRain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[0].Type
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[1].Name
+      value: SnowBall
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[1].Type
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[0].Image
+      value: 
+      objectReference: {fileID: 6459988035189592756, guid: c8738b10ab55eef4b8339398632b0c71, type: 3}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[0].Price
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[1].Image
       value: 
+      objectReference: {fileID: 3454823477630334380, guid: cbfffa4f60efa9e4b9875ce9ca34ed81, type: 3}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[1].Price
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[0].Prefab
@@ -1626,6 +1718,15 @@ PrefabInstance:
       propertyPath: powerUps.Array.data[1].shopPrefab
       value: 
       objectReference: {fileID: 8194489303407043045, guid: 67545720dad2e43448a0324e4b42a22b, type: 3}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[0].Description
+      value: Makes lightning rain down on your enemies and paralyzes them for a certain
+        duration
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[1].Description
+      value: Throws a snow ball at an enemy and slows it down for a certain duration
+      objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[0].Action.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2244,6 +2345,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4804041047266393419}
+    - target: {fileID: 8461689794371412947, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2360,6 +2465,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 30001050126655780, guid: 7c63d9a3d53c9d74a824fe81261ae5be, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6952892397853977950}
+    - targetCorrespondingSourceObject: {fileID: 999111310446167577, guid: 7c63d9a3d53c9d74a824fe81261ae5be, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 910607646943768901}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4793287693456372621, guid: 7c63d9a3d53c9d74a824fe81261ae5be, type: 3}
       insertIndex: -1
@@ -2412,8 +2520,8 @@ MonoBehaviour:
   selectedColor: {r: 0.6603774, g: 0.64961576, b: 0.6167675, a: 1}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   melee: {fileID: 5709711836209306420}
-  distance: {fileID: 0}
-  defence: {fileID: 0}
+  distance: {fileID: 709687901861510746}
+  defence: {fileID: 1475800737703858016}
 --- !u!114 &3576247067720226245 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6443254669894739638, guid: 7c63d9a3d53c9d74a824fe81261ae5be, type: 3}
@@ -2450,6 +2558,11 @@ MonoBehaviour:
 --- !u!224 &7184759015403640490 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 828394586092578265, guid: 7c63d9a3d53c9d74a824fe81261ae5be, type: 3}
+  m_PrefabInstance: {fileID: 7550962343422522227}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &7284544152999884138 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 999111310446167577, guid: 7c63d9a3d53c9d74a824fe81261ae5be, type: 3}
   m_PrefabInstance: {fileID: 7550962343422522227}
   m_PrefabAsset: {fileID: 0}
 --- !u!224 &7539305006801670743 stripped
