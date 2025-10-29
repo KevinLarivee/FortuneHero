@@ -94,7 +94,8 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
 
         // Panels init
         panelSlot.SetActive(false);
-        panelPlayer.SetActive(true);
+        if(panelPlayer != null)
+            panelPlayer.SetActive(true);
     }
 
     public void Enter() { }
@@ -154,7 +155,8 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
         pendingOpen = false;
 
         panelSlot.SetActive(true);
-        panelPlayer.SetActive(false);
+        if(panelPlayer != null)
+            panelPlayer.SetActive(false);
 
         // Brancher les boutons à chaque ouverture
         btnIncreaseBet.onClick.RemoveAllListeners();
@@ -181,7 +183,8 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
         Cursor.lockState = CursorLockMode.Locked;
 
         panelSlot.SetActive(false);
-        panelPlayer.SetActive(true);
+        if(panelPlayer != null)
+            panelPlayer.SetActive(true);
         resultText.text = "";
 
         // Stop attente d’ouverture si en cours

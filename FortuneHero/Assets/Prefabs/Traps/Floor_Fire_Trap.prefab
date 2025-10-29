@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1930218628442572989}
   - component: {fileID: 2392568418783090560}
   - component: {fileID: 6326805023635113722}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Floor_Fire_Trap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -128,6 +128,15 @@ MonoBehaviour:
   inactiveTime: 1
   activeTime: 1
   activeDistance: 20
+  target: Player
+  firePrefab: {fileID: 0}
+  fireRate: 0.1
+  afterBurnTime: 3
+  slowness: 1
+  slownessValue: 2
+  preventDash: 1
+  lavaPrefab: {fileID: 0}
+  lavaDelay: 10
 --- !u!1001 &671639786598911091
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -141,8 +150,20 @@ PrefabInstance:
       value: FlameThrower
       objectReference: {fileID: 0}
     - target: {fileID: 1634767862067424, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1634767862067424, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1685911702664702, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1819868529388052, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4584431484625042, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
       propertyPath: m_LocalScale.x
@@ -200,6 +221,10 @@ PrefabInstance:
       propertyPath: looping
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 198637950067575458, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
+      propertyPath: CollisionModule.collidesWith.m_Bits
+      value: 65
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -254,9 +279,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de77e775769df514ea67ded43a4775ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireComponent
-  dmg: 1
-  afterBurnTime: 3
-  slownessValue: 2
-  slowness: 1
-  preventDash: 1
   target: Player
+  firePrefab: {fileID: 0}
+  fireRate: 0.1
+  afterBurnTime: 3
+  slowness: 1
+  slownessValue: 2
+  preventDash: 1
+  lavaPrefab: {fileID: 0}
+  lavaDelay: 10

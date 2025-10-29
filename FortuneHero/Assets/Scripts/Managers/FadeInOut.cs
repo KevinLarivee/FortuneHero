@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 public class FadeInOut : MonoBehaviour
 {
     [SerializeField] float fadeSpeed = 3f;
-    CanvasRenderer renderer;
+    CanvasRenderer[] renderers;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        renderer = GetComponent<CanvasRenderer>();
+        renderers = GetComponentsInChildren<CanvasRenderer>() ?? GetComponents<CanvasRenderer>();
         //1f = opaque et 0f= invisible
         //renderer.SetAlpha(0f);
         //gameObject.SetActive(false);
@@ -19,24 +19,32 @@ public class FadeInOut : MonoBehaviour
     }
     public IEnumerator FadeIn()
     {
-        float alpha = renderer.GetAlpha();
+        float alpha = 0f;
         while (alpha < 1f)
         {
             alpha = alpha + fadeSpeed * Time.deltaTime;
-            renderer.SetAlpha(alpha);
+            SetAlpha(alpha);
             yield return null;
         }
     }
 
     public IEnumerator FadeOut()
     {
-        float alpha = renderer.GetAlpha();
+        float alpha = 1f;
         while (alpha > 0f)
         {
-
+            Debug.Log(alpha);
             alpha = alpha - fadeSpeed * Time.deltaTime;
-            renderer.SetAlpha(alpha);
+            SetAlpha(alpha);
             yield return null;
+        }
+        Debug.Log("FIN FADE OUT");
+    }
+    void SetAlpha(float alpha)
+    {
+        foreach (var renderer in renderers)
+        {
+            renderer.SetAlpha(alpha);
         }
     }
     // Update is called once per frame
@@ -45,4 +53,3 @@ public class FadeInOut : MonoBehaviour
 
     }
 }
-

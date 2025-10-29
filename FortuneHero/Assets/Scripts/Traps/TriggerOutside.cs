@@ -27,14 +27,14 @@ public class TriggerOutside : MonoBehaviour
     {
         if (other.CompareTag(target))
         {
-            targetHealth = other.GetComponent<HealthComponent>();
+            targetHealth = null;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag(target))
         {
-            targetHealth = null;
+            targetHealth = other.GetComponent<HealthComponent>();
         }
     }
     IEnumerator NearZoneCoroutine()
