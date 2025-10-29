@@ -29,6 +29,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] GameObject defaultProjectilePrefab;
     [SerializeField] GameObject iceBallPrefab;
     [SerializeField] GameObject aoeParaPrefab;
+    [SerializeField] GameObject invShieldPrefab; //inv --> invincibility
 
 
     [Header("Shield")]
@@ -39,13 +40,11 @@ public class PlayerActions : MonoBehaviour
     float speedWhileShielding = 2f;
 
     [Header("RangedAtk")]
-    //public int rangedAtkDmg = 20;
     [SerializeField] float rangedAtkCd = 1.5f;
     [SerializeField] float rangedAtkTimer = 0f;
     bool canRangedAtk = false;
 
     [Header("MeleeAtk")]
-    //public int meleeAtkDmg = 10;
     [SerializeField] float meleeAtkCd = 0.5f;
     [SerializeField] float meleeAtkTimer = 0f;
     bool canMeleeAtk = false;
@@ -53,10 +52,10 @@ public class PlayerActions : MonoBehaviour
     [Header("PowerUps")]
     public float slowDuration = 5f;
     public float speedDrop = 2f;
-    public bool AoeParaActivated = false;
     [SerializeField] LayerMask layersAffectedByAoe;
     [SerializeField] float aoeDuration = 4f;
     [SerializeField] float paralyzeDuration = 2f;
+    [SerializeField] float invShieldDuration = 4f;
     bool isIceBall = false;
     float aoeTimer;
 
@@ -64,6 +63,7 @@ public class PlayerActions : MonoBehaviour
 
     PlayerOverlayComponent overlay;
     Animator animator;
+    HealthComponent health;
 
     public ProjectileType currentType;
     public bool isPaused = false;
@@ -71,15 +71,15 @@ public class PlayerActions : MonoBehaviour
     void Awake()
     {
         instance = this;
-        animator = GetComponent<Animator>();
         defenceCurrentCharge = defenceMaxCharge;
+
+        animator = GetComponent<Animator>();
         overlay = GetComponent<PlayerOverlayComponent>();
+        health = GetComponent<HealthComponent>();
     }
 
     void Update()
     {
-        if (AoeParaActivated)
-            StartAoeParalyze();
         if (aoeTimer > 0)
             aoeTimer -= Time.deltaTime;
 
@@ -164,8 +164,6 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator AoeParalyze()
     {
-        AoeParaActivated = false; //Quand fct appeler, on veut pas refaire
-
         Vector3 spawnPos = new Vector3(transform.position.x, transform.position.y + 0.1f, transform.position.z);
         var obj = Instantiate(aoeParaPrefab, spawnPos, Quaternion.identity);
         aoeTimer = aoeDuration;
@@ -213,6 +211,21 @@ public class PlayerActions : MonoBehaviour
 
         Instantiate(prefab, exitPoint.transform.position, PlayerMovement.Instance.isAiming ? rotation : transform.rotation);
     }
+    public void UseInvShield()
+    {
+        StartCoroutine(InvShield());
+    }
+    private IEnumerator InvShield()
+    {
+        health.isInvincible = true;
+        var obj = Instantiate(invShieldPrefab, transform.position, Quaternion.identity);
+        obj.transform.parent = transform;
+
+        yield return new WaitForSeconds(invShieldDuration);
+        health.isInvincible = false;
+        Destroy(obj);
+    }
+
     public void ShowShield(bool show)
     {
         showShield = show;
@@ -220,17 +233,16 @@ public class PlayerActions : MonoBehaviour
         {
             animator.SetBool("isDefending", true);
             PlayerMovement.Instance.SlowPlayer(speedWhileShielding);
-            Debug.Log("Slow");
         }
         else
         {
-            Debug.Log("SpeedUp");
             animator.SetBool("isDefending", false);
             PlayerMovement.Instance.SpeedUpPlayer(speedWhileShielding);
         }
 
         shield.SetActive(show);
     }
+   
     public void EnableWeaponCollider()
     {
         weaponCollider.enabled = true;

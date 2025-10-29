@@ -15,6 +15,10 @@ public class BossComponent : MonoBehaviour
 
     [SerializeField] protected float moveSpeed = 5f;
     [SerializeField] protected float attackStopDistance = 3f;
+    [SerializeField, Range(0, 1)] protected float[] phases;
+    [SerializeField] int debuffsPerPhase = 2;
+    protected int currentPhase = 0;
+    protected float maxHp;
 
     protected Animator animator;
     //protected EnemyDrops enemyDrops;
@@ -25,7 +29,6 @@ public class BossComponent : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
-        //enemyDrops = GetComponent<EnemyDrops>();
         healthComponent = GetComponent<HealthComponent>();
         trackPlayer = GetComponent<TrackPlayerComponent>();
 
@@ -35,6 +38,7 @@ public class BossComponent : MonoBehaviour
 
     void Start()
     {
+        maxHp = healthComponent.hp;
         //Rendu là, mettre par défaut Presets à true?
         trackPlayer.AllPresets();
     }
@@ -69,6 +73,12 @@ public class BossComponent : MonoBehaviour
     protected virtual void Hit()
     {
         //animator.SetTrigger("hit");
+        if(currentPhase < phases.Length && healthComponent.hp / maxHp <= phases[currentPhase])
+        {
+            currentPhase++;
+            trackPlayer.GetTopStats(debuffsPerPhase);
+            //animations?
+        }
     }
     protected virtual void Death()
     {
@@ -76,7 +86,8 @@ public class BossComponent : MonoBehaviour
         //agent.isStopped = true;
         //À la fin de l'anim de mort
         //enemyDrops.SpawnDrops();
-        //Déclenché fin de niveau
+
+        //Déclenché fin de niveau!!!!
         Destroy(gameObject);
     }
 

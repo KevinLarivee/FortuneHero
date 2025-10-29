@@ -13,6 +13,7 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] float maxHp = 100;
     public float hp = 10;
     public bool alive = true;
+    public bool isInvincible = false;
 
     public delegate void OnDeath();
     public OnDeath onDeath;
@@ -60,12 +61,15 @@ public class HealthComponent : MonoBehaviour
     }
     public void Hit(float dmg, params StatusEffect[] status)
     {
-        hp -= dmg;
-        onHit?.Invoke();
-        SetBar(hp / maxHp);
-        alive = hp > 0;
-        if (!alive)
-            onDeath?.Invoke();
+        if (!isInvincible)
+        {
+            hp -= dmg;
+            onHit?.Invoke();
+            SetBar(hp / maxHp);
+            alive = hp > 0;
+            if (!alive)
+                onDeath?.Invoke();
+        }
     }
     public void ResetHealth()
     {

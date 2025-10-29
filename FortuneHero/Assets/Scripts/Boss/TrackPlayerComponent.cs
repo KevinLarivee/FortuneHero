@@ -110,7 +110,11 @@ public class TrackPlayerComponent : MonoBehaviour
     {
         if (presets.ContainsKey(key))
             presets[key] = true;
-        stats.TryAdd(key, new(multiplier, drawBack));
+        if(!stats.TryAdd(key, new(multiplier, drawBack)))
+        {
+            RemoveStat(key);
+            stats.TryAdd(key, new(multiplier, drawBack));
+        }
     }
     public void RemoveStat(string key)
     {

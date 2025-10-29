@@ -33,9 +33,10 @@ public class ShopComponent : MonoBehaviour, IInteractable
     GameObject currentItem;
     PowerUp currentPower;
 
+    [SerializeField] float detectionRadius = 2f;
     UIWeaponSelector selector;
     bool isInRange = false;
-    [SerializeField] float detectionRadius = 2f;
+    bool canBuy = false;
 
     public float exitTime { get; set; } //IInteractable
 
@@ -57,14 +58,14 @@ public class ShopComponent : MonoBehaviour, IInteractable
         int defRand = Random.Range(0, defencePowerUps.Count);
         PowerUp meleePower = meleePowerUps[meleeRand];
         PowerUp distPower = distancePowerUps[distRand];
-        //PowerUp defPower = defencePowerUps[defRand];
+        PowerUp defPower = defencePowerUps[defRand];
         currentShopPowerUps.Add(meleePower); //Les ajouter a la liste des powers ups available dans le shop
         currentShopPowerUps.Add(distPower);
-        //currentShopPowerUps.Add(defPower);
+        currentShopPowerUps.Add(defPower);
 
         item1 = Instantiate(meleePower.ShopPrefab, itemSpot1.position, Quaternion.identity);
         item2 = Instantiate(distPower.ShopPrefab, itemSpot2.position, Quaternion.identity);
-        //item3 = Instantiate(defPower.ShopPrefab, itemSpot3, false);
+        item3 = Instantiate(defPower.ShopPrefab, itemSpot3.position, Quaternion.identity);
 
         StartCoroutine(Play(item1)); //Delay pour le aoe pcq il etait pas sync (pas ideal pour si c pas le aoe mais sa change pas grand chose apart opti)
     }
@@ -84,29 +85,43 @@ public class ShopComponent : MonoBehaviour, IInteractable
             float dist2 = Vector3.Distance(playerPos, itemSpot2.position);
             float dist3 = Vector3.Distance(playerPos, itemSpot3.position);
 
-            if (item1 != null && dist1 < dist2 && dist1 < detectionRadius) //Si l'item a pas deja ete acheter, s'il est assez proche (pcq 1 collider, donc items peuvent etre loin)
+            if (dist1 < dist2 && dist1 < detectionRadius) //Si l'item a pas deja ete acheter, s'il est assez proche (pcq 1 collider, donc items peuvent etre loin)
                                                                            //et s'il plus proche que l'autre item
             {
-                currentItem = item1;
-                currentPower = currentShopPowerUps[0];
-                ItemCanva.SetActive(true); //repete le code pcq il faut que le canva s'active juste quand les conditions sont vrai pour un des trois, sinon non
-                ChangeCanvaValues(currentPower); //repete le code pcq je veux pas appeler la methode chaque frame quand le joueur est dans range, juste quand il en a besoin
+                if(item1 != null)
+                {
+                    currentItem = item1;
+                    currentPower = currentShopPowerUps[0];
+                    ItemCanva.SetActive(true); //repete le code pcq il faut que le canva s'active juste quand les conditions sont vrai pour un des trois, sinon non
+                    ChangeCanvaValues(currentPower); //repete le code pcq je veux pas appeler la methode chaque frame quand le joueur est dans range, juste quand il en a besoin
+                }
+                else
+                    ItemCanva.SetActive(false);
             }
-            else if (item2 != null && dist2 < dist1 && dist2 < dist3 && dist2 < detectionRadius)
+            else if (dist2 < dist1 && dist2 < dist3 && dist2 < detectionRadius)
             {
-                currentItem = item2;
-                currentPower = currentShopPowerUps[1];
-                ItemCanva.SetActive(true);
-                ChangeCanvaValues(currentPower);
+                if(item2 != null)
+                {
+                    currentItem = item2;
+                    currentPower = currentShopPowerUps[1];
+                    ItemCanva.SetActive(true);
+                    ChangeCanvaValues(currentPower);
+                }
+                
             }
-            else if (item3 != null && dist3 < dist2 && dist3 < detectionRadius)
+            else if (dist3 < dist2 && dist3 < detectionRadius)
             {
-                currentItem = item3;
-                currentPower = currentShopPowerUps[2];
-                ItemCanva.SetActive(true);
-                ChangeCanvaValues(currentPower);
+                if(item3 != null)
+                {
+                    currentItem = item3;
+                    currentPower = currentShopPowerUps[2];
+                    ItemCanva.SetActive(true);
+                    ChangeCanvaValues(currentPower);
+                }
+                else
+                    ItemCanva.SetActive(false);
             }
-            
+
             yield return new WaitForSeconds(0.1f);
         }
     }
@@ -115,13 +130,27 @@ public class ShopComponent : MonoBehaviour, IInteractable
         itemImage.texture = power.Image.texture;
         itemName.text = power.Name;
         itemDescription.text = power.Description;
-        itemPrice.text = power.Price.ToString();
+        if (PlayerComponent.Instance.currentCoins >= power.Price)
+        {
+            canBuy = true;
+            itemPrice.text = power.Price.ToString();
+        }
+        else
+        {
+            canBuy = false;
+            itemPrice.text = "Not enough coins";
+        }
+
     }
     private void BuyPowerUp(GameObject obj, PowerUp power)
     {
-        Destroy(obj);
-        PlayerComponent.Instance.GetXpAndCoins(0, -power.Price);
-        selector.GainPowerUp(power);
+        //check si j'ai assez de cash
+        if(canBuy)
+        {
+            Destroy(obj);
+            PlayerComponent.Instance.GetXpAndCoins(0, -power.Price);
+            selector.GainPowerUp(power);
+        }
     }
 
 
@@ -139,9 +168,9 @@ public class ShopComponent : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             isInRange = false;
-            ItemCanva.SetActive(false);
             currentItem = null;
             currentPower = null;
+            ItemCanva.SetActive(false);
         }
     }
 

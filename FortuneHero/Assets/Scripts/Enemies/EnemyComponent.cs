@@ -11,8 +11,8 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     protected EnemyState enemyState;
     public ObjectPoolComponent Pool { get; set; }
 
-    public int dmg = 1;
-    public int collisionDmg = 10;
+    public int dmg = 10;
+    public int collisionDmg = 5;
 
     [SerializeField] GameObject paralyzePrefab;
     public bool isParalyzed = false;
@@ -252,8 +252,15 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<HealthComponent>().Hit(collisionDmg); //Lier le dmg au dmg de l'enemy
+            collision.gameObject.GetComponent<HealthComponent>().Hit(collisionDmg);
         }
     }
 
+    protected void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<HealthComponent>().Hit(dmg); 
+        }
+    }
 }

@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:FortuneHero/Assets/Prefabs/Enemies/Walking.anim.meta
 guid: 103cdf2b24b4d4940a8a02b4f5e90ad8
-========
-guid: 5f13d78fb0abed94dabb7b4cd89ed1e3
->>>>>>>> Jacob:FortuneHero/Assets/Prefabs/Enemies/Ranged/Animations/Walking.anim.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 7400000

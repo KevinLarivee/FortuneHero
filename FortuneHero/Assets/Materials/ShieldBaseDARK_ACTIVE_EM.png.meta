@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:FortuneHero/Assets/Materials/ShieldBaseDARK_ACTIVE_EM.png.meta
 guid: 35b39734819c73742ba38bbb62448ed6
-========
-guid: bd6aadff5cdb1324385cbf012ffa63fc
->>>>>>>> Jacob:FortuneHero/Assets/Prefabs/World/slot_machine/textures/slot_machine_Material_Normal.png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -58,7 +54,7 @@ TextureImporter:
   alphaUsage: 1
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
-  textureType: 1
+  textureType: 0
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1

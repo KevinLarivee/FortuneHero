@@ -10,8 +10,7 @@ public class DamageCollision : MonoBehaviour
 
     [Header("Knockback")]
     [SerializeField, ShowIf(nameof(HasKnockback))] float knockbackForce = 10f;
-    [SerializeField, ShowIf(nameof(HasKnockback))] float knockbackDuration = 0.25f;
-    [SerializeField, Range(0f, 3f), ShowIf(nameof(HasKnockback))] float verticalFactor = 1f;
+    [SerializeField, ShowIf(nameof(HasKnockback))] float verticalMultiplier = 0.4f;
 
     [Header("Burn")]
     [SerializeField, ShowIf(nameof(HasBurn))] int burnDamage = 5;
@@ -37,10 +36,13 @@ public class DamageCollision : MonoBehaviour
     public void Damage(Collision collision)
     {
         //faire degats
-        collision.gameObject.GetComponent<HealthComponent>().Hit(damage);//statusEffect
-        Vector3 sourcePos = collision.collider.bounds.center;
-        //appel knockback
-        //PlayerMovement.Instance.KnockBack(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
+        collision.gameObject.GetComponent<HealthComponent>().Hit(damage);
+
+        Vector3 knockDir = collision.contacts[0].normal;
+        knockDir.y = 0f;
+        knockDir.Normalize();
+
+        PlayerMovement.Instance.KnockBack(transform.position + knockDir, knockbackForce, verticalMultiplier);
         Debug.Log($"{collision.gameObject.name} touché. Dégats: {damage}");
 
         if (Physics.Raycast(collision.contacts[0].point, -collision.contacts[0].normal, 1f, 69))

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Drawing;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     HealthComponent health;
     PlayerComponent playerInstance;
 
+    [SerializeField] LayerMask playerLayer;
     Vector3 jump;
     Vector3 knockBackDirection;
     Vector2 move;
@@ -47,11 +49,7 @@ public class PlayerMovement : MonoBehaviour
     //Vector3 cameraRotation;
     #endregion
 
-    [SerializeField] LayerMask playerLayer;
-
-    //[SerializeField] float dashCooldown = 0.75f;
     [SerializeField] float dashTime = 0.2f;
-    //[SerializeField] float dashSpeed = 2f;
     bool canDash = true;
     bool isDashing = false;
 
@@ -79,23 +77,19 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float deceleration = 10f;
     float groundDrag = 1f;
     float airDrag = 0.5f;
-    //float speedMultiplier = 1f; //Utiliser speedMulti. partout ferait que si player est super vite, son dash va etre vrm plus vite, etc.
 
     #region Status
 
-    //[SerializeField] bool isParalysed = false;
-    //[SerializeField] bool isBurning = false;
-    //[SerializeField] float paralyseTime = 3f;
     [SerializeField] float burnTimeUntilDmgTick = 1f;
-
-    float knockBackTime;
-    float knockBackCounter;
+    [SerializeField] float knockBackTime = 0.5f;
+    float knockBackTimer;
     float burnDmgPerTick = 2f; //Temp ? (envoye par fireComponent potentiellement)
     float burnTimer;
     float paralyseTimer;
     bool canJump = true;
+    bool isKnockedBack = false;
     #endregion
-
+    private float knockBackVerticalVelocity;
     void Awake()
     {
         instance = this;
@@ -121,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (knockBackCounter <= 0)
+        if (knockBackTimer <= 0)
         {
             if (!playerInstance.isParalysed)
                 Movement();
@@ -143,9 +137,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            knockBackCounter -= Time.deltaTime;
+            knockBackTimer -= Time.deltaTime;
             player.Move(knockBackDirection * Time.deltaTime);
         }
+
         if (playerInstance.isBurning)
         {
             fireVFX.SetActive(true);
@@ -196,6 +191,7 @@ public class PlayerMovement : MonoBehaviour
                 coyoteTimeCounter = 0f;
                 jump = transform.up * (jumpForce * playerInstance.jumpMultiplier);
                 jumpBufferCounter = 0f;
+                isKnockedBack = false;
                 animator.SetBool("hasJumped", true);
                 StartCoroutine(StartJumpVFX());
             }
@@ -379,23 +375,34 @@ public class PlayerMovement : MonoBehaviour
     {
         playerInstance.speedMultiplier *= multiplier;
     }
-
-    public void KnockBack(Vector3 direction, float knockForce)
+    public void KnockBack(Vector3 sourcePosition, float horizontalForce, float verticalMultiplier)
     {
-        knockBackCounter = knockBackTime;
-        knockBackDirection = direction * knockForce;
+        isKnockedBack = true;
+        Vector3 direction = (transform.position - sourcePosition).normalized;
+        direction.Normalize();
 
+        knockBackDirection = direction * horizontalForce;
+        knockBackDirection.y = horizontalForce * verticalMultiplier;
+        knockBackTimer = knockBackTime;
+
+        animator.SetTrigger("isHit");
+        animator.SetBool("isRunning", false);
     }
     public void ToggleBurn(bool burning)
     {
-        playerInstance.isBurning = burning;
+        if (!health.isInvincible)
+        {
+            playerInstance.isBurning = burning;
+        }
     }
     public void ToggleParalyse(float paralyseTime)
     {
-        playerInstance.isParalysed = true;
-        paralyseTimer = paralyseTime;
+        if (!health.isInvincible)
+        {
+            playerInstance.isParalysed = true;
+            paralyseTimer = paralyseTime;
+        }
     }
-    
     public void ToggleDash(bool dash)
     {
         canDash = dash;
@@ -410,6 +417,11 @@ public class PlayerMovement : MonoBehaviour
         var gameobject = Instantiate(jumpVFX, transform.position + Vector3.up * 0.5f, Quaternion.Euler(90, 0, 0)); //Object Pool
         yield return new WaitForSeconds(jumpVFXCd);
         Destroy(gameobject);
+    }
+    public void SetJumpPadForce(Vector3 force)
+    {
+        jump = force;
+        animator.SetBool("hasJumped", true);
     }
 
     void SnapFreeLookBehindPlayer()

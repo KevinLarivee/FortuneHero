@@ -33,15 +33,16 @@ public class UIWeaponSelector : MonoBehaviour
         bool containsKey = currentPowerUps.ContainsKey(key);
         if (context.performed && containsKey)
         {
-            if (currentSelected != 0)
-                currentPowerUps[currentSelected].Image.color = defaultColor;
+            //if (currentSelected != 0)
+            //    currentPowerUps[currentSelected].Image.color = defaultColor;
 
             currentSelected = key;
-            currentPowerUps[currentSelected].Image.color = selectedColor; //changement de couleur fonctionne pas ?
+            //currentPowerUps[currentSelected].Image.color = selectedColor; //changement de couleur fonctionne pas ?
 
             if (containsKey)
                 currentPowerUps[currentSelected].Action?.Invoke();
             UsePowerUp(currentSelected);
+            currentSelected = 0;
         }
     }
 

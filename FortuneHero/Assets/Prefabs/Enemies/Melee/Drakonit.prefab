@@ -101,12 +101,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 0.3
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.4
+  m_Center: {x: 0.10657866, y: 0.000000007409819, z: -0.000000014017346}
 --- !u!1 &8181540630944039705
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,12 +154,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Radius: 0.3
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.4
+  m_Center: {x: -0.082866274, y: 0.000000004428905, z: 0.000000007554131}
 --- !u!1001 &1837112528907044538
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1539,6 +1539,7 @@ MonoBehaviour:
   maxHp: 100
   hp: 10
   alive: 1
+  isInvincible: 0
 --- !u!114 &460234672230112972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1551,8 +1552,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e428d024801df940b1ee2f189513d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyComponent
-  dmg: 1
-  collisionDmg: 10
+  dmg: 10
+  collisionDmg: 5
   paralyzePrefab: {fileID: 1479063743343128894}
   isParalyzed: 0
   moveSpeed: 5

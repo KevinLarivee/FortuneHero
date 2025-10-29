@@ -19,8 +19,8 @@ public class PlayerComponent : MonoBehaviour
     public bool isBurning = false;
 
     [Header("Player status")]
-    [SerializeField] int currentCoins = 0;
-    [SerializeField] int currentXp = 0;
+    public int currentCoins = 0;
+    public int currentXp = 0;
     public int currentLevel = 0;
     public int xpRequirement = 100;
 

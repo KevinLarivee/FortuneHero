@@ -12,10 +12,8 @@ public class ProjectileCollision : MonoBehaviour
             if(PlayerActions.Instance.currentType == ProjectileType.IceBall)
             {
                 var iceExplosionObj = Instantiate(iceBallExplosionPrefab, collision.gameObject.transform.position, Quaternion.identity);
-                PlayerActions.Instance.SetToIceBall(false);
 
                 var enemyComponent = collision.gameObject.GetComponent<EnemyComponent>();
-                Debug.Log(enemyComponent);
                 enemyComponent.StartCoroutine(enemyComponent.HitByIceBall(PlayerActions.Instance.speedDrop, PlayerActions.Instance.slowDuration, iceExplosionObj));
             }
             enemyHealthComponent.Hit(PlayerComponent.Instance.rangedAtkDmg);
@@ -23,7 +21,7 @@ public class ProjectileCollision : MonoBehaviour
             if ((tracker = collision.gameObject.GetComponent<TrackPlayerComponent>()) != null)
                 tracker.IncreaseStat("playerRangeDmg", PlayerComponent.Instance.meleeAtkDmg);
         }
-
+        PlayerActions.Instance.SetToIceBall(false);
         Destroy(gameObject);
         //ObjectPool
     }

@@ -1,10 +1,11 @@
-using UnityEditor;
 using NaughtyAttributes;
+using System;
+using System.Collections;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
-using System;
-using Unity.VisualScripting;
-using System.Collections;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public enum PatrolType { Loop, Reverse, Random, /*Chaos*/};
 public class PatrolComponent : MonoBehaviour
@@ -38,17 +39,19 @@ public class PatrolComponent : MonoBehaviour
     //Modifié par d'autres scripts
     public bool isActive = false;
     bool isWaiting = false;
+    EnemyComponent enemy;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        enemy = GetComponent<EnemyComponent>();
         StartCoroutine(LookAround());
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(isActive && !isWaiting)
+        if(isActive && !isWaiting && !enemy.isParalyzed)
         {
             move(targets[currentTarget]);
         }
