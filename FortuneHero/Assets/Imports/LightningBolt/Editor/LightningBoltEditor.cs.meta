@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 819fd1bf4d804f84eb58ea267bd83357
+guid: 63a798753cf9bbc4596bb03f878ee72b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
@@ -11,8 +11,8 @@ MonoImporter:
   assetBundleVariant: 
 AssetOrigin:
   serializedVersion: 1
-  productId: 168611
-  packageName: Ultimate 10+ Shaders
-  packageVersion: 1.0.2
-  assetPath: Assets/IgnoredAssets/Ultimate 10 Plus Shaders/Scripts/U10PS_SnowOverTime.cs
-  uploadId: 385061
+  productId: 59471
+  packageName: Lightning Bolt Effect for Unity
+  packageVersion: 1.0.1
+  assetPath: Assets/LightningBolt/Editor/LightningBoltEditor.cs
+  uploadId: 500399

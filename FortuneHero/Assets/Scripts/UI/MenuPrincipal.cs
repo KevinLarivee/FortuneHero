@@ -18,7 +18,7 @@ public class MenuPrincipal : MonoBehaviour
 
     public void Jouer()
     {
-        LoadManager.Instance.Load("MainScene");
+        LoadManager.Instance.Load("LobbyScene");
         //SceneManager.LoadScene("MainScene");
     }
 
