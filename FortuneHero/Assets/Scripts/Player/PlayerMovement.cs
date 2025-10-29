@@ -63,11 +63,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float jumpBufferTime = 0.2f;
     [SerializeField] float doubleJumpAnimDelay = 0.5f;
     [SerializeField] float doubleJumpAnimTimer;
-    float jumpVFXCd = 0.4f; 
+    float jumpVFXCd = 0.4f;
     float coyoteTimeCounter;
     float jumpBufferCounter;
     bool doubleJumpStartTimer = false;
     bool doubleJumped = false;
+    bool usedJumpPad = false;
     #endregion
 
     [Header("Speed")]
@@ -124,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
                 paralyseTimer -= Time.deltaTime;
                 lightningVFX.SetActive(true);
                 animator.SetBool("isParalysed", true);
-                if (paralyseTimer <= 0) 
+                if (paralyseTimer <= 0)
                 {
                     lightningVFX.SetActive(false);
                     //paralyseTimer = paralyseTime;
@@ -169,6 +170,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (IsGrounded())
         {
+            if(jump.y <= -10)
+            {
+                if (usedJumpPad)
+                {
+                    usedJumpPad = false;
+                    jump.x = 0;
+                    jump.z = 0;
+                }
+            }
             jump.y = Mathf.Max(-10, jump.y);
             coyoteTimeCounter = coyoteTime;
             doubleJumped = false;
@@ -227,7 +237,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
             if (moveSpeed > 0f) //bouge pas mais a tjrs vitesse
-                moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere (si arrete pour bref moment, recommence avec vitesse et non 0)
+            moveSpeed = Mathf.Max(moveSpeed - deceleration * Time.deltaTime, 0f); //decelere (si arrete pour bref moment, recommence avec vitesse et non 0)
 
 
         if (!isAiming && direction.sqrMagnitude > 0.001f)
@@ -369,10 +379,12 @@ public class PlayerMovement : MonoBehaviour
     }
     public void SlowPlayer(float divider) // les mettres dans playerComponent ???
     {
+        if (isPaused) return;
         playerInstance.speedMultiplier /= divider;
     }
     public void SpeedUpPlayer(float multiplier)
     {
+        if (isPaused) return;
         playerInstance.speedMultiplier *= multiplier;
     }
     public void KnockBack(Vector3 sourcePosition, float horizontalForce, float verticalMultiplier)
@@ -420,6 +432,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void SetJumpPadForce(Vector3 force)
     {
+        usedJumpPad = true;
         jump = force;
         animator.SetBool("hasJumped", true);
     }

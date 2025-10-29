@@ -145,7 +145,6 @@ public class PlayerActions : MonoBehaviour
     }
     public void Defend(InputAction.CallbackContext ctx)
     {
-        //if(isPaused) return;
         if (PlayerComponent.Instance.bossDisableShield) return;
 
         if (isPaused || (ctx.canceled && showShield))
@@ -160,6 +159,7 @@ public class PlayerActions : MonoBehaviour
     }
     public void StartAoeParalyze()
     {
+        if (isPaused) return;
         StartCoroutine(AoeParalyze());
     }
     private IEnumerator AoeParalyze()
@@ -186,6 +186,7 @@ public class PlayerActions : MonoBehaviour
 
     public void SetToIceBall(bool trueOrFalse)
     {
+        if (isPaused) return;
         isIceBall = trueOrFalse;
     }
     public void ShootProjectile()

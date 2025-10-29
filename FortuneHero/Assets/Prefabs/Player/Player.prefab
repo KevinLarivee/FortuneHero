@@ -1990,6 +1990,10 @@ PrefabInstance:
       propertyPath: knockBackTime
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 8964794528452801434, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 247
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7632852541890627667, guid: 0283053334043de45b20b0876511552a, type: 3}
