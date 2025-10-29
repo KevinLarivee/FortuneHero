@@ -10,17 +10,17 @@ public class TriggerExpand : MonoBehaviour
     public float distance = 20f;
     public float delay = 0.32f;
     public float duration = 1f;
-    Vector3 initialScale;
+    Vector3 initialSize;
     bool isDestroyed = false;
     BoxCollider selfCollider;
     private void Awake()
     {
         selfCollider = GetComponent<BoxCollider>();
-        initialScale = transform.localScale;
+        initialSize = selfCollider.size;
     }
     private void OnEnable()
     {
-        transform.localScale = initialScale;
+        selfCollider.size = initialSize;
         StartCoroutine(Expanding());
     }
     IEnumerator Expanding()
@@ -32,12 +32,12 @@ public class TriggerExpand : MonoBehaviour
             float t = elapsed / duration;
             float currentLength = Mathf.Lerp(0f, distance, t);
 
-            selfCollider.size = new Vector3(initialScale.x, initialScale.y, currentLength);
+            selfCollider.size = new Vector3(initialSize.x, initialSize.y, currentLength);
 
             elapsed += Time.deltaTime;
             yield return null;
         }
-        selfCollider.size = new Vector3(initialScale.x, initialScale.y, distance);
+        selfCollider.size = new Vector3(initialSize.x, initialSize.y, distance);
     }
 
     private void OnTriggerEnter(Collider other)
