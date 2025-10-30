@@ -356,7 +356,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 0d7d29c12eb2dde4ab2db0f049557ad6, type: 3}
+  m_Motion: {fileID: 7400000, guid: 50ae3a4e00945fc47b901288a88fc051, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -458,7 +458,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: 6203b6a2554f7ef46a0cfb087c1e67ad, type: 3}
+  m_Motion: {fileID: 7400000, guid: 97448d5b5bad40f4ea6c3c8057598107, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -830,7 +830,7 @@ AnimatorController:
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
   - m_Name: Punch
     m_Type: 9
@@ -854,7 +854,7 @@ AnimatorController:
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
   - m_Name: Blend
     m_Type: 1
@@ -962,7 +962,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: mixamo_com
+  m_Name: ActualFireBreath
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -978,7 +978,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: eed7764550775d644b08ed6422fd3a29, type: 3}
+  m_Motion: {fileID: 7400000, guid: 90a06b0dcc16e8243965ee7337f66051, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -1266,7 +1266,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -203655887218126122, guid: e2dc5ce9c2728e54b85203fdedf444be, type: 3}
+  m_Motion: {fileID: 7400000, guid: 5084dfaa082347345b1f0cd1d65fc283, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

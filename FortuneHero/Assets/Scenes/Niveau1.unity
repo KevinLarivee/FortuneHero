@@ -18051,7 +18051,7 @@ PrefabInstance:
     - target: {fileID: 4769977475108798152, guid: df07d9d1fd5fbd548917dce3729ce0e0, type: 3}
       propertyPath: spawnPoint
       value: 
-      objectReference: {fileID: 1342427683}
+      objectReference: {fileID: 1689908790}
     - target: {fileID: 7461307687135274031, guid: df07d9d1fd5fbd548917dce3729ce0e0, type: 3}
       propertyPath: m_Name
       value: GameManager

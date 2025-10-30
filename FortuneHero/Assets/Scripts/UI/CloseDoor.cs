@@ -3,6 +3,7 @@ using UnityEngine;
 public class CloseDoor : MonoBehaviour
 {
     public GameObject door; 
+    public GameObject boss;
 
     private bool activated = false; 
 
@@ -10,7 +11,8 @@ public class CloseDoor : MonoBehaviour
     {
         if (!activated && other.CompareTag("Player"))
         {
-            door.SetActive(true);  
+            door.SetActive(true);
+            boss.SetActive(true);
             activated = true;      // Empêche toute nouvelle activation
         }
     }
