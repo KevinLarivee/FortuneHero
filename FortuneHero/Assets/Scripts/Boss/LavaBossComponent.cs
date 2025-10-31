@@ -9,13 +9,13 @@ public class LavaBossComponent : BossComponent
     [SerializeField] GameObject SlashCollision;
     [SerializeField] ParticleSystem[] slashs;
     [SerializeField] GameObject groundSmash;
-    FireTrapComponent fireBreath;
+    [SerializeField] FireTrapComponent fireBreath;
 
     int currentSlash = 0;
 
     void Start()
     {
-        fireBreath = GetComponentInChildren<FireTrapComponent>();
+        //fireBreath = GetComponentInChildren<FireTrapComponent>();
         fireBreath.GetComponent<AimToTargetComponent>().target = PlayerComponent.Instance.transform;
         float lowestY = float.MaxValue;
         foreach (Transform platform in platforms.GetComponentsInChildren<Transform>())
