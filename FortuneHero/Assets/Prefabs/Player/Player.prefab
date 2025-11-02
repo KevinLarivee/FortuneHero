@@ -251,8 +251,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4199309781050396456}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10215648, y: 0.04742772, z: -0.0048572705, w: 0.9936253}
-  m_LocalPosition: {x: -0.37985912, y: 3.2005668, z: -3.9723747}
+  m_LocalRotation: {x: -0.0013234112, y: 0.9860884, z: -0.16603169, w: -0.007838862}
+  m_LocalPosition: {x: 53.85286, y: 1.6326643, z: -11.043221}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -291,7 +291,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 76
+  field of view: 60.000004
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -2122,9 +2122,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5965113584445915505}
     m_Modifications:
+    - target: {fileID: 1152905235978852403, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
+      propertyPath: IgnoreTag
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2034799004800401626, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
+      propertyPath: CameraSide
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2034799004800401626, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
+      propertyPath: CameraDistance
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3050294600146374873, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_Name
       value: CameraManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3128667976007483391, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
+      propertyPath: BlendHint
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3128667976007483391, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: Target.TrackingTarget
@@ -2164,7 +2180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3288302976710426708, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.2499994
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 3288302976710426708, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2172,7 +2188,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3288302976710426708, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 5.71525
+      value: 4.71525
+      objectReference: {fileID: 0}
+    - target: {fileID: 4280938676662723590, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
+      propertyPath: BlendHint
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4280938676662723590, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: Priority.Enabled
@@ -2186,6 +2206,14 @@ PrefabInstance:
       propertyPath: Target.TrackingTarget
       value: 
       objectReference: {fileID: 7838126721332952908}
+    - target: {fileID: 4700615378854894866, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
+      propertyPath: AmplitudeGain
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700615378854894866, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
+      propertyPath: FrequencyGain
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.12014088
