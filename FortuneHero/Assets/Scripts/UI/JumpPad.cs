@@ -3,18 +3,23 @@ using UnityEngine;
 public class JumpPad : MonoBehaviour
 {
     public float jumpForce = 20f;
-    
+    public GameObject jumpPadEffect;
+
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && other.excludeLayers != LayerMask.GetMask("IgnoreTrigger")) 
         {
             Debug.Log("jump");
-            PlayerMovement player = other.GetComponent<PlayerMovement>(); // ou le nom de ton script
+            PlayerMovement player = other.GetComponent<PlayerMovement>(); 
             if (player != null)
             {
-                //player.SetJumpPadForce(transform.up * jumpForce);
-               
+                player.SetJumpPadForce(transform.up * jumpForce);
+
+                if (jumpPadEffect != null)
+                    jumpPadEffect.SetActive(true);
+
             }
         }
     }
