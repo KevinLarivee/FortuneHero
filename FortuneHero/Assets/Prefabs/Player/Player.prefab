@@ -2639,6 +2639,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1453865510162959563, guid: 7c63d9a3d53c9d74a824fe81261ae5be, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7907284360531690650, guid: 7c63d9a3d53c9d74a824fe81261ae5be, type: 3}
       propertyPath: m_Name
       value: CanvaJoueur
