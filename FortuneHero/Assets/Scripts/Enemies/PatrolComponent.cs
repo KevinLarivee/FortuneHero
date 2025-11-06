@@ -53,6 +53,7 @@ public class PatrolComponent : MonoBehaviour
     {
         if(isActive && !isWaiting && !enemy.isParalyzed)
         {
+            if(targets.Length > 0)
             move(targets[currentTarget]);
         }
     }
