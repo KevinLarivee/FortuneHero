@@ -146,12 +146,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 020f0624cc307a44684e4680cc19067c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DamageCollision
-  damage: 1
+  damage: 5
   targetTag: Player
-  statusEffect: 4
-  knockbackForce: 10
-  knockbackDuration: 0.25
-  verticalFactor: 1
+  statusEffects: 8
+  knockbackForce: 40
+  verticalMultiplier: 0.2
+  burnDamage: 5
+  afterBurnTime: 3
+  paralyzeDamage: 1
+  paralyzeDuration: 0.1
+  freezeDamage: 1
+  freezeMultiplier: 2
+  freezeDuration: 2
 --- !u!1 &6718920062489701812
 GameObject:
   m_ObjectHideFlags: 0

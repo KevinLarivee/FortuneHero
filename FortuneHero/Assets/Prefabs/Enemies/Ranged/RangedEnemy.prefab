@@ -637,10 +637,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9162e290bcc0284c87ecc74cc45c314, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
-  bar: {fileID: 0}
+  bar: {fileID: 2505007156101605638}
   maxHp: 100
   hp: 10
   alive: 1
+  isInvincible: 0
 --- !u!114 &1492321424613175666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -654,7 +655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangedEnemyComponent
   dmg: 1
-  collisionDmg: 10
+  collisionDmg: 3
   paralyzePrefab: {fileID: 3066136394147834298}
   isParalyzed: 0
   moveSpeed: 5
@@ -881,3 +882,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8373286550318866045, guid: fcd4b14309454ee458e7299a6519f837, type: 3}
   m_PrefabInstance: {fileID: 7924326988515501401}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2505007156101605638 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5709244732119354463, guid: fcd4b14309454ee458e7299a6519f837, type: 3}
+  m_PrefabInstance: {fileID: 7924326988515501401}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

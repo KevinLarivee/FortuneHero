@@ -80,9 +80,9 @@ public class PlayerMovement : MonoBehaviour
     float airDrag = 0.5f;
 
     #region Status
-
     [SerializeField] float burnTimeUntilDmgTick = 1f;
     [SerializeField] float knockBackTime = 0.5f;
+    [SerializeField] float invDuration = 1f;
     float knockBackTimer;
     float burnDmgPerTick = 2f; //Temp ? (envoye par fireComponent potentiellement)
     float burnTimer;
@@ -90,6 +90,7 @@ public class PlayerMovement : MonoBehaviour
     bool canJump = true;
     bool isKnockedBack = false;
     #endregion
+
     private float knockBackVerticalVelocity;
     void Awake()
     {
@@ -128,9 +129,9 @@ public class PlayerMovement : MonoBehaviour
                 if (paralyseTimer <= 0)
                 {
                     lightningVFX.SetActive(false);
-                    //paralyseTimer = paralyseTime;
                     playerInstance.isParalysed = false;
                     animator.SetBool("isParalysed", false);
+                    StartCoroutine(MakeInvincible(invDuration));
                 }
             }
 
@@ -163,14 +164,21 @@ public class PlayerMovement : MonoBehaviour
         Vector3 forward = isAiming ? transform.forward : freelookCam.transform.forward;
         Vector3 right = isAiming ? transform.right : freelookCam.transform.right;
 
-        direction = forward * move.y + right * move.x;
-        if (direction.magnitude > 0)
-            direction.Normalize();
-        direction.y = 0;
+        if(!isDashing)
+        {
+            direction = forward * move.y + right * move.x;
+            if (direction.magnitude > 0)
+                direction.Normalize();
+            direction.y = 0;
+        }
+        //else
+        //{
+        //    //gravity = 0;
+        //}
 
         if (IsGrounded())
         {
-            if(jump.y <= -10)
+            if (jump.y <= -10)
             {
                 if (usedJumpPad)
                 {
@@ -243,7 +251,12 @@ public class PlayerMovement : MonoBehaviour
         if (!isAiming && direction.sqrMagnitude > 0.001f)
             animator.SetBool("isRunning", true);
         else
+        {
+            animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
+            animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
             animator.SetBool("isRunning", false);
+        }
+           
 
         player.Move((moveSpeed * direction + jump) * Time.deltaTime);
     }
@@ -295,8 +308,6 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext ctx)
     {
         //if (isPaused) return;
-
-        if (!isDashing)
             move = ctx.ReadValue<Vector2>();
     }
     public void Look(InputAction.CallbackContext ctx)
@@ -353,9 +364,7 @@ public class PlayerMovement : MonoBehaviour
             inputAxisController.enabled = false;
             SlowPlayer(2);
             animator.SetBool("isAiming", true);
-            animator.SetBool("isRunning", false);
-            animator.SetFloat("x", move.x, 0.2f, Time.deltaTime);
-            animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
+            animator.SetBool("isRunning", false);  
         }
     }
 
@@ -363,14 +372,11 @@ public class PlayerMovement : MonoBehaviour
     {
         isDashing = true;
         canDash = false;
-        yield return new WaitForEndOfFrame();
-
-        float originalGravity = gravity;
-        gravity = 0f;
+        //yield return new WaitForEndOfFrame();
+        jump.y = 0f;
         moveSpeed = maxSpeed * playerInstance.speedMultiplier * playerInstance.dashSpeed;
         yield return new WaitForSeconds(dashTime);
 
-        gravity = originalGravity;
         moveSpeed = maxSpeed * playerInstance.speedMultiplier;
         isDashing = false;
         yield return new WaitForSeconds(playerInstance.dashCooldown);
@@ -409,7 +415,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public void ToggleParalyse(float paralyseTime)
     {
-        if (!health.isInvincible)
+        if (!playerInstance.isParalysed && !health.isInvincible)
         {
             playerInstance.isParalysed = true;
             paralyseTimer = paralyseTime;
@@ -424,17 +430,23 @@ public class PlayerMovement : MonoBehaviour
         canJump = jump;
         doubleJumped = doubleJump;
     }
+    public void SetJumpPadForce(Vector3 force)
+    {
+        usedJumpPad = true;
+        jump = force;
+        animator.SetBool("hasJumped", true);
+    }
     public IEnumerator StartJumpVFX()
     {
         var gameobject = Instantiate(jumpVFX, transform.position + Vector3.up * 0.5f, Quaternion.Euler(90, 0, 0)); //Object Pool
         yield return new WaitForSeconds(jumpVFXCd);
         Destroy(gameobject);
     }
-    public void SetJumpPadForce(Vector3 force)
+    public IEnumerator MakeInvincible(float duration)
     {
-        usedJumpPad = true;
-        jump = force;
-        animator.SetBool("hasJumped", true);
+        health.isInvincible = true;
+        yield return new WaitForSeconds(duration);
+        health.isInvincible = false;
     }
 
     void SnapFreeLookBehindPlayer()

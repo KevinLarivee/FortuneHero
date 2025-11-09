@@ -1552,13 +1552,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e428d024801df940b1ee2f189513d54, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyComponent
-  dmg: 10
-  collisionDmg: 5
+  dmg: 5
+  collisionDmg: 2
   paralyzePrefab: {fileID: 1479063743343128894}
   isParalyzed: 0
   moveSpeed: 5
   stoppingDistance: 1
-  attackStopDistance: 3
+  attackStopDistance: 2
   attackCd: 1
   animationTime: 0.7
   rightHandCollider: {fileID: 3141203301552578361}

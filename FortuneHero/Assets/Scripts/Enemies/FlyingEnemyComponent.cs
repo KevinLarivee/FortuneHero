@@ -11,34 +11,26 @@ public class FlyingEnemyComponent : EnemyComponent
     {
         animator = GetComponentInChildren<Animator>();
         patrol.move = Move;
-        //detector.targetDetected = PlayerDetected;
-        //healthComponent.OnHit = Hit;
-        //healthComponent.OnDeath = Death;
     }
-
-    //void Update()
-    //{
-    //    base.Update();
-    //}
-
 
     //� cause du parent... � retravailler anyways
     protected override void Move(Transform newTarget)
     {
         //D�j� dans base
-        target = newTarget.position;
+        //target = newTarget.position;
+        base.Move(newTarget);
         Vector3 posToTarget = target - transform.position;
 
-        //� override
+        //Utilise pas NavMesh, donc doit gerer la rotation 
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
         //D�j� dans base
-        if (posToTarget.sqrMagnitude <= stoppingDistance * stoppingDistance)
-            newTarget = patrol.NextTarget();
-        animator.SetBool("isPatrolling", true);
-        animator.SetBool("isChasing", false);
+        //if (posToTarget.sqrMagnitude <= stoppingDistance * stoppingDistance)
+        //    newTarget = patrol.NextTarget();
+        //animator.SetBool("isPatrolling", true);
+        //animator.SetBool("isChasing", false);
     }
 
     protected override void ChasingMove()
@@ -49,41 +41,12 @@ public class FlyingEnemyComponent : EnemyComponent
         Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-
         base.ChasingMove();
-        //animator.SetBool("isChasing", true);
-        //animator.SetBool("isPatrolling", false);
     }
 
     public override void ToggleParalyze(float aoeDuration)
     {
         base.ToggleParalyze(aoeDuration);
-        //moveSpeed = 0;
         target = transform.position;
     }
-    //protected override IEnumerator Attack()
-    //{
-    //    animator.SetBool("isChasing", false);
-    //    animator.SetTrigger("Attack");
-
-    //    yield return new WaitForSeconds(animationTime);
-    //    enemyState = EnemyState.Chasing;
-
-    //    yield return new WaitForSeconds(attackCd);
-
-    //}
-    //protected override void Hit()
-    //{
-    //    animator.SetTrigger("hit");
-    //    base.Hit();
-    //}
-    //protected override void Death()
-    //{
-    //    //animator.SetTrigger("death");
-    //    //agent.isStopped = true;
-    //    //� la fin de l'anim de mort
-    //    Destroy(gameObject);
-    //    enemyDrops.SpawnDrops();
-    //    base.Death();
-    //}
 }

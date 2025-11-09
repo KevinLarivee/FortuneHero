@@ -4,21 +4,24 @@ using UnityEngine.AI;
 public class ProjectileCollision : MonoBehaviour
 {
     [SerializeField] GameObject iceBallExplosionPrefab;
-    private void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        Debug.Log(other.gameObject);
+        if (other.gameObject.CompareTag("Enemy"))
         {
-            var enemyHealthComponent = collision.gameObject.GetComponent<HealthComponent>();
-            if(PlayerActions.Instance.currentType == ProjectileType.IceBall)
-            {
-                var iceExplosionObj = Instantiate(iceBallExplosionPrefab, collision.gameObject.transform.position, Quaternion.identity);
+            var enemyHealthComponent = other.GetComponentInParent<HealthComponent>();
+            Debug.Log(enemyHealthComponent);
 
-                var enemyComponent = collision.gameObject.GetComponent<EnemyComponent>();
+            if (PlayerActions.Instance.currentType == ProjectileType.IceBall)
+            {
+                var iceExplosionObj = Instantiate(iceBallExplosionPrefab, other.gameObject.transform.position, Quaternion.identity);
+                iceExplosionObj.transform.parent = other.transform;
+                var enemyComponent = other.gameObject.GetComponentInParent<EnemyComponent>();
                 enemyComponent.StartCoroutine(enemyComponent.HitByIceBall(PlayerActions.Instance.speedDrop, PlayerActions.Instance.slowDuration, iceExplosionObj));
             }
             enemyHealthComponent.Hit(PlayerComponent.Instance.rangedAtkDmg);
             TrackPlayerComponent tracker;
-            if ((tracker = collision.gameObject.GetComponent<TrackPlayerComponent>()) != null)
+            if ((tracker = other.gameObject.GetComponent<TrackPlayerComponent>()) != null)
                 tracker.IncreaseStat("playerRangeDmg", PlayerComponent.Instance.meleeAtkDmg);
         }
         PlayerActions.Instance.SetToIceBall(false);

@@ -157,6 +157,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     public IEnumerator HitByIceBall(float speedChange, float slowDuration, GameObject explosionObj)
     {
         SlowEnemy(speedChange);
+        Debug.Log(explosionObj);
         yield return new WaitForSeconds(slowDuration);
         SpeedUpEnemy(speedChange);
         Destroy(explosionObj);

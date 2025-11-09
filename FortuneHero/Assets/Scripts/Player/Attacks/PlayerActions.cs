@@ -181,7 +181,7 @@ public class PlayerActions : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(new Vector3(spawnPos.x, spawnPos.y + 1.6f, spawnPos.z), 4, layersAffectedByAoe);
         foreach (Collider collider in colliders)
-            collider.transform.root.GetComponent<EnemyComponent>().ToggleParalyze(paralyzeDuration);
+            collider.GetComponentInParent<EnemyComponent>().ToggleParalyze(paralyzeDuration);
     }
 
     public void SetToIceBall(bool trueOrFalse)
