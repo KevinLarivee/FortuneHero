@@ -20,7 +20,7 @@ abstract public class BehaviourTree : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (activeNode != null)
             activeNode.Tick(Time.deltaTime);

@@ -38,6 +38,8 @@ public class TrackPlayerComponent : MonoBehaviour
     [SerializeField] GameObject nearZoneDebuff;
     [SerializeField] TriggerProjectile[] rangedProjectile;
     [SerializeField] DamageCollision[] meleeCollision;
+    [SerializeField] string meleeSpeedAnimatorParameter = "meleeSpeed";
+    [SerializeField] float rangeSizeIncrease = 0.5f;
 
     void Start()
     {
@@ -49,6 +51,8 @@ public class TrackPlayerComponent : MonoBehaviour
         boss = GetComponent<BossComponent>();
         bossHealth = boss.GetComponent<HealthComponent>();
         bossHealth.onHit += OnBossHit;
+
+        boss.rangePrefab.transform.localScale = Vector3.one;
     }
     void Update()
     {
@@ -67,7 +71,7 @@ public class TrackPlayerComponent : MonoBehaviour
     }
 
     #region Stats
-    Dictionary<string, Stat> stats = new();
+    public Dictionary<string, Stat> stats = new();
     public void GetTopStats(int top)
     {
         if (top <= 0 || stats.Count <= top) return;
@@ -80,9 +84,14 @@ public class TrackPlayerComponent : MonoBehaviour
         }
 
         stats = stats.OrderByDescending(s => s.Value.value * s.Value.multiplier).ToDictionary(s => s.Key, s => s.Value);
+        foreach ((string key, Stat stat) in stats)
+        {
+            Debug.Log(key + " of value " + stat.value * stat.multiplier);
+        }
         for (int i = 0; i < top; ++i)
         {
             stats.First().Value.drawBack();
+            Debug.Log(stats.First().Key + " picked");
             RemoveStat(stats.First().Key);
         }
         //À réfléchir...
@@ -110,10 +119,10 @@ public class TrackPlayerComponent : MonoBehaviour
     {
         if (presets.ContainsKey(key))
             presets[key] = true;
-        if(!stats.TryAdd(key, new(multiplier, drawBack)))
+        if (!stats.TryAdd(key, new(multiplier, drawBack)))
         {
             RemoveStat(key);
-            stats.TryAdd(key, new(multiplier, drawBack));
+            AddStat(key, multiplier, drawBack);
         }
     }
     public void RemoveStat(string key)
@@ -138,20 +147,20 @@ public class TrackPlayerComponent : MonoBehaviour
     public Dictionary<string, bool> presets = new Dictionary<string, bool>
     {
         //Boss
-        ["phaseElapsedTime"] = false, //Augmenter def ou HP, bref ralonger le combat
+        ["phaseElapsedTime"] = false, //*Augmenter def ou HP, bref ralonger le combat
 
-        ["bossMeleeMiss"] = false, //*Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
+        ["bossMeleeMiss"] = false, //Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
         ["bossMeleeBlocked"] = false, //*Obliger update via script Boss? (ou player)   Empêcher le block 
-        ["bossMeleeHit"] = false, //*Obliger update via script ? Augmenter le dmg melee du boss
+        ["bossMeleeHit"] = false, //Obliger update via script ? Augmenter le dmg melee du boss
 
-        ["bossRangeMiss"] = false, //*Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
+        ["bossRangeMiss"] = false, //Obliger update via script Boss?  Accélérer l'attaque ou augmenter la hitbox
         ["bossRangeBlocked"] = false, //*Obliger update via script Boss? (ou player)    Empêcher le block
-        ["bossRangeHit"] = false, //*Obliger update via script Boss? Augmenter le dmg range du boss
+        ["bossRangeHit"] = false, //Obliger update via script Boss? Augmenter le dmg range du boss
 
         //Player
         ["playerY"] = false, //Déclencher l'event pour les platformes/sable mouvant
         ["playerFar"] = false, //Augmenter la vitesse du boss, ou les attaques le rapprochant du joueur, ou ralentir le joueur?
-        ["playerNear"] = false, //Déclencher plus d'attaques de déplacement
+        ["playerNear"] = false, //*Déclencher plus d'attaques de déplacement
 
         //Idée : Ultime debuff, car devrait seulement se déclencher si le joueur joue très bien.
         ["playerHealth"] = false, // Si trop court, se déclenche avec phaseElapsedTime. Si trop long, + d'attaques boss donc ne sera pas déclenché
@@ -159,8 +168,8 @@ public class TrackPlayerComponent : MonoBehaviour
         //["playerBlocking"] = false,
         //["playerDashing"] = false,
 
-        ["playerMeleeDmg"] = false, //Augmenter la defense melee du Boss
-        ["playerRangeDmg"] = false  //Augmenter la defense range du Boss
+        ["playerMeleeDmg"] = false, //*Augmenter la defense melee du Boss
+        ["playerRangeDmg"] = false  //*Augmenter la defense range du Boss
     };
     public void AllPresets()
     {
@@ -200,7 +209,7 @@ public class TrackPlayerComponent : MonoBehaviour
 
 
     public void PlayerY(Action drawBack, bool active = true) =>
-        PreSetStat("PlayerY", 0.05f, drawBack ?? PlayerYDrawBack, active);
+        PreSetStat("playerY", 0.05f, drawBack ?? PlayerYDrawBack, active);
     public void PlayerFar(Action drawBack, bool active = true) =>
         PreSetStat("playerFar", 0.05f, drawBack ?? PlayerFarDrawBack, active);
     public void PlayerNear(Action drawBack, bool active = true) =>
@@ -243,14 +252,16 @@ public class TrackPlayerComponent : MonoBehaviour
     void BossMeleeMissDrawBack()
     {
         //Accélérer l'attaque ou augmenter la hitbox
+        float speed = boss.animator.GetFloat(meleeSpeedAnimatorParameter);
+        boss.animator.SetFloat(meleeSpeedAnimatorParameter, speed * 1.5f);
     }
     void BossMeleeBlockedDrawBack()
     {
         //Empêcher le block (Dans boss component)
-        foreach(var melee in meleeCollision)
+        foreach (var melee in meleeCollision)
         {
             //melee.statusEffect = statusDrawBack;
-            
+
         }
     }
     void BossMeleeHitDrawBack()
@@ -262,6 +273,7 @@ public class TrackPlayerComponent : MonoBehaviour
     void BossRangeMissDrawBack()
     {
         //Accélérer l'attaque ou augmenter la hitbox
+        boss.rangePrefab.transform.localScale *= (1f + rangeSizeIncrease);
     }
     void BossRangeBlockedDrawBack()
     {
@@ -281,9 +293,9 @@ public class TrackPlayerComponent : MonoBehaviour
     void PlayerFarDrawBack()
     {
         //Augmenter la vitesse du boss, ou les attaques le rapprochant du joueur, ou ralentir le joueur?
-        if(nearZoneDebuff != null)
+        if (nearZoneDebuff != null)
             nearZoneDebuff.SetActive(true);
-        RemoveStat("playerFar");
+        RemoveStat("playerNear");
     }
     void PlayerNearDrawBack()
     {

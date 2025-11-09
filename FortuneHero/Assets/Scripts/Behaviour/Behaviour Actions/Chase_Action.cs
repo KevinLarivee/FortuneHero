@@ -33,4 +33,9 @@ public class Chase_Action : Behaviour_Node
         agent.destination = agent.transform.position;
         base.InteruptAction();
     }
+    public override void FinishAction(bool result)
+    {
+        agent.destination = agent.transform.position;
+        base.FinishAction(result);
+    }
 }

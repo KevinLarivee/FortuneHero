@@ -44,7 +44,7 @@ public class WanderingWithChase_BT : BehaviourTree
 
         // Action Set #1
         chase_Action = new Chase_Action(null, agent, player.gameObject);
-        rotateToFaceTarget_Action = new RotateToFaceTarget_Action(null, player.gameObject, rotationSpeed, agent);
+        rotateToFaceTarget_Action = new RotateToFaceTarget_Action(null, player.gameObject, rotationSpeed, agent.transform, 0f);
         attackDemo_Action = new AttackDemo_Action(null, atkPrefab, agent.gameObject, 0.5f);
         attack_Wait_Action = new Wait_Action(null, 0.5f);
 

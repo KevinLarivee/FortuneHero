@@ -10,7 +10,7 @@ public class HealthComponent : MonoBehaviour
 {
     [SerializeField] UnityEngine.UI.Image bar;
 
-    [SerializeField] float maxHp = 100;
+    public float maxHp = 100;
     public float hp = 10;
     public bool alive = true;
     public bool isInvincible = false;

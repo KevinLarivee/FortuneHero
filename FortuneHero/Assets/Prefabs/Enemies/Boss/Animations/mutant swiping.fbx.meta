@@ -54,7 +54,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.45780957
+        functionName: EnableLeftHandCollider
+        data: 
+        objectReferenceParameter: {fileID: 8720446606508543019, guid: 6ed579c3b31857745ab87435a4fc0d44, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.72351867
+        functionName: DisableLeftHandCollider
+        data: 
+        objectReferenceParameter: {fileID: 8720446606508543019, guid: 6ed579c3b31857745ab87435a4fc0d44, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

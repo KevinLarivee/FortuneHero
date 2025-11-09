@@ -1,46 +1,43 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 
-[RequireComponent (typeof(HealthComponent), typeof(Behaviour), typeof(TrackPlayerComponent))]
+[RequireComponent(typeof(HealthComponent), typeof(Behaviour), typeof(TrackPlayerComponent))]
 public class BossComponent : MonoBehaviour
 {
     public float meleeDefense = 1f;
     public float rangeDefense = 1f;
     public float movementProbability = 0.3f;
+    public float meleeProbability = 0.8f;
 
     public int meleeDmg = 1;
     public int rangeDmg = 5;
     public int collisionDmg = 10;
 
     [SerializeField] protected float moveSpeed = 5f;
-    [SerializeField] protected float attackStopDistance = 3f;
+    public float attackStopDistance = 3f;
     [SerializeField, Range(0, 1)] protected float[] phases;
     [SerializeField] int debuffsPerPhase = 2;
     protected int currentPhase = 0;
-    protected float maxHp;
+    public GameObject rangePrefab;
 
-    protected Animator animator;
+    public Animator animator;
+    public NavMeshAgent agent;
     //protected EnemyDrops enemyDrops;
     protected HealthComponent healthComponent;
 
-    protected TrackPlayerComponent trackPlayer;
+    public TrackPlayerComponent trackPlayer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         animator = GetComponent<Animator>();
+        agent = GetComponent<NavMeshAgent>();
         healthComponent = GetComponent<HealthComponent>();
         trackPlayer = GetComponent<TrackPlayerComponent>();
 
         healthComponent.onHit += Hit;
         healthComponent.onDeath += Death;
-    }
-
-    void Start()
-    {
-        maxHp = healthComponent.hp;
-        //Rendu là, mettre par défaut Presets à true?
-        trackPlayer.AllPresets();
     }
     void Update()
     {
@@ -57,6 +54,7 @@ public class BossComponent : MonoBehaviour
         //    patrol.isActive = true;
         //    enemyState = EnemyState.Patrol;
         //}
+        animator.SetFloat("Speed", agent.velocity.magnitude);
     }
 
     //protected virtual IEnumerator Attack()
@@ -73,7 +71,7 @@ public class BossComponent : MonoBehaviour
     protected virtual void Hit()
     {
         //animator.SetTrigger("hit");
-        if(currentPhase < phases.Length && healthComponent.hp / maxHp <= phases[currentPhase])
+        if (currentPhase < phases.Length && healthComponent.hp / healthComponent.maxHp <= phases[currentPhase])
         {
             currentPhase++;
             trackPlayer.GetTopStats(debuffsPerPhase);
@@ -88,7 +86,7 @@ public class BossComponent : MonoBehaviour
         //enemyDrops.SpawnDrops();
 
         //Déclenché fin de niveau!!!!
-        Destroy(gameObject);
+        Destroy(gameObject, 5f);
     }
 
     protected void OnCollisionEnter(Collision collision)

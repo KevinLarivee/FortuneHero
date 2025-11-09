@@ -26,8 +26,8 @@ public class Behaviour_Node
     virtual public void ExecuteAction(Behaviour_Composite parent_composite)
     {
         this.parent_Composite = parent_composite;
-        interupted = true;
-        SetNodeAsActive();
+        interupted = false;
+        //SetNodeAsActive();
 
 
         //Faire une action
@@ -36,8 +36,9 @@ public class Behaviour_Node
 
     virtual public void FinishAction(bool result)
     {
-        if(!interupted)
+        if(!interupted && parent_Composite != null)
             parent_Composite.FinishAction(result);
+        interupted = true;
     }
 
 
@@ -54,11 +55,11 @@ public class Behaviour_Node
 
 
     //Simplifier, peut nécessiter changement
-    void SetNodeAsActive()
-    {
-        if (parent_Composite == null || this is Behaviour_Composite)
-            return;
+    //void SetNodeAsActive()
+    //{
+    //    if (parent_Composite == null || parent_Composite.compositeType == Behaviour_Composite.CompositeType.Parallel || (this is Behaviour_Composite && (this as Behaviour_Composite).compositeType != Behaviour_Composite.CompositeType.Parallel))
+    //        return;
 
-        parent_Composite.behaviourTree.activeNode = this;
-    }
+    //    parent_Composite.behaviourTree.activeNode = this;
+    //}
 }
