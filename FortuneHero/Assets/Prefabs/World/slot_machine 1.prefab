@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8514177208118945312}
   - component: {fileID: 5152024262181318091}
   - component: {fileID: 2371048875977020281}
+  - component: {fileID: 5047434615602806222}
   m_Layer: 6
   m_Name: slot_machine 1
   m_TagString: Untagged
@@ -156,6 +157,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 1122585836714247445, guid: 0846a76388daddf41a62eef4740c533c, type: 3}
+--- !u!114 &5047434615602806222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 81492919983255987}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d8369fd904257e4b8e48e6de01e58b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ApplyMainCamera
 --- !u!1 &325415411098528569
 GameObject:
   m_ObjectHideFlags: 0

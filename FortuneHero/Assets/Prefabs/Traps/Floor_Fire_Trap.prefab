@@ -129,7 +129,7 @@ MonoBehaviour:
   activeTime: 1
   activeDistance: 20
   target: Player
-  firePrefab: {fileID: 0}
+  firePrefab: {fileID: 8049974088879247194, guid: dba6d3161e22bc34d95b11651b29ab75, type: 3}
   fireRate: 0.1
   afterBurnTime: 3
   slowness: 1
@@ -232,9 +232,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1634767862067424, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
       insertIndex: -1
       addedObject: {fileID: 828287091902304861}
-    - targetCorrespondingSourceObject: {fileID: 1634767862067424, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6053073154120702572}
   m_SourcePrefab: {fileID: 100100000, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
 --- !u!4 &667215919312547041 stripped
 Transform:
@@ -267,24 +264,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.5, z: 8.8}
   m_Center: {x: 0, y: 0, z: 5.3}
---- !u!114 &6053073154120702572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 673263971621026963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de77e775769df514ea67ded43a4775ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireComponent
-  target: Player
-  firePrefab: {fileID: 0}
-  fireRate: 0.1
-  afterBurnTime: 3
-  slowness: 1
-  slownessValue: 2
-  preventDash: 1
-  lavaPrefab: {fileID: 0}
-  lavaDelay: 10
