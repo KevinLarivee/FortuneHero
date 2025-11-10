@@ -6,11 +6,9 @@ public class ProjectileCollision : MonoBehaviour
     [SerializeField] GameObject iceBallExplosionPrefab;
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject);
         if (other.gameObject.CompareTag("Enemy"))
         {
             var enemyHealthComponent = other.GetComponentInParent<HealthComponent>();
-            Debug.Log(enemyHealthComponent);
 
             if (PlayerActions.Instance.currentType == ProjectileType.IceBall)
             {

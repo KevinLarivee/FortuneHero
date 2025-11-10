@@ -1592,6 +1592,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Watcher 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4583572862365802054, guid: 12f643ff5eb58b74d988e97a5d92ac5e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2327,7 +2331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5995427188773113595, guid: 825e0708492906d408b19c0c67bc630d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6377055221343458369, guid: 825e0708492906d408b19c0c67bc630d, type: 3}
       propertyPath: m_LocalPosition.x

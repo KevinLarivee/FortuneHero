@@ -12,7 +12,6 @@ public class MeleeAttackCollision : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("You have attacked the enemy !!!");
             var enemyHealthComponent = other.GetComponentInParent<HealthComponent>();
             enemyHealthComponent.Hit(PlayerComponent.Instance.meleeAtkDmg);
             TrackPlayerComponent tracker;

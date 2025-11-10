@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,14 +19,15 @@ public class PlayerActions : MonoBehaviour
     public static PlayerActions Instance { get { return instance; } }
 
     public List<PowerUp> powerUps;
-    
 
 
-    [SerializeField] Collider weaponCollider;
+
+    //[SerializeField] Collider weaponCollider;
     [SerializeField] GameObject exitPoint;
     [SerializeField] GameObject shield;
     [SerializeField] Camera aimCamera;
 
+    [SerializeField] GameObject meleeSlashPrefab;
     [SerializeField] GameObject defaultProjectilePrefab;
     [SerializeField] GameObject iceBallPrefab;
     [SerializeField] GameObject aoeParaPrefab;
@@ -47,7 +49,10 @@ public class PlayerActions : MonoBehaviour
     [Header("MeleeAtk")]
     [SerializeField] float meleeAtkCd = 0.5f;
     [SerializeField] float meleeAtkTimer = 0f;
-    bool canMeleeAtk = false;
+    [SerializeField] float meleeComboDelay = 1f;
+    bool canMeleeAtk = true;
+    int atkCount = 0;
+    float lastAttackInput;
 
     [Header("PowerUps")]
     public float slowDuration = 5f;
@@ -88,19 +93,7 @@ public class PlayerActions : MonoBehaviour
         else
             currentType = ProjectileType.Default;
 
-        if (!canMeleeAtk)
-        {
-            meleeAtkTimer -= Time.deltaTime;
-            if (meleeAtkTimer <= 0f)
-                canMeleeAtk = true;
-        }
-        if (!canRangedAtk)
-        {
-            rangedAtkTimer -= Time.deltaTime;
-            if (rangedAtkTimer <= 0f)
-                canRangedAtk = true;
-        }
-
+        //Shield
         if (defenceCurrentCharge <= 0)
         {
             canDefend = false;
@@ -119,6 +112,24 @@ public class PlayerActions : MonoBehaviour
             defenceCurrentCharge = Mathf.Min(defenceCurrentCharge + Time.deltaTime, defenceMaxCharge);
             overlay.UseShield(defenceCurrentCharge);
         }
+
+        //Attacks
+        //if (!canMeleeAtk)
+        //{
+        //    meleeAtkTimer -= Time.deltaTime;
+        //    if (meleeAtkTimer <= 0f)
+        //        canMeleeAtk = true;
+        //}
+        if (!canRangedAtk)
+        {
+            rangedAtkTimer -= Time.deltaTime;
+            if (rangedAtkTimer <= 0f)
+                canRangedAtk = true;
+        }
+        //if (Time.time - lastAttackInput > meleeComboDelay)
+        //{
+        //    atkCount = 0;
+        //}
     }
 
     public void MeleeAttack(InputAction.CallbackContext ctx)
@@ -128,8 +139,25 @@ public class PlayerActions : MonoBehaviour
         if (ctx.performed && canMeleeAtk)
         {
             animator.SetTrigger("MeleeAttack");
-            meleeAtkTimer = meleeAtkCd;
-            canMeleeAtk = false;
+            //meleeAtkTimer = meleeAtkCd;
+            //canMeleeAtk = false;
+            //var animState = animator.GetCurrentAnimatorStateInfo(1);
+
+            //++atkCount;
+            //lastAttackInput = Time.time;
+            //if (atkCount == 1)
+            //    animator.SetTrigger("MeleeAttack");
+
+            //atkCount = Mathf.Clamp(atkCount, 0, 2);
+            //if (atkCount == 2 && animState.IsName("MeleeAttack") && animState.normalizedTime <= 0.8f)
+            //{
+            //    animator.SetTrigger("Thrust");
+            //}
+            //if (atkCount == 2 && animState.IsName("Thrust") && animState.normalizedTime <= 0.8f)
+            //{
+            //    animator.SetTrigger("MeleeAttack");
+
+            //}
         }
     }
     public void RangedAttack(InputAction.CallbackContext ctx)
@@ -243,14 +271,16 @@ public class PlayerActions : MonoBehaviour
 
         shield.SetActive(show);
     }
-   
+
     public void EnableWeaponCollider()
     {
-        weaponCollider.enabled = true;
+        meleeSlashPrefab.SetActive(true);
+        //weaponCollider.enabled = true;
     }
     public void DisableWeaponCollider()
     {
-        weaponCollider.enabled = false;
+        meleeSlashPrefab.SetActive(false);
+        //weaponCollider.enabled = false;
     }
 }
 
