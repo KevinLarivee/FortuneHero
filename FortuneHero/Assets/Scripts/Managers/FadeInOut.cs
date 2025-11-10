@@ -26,6 +26,8 @@ public class FadeInOut : MonoBehaviour
             SetAlpha(alpha);
             yield return null;
         }
+        gameObject.SetActive(true);
+
     }
 
     public IEnumerator FadeOut()
@@ -39,6 +41,8 @@ public class FadeInOut : MonoBehaviour
             yield return null;
         }
         Debug.Log("FIN FADE OUT");
+
+        gameObject.SetActive(false);
     }
     void SetAlpha(float alpha)
     {

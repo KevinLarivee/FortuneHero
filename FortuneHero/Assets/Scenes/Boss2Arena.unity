@@ -18469,7 +18469,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461929684902478665, guid: e40f1f138f3fc964fb6f65f1dcb78b98, type: 3}
       propertyPath: jumpForce
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3461929684902478665, guid: e40f1f138f3fc964fb6f65f1dcb78b98, type: 3}
       propertyPath: jumpPadEffect
@@ -30877,7 +30877,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461929684902478665, guid: e40f1f138f3fc964fb6f65f1dcb78b98, type: 3}
       propertyPath: jumpForce
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3461929684902478665, guid: e40f1f138f3fc964fb6f65f1dcb78b98, type: 3}
       propertyPath: jumpPadEffect
@@ -36833,7 +36833,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3461929684902478665, guid: e40f1f138f3fc964fb6f65f1dcb78b98, type: 3}
       propertyPath: jumpForce
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3461929684902478665, guid: e40f1f138f3fc964fb6f65f1dcb78b98, type: 3}
       propertyPath: jumpPadEffect

@@ -53,6 +53,6 @@ public class DeathUiManager : MonoBehaviour
 
     private void OnReturnToLobby()
     {
-        GameManager.Instance.ReturnToLobby();
+        LoadManager.Instance.Load("LobbyScene");
     }
 }
