@@ -9,6 +9,7 @@ public class RespawnManager : MonoBehaviour
     DissolveComponent dissolve;
     Vector3 respawnPoint = Vector3.zero;
 
+    [SerializeField] float repeatrate = 0.5f;
     bool isRespawning = false;
 
     static RespawnManager instance;
@@ -21,7 +22,7 @@ public class RespawnManager : MonoBehaviour
         pc = PlayerComponent.Instance;
         pm = PlayerMovement.Instance;
         dissolve = pc.GetComponent<DissolveComponent>();
-        InvokeRepeating(nameof(UpdateRespawn), 0.5f, 0.5f);
+        InvokeRepeating(nameof(UpdateRespawn), 0.5f, repeatrate);
     }
 
     void UpdateRespawn()

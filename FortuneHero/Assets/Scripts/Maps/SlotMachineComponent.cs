@@ -67,19 +67,16 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
 
     private bool isSpinning = false;
 
-    void Awake()
+    void Start()
     {
         // Récupère le CinemachineBrain sur la caméra principale (Camera.main)
-        if (Camera.main != null)
-            brain = Camera.main.GetComponent<CinemachineBrain>();
+        //if (Camera.main != null)
+        brain = PlayerComponent.Instance.transform.root.GetComponentInChildren<CinemachineBrain>();
 
         // Assure des priorités connues au démarrage
         if (mainVcam != null) mainVcam.Priority = mainPriority;
         if (slotVcam != null) slotVcam.Priority = slotInactivePriority;
-    }
 
-    void Start()
-    {
         totalWeight = weightCerise + weightCloche + weightBAR + weightSept;
 
         if (!PlayerPrefs.HasKey("coins"))
@@ -171,8 +168,9 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
         UpdateBalanceText();
         resultText.text = "";
 
-        // Gel du jeu visuel, mais on laisse le script Player lire l’input (pour Interact)
+        // Gel du jeu visuel, mais on laisse le script Player lire l’input (pour Interact)wd
         Time.timeScale = 0f;
+        //PlayerComponent.Instance.PausePlayer(true);
         Cursor.lockState = CursorLockMode.None;
     }
 

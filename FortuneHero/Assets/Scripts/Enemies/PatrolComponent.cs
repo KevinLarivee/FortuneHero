@@ -51,7 +51,7 @@ public class PatrolComponent : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(isActive && !isWaiting && !enemy.isParalyzed)
+        if(isActive && !isWaiting /*&& !enemy.isParalyzed a voir si nessecaire*/)
         {
             if(targets.Length > 0)
             move(targets[currentTarget]);

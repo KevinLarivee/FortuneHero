@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   PlayerPrefab: {fileID: 6551409111273694015, guid: 3e4ec8f394b04ed4b8c66a3b90cd346e, type: 3}
+  spawnPoint: {fileID: 0}
   isInBossFight: 0
 --- !u!114 &5175611476088266235
 MonoBehaviour:
@@ -61,4 +62,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RespawnManager
   mask:
     serializedVersion: 2
-    m_Bits: 23
+    m_Bits: 535
+  repeatrate: 0.5

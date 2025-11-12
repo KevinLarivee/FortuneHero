@@ -61,17 +61,16 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
     private bool roundActive = false;
     private bool playerTurn = false;
 
-    void Awake()
-    {
-        if (Camera.main != null)
-            brain = Camera.main.GetComponent<CinemachineBrain>();
-
-        if (mainVcam != null) mainVcam.Priority = mainPriority;
-        if (tableVcam != null) tableVcam.Priority = tableInactivePriority;
-    }
+    
 
     void Start()
     {
+        brain = PlayerComponent.Instance.transform.root.GetComponentInChildren<CinemachineBrain>();
+
+        // Assure des priorités connues au démarrage
+        if (mainVcam != null) mainVcam.Priority = mainPriority;
+        if (tableVcam != null) tableVcam.Priority = tableInactivePriority;
+
         if (!PlayerPrefs.HasKey("coins"))
             PlayerPrefs.SetInt("coins", 200);
 
