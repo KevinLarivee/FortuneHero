@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class DebugBehaviour : MonoBehaviour
 {
-    [SerializeField] TrackPlayerComponent bt;
+    [SerializeField] TrackPlayerComponent tracker;
+    [SerializeField] BehaviourTree bt;
     TextMeshProUGUI debugText;
 
     void Start()
@@ -12,15 +13,18 @@ public class DebugBehaviour : MonoBehaviour
     }
     void Update()
     {
-        //if (bt != null && debugText != null && bt.activeNode != null)
-        //{
-        //    debugText.SetText("Action: " + (bt.activeNode as Behaviour_Composite).compositeInstanceID);
-        //}
-        string temp = "Stats:\n";
-        foreach ((string key, Stat stat)in bt.stats)
+        if (bt != null && debugText != null && bt.activeNode != null)
         {
-            temp += key + ": " + stat.value * stat.multiplier + "\n";
+            debugText.SetText("Action: " + (bt.activeNode as Behaviour_Composite).compositeInstanceID);
         }
-        debugText.SetText(temp);
+        else
+        {
+            string temp = "Stats:\n";
+            foreach ((string key, Stat stat)in tracker.stats)
+            {
+                temp += key + ": " + stat.value * stat.multiplier + "\n";
+            }
+            debugText.SetText(temp);
+        }
     }
 }

@@ -1,24 +1,15 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-abstract public class Behaviour_Condition
+public abstract class Behaviour_Condition
 {
-    abstract public bool Evaluate();
+    protected bool reverseCondition;
+    public abstract bool Evaluate();
 
-    // Permet d'utiliser une condition inverser
-    public Behaviour_Condition Invert() => 
-        new Behaviour_InvertedCondition(this);
-}
-// Représente une condition inversée
-public class Behaviour_InvertedCondition : Behaviour_Condition
-{
-    Behaviour_Condition condition;
-
-    public Behaviour_InvertedCondition(Behaviour_Condition condition)
+    public bool CheckForReverseCondition(bool result)
     {
-        this.condition = condition;
+        if (reverseCondition)
+            result = !result;
+        return result;
     }
-
-    public override bool Evaluate() => 
-        !condition.Evaluate();
 }

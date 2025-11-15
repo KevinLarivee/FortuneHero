@@ -1,8 +1,9 @@
 fileFormatVersion: 2
-guid: 007c57e2df8e9b144b99f471b84f3d56
-NativeFormatImporter:
+guid: 77711a0a1ef662843a281ba4ecd2c54c
+ShaderImporter:
   externalObjects: {}
-  mainObjectFileID: 100100000
+  defaultTextures: []
+  nonModifiableTextures: []
   userData: 
   assetBundleName: 
   assetBundleVariant: 
@@ -11,5 +12,5 @@ AssetOrigin:
   productId: 127325
   packageName: Particle Pack
   packageVersion: 3.1
-  assetPath: Assets/Prefabs/Traps/FlameThrower.prefab
+  assetPath: Assets/UnityTechnologies/ParticlePack/EffectExamples/Misc Effects/Shaders/Respawn.shader
   uploadId: 691001

@@ -65,10 +65,11 @@ public class GolemBoss_BT : BehaviourTree
 
     // Conditions
     NearTarget_Condition isNear_Lava;
+    NearTarget_Condition isFar_Lava;
     CoolDown_Condition coolDown_Lava;
     Random_Condition random_Movement;
     NearTarget_Condition isNear_Player;
-    AboveSelf_Condition isAbove_Player;
+    AboveSelf_Condition notAbove_Player;
     Random_Condition random_Melee;
 
 
@@ -86,22 +87,23 @@ public class GolemBoss_BT : BehaviourTree
         {
             lavaTransforms.Add(t);
         }
-        isNear_Lava = new NearTarget_Condition(transform, lavaBoss.trackPlayer.farThreshold, lavaTransforms.ToArray());
-        coolDown_Lava = new CoolDown_Condition(CdLava);
-        random_Movement = new Random_Condition(lavaBoss.movementProbability);
-        isNear_Player = new NearTarget_Condition(transform, lavaBoss.attackStopDistance, player.transform);
-        isAbove_Player = new AboveSelf_Condition(transform, player.transform);
-        random_Melee = new Random_Condition(lavaBoss.meleeProbability);
+        isNear_Lava = new NearTarget_Condition(false, transform, lavaBoss.trackPlayer.farThreshold, lavaTransforms.ToArray());
+        isFar_Lava = new NearTarget_Condition(true, transform, lavaBoss.trackPlayer.farThreshold, lavaTransforms.ToArray());
+        coolDown_Lava = new CoolDown_Condition(false, CdLava);
+        random_Movement = new Random_Condition(false, lavaBoss.movementProbability);
+        isNear_Player = new NearTarget_Condition(false, transform, lavaBoss.attackStopDistance, player.transform);
+        notAbove_Player = new AboveSelf_Condition(true, transform, player.transform);
+        random_Melee = new Random_Condition(false,lavaBoss.meleeProbability);
 
         // Action Set #1
-        chase_Action = new Chase_Action(null, lavaBoss.agent, player.gameObject);
+        chase_Action = new Chase_Action(null, lavaBoss.agent, player.transform);
         wait_Action = new Wait_Action(null, chaseTime);
 
         // Composite (Action Set #1)
         chase_parallel = new Behaviour_Composite(null, Behaviour_Composite.CompositeType.Parallel, this, new Behaviour_Node[] { chase_Action, wait_Action}, "chase_parallel");
 
         // Action Set #2
-        jumpAttack_Lava_Action = new JumpToRandom_Action(new Behaviour_Condition[] { isNear_Lava.Invert() }, lavaBoss.animator, lavaBoss.agent, jumpHeight, 0.42f, lavaTransforms.ToArray());
+        jumpAttack_Lava_Action = new JumpToRandom_Action(new Behaviour_Condition[] { isFar_Lava }, lavaBoss.animator, lavaBoss.agent, jumpHeight, 0.42f, lavaTransforms.ToArray());
 
         moveToClosestLava_Action = new MoveToClosestTarget_Action(new Behaviour_Condition[] { isNear_Lava }, lavaBoss.agent, lavaTransforms.ToArray());
 
@@ -145,7 +147,7 @@ public class GolemBoss_BT : BehaviourTree
 
         // Action Set #7
         //lavaTransforms.Add(player.transform);
-        jumpAttack_Player_Action = new JumpToRandom_Action(new Behaviour_Condition[] { isAbove_Player.Invert(), random_Movement }, lavaBoss.animator, lavaBoss.agent, jumpHeight, 0.42f, player.transform);
+        jumpAttack_Player_Action = new JumpToRandom_Action(new Behaviour_Condition[] { notAbove_Player, random_Movement }, lavaBoss.animator, lavaBoss.agent, jumpHeight, 0.42f, player.transform);
 
         // Composite (Action Set #7)
         attacks_selector = new Behaviour_Composite(null, Behaviour_Composite.CompositeType.Selector, this, new Behaviour_Node[] { lava_sequencer, jumpAttack_Player_Action, melee_parallel, range_parallel}, "attacks_selector");

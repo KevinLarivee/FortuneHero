@@ -4,9 +4,9 @@ using UnityEngine.AI;
 public class Chase_Action : Behaviour_Node
 {
     NavMeshAgent agent;
-    GameObject target;
+    Transform target;
 
-    public Chase_Action(Behaviour_Condition[] behaviour_Conditions, NavMeshAgent agent, GameObject target) : base(behaviour_Conditions)
+    public Chase_Action(Behaviour_Condition[] behaviour_Conditions, NavMeshAgent agent, Transform target) : base(behaviour_Conditions)
     {
         this.agent = agent;
         this.target = target;

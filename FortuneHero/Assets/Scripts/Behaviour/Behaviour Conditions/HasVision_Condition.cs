@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class HasVision_Condition : Behaviour_Condition
 {
+    //Comparer le HasVision de kevin
+
     GameObject self;
     GameObject target;
     float maxAngle;
     float maxDistance;
 
-    public HasVision_Condition(GameObject self, GameObject target, float maxAngle, float maxDistance)
+    public HasVision_Condition(bool reverseCondition, GameObject self, GameObject target, float maxAngle, float maxDistance)
     {
+        this.reverseCondition = reverseCondition;
         this.self = self;
         this.target = target;
         this.maxAngle = maxAngle;
@@ -22,16 +25,16 @@ public class HasVision_Condition : Behaviour_Condition
         float angleToTarget = Vector3.Angle(self.transform.forward, directionToTarget);
 
         if (angleToTarget > maxAngle / 2)
-            return false;
+            return CheckForReverseCondition(false);
 
         if (Physics.Raycast(self.transform.position, directionToTarget, out RaycastHit hit, maxDistance))
         {
             if (hit.collider.gameObject != target)
-                return false;
+                return CheckForReverseCondition(false);
         }
         else
-            return false;
+            return CheckForReverseCondition(false);
 
-        return true;
+        return CheckForReverseCondition(true);
     }
 }

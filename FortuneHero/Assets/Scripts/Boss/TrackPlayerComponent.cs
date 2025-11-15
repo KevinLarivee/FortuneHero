@@ -208,8 +208,8 @@ public class TrackPlayerComponent : MonoBehaviour
         PreSetStat("bossRangeHit", 1f, drawBack ?? BossRangeHitDrawBack, active);
 
 
-    public void PlayerY(Action drawBack, bool active = true) =>
-        PreSetStat("playerY", 0.05f, drawBack ?? PlayerYDrawBack, active);
+    public void PlayerY(Action drawBack, float multiplier = 0.05f, bool active = true) =>
+        PreSetStat("playerY", multiplier, drawBack ?? PlayerYDrawBack, active);
     public void PlayerFar(Action drawBack, bool active = true) =>
         PreSetStat("playerFar", 0.05f, drawBack ?? PlayerFarDrawBack, active);
     public void PlayerNear(Action drawBack, bool active = true) =>

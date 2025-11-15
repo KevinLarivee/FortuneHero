@@ -6,8 +6,9 @@ public class NearTarget_Condition : Behaviour_Condition
     float maxDistance;
     Transform[] targets;
 
-    public NearTarget_Condition(Transform self, float maxDistance, params Transform[] targets)
+    public NearTarget_Condition(bool reverseCondition, Transform self, float maxDistance, params Transform[] targets)
     {
+        this.reverseCondition = reverseCondition;
         this.self = self;
         this.maxDistance = maxDistance;
         this.targets = targets;
@@ -19,9 +20,9 @@ public class NearTarget_Condition : Behaviour_Condition
         {
             if (Vector3.Distance(self.position, target.position) <= maxDistance)
             {
-                return true;
+                return CheckForReverseCondition(true);
             }
         }
-        return false;
+        return CheckForReverseCondition(false);
     }
 }

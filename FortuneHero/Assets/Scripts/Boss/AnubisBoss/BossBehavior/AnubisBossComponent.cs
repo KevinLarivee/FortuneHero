@@ -1,23 +1,45 @@
+using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class AnubisBossComponent : MonoBehaviour
+public class AnubisBossComponent : BossComponent
 {
+    [Header("Anubis Boss Specific")]
     [SerializeField] Collider weaponCollider;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] Transform exitPoint;
+    [SerializeField] GameObject platforms;
+    [SerializeField] float yThreshold = 10f;
+    [SerializeField] float yDefaultValue = 30f;
+    [SerializeField] GameObject quicksand;
+    ParticleSystem[] envPlatforms;
     Transform target;
-    HealthComponent healthComponent;
     public int dmg = 10;
-    public int collisionDmg = 5;
     float bufferCd = 0.2f;
     float bufferTimer = 0;
 
     void Start()
     {
+        trackPlayer.AllPresets();
+
+        trackPlayer.yThreshold = yThreshold;
+
+        //Pour reverse
+        trackPlayer.PlayerY(() => quicksand.SetActive(true), -0.05f);
+        trackPlayer.SetStat("playerY", yDefaultValue);
+
         healthComponent = GetComponent<HealthComponent>();
         healthComponent.onDeath += Death;
         bufferTimer = bufferCd;
         target = PlayerComponent.Instance.transform;
+
+        List<ParticleSystem> temp = new List<ParticleSystem>();
+        foreach (Transform t in platforms.transform)
+        {
+            temp.Add(t.GetComponent<ParticleSystem>());
+        }
+        envPlatforms = temp.ToArray();
     }
     void Update()
     {
@@ -26,16 +48,47 @@ public class AnubisBossComponent : MonoBehaviour
             bufferTimer += Time.deltaTime;
         }
     }
+    protected override void Hit()
+    {
+        bool willChangePhase = currentPhase < phases.Length && healthComponent.hp / healthComponent.maxHp <= phases[currentPhase];
+        base.Hit();
+        if (willChangePhase)
+        {
+            trackPlayer.SetStat("playerY", yDefaultValue);
+        }
+    }
+    public IEnumerator StartEnvironmentAttack()
+    {
+        Debug.Log("In Coroutine");
+        PlayParticles();
+        //Changer pour le "mini Boss"
+        //yield return new WaitUntil(() => );
+        yield return new WaitForSeconds(20f);
+        StopParticles();
+        //envAtk.isActivated = false;
+    }
+
+    private void PlayParticles()
+    {
+        foreach (var p in envPlatforms)
+        {
+            p.gameObject.SetActive(true);
+            p.Play();
+        }
+    }
+    private void StopParticles()
+    {
+        foreach (var p in envPlatforms)
+        {
+            p.gameObject.SetActive(false);
+            p.Stop();
+        }
+    }
 
     public void RangedAttack()
     {
         var rotation = Quaternion.LookRotation(target.position - exitPoint.position);
         Instantiate(projectilePrefab, exitPoint.position, rotation);
-    }
-
-    private void Death()
-    {
-        Destroy(gameObject);
     }
     public void EnableWeaponCollider()
     {
@@ -44,13 +97,6 @@ public class AnubisBossComponent : MonoBehaviour
     public void DisableWeaponCollider()
     {
         weaponCollider.enabled = false;
-    }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<HealthComponent>().Hit(collisionDmg);
-        }
     }
 
     void OnTriggerEnter(Collider other)

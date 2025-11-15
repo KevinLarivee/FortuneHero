@@ -447,7 +447,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0572499e998068647b1b3bebc8ab63d3, type: 2}
+  - {fileID: 2100000, guid: a9832ed954c6ec143a3ef13ee01cd3fa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -596,6 +596,7 @@ GameObject:
   - component: {fileID: 634670357084122414}
   - component: {fileID: 964538721597306132}
   - component: {fileID: 8238716480473417436}
+  - component: {fileID: 1469072344100619827}
   m_Layer: 3
   m_Name: Anubis
   m_TagString: Enemy
@@ -725,12 +726,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 213936f87474a6140a428eac57127819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meleeDefense: 1
+  rangeDefense: 1
+  movementProbability: 0.3
+  meleeProbability: 0.8
+  meleeDmg: 1
+  rangeDmg: 5
+  collisionDmg: 5
+  moveSpeed: 5
+  attackStopDistance: 3
+  phases: []
+  debuffsPerPhase: 2
+  rangePrefab: {fileID: 0}
+  animator: {fileID: 0}
+  agent: {fileID: 0}
+  trackPlayer: {fileID: 0}
   weaponCollider: {fileID: 8715552731622049047}
   projectilePrefab: {fileID: 7829516962621623940, guid: 2923c730c70405744bcdc631cc290060, type: 3}
   exitPoint: {fileID: 3418210675735554232}
-  target: {fileID: 0}
   dmg: 10
-  collisionDmg: 5
 --- !u!114 &964538721597306132
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,11 +757,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78bcb8021d29631408198986f938983c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeNodeText: {fileID: 0}
-  attackCd: 20
-  atkTarget: {fileID: 0}
   meleeStopDistance: 4
   tpStopDistance: 3
+  gainDistance: 10
   envAnimName: Environment
   envDuration: 10
   envCd: 20
@@ -780,6 +792,28 @@ MonoBehaviour:
   hp: 10
   alive: 1
   isInvincible: 0
+--- !u!114 &1469072344100619827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2227412776647764039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f440266470a02045b747bc1c695e3f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TrackPlayerComponent
+  yThreshold: 15
+  farThreshold: 15
+  phaseTime: 100
+  statusDrawBack: 0
+  statusEffectPrefab: {fileID: 0}
+  nearZoneDebuff: {fileID: 0}
+  rangedProjectile: []
+  meleeCollision: []
+  meleeSpeedAnimatorParameter: meleeSpeed
+  rangeSizeIncrease: 0.5
 --- !u!1 &2318871544312270583
 GameObject:
   m_ObjectHideFlags: 0
@@ -1151,7 +1185,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0572499e998068647b1b3bebc8ab63d3, type: 2}
+  - {fileID: 2100000, guid: a9832ed954c6ec143a3ef13ee01cd3fa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

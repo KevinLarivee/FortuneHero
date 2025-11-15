@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,12 +23,12 @@ public class BossComponent : MonoBehaviour
     protected int currentPhase = 0;
     public GameObject rangePrefab;
 
-    public Animator animator;
-    public NavMeshAgent agent;
+    [HideInInspector] public Animator animator;
+    [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public TrackPlayerComponent trackPlayer;
     //protected EnemyDrops enemyDrops;
     protected HealthComponent healthComponent;
 
-    public TrackPlayerComponent trackPlayer;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {

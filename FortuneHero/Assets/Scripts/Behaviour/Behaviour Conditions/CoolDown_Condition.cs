@@ -5,8 +5,9 @@ public class CoolDown_Condition : Behaviour_Condition
     float delay;
     float lastTime;
 
-    public CoolDown_Condition(float delay)
+    public CoolDown_Condition(bool reverseCondition, float delay)
     {
+        this.reverseCondition = reverseCondition;
         this.delay = delay;
     }
 
@@ -15,8 +16,8 @@ public class CoolDown_Condition : Behaviour_Condition
         if(Time.time - lastTime >= delay)
         {
             lastTime = Time.time;
-            return true;
+            return CheckForReverseCondition(true);
         }
-        return false;
+        return CheckForReverseCondition(false);
     }
 }
