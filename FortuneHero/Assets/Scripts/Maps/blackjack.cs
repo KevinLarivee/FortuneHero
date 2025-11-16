@@ -32,10 +32,19 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
     [SerializeField] int mainPriority = 10;          // priorité par défaut de la caméra principale
     [SerializeField] int tableInactivePriority = 0;  // priorité quand la caméra table est idle
     [SerializeField] int tableActivePriority = 20;   // priorité quand on veut focus la table
+                                                     // [NOUVEAU] – juste sous "Blackjack Settings"
+    [Header("Tempo & Anim du croupier")]
+    [SerializeField] float dealerDrawDelay = 0.25f;    // délai entre tirages du croupier
+    [SerializeField] float dealerFlipDuration = 0.6f;  // durée de l'anim (deal / flip)
+    [SerializeField] float dealerArcHeight = 0.12f;    // hauteur de l'arc de la carte
+    [SerializeField] float dealerSideOffset = 0.35f;   // décalage latéral (comme la main du croupier)
+
 
     private CinemachineBrain brain;
     private Coroutine blendWaitCo;
     private bool pendingOpen;
+    private bool dealerHoleRevealed = false;
+
 
     [Header("Blackjack Settings")]
     [SerializeField] int currentBet = 10;
@@ -61,8 +70,6 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
     private bool roundActive = false;
     private bool playerTurn = false;
 
-    
-
     void Start()
     {
         brain = PlayerComponent.Instance.transform.root.GetComponentInChildren<CinemachineBrain>();
@@ -83,7 +90,6 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         UpdateBetText();
         ClearCardContainers();
     }
-
     public void Enter() { }
     public void Exit() { }
 
@@ -237,33 +243,110 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         if (dealerHandText != null) dealerHandText.text = "Croupier :";
         if (resultText != null) resultText.text = "";
     }
+    static Quaternion LocalCardOrientation(bool faceDown)
+    {
+        // visible :  X=-90, Y=90, Z=90
+        // cachée  :  X= 90, Y=90, Z=90
+        return faceDown
+            ? Quaternion.Euler(90f, 90f, 90f)
+            : Quaternion.Euler(-90f, 90f, 90f);
+    }
+
+    static Transform CreateHolder(Transform parent, int index)
+    {
+        var holder = new GameObject($"CardHolder_{index}").transform;
+        holder.SetParent(parent, false);
+
+        float scale = 1.3f;                      
+        float spacing = 0.22f * scale;            
+
+        holder.localPosition = new Vector3(-spacing * index, 0.018f, 0f);
+        holder.localRotation = Quaternion.identity;
+        holder.localScale = Vector3.one * scale; 
+
+        return holder;
+    }
+
+    static Transform GetVisualTransform(Transform cardRoot)
+    {
+        var mr = cardRoot.GetComponentInChildren<MeshRenderer>();
+        if (mr != null) return mr.transform;
+
+        var smr = cardRoot.GetComponentInChildren<SkinnedMeshRenderer>();
+        if (smr != null) return smr.transform;
+
+        return cardRoot; // fallback
+    }
+
+
+
+    static void PoseCard(Transform parent, Transform card, int index, bool faceDown)
+    {
+        // Crée un frame neutre sous le container
+        var holder = CreateHolder(parent, index);
+
+        // Place le root du prefab dans le holder (neutre)
+        card.SetParent(holder, false);
+        card.localPosition = Vector3.zero;
+        card.localEulerAngles = new Vector3(90f, 90f, 90f);
+        Debug.Log(card.localRotation);
+
+        // Oriente le VISUEL (mesh) pour imposer X/Y/Z = (-90|90|90) ou (90|90|90)
+        var vis = GetVisualTransform(card);
+        vis.localScale = Vector3.one * 1.6f;   // grossit seulement la carte, pas le holder
+
+        vis.localPosition = Vector3.zero;
+        //vis.localRotation = LocalCardOrientation(faceDown);
+        vis.localEulerAngles = faceDown
+            ? new Vector3(90f, 90f, 90f)
+            : new Vector3(-90f, 90f, 90f);
+        Debug.Log(vis.localRotation);
+        
+    }
+
 
     void RefreshHands(bool showDealerHole)
     {
-        // VISU : instancie les prefabs
         ClearCardContainers();
 
-        foreach (int c in playerCards)
+        // ----- JOUEUR -----
+        for (int i = 0; i < playerCards.Count; i++)
         {
-            var pf = GetPrefabForCard(c);
-            if (pf != null && playerCardsContainer != null) Instantiate(pf, playerCardsContainer);
+            var pf = GetPrefabForCard(playerCards[i]);
+            if (pf != null && playerCardsContainer != null)
+            {
+                var go = Instantiate(pf);                 // on instancie d’abord sans parent
+                PoseCard(playerCardsContainer, go.transform, i, faceDown: false);
+            }
         }
 
+        // ----- CROUPIER -----
         for (int i = 0; i < dealerCards.Count; i++)
         {
-            if (!showDealerHole && i == 1)
+            bool holeCardHidden = (!showDealerHole && i == 1);
+
+            var pf = GetPrefabForCard(dealerCards[i]);
+            if (pf != null && dealerCardsContainer != null)
             {
-                if (backCardPrefab != null && dealerCardsContainer != null)
-                    Instantiate(backCardPrefab, dealerCardsContainer);
-            }
-            else
-            {
-                var pf = GetPrefabForCard(dealerCards[i]);
-                if (pf != null && dealerCardsContainer != null) Instantiate(pf, dealerCardsContainer);
+                var go = Instantiate(pf);
+                PoseCard(dealerCardsContainer, go.transform, i, holeCardHidden);
+
+                // si on révèle la hole card (i == 1) : flip 90 -> -90 sur X en local du holder
+                // si on révèle la hole card (i == 1) : flip 90 -> -90 une seule fois
+                if (showDealerHole && i == 1 && !dealerHoleRevealed)
+                {
+                    dealerHoleRevealed = true;
+
+                    var e = go.transform.localEulerAngles;
+                    e.x = 90f;
+                    go.transform.localEulerAngles = e;
+
+                    StartCoroutine(AnimateFlip(go.transform, 90f, -90f, dealerFlipDuration));
+                }
+
             }
         }
 
-        // TEXTE : résumé des mains (pratique pour debug et valeur)
         if (playerHandText != null)
             playerHandText.text = "Joueur : " + HandToString(playerCards) + $"  ({HandValue(playerCards)})";
 
@@ -272,16 +355,14 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
             if (showDealerHole)
                 dealerHandText.text = "Croupier : " + HandToString(dealerCards) + $"  ({HandValue(dealerCards)})";
             else
-            {
-                if (dealerCards.Count > 0)
-                {
-                    string first = CardToString(dealerCards[0]);
-                    dealerHandText.text = "Croupier : " + first + " + [??]";
-                }
-                else dealerHandText.text = "Croupier : ";
-            }
+                dealerHandText.text = dealerCards.Count > 0
+                    ? "Croupier : " + CardToString(dealerCards[0]) + " + [??]"
+                    : "Croupier : ";
         }
     }
+
+
+
 
     void ClearCardContainers()
     {
@@ -324,6 +405,8 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         roundActive = true;
         playerTurn = true;
         if (resultText != null) resultText.text = "";
+        dealerHoleRevealed = false;
+
 
         BuildAndShuffleDeck();
 
@@ -378,14 +461,53 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
 
     IEnumerator DealerPlayThenResolve()
     {
+        // Révèle la carte cachée avec anim de flip (géré par RefreshHands(true))
         RefreshHands(showDealerHole: true);
+
+        // petit délai avant que le croupier commence à tirer
+        yield return new WaitForSecondsRealtime(dealerDrawDelay);
 
         // Tirage jusqu'à 17+
         while (HandValue(dealerCards) < 17)
         {
+            // délai entre chaque tirage
+            yield return new WaitForSecondsRealtime(dealerDrawDelay);
+
+            // ajoute une carte
             dealerCards.Add(DrawCard());
+
+            // Rafraîchit l'affichage (instancie la nouvelle carte à sa position finale)
             RefreshHands(showDealerHole: true);
-            yield return new WaitForSecondsRealtime(0.3f);
+
+            // Récupère le dernier "holder" du croupier
+            if (dealerCardsContainer != null && dealerCardsContainer.childCount > 0)
+            {
+                var holder = dealerCardsContainer.GetChild(dealerCardsContainer.childCount - 1);
+
+                // position / rotation finale déjà posées par PoseCard
+                Vector3 endPos = holder.localPosition;
+                Quaternion endRot = holder.localRotation;
+
+                // point de départ : un peu sur le côté + vers le croupier
+                Vector3 startPos = endPos
+                    + holder.right * dealerSideOffset   // vers la droite (main du dealer)
+                    + holder.forward * 0.25f;           // vers lui
+                startPos.y += dealerArcHeight * 0.5f;   // légèrement plus haut
+
+                // rotation de départ : carte un peu tournée comme si elle sortait de la main
+                Quaternion startRot = Quaternion.Euler(-60f, 40f, 120f);
+
+                // anim complète (montée + arc + rotation)
+                yield return AnimateDealerCard(
+                    holder,
+                    startPos,
+                    endPos,
+                    startRot,
+                    endRot,
+                    dealerFlipDuration,
+                    dealerArcHeight
+                );
+            }
         }
 
         int p = HandValue(playerCards);
@@ -396,6 +518,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         else if (p < d) { EndRound(false, false, false); }
         else { EndRound(false, false, true); } // push
     }
+
 
     void ResolveImmediateNaturals(int playerVal, int dealerVal)
     {
@@ -411,6 +534,68 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         {
             EndRound(false, false, false);
         }
+    }
+
+    IEnumerator AnimateDealerCard(
+    Transform tr,
+    Vector3 startLocalPos,
+    Vector3 endLocalPos,
+    Quaternion startLocalRot,
+    Quaternion endLocalRot,
+    float duration,
+    float arcHeight)
+    {
+        float t = 0f;
+
+        tr.localPosition = startLocalPos;
+        tr.localRotation = startLocalRot;
+
+        while (t < duration)
+        {
+            t += Time.unscaledDeltaTime;
+            float u = Mathf.Clamp01(t / duration);
+
+            // trajectoire de base linéaire
+            Vector3 basePos = Vector3.Lerp(startLocalPos, endLocalPos, u);
+            // petit arc vers le haut
+            float extraY = Mathf.Sin(u * Mathf.PI) * arcHeight;
+
+            tr.localPosition = basePos + Vector3.up * extraY;
+            tr.localRotation = Quaternion.Slerp(startLocalRot, endLocalRot, u);
+
+            yield return null;
+        }
+
+        tr.localPosition = endLocalPos;
+        tr.localRotation = endLocalRot;
+    }
+
+    IEnumerator AnimateFlip(Transform tr, float fromX, float toX, float duration)
+    {
+        float t = 0f;
+
+        // on part de la rotation actuelle, mais on force l'angle X de départ/fin
+        Vector3 startEuler = tr.localEulerAngles;
+        startEuler.x = fromX;
+
+        Vector3 endEuler = startEuler;
+        endEuler.x = toX;
+
+        Quaternion startRot = Quaternion.Euler(startEuler);
+        Quaternion endRot = Quaternion.Euler(endEuler);
+
+        tr.localRotation = startRot;
+
+        while (t < duration)
+        {
+            t += Time.unscaledDeltaTime;
+            float u = Mathf.Clamp01(t / duration);
+
+            tr.localRotation = Quaternion.Slerp(startRot, endRot, u);
+            yield return null;
+        }
+
+        tr.localRotation = endRot;
     }
 
     void EndRound(bool playerWon, bool isBlackjackNatural, bool isPush)

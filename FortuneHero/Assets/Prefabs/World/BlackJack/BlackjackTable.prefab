@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6448200715604165620}
-  - component: {fileID: 6904911162916169411}
   m_Layer: 0
   m_Name: pCardContainer
   m_TagString: Untagged
@@ -17,51 +16,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &6448200715604165620
-RectTransform:
+--- !u!4 &6448200715604165620
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 228368628350799290}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7677210407005914904}
+  m_Father: {fileID: 4171777087355274631}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -499, y: -46}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6904911162916169411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 228368628350799290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &1421446311582804931
 GameObject:
   m_ObjectHideFlags: 0
@@ -1370,6 +1339,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6448200715604165620}
+  - {fileID: 2232698634005202934}
   - {fileID: 6739831562211162579}
   - {fileID: 8843769971241673429}
   - {fileID: 7677210407005914904}
@@ -1448,8 +1419,6 @@ RectTransform:
   m_Children:
   - {fileID: 3731827468305418961}
   - {fileID: 3676957602881566033}
-  - {fileID: 6448200715604165620}
-  - {fileID: 2232698634005202934}
   m_Father: {fileID: 4171777087355274631}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1650,7 +1619,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2232698634005202934}
-  - component: {fileID: 3729883266231234385}
   m_Layer: 0
   m_Name: dCardContainer
   m_TagString: Untagged
@@ -1658,51 +1626,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &2232698634005202934
-RectTransform:
+--- !u!4 &2232698634005202934
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5953038266759989063}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7677210407005914904}
+  m_Father: {fileID: 4171777087355274631}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 360, y: -2}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3729883266231234385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5953038266759989063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.HorizontalLayoutGroup
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 0
-  m_ChildControlHeight: 0
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1 &6558458127735812269
 GameObject:
   m_ObjectHideFlags: 0
@@ -2465,19 +2403,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BlackjackComponent
   panelBlackjack: {fileID: 4829081193255973821}
-  playerHandText: {fileID: 7740646305360255406}
-  dealerHandText: {fileID: 5456099761012569803}
-  resultText: {fileID: 2116212120254125098}
-  betText: {fileID: 5226297011375032527}
-  balanceText: {fileID: 6542538904700205582}
+  panelPlayer: {fileID: 0}
   btnDeal: {fileID: 7847342315561129559}
   btnHit: {fileID: 3249096823365453551}
   btnStand: {fileID: 3187477812330336457}
   btnIncreaseBet: {fileID: 2311419586581807341}
   btnDecreaseBet: {fileID: 6669861038444263161}
+  playerHandText: {fileID: 7740646305360255406}
+  dealerHandText: {fileID: 5456099761012569803}
+  resultText: {fileID: 2116212120254125098}
+  betText: {fileID: 5226297011375032527}
+  balanceText: {fileID: 6542538904700205582}
+  mainVcam: {fileID: 0}
   tableVcam: {fileID: 8416308234307108479}
+  mainPriority: 10
+  tableInactivePriority: 0
   tableActivePriority: 20
-  normalPriority: 10
+  dealerDrawDelay: 0.25
+  dealerFlipDuration: 1
   currentBet: 10
   minBet: 5
   maxBet: 100
@@ -2538,8 +2481,8 @@ MonoBehaviour:
   - {fileID: 6093760270803575120, guid: b5170d2275f45684ea03edd9f3dcf573, type: 3}
   - {fileID: 6824222627732136798, guid: 0ffa42bb9ab2a7f49beec6ea3f044d6e, type: 3}
   backCardPrefab: {fileID: 7085839119149727733, guid: e1d6ca519cda25b47be1c9c392076934, type: 3}
-  playerCardsContainer: {fileID: 6448200715604165620}
-  dealerCardsContainer: {fileID: 2232698634005202934}
+  playerCardsContainer: {fileID: 0}
+  dealerCardsContainer: {fileID: 0}
 --- !u!4 &6739831562211162579 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 249150925622268775, guid: cf856591953c8ed4bad3e9d863896e12, type: 3}
