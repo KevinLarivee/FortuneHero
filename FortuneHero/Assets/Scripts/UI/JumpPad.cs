@@ -11,7 +11,6 @@ public class JumpPad : MonoBehaviour
     {
         if (other.CompareTag("Player") && other.excludeLayers != LayerMask.GetMask("IgnoreTrigger")) 
         {
-            Debug.Log("jump");
             PlayerMovement player = other.GetComponent<PlayerMovement>(); 
             if (player != null)
             {

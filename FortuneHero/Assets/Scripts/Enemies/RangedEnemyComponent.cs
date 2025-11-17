@@ -20,22 +20,28 @@ public class RangedEnemyComponent : EnemyComponent
     protected override void PlayerDetected(Vector3 targetPosition)
     {
         base.PlayerDetected(targetPosition);
-        agent.isStopped = enemyState == EnemyState.Attacking;
+        if(!isStatic)
+            agent.isStopped = enemyState == EnemyState.Attacking;
     }
     protected override void Move(Transform newTarget)
     {
-        agent.destination = newTarget.position;
-        if (agent.speed != moveSpeed / 2)
-            agent.speed = moveSpeed / 2;
-
-        base.Move(newTarget);
+        if (!isStatic)
+        {
+            agent.destination = newTarget.position;
+            if (agent.speed != moveSpeed / 2)
+                agent.speed = moveSpeed / 2;
+            base.Move(newTarget);
+        }
     }
     protected override void ChasingMove()
     {
-        agent.destination = target;
-        if (agent.speed != moveSpeed)
-            agent.speed = moveSpeed;
-        base.ChasingMove();
+        if (!isStatic)
+        {
+            agent.destination = target;
+            if (agent.speed != moveSpeed)
+                agent.speed = moveSpeed;
+            base.ChasingMove();
+        }
     }
     protected override void SlowEnemy(float divider)
     {
@@ -50,8 +56,9 @@ public class RangedEnemyComponent : EnemyComponent
     public void FireProjectile()
     {
         Vector3 dir = target - firePoint.position;
-        if(dir.y < 0)
-            dir.y = 0;
+        //if(dir.y < 0)
+        //    dir.y = 0;
+        dir.y += 0.7f;
         dir.Normalize();
 
         Quaternion rot = Quaternion.LookRotation(dir, Vector3.up);

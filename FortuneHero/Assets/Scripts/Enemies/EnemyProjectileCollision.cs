@@ -7,9 +7,8 @@ public class EnemyProjectileCollision : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("RangedHit");
             other.GetComponent<HealthComponent>().Hit(projectileDamage);
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
 }

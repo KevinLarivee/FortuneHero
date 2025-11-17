@@ -638,7 +638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   bar: {fileID: 2505007156101605638}
-  maxHp: 100
+  maxHp: 40
   hp: 10
   alive: 1
   isInvincible: 0
@@ -663,6 +663,7 @@ MonoBehaviour:
   attackStopDistance: 15
   attackCd: 1
   animationTime: 0.7
+  isStatic: 0
   projectilePrefab: {fileID: 4546562718983528009, guid: c7bca65d127fffc49bf72a11a7ea346e, type: 3}
   firePoint: {fileID: 4859668478372667009}
 --- !u!195 &8075445578309700717

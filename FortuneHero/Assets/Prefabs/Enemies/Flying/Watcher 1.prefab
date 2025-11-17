@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthComponent
   bar: {fileID: 1665100619552949540}
-  maxHp: 100
+  maxHp: 25
   hp: 100
   alive: 1
   isInvincible: 0
@@ -638,6 +638,7 @@ MonoBehaviour:
   attackStopDistance: 3
   attackCd: 1
   animationTime: 0.7
+  isStatic: 0
 --- !u!54 &7535734103015417398
 Rigidbody:
   m_ObjectHideFlags: 0

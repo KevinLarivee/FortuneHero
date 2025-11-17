@@ -23,6 +23,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     [SerializeField] protected float attackStopDistance = 3f;
     [SerializeField] protected float attackCd = 1f;
     [SerializeField] protected float animationTime = 0.7f;
+    [SerializeField] protected bool isStatic = false;
 
 
     protected Animator animator;
@@ -107,7 +108,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
     protected virtual void Move(Transform newTarget)
     {
-        if (!isParalyzed)
+        if (!isParalyzed && !isStatic)
         {
             if (Vector3.Distance(target, transform.position) <= stoppingDistance)
                 newTarget = patrol.NextTarget();
@@ -122,7 +123,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
     protected virtual void ChasingMove()
     {
-        if (!isParalyzed)
+        if (!isParalyzed && !isStatic)
         {
             animator.SetBool("isChasing", true);
             animator.SetBool("isPatrolling", false);
