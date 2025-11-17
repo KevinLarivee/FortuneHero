@@ -37,8 +37,10 @@ public class Behaviour_Node
     virtual public void FinishAction(bool result)
     {
         if(!interupted && parent_Composite != null)
+        {
+            interupted = true;
             parent_Composite.FinishAction(result);
-        interupted = true;
+        }
     }
 
 

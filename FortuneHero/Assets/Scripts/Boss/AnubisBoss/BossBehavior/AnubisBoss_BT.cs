@@ -18,6 +18,10 @@ public class AnubisBoss_BT : BehaviourTree
 
     [SerializeField] string envAnimName;
     [SerializeField] string meleeAnimName;
+    [SerializeField] string rangedParameter;
+    [SerializeField] string rangedAnimName;
+    [SerializeField] string tpAnimName;
+    [SerializeField] string dashAnimName;
     //[SerializeField] float envDuration = 10f;
     [SerializeField] float envCd = 60f;
     [SerializeField] float tpCd = 20f;
@@ -105,7 +109,7 @@ public class AnubisBoss_BT : BehaviourTree
         //interrupt = new Interrupt(null, this);
 
         // Action Set #1
-        animation_Tp_Action = new Animation_Action(null, anubis.animator, "Tp");
+        animation_Tp_Action = new Animation_Action(null, anubis.animator, tpAnimName, tpAnimName, 0.8f);
         tpToCenter_Action = new TeleportToRandom_Action(null, anubis.agent, points[0]);
         animation_EnvAtk_Action = new Animation_Action(null, anubis.animator, envAnimName);
 
@@ -119,7 +123,7 @@ public class AnubisBoss_BT : BehaviourTree
         randomTp_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { coolDown_TpRandom, random_TpRandom }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Tp_Action, tpToRandom_Action }, "randomTp_sequencer");
 
         // Action Set #3
-        animation_Dash_Action = new Animation_Action(new Behaviour_Condition[] { isNear_Player, isNotChaseRange_Player }, anubis.animator, "Dash");
+        animation_Dash_Action = new Animation_Action(new Behaviour_Condition[] { isNear_Player, isNotChaseRange_Player }, anubis.animator, dashAnimName);
 
         // Composite (Action Set #3)
         dash_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { coolDown_Dash }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Dash_Action }, "dash_sequencer");
@@ -146,10 +150,10 @@ public class AnubisBoss_BT : BehaviourTree
         tpAttack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { random_TpAttack }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Tp_Action, tpMeleeAtk_Action, tpMeleeAtk_Action, tpMeleeAtk_Action, tpMeleeAtk_Action }, "tpAttack_sequencer");
 
         // Action Set #7
-        animation_Ranged_Action = new Animation_Action(new Behaviour_Condition[] { isNotChaseRange_Player }, anubis.animator, "RangedAttack");
+        animation_Ranged_Action = new Animation_Action(new Behaviour_Condition[] { isNotChaseRange_Player }, anubis.animator, rangedParameter, rangedAnimName);
 
         // Composite (Action Set #7)
-        ranged_sequencer = new Behaviour_Composite(null, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Ranged_Action, animation_Ranged_Action, animation_Ranged_Action }, "ranged_sequencer");
+        ranged_sequencer = new Behaviour_Composite(null, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Ranged_Action, animation_Ranged_Action, animation_Ranged_Action, animation_Ranged_Action }, "ranged_sequencer");
 
         // Action Set #8
         rotateToFaceTarget_Endlessly_Action = new RotateToFaceTarget_Action(null, player.gameObject, rotationSpeed, transform, float.MaxValue);

@@ -1,3 +1,4 @@
+using GLTFast.Schema;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,20 +8,17 @@ using UnityEngine.AI;
 public class TpMeleeAttack_Action : Behaviour_Node
 {
     //En cours...
-    //Si j'utilisse la même instance 4 fois, je peux carry de l'info
+    //Si j'utilisse la même instance 4 fois, je peux carry de l'info ===> ******* Pour l'instant, j'ai enlever les autres tp dans la sequence, tu les remettra si tu fais sa
     Animator animator;
     NavMeshAgent agent;
     Transform target;
     float offset;
     string animName;
+    bool gate;
 
-    List<Vector3> possibleTpPos;
+    List<Vector3> possibleTpPos = new();
     Vector3 playerPos;
-    int atkCount;
-    bool hasAttacked = false;
-    bool firstAttack = false;
-
-    public TpMeleeAttack_Action(Behaviour_Condition[] conditions, Animator animator, NavMeshAgent agent, Transform target, float offset, string animName = "Thrust") : base(conditions)
+    public TpMeleeAttack_Action(Behaviour_Condition[] conditions, Animator animator, NavMeshAgent agent, Transform target, float offset, string animName = "TpThrust") : base(conditions)
     {
         this.animator = animator;
         this.agent = agent;
@@ -32,38 +30,28 @@ public class TpMeleeAttack_Action : Behaviour_Node
     public override void ExecuteAction(Behaviour_Composite parent_composite)
     {
         base.ExecuteAction(parent_composite);
-
-        if (possibleTpPos == null || possibleTpPos.Count == 0)
+        if (possibleTpPos.Count == 0) //j'ai enlever la condition de s'il est null, pcq je creer la liste dans la def de variable (pcq sa essayait de Clear et Add sur une liste qui existait pas)
         {
             SetTpPositions();
-            firstAttack = true;
-            atkCount = 0;
         }
-        
-
-        //agent.enabled = false; ?
+        TpAttack(); //Vu que votre version check la condition avant, on peut juste mettre le premier TpAttack dans le ExecuteAction
         agent.isStopped = true;
+        gate = false;
     }
     public override void Tick(float deltaTime)
     {
-        playerPos = target.position;
 
         var animState = animator.GetCurrentAnimatorStateInfo(0);
-        if (firstAttack)
+        if (!gate)
         {
-            firstAttack = false;
-            TpAttack(); //Premiere attaque dans le tick, sinon, mm si condition est fausse, fait une attaque
+            if (animState.IsName(animName) && animState.normalizedTime < 0.9f)
+            {
+                gate = true;
+            }
         }
-        if (atkCount < 4 && animState.IsName(animName))
+        else if(!interupted && (!animState.IsName(animName) || animState.normalizedTime >= 0.9f))
         {
-            if (!hasAttacked && animState.normalizedTime >= 0.9f)
-                TpAttack();
-            else if(animState.normalizedTime < 0.9f) //des que ya attaquer, remet a false. Pourra pas rerentrer dans le if en haut pcq animation va pas etre terminer
-                hasAttacked = false;
-        }
-        else if (atkCount >= 4)
-        {
-            FinishAction(true); //Peux importe si tu hit le joueur, quand le boss fini cette node, success
+            FinishAction(true);
         }
     }
     public override void FinishAction(bool result)
@@ -78,26 +66,23 @@ public class TpMeleeAttack_Action : Behaviour_Node
     private void SetTpPositions()
     {
         possibleTpPos.Clear();
-        possibleTpPos.Add(new Vector3(-offset, 0f, 0f));// [0]
-        possibleTpPos.Add(new Vector3(offset, 0f, 0f));// [1]
-        possibleTpPos.Add(new Vector3(0f, 0f, -offset));// [2]
-        possibleTpPos.Add(new Vector3(0f, 0f, offset));// [3]
+        possibleTpPos.Add(new Vector3(-offset, 0f, 0f)); // [0]
+        possibleTpPos.Add(new Vector3(offset, 0f, 0f));  // [1]
+        possibleTpPos.Add(new Vector3(0f, 0f, -offset)); // [2]
+        possibleTpPos.Add(new Vector3(0f, 0f, offset));  // [3]
     }
     private void TpAttack()
     {
+        playerPos = target.position;
         int randIndex = Random.Range(0, possibleTpPos.Count);
         Vector3 posOffset = possibleTpPos[randIndex];
-
         possibleTpPos.RemoveAt(randIndex);
 
         animator.SetTrigger(animName);
-        hasAttacked = true;
         //Activate le Shader de tp ?        
 
         agent.transform.position = playerPos + posOffset;
         agent.transform.rotation = Quaternion.LookRotation(target.position - agent.transform.position);
-
-        atkCount++;
     }
 }
 

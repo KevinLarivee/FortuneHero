@@ -30,6 +30,7 @@ public class DissolveComponent : MonoBehaviour
             
     }
 
+    
     public IEnumerator Dissolve(bool reverse = false)
     {
         Debug.Log(reverse);

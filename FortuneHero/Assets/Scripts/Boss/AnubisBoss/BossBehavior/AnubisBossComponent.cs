@@ -15,6 +15,7 @@ public class AnubisBossComponent : BossComponent
     [SerializeField] GameObject quicksand;
     ParticleSystem[] envPlatforms;
     Transform target;
+    DissolveComponent dissolve;
     public int dmg = 10;
     float bufferCd = 0.2f;
     float bufferTimer = 0;
@@ -30,6 +31,7 @@ public class AnubisBossComponent : BossComponent
         trackPlayer.SetStat("playerY", yDefaultValue);
 
         healthComponent = GetComponent<HealthComponent>();
+        dissolve = GetComponent<DissolveComponent>();
         healthComponent.onDeath += Death;
         bufferTimer = bufferCd;
         target = PlayerComponent.Instance.transform;
@@ -97,6 +99,14 @@ public class AnubisBossComponent : BossComponent
     public void DisableWeaponCollider()
     {
         weaponCollider.enabled = false;
+    }
+    public void StartDissolve()
+    {
+        StartCoroutine(dissolve.Dissolve());
+    }
+    public void ReverseDissolve()
+    {
+        StartCoroutine(dissolve.Dissolve(true));
     }
 
     void OnTriggerEnter(Collider other)

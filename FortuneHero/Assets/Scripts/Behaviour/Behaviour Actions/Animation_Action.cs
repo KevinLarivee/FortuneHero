@@ -15,7 +15,7 @@ public class Animation_Action : Behaviour_Node
 
     public Animation_Action(Behaviour_Condition[] behaviour_Conditions, Animator animator, string parameter, AnimatorControllerParameterType type = AnimatorControllerParameterType.Trigger) : this(behaviour_Conditions, animator, parameter, parameter, 1f, type)
     { }
-    public Animation_Action(Behaviour_Condition[] behaviour_Conditions, Animator animator, string parameter, string animationName, float donePercentile = 1f, AnimatorControllerParameterType type = AnimatorControllerParameterType.Trigger) : base(behaviour_Conditions)
+    public Animation_Action(Behaviour_Condition[] behaviour_Conditions, Animator animator, string parameter, string animationName, float donePercentile = 0.9f, AnimatorControllerParameterType type = AnimatorControllerParameterType.Trigger) : base(behaviour_Conditions)
     {
         this.animator = animator;
         this.parameter = parameter;
@@ -29,7 +29,7 @@ public class Animation_Action : Behaviour_Node
         // Pour savoir si l'animation existe
         try
         {
-            switch(type)
+            switch (type)
             {
                 case AnimatorControllerParameterType.Trigger:
                     animator.SetTrigger(parameter);
@@ -47,7 +47,7 @@ public class Animation_Action : Behaviour_Node
                     break;
             }
         }
-        catch(System.Exception ex)
+        catch (System.Exception ex)
         {
             FinishAction(false);
         }
@@ -67,7 +67,10 @@ public class Animation_Action : Behaviour_Node
         {
             FinishAction(true);
         }
-        base.Tick(deltaTime);
+        //Debug.Log("NotInterrupted : " + !interupted + "     |       AnimName : " + !temp.IsName(animationName) + " : " + animationName + "      |       AnimTime : " + (temp.normalizedTime >= donePercentile) + " : " + temp.normalizedTime);
+
+
+        //base.Tick(deltaTime); base fait rien so why l'appeler ?
     }
 
     public override void FinishAction(bool result)
