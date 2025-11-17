@@ -29,7 +29,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    private void PauseGame(string input = "")
+    public void PauseGame(string input = "")
     {
         (input == "f" ? skillMenuUI : pauseMenuUI).SetActive(true); 
         Time.timeScale = 0f;         
@@ -50,7 +50,7 @@ public class PauseMenu : MonoBehaviour
     public void ReturnToLobby()
     {
         Time.timeScale = 1f;
-        LoadManager.Instance.Load("Test");
+        LoadManager.Instance.Load("LobbyScene");
     }
 
     public void Options()

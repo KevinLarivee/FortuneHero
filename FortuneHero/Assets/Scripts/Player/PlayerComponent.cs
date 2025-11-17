@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Cinemachine;
 
 public class PlayerComponent : MonoBehaviour
 {
@@ -31,6 +32,10 @@ public class PlayerComponent : MonoBehaviour
     [Header("Shield")]
     public bool bossDisableShield = false; //A utiliser dans PlayerMovement pour disable si le boss veut ?
 
+    [SerializeField] private float minSensitivity = 0.5f;
+    [SerializeField] private float maxSensitivity = 5f;
+
+    [SerializeField] CinemachineInputAxisController inputController;
     PlayerMovement playerM;
     PlayerActions playerA;
     PlayerInteractions playerI;
@@ -53,6 +58,9 @@ public class PlayerComponent : MonoBehaviour
         actions = new InputSystem_Actions.PlayerActions();
 
         healthComponent.onDeath = PlayerDeath;
+
+        float saved = PlayerPrefs.GetFloat(MouseSensativity.PrefKey, 1f);
+        ApplySensitivity(saved);
     }
 
     public void GetXpAndCoins(int xpGain, int coinGain) //Mettre valeur negative pour perdre coins ou xp, pour get un des deux, mettre l'autre a 0
@@ -72,7 +80,18 @@ public class PlayerComponent : MonoBehaviour
         playerA.enabled = !paused;
         playerI.enabled = !paused;
     }
+    public void ApplySensitivity(float normalizedValue)
+    {
+        // Convertir [0..1], [min..max]
+        float sens = Mathf.Lerp(minSensitivity, maxSensitivity, normalizedValue);
 
+        foreach (var c in inputController.Controllers)
+        {
+            Debug.Log($"Controller: {c.Name} with value {sens}");
+
+            c.Input.Gain = sens;
+        }
+    }
     public void PlayerDeath()
     {
         //jouer animation de mort
@@ -82,5 +101,9 @@ public class PlayerComponent : MonoBehaviour
         GameManager.Instance.OnPlayerDeath();
         //particle effect ou autre ??
         //Comment on veut reset les stats et tt. (boss stats, coins, currenthp, etc.)
+    }
+    private void OnDestroy()
+    {
+        instance = null;
     }
 }

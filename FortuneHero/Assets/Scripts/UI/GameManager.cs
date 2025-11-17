@@ -5,38 +5,60 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject PlayerPrefab;
     public Transform spawnPoint;
+    [SerializeField] string loadScene = "Niveau1";
+
     public static GameManager Instance { get; private set; }
+
+    [SerializeField] GameObject panelDeath;
+    [SerializeField] GameObject panelVictory;
+    PlayerComponent player;
 
 
     public bool isInBossFight = false; 
 
     void Awake()
     {
+        panelDeath.GetComponent<DeathUiManager>();
+
         Instance = this;
         //DontDestroyOnLoad(gameObject);
         if(spawnPoint == null) spawnPoint = transform;
         Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
+        player = PlayerComponent.Instance;
     }
 
     public void OnPlayerDeath()
     {
-        // Appelle le UI manager pour afficher l'écran de mort
-        DeathUiManager.Instance.ShowDeathUI(isInBossFight);
+
+        panelDeath.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        player.PausePlayer(true);
+
+
     }
 
+    public void OnPlayerWin()
+    {
+
+        panelVictory.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        player.PausePlayer(true);
+
+
+    }
     public void RestartLevel()
     {
-        SceneManager.LoadScene("");
+        LoadManager.Instance.Load(loadScene);
     }
 
     public void ReturnToLobby()
     {
-        SceneManager.LoadScene("MainScene");
+        LoadManager.Instance.Load("LobbyScene");
     }
 
-    
+
     public void RestartBoss()
     {
-        //jsp
+        LoadManager.Instance.Load(loadScene);
     }
 }

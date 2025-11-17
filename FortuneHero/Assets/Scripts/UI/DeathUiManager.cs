@@ -1,9 +1,11 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DeathUiManager : MonoBehaviour
 {
-    public static DeathUiManager Instance { get; private set; }
+
+
 
     public GameObject deathPanel; 
     public Button restartLevelButton;
@@ -12,8 +14,6 @@ public class DeathUiManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
-        Instance = this;
         // Pas de DontDestroyOnLoad pour pas reconstruir le UI par scène.
         HideDeathUI();
     }
@@ -26,19 +26,19 @@ public class DeathUiManager : MonoBehaviour
 
     }
 
-    public void ShowDeathUI(bool isBossFight)
+    void OnEnable()
     {
-        if (deathPanel == null) return;
-        deathPanel.SetActive(true);
-        restartBossButton.gameObject.SetActive(isBossFight);
-        Cursor.lockState = CursorLockMode.None;
+        if(GameManager.Instance.isInBossFight == true)
+            restartBossButton.gameObject.SetActive(true);
+        else
+            restartBossButton.gameObject.SetActive(false);
     }
 
     public void HideDeathUI()
     {
         if (deathPanel == null) return;
         deathPanel.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     private void OnRestartLevel()

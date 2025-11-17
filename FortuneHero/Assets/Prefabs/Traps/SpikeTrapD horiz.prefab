@@ -595,6 +595,7 @@ GameObject:
   - component: {fileID: 3243961573679894117}
   - component: {fileID: 4411465237436810964}
   - component: {fileID: 4289132394542823427}
+  - component: {fileID: -2234974126860752055}
   m_Layer: 0
   m_Name: SpikeTrapD horiz
   m_TagString: Trap
@@ -738,6 +739,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2.0000005, y: 0.18000002, z: 2.000001}
   m_Center: {x: 0.000000059604645, y: 0.033333298, z: 0.0000001192093}
+--- !u!114 &-2234974126860752055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7345588070351670634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7e083f38969a44cbbbcf239952e609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  playSound: {fileID: 8300000, guid: f8acba3aeb5430745a16d406162959bc, type: 3}
 --- !u!1 &8352551520746164811
 GameObject:
   m_ObjectHideFlags: 0

@@ -88,6 +88,7 @@ public class BossComponent : MonoBehaviour
 
         //Déclenché fin de niveau!!!!
         Destroy(gameObject, 5f);
+        GameManager.Instance.OnPlayerWin();
     }
 
     protected void OnCollisionEnter(Collision collision)

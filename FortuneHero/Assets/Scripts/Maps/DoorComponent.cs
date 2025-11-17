@@ -7,7 +7,7 @@ public class DoorComponent : MonoBehaviour, IInteractable
     [SerializeField] string sceneToLoad = "Lobby";
     [SerializeField] int levelRequirement = 0;
 
-    TextMeshProUGUI text;
+    //TextMeshProUGUI text;
 
     bool canEnter = true;
 
@@ -19,18 +19,18 @@ public class DoorComponent : MonoBehaviour, IInteractable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        text = GetComponentInChildren<TextMeshProUGUI>();
+        //text = GetComponentInChildren<TextMeshProUGUI>();
         //Clé à revoir...
         if(levelRequirement > PlayerPrefs.GetInt("Progression"))
         {
             canEnter = false;
-            text.text = "Compléter d'abord le niveau " + levelRequirement/*(levelRequirement == 0 ? "tutoriel" : levelRequirement)*/;
+            //text.text = "Compléter d'abord le niveau " + levelRequirement/*(levelRequirement == 0 ? "tutoriel" : levelRequirement)*/;
         }
         else
         {
             canEnter = true;
             //À revoir...
-            text.text = "Appuyer sur " + PlayerPrefs.GetString("InteractKey") + " pour aller au " + sceneToLoad;
+            //text.text = "Appuyer sur " + PlayerPrefs.GetString("InteractKey") + " pour aller au " + sceneToLoad;
         }
         Exit();
     }
@@ -51,14 +51,14 @@ public class DoorComponent : MonoBehaviour, IInteractable
 
     public void Enter()
     {
-        text.gameObject.SetActive(true);
+        //text.gameObject.SetActive(true);
         elapsedTime = 0f;
         isExit = false;
     }
 
     public void Exit()
     {
-        text.gameObject.SetActive(false);
+        //text.gameObject.SetActive(false);
         isExit = true;
     }
 

@@ -2,15 +2,23 @@ using UnityEngine;
 
 public class SFXManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static SFXManager instance;
+    [SerializeField] ObjectPoolComponent pool;
+    void Awake()
     {
-        
+        if (instance == null)
+            instance = this;
+
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlaySFX(AudioClip clip, Transform sourceTransform)
     {
-        
+        GameObject audioObject = pool.GetObject();
+        audioObject.SetActive(true);
+        AudioSource audioSource = audioObject.GetComponent<AudioSource>();
+        audioSource.clip = clip;
+        audioSource.transform.position = sourceTransform.position;
+        audioSource.Play();
+        audioObject.GetComponent<RecycleAudio>().Recycle(audioSource.clip.length);
     }
 }

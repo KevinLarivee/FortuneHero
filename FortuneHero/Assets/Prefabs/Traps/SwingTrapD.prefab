@@ -168,6 +168,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2588264475513772231}
   - component: {fileID: 7630005946751432062}
+  - component: {fileID: 1613158119011646881}
   m_Layer: 0
   m_Name: SwingTrapD
   m_TagString: Untagged
@@ -213,3 +214,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1613158119011646881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6718920062489701812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf7e083f38969a44cbbbcf239952e609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
+  playSound: {fileID: 8300000, guid: 0af923b1332baec46b9aa48d2e2365e7, type: 3}
