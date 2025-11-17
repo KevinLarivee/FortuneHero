@@ -17,7 +17,7 @@ public class AnubisBoss_BT : BehaviourTree
 
 
     [SerializeField] string envAnimName;
-    [SerializeField] string meleeAnimName;
+    [SerializeField] string[] meleesAnimName;
     [SerializeField] string rangedParameter;
     [SerializeField] string rangedAnimName;
     [SerializeField] string tpAnimName;
@@ -46,7 +46,7 @@ public class AnubisBoss_BT : BehaviourTree
     TeleportToRandom_Action tpToRandom_Action;
 
     Animation_Action animation_Tp_Action;
-    Animation_Action animation_Melee_Action;
+    Animation_Action[] animation_Melees_Action;
     Animation_Action animation_Dash_Action;
     Animation_Action animation_EnvAtk_Action;
     Animation_Action animation_Ranged_Action;
@@ -132,11 +132,20 @@ public class AnubisBoss_BT : BehaviourTree
         //Doit se déplacer plus vite que le joueur, sinon timer?
         chase_Action = new Chase_Action(null, anubis.agent, player.transform);
         //Normalement, pas besoin de condition
-        animation_Melee_Action = new Animation_Action(null, anubis.animator, meleeAnimName);
+        animation_Melees_Action = new Animation_Action[meleesAnimName.Length];
+        for(int i = 0; i < meleesAnimName.Length; i++)
+        {
+            animation_Melees_Action[i] = new Animation_Action(null, anubis.animator, meleesAnimName[i]);
+        }
         gainDistance_Action = new GainDistance_Action(new Behaviour_Condition[] { random_GainDistance }, anubis.animator, anubis.agent, gainDistance);
 
+        List<Behaviour_Node> attackNodes = new List<Behaviour_Node>();
+        attackNodes.Add(chase_Action);
+        attackNodes.AddRange(animation_Melees_Action);
+        attackNodes.Add(gainDistance_Action);
+
         // Composite (Action Set #4)
-        attack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { isChaseRange_Player }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { chase_Action, animation_Melee_Action, gainDistance_Action }, "attack_sequencer");
+        attack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { isChaseRange_Player }, Behaviour_Composite.CompositeType.Sequence, this, attackNodes.ToArray(), "attack_sequencer");
 
         // Action Set #5
         

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class TTL : MonoBehaviour//, IPoolable
 {
-    [SerializeField] float timeToLive = 3f;
+    public float timeToLive = 3f;
     float initialTime;
 
     //public ObjectPoolComponent Pool { get; set; }

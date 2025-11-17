@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7211533474208428765}
   - component: {fileID: 8286485356810298679}
   - component: {fileID: 137360940906534198}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Lava
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4905,7 +4905,7 @@ GameObject:
   - component: {fileID: 5119912496141800894}
   - component: {fileID: 2877227126143263007}
   - component: {fileID: 2048941531613498145}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9754,8 +9754,9 @@ GameObject:
   - component: {fileID: 7626559550640520925}
   - component: {fileID: 4751773742472547031}
   - component: {fileID: 3120481099678683684}
-  - component: {fileID: 992481531633834198}
-  m_Layer: 0
+  - component: {fileID: 2819383135608475951}
+  - component: {fileID: 8883165048195387697}
+  m_Layer: 4
   m_Name: FireBreath
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14604,7 +14605,7 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &992481531633834198
+--- !u!114 &2819383135608475951
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14613,9 +14614,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5080550903040001119}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de77e775769df514ea67ded43a4775ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 89a1631e73ab1a34f9ceee5753dc4a4b, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FireComponent
+  m_EditorClassIdentifier: Assembly-CSharp::FireTrapComponent
+  inactiveTime: 0
+  activeTime: 1
+  activeDistance: 60
   target: Player
   firePrefab: {fileID: 8049974088879247194, guid: dba6d3161e22bc34d95b11651b29ab75, type: 3}
   fireRate: 0.1
@@ -14624,7 +14628,20 @@ MonoBehaviour:
   slownessValue: 2
   preventDash: 1
   lavaPrefab: {fileID: 2011506676143955710, guid: 0412a6420a69ffb4788a794e36161aa9, type: 3}
-  lavaDelay: 1
+  lavaDelay: 0.3
+--- !u!114 &8883165048195387697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5080550903040001119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bea6f842458cb34ab15c1d08f9e716e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AimToTargetComponent
+  target: {fileID: 0}
 --- !u!1 &6182647581916009800
 GameObject:
   m_ObjectHideFlags: 0
@@ -14636,7 +14653,7 @@ GameObject:
   - component: {fileID: 2119783357087808564}
   - component: {fileID: 5519376396499139864}
   - component: {fileID: 4466505819297062327}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: FireEmbers (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

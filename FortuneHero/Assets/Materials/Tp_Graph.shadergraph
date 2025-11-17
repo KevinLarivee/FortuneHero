@@ -884,7 +884,7 @@
     "m_ObjectId": "0f0ba94235224fc8a3522888ab4589e8",
     "m_Title": "Glow lines",
     "m_Position": {
-        "x": 1555.199951171875,
+        "x": 1555.2000732421875,
         "y": 2831.199951171875
     }
 }
@@ -1264,8 +1264,8 @@
     "m_ShaderOutputName": "OutMinMax",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": 0.0,
-        "y": 1.0
+        "x": 1.0,
+        "y": -0.10000000149011612
     },
     "m_DefaultValue": {
         "x": 0.0,
@@ -1333,7 +1333,7 @@
     "m_ShaderOutputName": "InMinMax",
     "m_StageCapability": 3,
     "m_Value": {
-        "x": -1.0,
+        "x": 0.0,
         "y": 1.0
     },
     "m_DefaultValue": {
@@ -1547,7 +1547,7 @@
     "m_ObjectId": "272d9c7df0fd47759dcc9e4e2b494e41",
     "m_Title": "Colour",
     "m_Position": {
-        "x": 1876.0,
+        "x": 1876.0001220703125,
         "y": 1593.599853515625
     }
 }
@@ -3833,7 +3833,7 @@
     "m_ObjectId": "a52a29f8f18a4c918c22cf140ac61d2f",
     "m_Title": "Time",
     "m_Position": {
-        "x": 498.4000244140625,
+        "x": 498.3999938964844,
         "y": 2855.199951171875
     }
 }
@@ -4125,7 +4125,7 @@
     "m_Value": 0.0,
     "m_FloatType": 1,
     "m_RangeValues": {
-        "x": -1.2000000476837159,
+        "x": 0.0,
         "y": 1.0
     },
     "m_SliderType": 0,

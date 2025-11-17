@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FireTrapComponent : MonoBehaviour
@@ -11,6 +12,7 @@ public class FireTrapComponent : MonoBehaviour
     //FireComponent flame;
     Coroutine fireCycle;
     float distance = 0f;
+    float timeToLive = 0f;
     bool isActive = false;
 
     [Header("FireComponent")]
@@ -41,6 +43,10 @@ public class FireTrapComponent : MonoBehaviour
         ignoreTrigger = LayerMask.GetMask("IgnoreTrigger");
         StopFire();
         player = PlayerMovement.Instance;
+        if(effects != null)
+        {
+            timeToLive = effects[0].main.startLifetime.constant;
+        }
     }
 
     // Update is called once per frame
@@ -173,6 +179,7 @@ public class FireTrapComponent : MonoBehaviour
     {
         GameObject fireCollision = Instantiate(firePrefab, transform.position, transform.rotation);
         fireCollision.GetComponent<TriggerProjectile>().onTrigger.AddListener(EnterFire);
+        fireCollision.GetComponent<TTL>().timeToLive = timeToLive;
     }
     bool ShowDelay => lavaPrefab != null;
 }

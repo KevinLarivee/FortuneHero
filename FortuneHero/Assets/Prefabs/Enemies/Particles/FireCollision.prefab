@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6787008178455296978}
   - component: {fileID: 1134804177895233063}
   - component: {fileID: 6753992759198000883}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: FireCollision
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,7 +49,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 310
+    m_Bits: 438
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -107,7 +107,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 310
+    m_Bits: 438
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0

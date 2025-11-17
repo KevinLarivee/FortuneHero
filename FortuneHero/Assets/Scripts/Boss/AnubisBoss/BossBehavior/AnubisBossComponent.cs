@@ -13,12 +13,15 @@ public class AnubisBossComponent : BossComponent
     [SerializeField] float yThreshold = 10f;
     [SerializeField] float yDefaultValue = 30f;
     [SerializeField] GameObject quicksand;
+    [SerializeField] string tpMelee;
     ParticleSystem[] envPlatforms;
     Transform target;
     DissolveComponent dissolve;
+    AnubisBoss_BT bt;
     public int dmg = 10;
     float bufferCd = 0.2f;
     float bufferTimer = 0;
+    int tpCount = 0;
 
     void Start()
     {
@@ -42,6 +45,8 @@ public class AnubisBossComponent : BossComponent
             temp.Add(t.GetComponent<ParticleSystem>());
         }
         envPlatforms = temp.ToArray();
+
+        bt = GetComponent<AnubisBoss_BT>();
     }
     void Update()
     {
@@ -102,7 +107,12 @@ public class AnubisBossComponent : BossComponent
     }
     public void StartDissolve()
     {
-        StartCoroutine(dissolve.Dissolve());
+        if(bt.activeNode is Behaviour_Composite && (bt.activeNode as Behaviour_Composite).compositeInstanceID == tpMelee)
+            tpCount = (tpCount + 1) % 4;
+        if(tpCount != 3)
+            StartCoroutine(dissolve.Dissolve());
+        else //Ne va rien faire au pire
+            ReverseDissolve();
     }
     public void ReverseDissolve()
     {

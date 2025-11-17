@@ -117,7 +117,7 @@ Shader "Ultimate 10+ Shaders/Lava3D_URP"
 
                 // Displace the vertex in object space along Y like original
                 float3 posOS = IN.positionOS.xyz;
-                posOS.y = height * _Amplitude;
+                posOS += IN.normalOS * height * _Amplitude;
 
                 // Output
                 OUT.positionHCS = TransformObjectToHClip(float4(posOS, 1.0));

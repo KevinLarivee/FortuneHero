@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-[RequireComponent(typeof(HealthComponent), typeof(Behaviour), typeof(TrackPlayerComponent))]
+[RequireComponent(typeof(HealthComponent), typeof(BehaviourTree), typeof(TrackPlayerComponent))]
 public class BossComponent : MonoBehaviour
 {
     public float meleeDefense = 1f;

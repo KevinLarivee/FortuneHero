@@ -75,7 +75,7 @@ Material:
     - _BlendModePreserveSpecular: 1
     - _CastShadows: 1
     - _Cull: 2
-    - _DissolveAmount: 1
+    - _DissolveAmount: 0
     - _DstBlend: 0
     - _Glow_Line_Thickness: 0.1
     - _Metallic: 0

@@ -24,6 +24,7 @@ public class LavaComponent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Enter Trigger " + other.GetType());
         if (other.CompareTag(target) && other.excludeLayers != ignoreTrigger)
         {
             if (afterBurn != null)
@@ -57,6 +58,7 @@ public class LavaComponent : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        Debug.Log("Exit Trigger " + other.GetType());
         if (other.CompareTag(target) && other.excludeLayers != ignoreTrigger)
         {
             ExitFire();
