@@ -7,8 +7,8 @@ public class PlayerInteractions : MonoBehaviour
 {
     [SerializeField] LayerMask interactable;
     [SerializeField] float interactionRadius = 4f;
-    [SerializeField] float enterRadius = 20f;
-    [SerializeField] float exitRadius = 25f;
+    [SerializeField] public float enterRadius = 20f;
+    [SerializeField] public float exitRadius = 25f;
 
     Collider[] cols;
 

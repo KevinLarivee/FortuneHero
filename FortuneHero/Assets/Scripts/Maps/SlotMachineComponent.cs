@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using TMPro;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SlotMachineComponent : MonoBehaviour, IInteractable
 {
     public float exitTime { get => throw new System.NotImplementedException(); set => new System.NotImplementedException(); }
-
     [Header("UI Panels")]
     [SerializeField] GameObject panelSlot;
     [SerializeField] GameObject panelPlayer;
@@ -93,6 +93,13 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
         panelSlot.SetActive(false);
         if(panelPlayer != null)
             panelPlayer.SetActive(true);
+
+        var playerInteractions = PlayerComponent.Instance.GetComponent<PlayerInteractions>();
+        if (playerInteractions != null)
+        {
+            playerInteractions.enterRadius = 5f;
+            playerInteractions.exitRadius = 6f;
+        }
     }
 
     public void Enter() { }

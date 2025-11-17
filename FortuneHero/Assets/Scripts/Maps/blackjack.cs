@@ -227,7 +227,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
 
     void UpdateBetText()
     {
-        if (betText != null) betText.text = $"{currentBet}"; // comme ta slot (juste le nombre)
+        if (betText != null) betText.text = $"Current bet: {currentBet}"; // comme ta slot (juste le nombre)
     }
 
     void UpdateBalanceText()
@@ -348,17 +348,31 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         }
 
         if (playerHandText != null)
-            playerHandText.text = "Joueur : " + HandToString(playerCards) + $"  ({HandValue(playerCards)})";
+            playerHandText.text = "Joueur : " + $" ({HandValue(playerCards)})";
 
         if (dealerHandText != null)
         {
             if (showDealerHole)
-                dealerHandText.text = "Croupier : " + HandToString(dealerCards) + $"  ({HandValue(dealerCards)})";
+            {
+                // Les deux cartes visibles → afficher la valeur totale
+                dealerHandText.text = $"Croupier : ({HandValue(dealerCards)})";
+            }
             else
-                dealerHandText.text = dealerCards.Count > 0
-                    ? "Croupier : " + CardToString(dealerCards[0]) + " + [??]"
-                    : "Croupier : ";
+            {
+                if (dealerCards.Count > 0)
+                {
+                    int visibleCard = dealerCards[0];                      // première carte
+                    int visibleValue = ValueForRank(Rank(visibleCard));    // valeur d’une seule carte
+
+                    dealerHandText.text = $"Croupier : {visibleValue}";
+                }
+                else
+                {
+                    dealerHandText.text = "Croupier : ";
+                }
+            }
         }
+
     }
 
 
