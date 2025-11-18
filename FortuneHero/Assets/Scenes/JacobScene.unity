@@ -1117,26 +1117,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 379014760285193093, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -270
-      objectReference: {fileID: 0}
-    - target: {fileID: 3053498543495142173, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 3053498543495142173, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -537
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285443121704632272, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -554
-      objectReference: {fileID: 0}
-    - target: {fileID: 3285443121704632272, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 390
-      objectReference: {fileID: 0}
     - target: {fileID: 4171777087355274631, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 42.31405
@@ -1180,14 +1160,6 @@ PrefabInstance:
     - target: {fileID: 4610281150307999625, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
       propertyPath: m_Name
       value: BlackjackTable
-      objectReference: {fileID: 0}
-    - target: {fileID: 5841388697345897891, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -270
-      objectReference: {fileID: 0}
-    - target: {fileID: 8416308234307108479, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
-      propertyPath: Priority.Enabled
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -257,15 +257,27 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         var holder = new GameObject($"CardHolder_{index}").transform;
         holder.SetParent(parent, false);
 
-        float scale = 1.3f;                      
-        float spacing = 0.22f * scale;            
+        float scale = 1f;                 // taille des cartes
+        float spacing = 0.22f * scale;      // espace horizontal entre les cartes
 
-        holder.localPosition = new Vector3(-spacing * index, 0.018f, 0f);
+        int cardsPerRow = 5;                // nb de cartes par rangée
+        int row = index / cardsPerRow;      // 0,1,2,...
+        int col = index % cardsPerRow;      // 0..3
+
+        float rowSpacing = 0.30f;           // espace vertical (vers le bas)
+
+        holder.localPosition = new Vector3(
+            -spacing * col,                 // colonne à gauche/droite
+            0.018f,                         // hauteur de la carte
+            row * rowSpacing                // **vers le bas** (+Z = en bas sur table)
+        );
+
         holder.localRotation = Quaternion.identity;
-        holder.localScale = Vector3.one * scale; 
+        holder.localScale = Vector3.one * scale;
 
         return holder;
     }
+
 
     static Transform GetVisualTransform(Transform cardRoot)
     {
@@ -355,7 +367,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
             if (showDealerHole)
             {
                 // Les deux cartes visibles → afficher la valeur totale
-                dealerHandText.text = $"Croupier : ({HandValue(dealerCards)})";
+                dealerHandText.text = $"Croupier : {HandValue(dealerCards)}";
             }
             else
             {
@@ -418,9 +430,8 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         // Init manche
         roundActive = true;
         playerTurn = true;
-        if (resultText != null) resultText.text = "";
         dealerHoleRevealed = false;
-
+        if (resultText != null) resultText.text = "";
 
         BuildAndShuffleDeck();
 
@@ -436,7 +447,9 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         // Affichage avec carte du croupier cachée
         RefreshHands(showDealerHole: false);
 
-        // Active les actions joueur
+        // État des boutons pendant la manche :
+        // Deal désactivé, Hit/Stand activés
+        if (btnDeal != null) btnDeal.interactable = false;
         if (btnHit != null) btnHit.interactable = true;
         if (btnStand != null) btnStand.interactable = true;
 
@@ -450,6 +463,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
             ResolveImmediateNaturals(playerVal, dealerVal);
         }
     }
+
 
     void Hit()
     {
@@ -470,11 +484,22 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         if (!roundActive || !playerTurn) return;
 
         playerTurn = false;
+
+        // Quand le dealer commence à jouer → on grise tout
+        if (btnDeal != null) btnDeal.interactable = false;
+        if (btnHit != null) btnHit.interactable = false;
+        if (btnStand != null) btnStand.interactable = false;
+
         StartCoroutine(DealerPlayThenResolve());
     }
 
     IEnumerator DealerPlayThenResolve()
     {
+        // Sécurité : pendant toute la phase du croupier, tout est désactivé
+        if (btnDeal != null) btnDeal.interactable = false;
+        if (btnHit != null) btnHit.interactable = false;
+        if (btnStand != null) btnStand.interactable = false;
+
         // Révèle la carte cachée avec anim de flip (géré par RefreshHands(true))
         RefreshHands(showDealerHole: true);
 
@@ -617,8 +642,11 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         roundActive = false;
         playerTurn = false;
 
+        // Fin de manche :
+        // Hit/Stand désactivés, Deal réactivé pour la prochaine manche.
         if (btnHit != null) btnHit.interactable = false;
         if (btnStand != null) btnStand.interactable = false;
+        if (btnDeal != null) btnDeal.interactable = true;
 
         int coins = PlayerPrefs.GetInt("coins");
 
@@ -633,7 +661,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
             {
                 int win = Mathf.RoundToInt(currentBet * 2.5f);
                 coins += win;
-                if (resultText != null) resultText.text = $"Blackjack ! +{win}";
+                if (resultText != null) resultText.text = $"Blackjack ! 2.5x votre mise! +{win}";
             }
             else
             {
