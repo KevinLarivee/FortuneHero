@@ -13,5 +13,5 @@ public class AboveSelf_Condition : Behaviour_Condition
     }
 
     public override bool Evaluate() =>
-        CheckForReverseCondition(other.position.y > self.position.y);
+        CheckForReverseCondition(other.position.y > self.position.y + 2f);
 }

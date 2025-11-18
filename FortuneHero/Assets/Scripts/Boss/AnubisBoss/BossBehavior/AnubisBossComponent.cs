@@ -8,6 +8,10 @@ public class AnubisBossComponent : BossComponent
     [Header("Anubis Boss Specific")]
     [SerializeField] Collider weaponCollider;
     [SerializeField] GameObject projectilePrefab;
+    [SerializeField] GameObject explosionPrefab;
+    [SerializeField] float envAtkSpeed = 15f;
+    [SerializeField] GameObject envAtkPrefab;
+    [SerializeField] Transform pyramidTop;
     [SerializeField] Transform exitPoint;
     [SerializeField] GameObject platforms;
     [SerializeField] float yThreshold = 10f;
@@ -67,35 +71,68 @@ public class AnubisBossComponent : BossComponent
     public IEnumerator StartEnvironmentAttack()
     {
         Debug.Log("In Coroutine");
-        PlayParticles();
+        GameObject envAtk = Instantiate(envAtkPrefab, exitPoint.position, Quaternion.identity);
+        //PlayParticles();
         //Changer pour le "mini Boss"
         //yield return new WaitUntil(() => );
-        yield return new WaitForSeconds(20f);
-        StopParticles();
+        //Temps de chargement de la boule
+        yield return new WaitForSeconds(2f);
+        while(Vector3.Distance(envAtk.transform.position, pyramidTop.position) > 1f)
+        {
+            //Pas sur
+            if (envAtk == null)
+                yield break;
+            envAtk.transform.position = Vector3.MoveTowards(envAtk.transform.position, pyramidTop.position, envAtkSpeed * Time.deltaTime);
+            yield return null;
+        }
+        if(envAtk != null)
+        {
+            PlayParticles();
+            envAtk.GetComponent<HealthComponent>().onDeath += () => StopParticles(envAtk);
+        }
+        //StopParticles();
         //envAtk.isActivated = false;
     }
 
     private void PlayParticles()
     {
-        foreach (var p in envPlatforms)
+        foreach (ParticleSystem p in envPlatforms)
         {
             p.gameObject.SetActive(true);
             p.Play();
         }
     }
-    private void StopParticles()
+    private void StopParticles(GameObject envAtk)
     {
-        foreach (var p in envPlatforms)
+        foreach (ParticleSystem p in envPlatforms)
         {
             p.gameObject.SetActive(false);
             p.Stop();
         }
+        Destroy(envAtk);
     }
 
     public void RangedAttack()
     {
-        var rotation = Quaternion.LookRotation(target.position - exitPoint.position);
-        Instantiate(projectilePrefab, exitPoint.position, rotation);
+        Quaternion rotation = Quaternion.LookRotation(target.position - exitPoint.position);
+        GameObject ranged = Instantiate(projectilePrefab, exitPoint.position, rotation);
+        ranged.GetComponent<TriggerProjectile>().onTrigger.AddListener(RangedExplosion);
+    }
+    public void RangedExplosion(CSquareEvent colliders)
+    {
+        if (colliders.other.CompareTag("Shield"))
+        {
+            trackPlayer.IncreaseStat("bossRangeMiss", -1);
+            trackPlayer.IncreaseStat("bossRangeBlocked", 1);
+        }
+        else if (colliders.other.CompareTag("Player"))
+        {
+            trackPlayer.IncreaseStat("bossRangeMiss", -1);
+            trackPlayer.IncreaseStat("bossRangeHit", 1);
+            colliders.other.gameObject.GetComponent<HealthComponent>().Hit(rangeDmg);
+        }
+        //Surement plus de code ici
+        Instantiate(explosionPrefab, colliders.self.transform.position, Quaternion.identity);
     }
     public void EnableWeaponCollider()
     {

@@ -76,6 +76,7 @@ public class AnubisBoss_BT : BehaviourTree
     CoolDown_Condition coolDown_Environnement;
     CoolDown_Condition coolDown_TpRandom;
     CoolDown_Condition coolDown_Dash;
+    AboveSelf_Condition notAbove_Player;
 
     public override void InitializeTree()
     {
@@ -103,6 +104,7 @@ public class AnubisBoss_BT : BehaviourTree
         coolDown_Environnement = new CoolDown_Condition(false, envCd);
         coolDown_TpRandom = new CoolDown_Condition(false, tpCd);
         coolDown_Dash = new CoolDown_Condition(false, dashCd);
+        notAbove_Player = new AboveSelf_Condition(true, transform, player.transform);
 
 
         //Interrupt****
@@ -150,13 +152,13 @@ public class AnubisBoss_BT : BehaviourTree
         // Action Set #5
         
         // Composite (Action Set #5)
-        melee_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { isNear_Player }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { dash_sequencer, attack_sequencer }, "melee_sequencer");
+        melee_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { notAbove_Player, isNear_Player }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { dash_sequencer, attack_sequencer }, "melee_sequencer");
 
         // Action Set #6
         tpMeleeAtk_Action = new TpMeleeAttack_Action(null, anubis.animator, anubis.agent, target, tpStopDistance);
 
         // Composite (Action Set #6)
-        tpAttack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { random_TpAttack }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Tp_Action, tpMeleeAtk_Action, tpMeleeAtk_Action, tpMeleeAtk_Action, tpMeleeAtk_Action }, "tpAttack_sequencer");
+        tpAttack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { notAbove_Player, random_TpAttack }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Tp_Action, tpMeleeAtk_Action, tpMeleeAtk_Action, tpMeleeAtk_Action, tpMeleeAtk_Action }, "tpAttack_sequencer");
 
         // Action Set #7
         animation_Ranged_Action = new Animation_Action(new Behaviour_Condition[] { isNotChaseRange_Player }, anubis.animator, rangedParameter, rangedAnimName);
