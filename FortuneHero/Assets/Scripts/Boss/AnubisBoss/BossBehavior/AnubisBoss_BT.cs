@@ -28,6 +28,9 @@ public class AnubisBoss_BT : BehaviourTree
     [SerializeField] float dashCd = 10f;
     [SerializeField] GameObject tpPoints;
 
+    [Header("Conditions")]
+    [SerializeField] float nearPlayerDistance = 30f;
+
     //Odds pour faire chaque nodes (en decimal)
     [Header("Node odds (Decimal")]
     [SerializeField] float gainDistanceOdds = 0.3f;
@@ -94,7 +97,7 @@ public class AnubisBoss_BT : BehaviourTree
         Transform[] points = temp.ToArray();
 
         //Conditions****
-        isNear_Player = new NearTarget_Condition(false, transform, 10f, target);
+        isNear_Player = new NearTarget_Condition(false, transform, nearPlayerDistance, target);
         isChaseRange_Player = new NearTarget_Condition(false, transform, 2.5f, target);
         isNotChaseRange_Player = new NearTarget_Condition(true, transform, 2.5f, target);
         random_GainDistance = new Random_Condition(false, gainDistanceOdds);
@@ -128,7 +131,7 @@ public class AnubisBoss_BT : BehaviourTree
         animation_Dash_Action = new Animation_Action(new Behaviour_Condition[] { isNear_Player, isNotChaseRange_Player }, anubis.animator, dashAnimName);
 
         // Composite (Action Set #3)
-        dash_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { coolDown_Dash }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Dash_Action }, "dash_sequencer");
+        dash_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { coolDown_Dash }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Dash_Action, animation_Dash_Action, animation_Dash_Action }, "dash_sequencer");
 
         // Action Set #4
         //Doit se déplacer plus vite que le joueur, sinon timer?

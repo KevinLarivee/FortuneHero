@@ -23,6 +23,7 @@ public class MoveToTarget_Action : Behaviour_Node
     public override void ExecuteAction(Behaviour_Composite parent_composite)
     {
         base.ExecuteAction(parent_composite);
+        agent.isStopped = false;
         initialSpeed = agent.speed;
         agent.speed = speed;
         agent.SetDestination(target.transform.position);

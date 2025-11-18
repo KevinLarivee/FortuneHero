@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AnubisBossComponent : BossComponent
@@ -9,6 +10,7 @@ public class AnubisBossComponent : BossComponent
     [SerializeField] Collider weaponCollider;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject explosionPrefab;
+    [SerializeField] GameObject dashEffectPrefab;
     [SerializeField] float envAtkSpeed = 15f;
     [SerializeField] GameObject envAtkPrefab;
     [SerializeField] Transform pyramidTop;
@@ -18,14 +20,20 @@ public class AnubisBossComponent : BossComponent
     [SerializeField] float yDefaultValue = 30f;
     [SerializeField] GameObject quicksand;
     [SerializeField] string tpMelee;
+    [SerializeField] float dashDistance = 5f;
+    [SerializeField] float rotationSpeed = 150f;
+
     ParticleSystem[] envPlatforms;
     Transform target;
     DissolveComponent dissolve;
     AnubisBoss_BT bt;
+    GameObject projectile;
+
     public int dmg = 10;
+    int tpCount = 0;
     float bufferCd = 0.2f;
     float bufferTimer = 0;
-    int tpCount = 0;
+    bool isStartingDash = false;
 
     void Start()
     {
@@ -54,7 +62,7 @@ public class AnubisBossComponent : BossComponent
     }
     void Update()
     {
-        if(bufferTimer < bufferCd)
+        if (bufferTimer < bufferCd)
         {
             bufferTimer += Time.deltaTime;
         }
@@ -77,7 +85,7 @@ public class AnubisBossComponent : BossComponent
         //yield return new WaitUntil(() => );
         //Temps de chargement de la boule
         yield return new WaitForSeconds(2f);
-        while(Vector3.Distance(envAtk.transform.position, pyramidTop.position) > 1f)
+        while (Vector3.Distance(envAtk.transform.position, pyramidTop.position) > 1f)
         {
             //Pas sur
             if (envAtk == null)
@@ -85,7 +93,7 @@ public class AnubisBossComponent : BossComponent
             envAtk.transform.position = Vector3.MoveTowards(envAtk.transform.position, pyramidTop.position, envAtkSpeed * Time.deltaTime);
             yield return null;
         }
-        if(envAtk != null)
+        if (envAtk != null)
         {
             PlayParticles();
             envAtk.GetComponent<HealthComponent>().onDeath += () => StopParticles(envAtk);
@@ -112,11 +120,17 @@ public class AnubisBossComponent : BossComponent
         Destroy(envAtk);
     }
 
+    public void InstantiateProjectile()
+    {
+        projectile = Instantiate(projectilePrefab, exitPoint.position, Quaternion.Euler(90, transform.rotation.y, transform.rotation.z));
+        //projectile.GetComponent<TriggerProjectile>().onTrigger.AddListener(RangedExplosion);
+        projectile.transform.parent = weaponCollider.gameObject.transform;
+    }
     public void RangedAttack()
     {
-        Quaternion rotation = Quaternion.LookRotation(target.position - exitPoint.position);
-        GameObject ranged = Instantiate(projectilePrefab, exitPoint.position, rotation);
-        ranged.GetComponent<TriggerProjectile>().onTrigger.AddListener(RangedExplosion);
+        projectile.transform.parent = null;
+        projectile.transform.rotation = Quaternion.LookRotation(target.position - exitPoint.position);
+        projectile.GetComponent<BossProjectileMovement>().launchProjectile = true;
     }
     public void RangedExplosion(CSquareEvent colliders)
     {
@@ -144,9 +158,9 @@ public class AnubisBossComponent : BossComponent
     }
     public void StartDissolve()
     {
-        if(bt.activeNode is Behaviour_Composite && (bt.activeNode as Behaviour_Composite).compositeInstanceID == tpMelee)
+        if (bt.activeNode is Behaviour_Composite && (bt.activeNode as Behaviour_Composite).compositeInstanceID == tpMelee)
             tpCount = (tpCount + 1) % 4;
-        if(tpCount != 3)
+        if (tpCount != 3)
             StartCoroutine(dissolve.Dissolve());
         else //Ne va rien faire au pire
             ReverseDissolve();
@@ -155,6 +169,51 @@ public class AnubisBossComponent : BossComponent
     {
         StartCoroutine(dissolve.Dissolve(true));
     }
+
+    public void StartDash()
+    {
+        StartCoroutine(Dash());
+    }
+    public void StartRotation()
+    {
+        StartCoroutine(RotateBoss());
+        //RotateBoss2();
+    }
+    public IEnumerator RotateBoss()
+    {
+        agent.isStopped = true;
+        while (!isStartingDash)
+        {
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up), rotationSpeed * Time.deltaTime);
+            dashEffectPrefab.SetActive(true);
+            yield return null;
+        }
+    }
+    public void RotateBoss2()
+    {
+        transform.rotation = Quaternion.LookRotation(target.transform.position - transform.position, Vector3.up);
+        dashEffectPrefab.SetActive(true);
+    }
+    public IEnumerator Dash()
+    {
+        isStartingDash = true;
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = startPos + transform.forward * dashDistance;
+
+        float animTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        while (animTime < 0.95f)
+        {
+            animTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            transform.position = Vector3.Lerp(startPos, targetPos, animTime);
+            yield return null;
+        }
+        agent.isStopped = false;
+        dashEffectPrefab.SetActive(false);
+        isStartingDash = false;
+
+    }
+
+
 
     void OnTriggerEnter(Collider other)
     {

@@ -90,6 +90,8 @@ public class PlayerComponent : MonoBehaviour
             Debug.Log($"Controller: {c.Name} with value {sens}");
 
             c.Input.Gain = sens;
+            if (c.Name == "Look Orbit Y")
+                c.Input.Gain *= -1; //Inverser l'axe Y pour la camera
         }
     }
     public void PlayerDeath()
