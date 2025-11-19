@@ -58,7 +58,7 @@ public class Animation_Action : Behaviour_Node
         AnimatorStateInfo temp = animator.GetCurrentAnimatorStateInfo(0);
         if (!gate)
         {
-            if (temp.IsName(animationName))
+            if (temp.IsName(animationName) && temp.normalizedTime < donePercentile)
             {
                 gate = true;
             }

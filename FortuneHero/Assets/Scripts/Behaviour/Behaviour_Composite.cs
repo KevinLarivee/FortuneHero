@@ -116,7 +116,8 @@ public class Behaviour_Composite : Behaviour_Node
             parallelFinished = true;
             foreach (Behaviour_Node node in nodes)
             {
-                node.FinishAction(true);
+                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! Était true...
+                node.FinishAction(false);
             }
         }
         if(behaviourTree.activeNode == this)

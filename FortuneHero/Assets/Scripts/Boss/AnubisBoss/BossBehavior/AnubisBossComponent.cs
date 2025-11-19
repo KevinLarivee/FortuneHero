@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -12,13 +13,13 @@ public class AnubisBossComponent : BossComponent
     [SerializeField] GameObject explosionPrefab;
     [SerializeField] GameObject dashEffectPrefab;
     [SerializeField] float envAtkSpeed = 15f;
-    [SerializeField] GameObject envAtkPrefab;
     [SerializeField] Transform pyramidTop;
     [SerializeField] Transform exitPoint;
     [SerializeField] GameObject platforms;
     [SerializeField] float yThreshold = 10f;
     [SerializeField] float yDefaultValue = 30f;
-    [SerializeField] GameObject quicksand;
+    [SerializeField] GameObject ground;
+    [SerializeField] Material quickSand;
     [SerializeField] string tpMelee;
     [SerializeField] float dashDistance = 5f;
     [SerializeField] float rotationSpeed = 150f;
@@ -42,7 +43,7 @@ public class AnubisBossComponent : BossComponent
         trackPlayer.yThreshold = yThreshold;
 
         //Pour reverse
-        trackPlayer.PlayerY(() => quicksand.SetActive(true), -0.05f);
+        trackPlayer.PlayerY(QuickSand, -0.05f);
         trackPlayer.SetStat("playerY", yDefaultValue);
 
         healthComponent = GetComponent<HealthComponent>();
@@ -76,10 +77,14 @@ public class AnubisBossComponent : BossComponent
             trackPlayer.SetStat("playerY", yDefaultValue);
         }
     }
-    public IEnumerator StartEnvironmentAttack()
+    public void StartEnvironnementAttack()
+    {
+        StartCoroutine(EnvironmentAttack());
+    }
+    public IEnumerator EnvironmentAttack()
     {
         Debug.Log("In Coroutine");
-        GameObject envAtk = Instantiate(envAtkPrefab, exitPoint.position, Quaternion.identity);
+        GameObject envAtk = Instantiate(rangePrefab, exitPoint.position, Quaternion.identity);
         //PlayParticles();
         //Changer pour le "mini Boss"
         //yield return new WaitUntil(() => );
@@ -96,7 +101,7 @@ public class AnubisBossComponent : BossComponent
         if (envAtk != null)
         {
             PlayParticles();
-            envAtk.GetComponent<HealthComponent>().onDeath += () => StopParticles(envAtk);
+            envAtk.AddComponent<HealthComponent>().onDeath += () => StopParticles(envAtk);
         }
         //StopParticles();
         //envAtk.isActivated = false;
@@ -123,13 +128,13 @@ public class AnubisBossComponent : BossComponent
     public void InstantiateProjectile()
     {
         projectile = Instantiate(projectilePrefab, exitPoint.position, Quaternion.Euler(90, transform.rotation.y, transform.rotation.z));
-        //projectile.GetComponent<TriggerProjectile>().onTrigger.AddListener(RangedExplosion);
+        projectile.GetComponent<BossProjectileMovement>().onTrigger.AddListener(RangedExplosion);
         projectile.transform.parent = weaponCollider.gameObject.transform;
     }
     public void RangedAttack()
     {
         projectile.transform.parent = null;
-        projectile.transform.rotation = Quaternion.LookRotation(target.position - exitPoint.position);
+        //projectile.transform.rotation = Quaternion.LookRotation(target.position - exitPoint.position);
         projectile.GetComponent<BossProjectileMovement>().launchProjectile = true;
     }
     public void RangedExplosion(CSquareEvent colliders)
@@ -138,6 +143,7 @@ public class AnubisBossComponent : BossComponent
         {
             trackPlayer.IncreaseStat("bossRangeMiss", -1);
             trackPlayer.IncreaseStat("bossRangeBlocked", 1);
+            return;
         }
         else if (colliders.other.CompareTag("Player"))
         {
@@ -147,6 +153,11 @@ public class AnubisBossComponent : BossComponent
         }
         //Surement plus de code ici
         Instantiate(explosionPrefab, colliders.self.transform.position, Quaternion.identity);
+        //Rajouter des layers?
+        if (Physics.OverlapSphere(colliders.self.transform.position, 3f, LayerMask.GetMask("Player")).Any(c => c.CompareTag("Player")))
+        {
+            PlayerComponent.Instance.GetComponent<HealthComponent>().Hit(rangeDmg);
+        }
     }
     public void EnableWeaponCollider()
     {
@@ -213,7 +224,11 @@ public class AnubisBossComponent : BossComponent
 
     }
 
-
+    public void QuickSand()
+    {
+        ground.GetComponent<MeshRenderer>().material = quickSand;
+        ground.AddComponent<QuickSandComponent>();
+    }
 
     void OnTriggerEnter(Collider other)
     {

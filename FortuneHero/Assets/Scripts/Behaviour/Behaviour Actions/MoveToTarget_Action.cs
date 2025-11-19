@@ -32,6 +32,8 @@ public class MoveToTarget_Action : Behaviour_Node
     public override void Tick(float deltaTime)
     {
         base.Tick(deltaTime);
+        if (!interupted)
+            agent.SetDestination(target.transform.position);
 
         if (currentTime > 0f)
         {

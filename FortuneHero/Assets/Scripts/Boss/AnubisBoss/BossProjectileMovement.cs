@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UIElements;
 
 [RequireComponent (typeof(Rigidbody))]
 public class BossProjectileMovement : MonoBehaviour
 {
+    public UnityEvent<CSquareEvent> onTrigger;
     [SerializeField] float distanceUntilRecycled = 80f;
     [SerializeField] float projectileVelocity = 20f;
     [SerializeField] float dmg = 20f;
@@ -11,8 +13,11 @@ public class BossProjectileMovement : MonoBehaviour
     Rigidbody rb;
     Transform target;
     Vector3 initialPos;
+    Collider selfCollider;
+    bool isDestroyed = false;
     void Start()
     {
+        selfCollider = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         initialPos = transform.position;
         target = PlayerComponent.Instance.transform;
@@ -21,8 +26,8 @@ public class BossProjectileMovement : MonoBehaviour
     {
         if (launchProjectile)
         {
-            rb.linearVelocity = transform.forward * projectileVelocity;
-            transform.rotation = Quaternion.LookRotation(target.position - transform.position) * Quaternion.Euler(90, 95, 90); 
+            transform.rotation = Quaternion.LookRotation(target.position + Vector3.up * 1f - transform.position) * Quaternion.Euler(90, 90, 90);
+            rb.linearVelocity = transform.up * projectileVelocity;
             // <--- Trial and error pour trouver la bonne rotation apres que le projectile est lancer, lookRotation pour que la rotation soit tt le temps baser sur ou le joueur est * le offset
             launchProjectile = false;
         }
@@ -34,11 +39,10 @@ public class BossProjectileMovement : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            other.GetComponent<HealthComponent>().Hit(dmg);
-            Destroy(gameObject);
-        }
+        if (!isDestroyed)
+            onTrigger?.Invoke(new(selfCollider, other));
+        isDestroyed = true;
+        Destroy(gameObject);
     }
 }
 

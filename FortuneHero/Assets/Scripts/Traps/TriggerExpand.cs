@@ -11,16 +11,25 @@ public class TriggerExpand : MonoBehaviour
     public float delay = 0.32f;
     public float duration = 1f;
     Vector3 initialSize;
+    float initialRadius;
     bool isDestroyed = false;
-    BoxCollider selfCollider;
+    BoxCollider boxCollider;
+    SphereCollider sphereCollider;
     private void Awake()
     {
-        selfCollider = GetComponent<BoxCollider>();
-        initialSize = selfCollider.size;
+        boxCollider = GetComponent<BoxCollider>();
+        sphereCollider = GetComponent<SphereCollider>();
+        if(boxCollider != null)
+            initialSize = boxCollider.size;
+        else
+            initialRadius = sphereCollider.radius;
     }
     private void OnEnable()
     {
-        selfCollider.size = initialSize;
+        if(boxCollider != null)
+            boxCollider.size = initialSize;
+        else
+            sphereCollider.radius = initialRadius;
         StartCoroutine(Expanding());
     }
     IEnumerator Expanding()
@@ -32,12 +41,18 @@ public class TriggerExpand : MonoBehaviour
             float t = elapsed / duration;
             float currentLength = Mathf.Lerp(0f, distance, t);
 
-            selfCollider.size = new Vector3(initialSize.x, initialSize.y, currentLength);
+            if (boxCollider != null)
+                boxCollider.size = new Vector3(initialSize.x, initialSize.y, currentLength);
+            else
+                sphereCollider.radius = currentLength;
 
             elapsed += Time.deltaTime;
             yield return null;
         }
-        selfCollider.size = new Vector3(initialSize.x, initialSize.y, distance);
+        if (boxCollider != null)
+            boxCollider.size = new Vector3(initialSize.x, initialSize.y, distance);
+        else
+            sphereCollider.radius = distance;
     }
 
     private void OnTriggerEnter(Collider other)

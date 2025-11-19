@@ -30,6 +30,7 @@ public class AnubisBoss_BT : BehaviourTree
 
     [Header("Conditions")]
     [SerializeField] float nearPlayerDistance = 30f;
+    [SerializeField] float chaseRange = 5f;
 
     //Odds pour faire chaque nodes (en decimal)
     [Header("Node odds (Decimal")]
@@ -98,8 +99,8 @@ public class AnubisBoss_BT : BehaviourTree
 
         //Conditions****
         isNear_Player = new NearTarget_Condition(false, transform, nearPlayerDistance, target);
-        isChaseRange_Player = new NearTarget_Condition(false, transform, 2.5f, target);
-        isNotChaseRange_Player = new NearTarget_Condition(true, transform, 2.5f, target);
+        isChaseRange_Player = new NearTarget_Condition(false, transform, chaseRange, target);
+        isNotChaseRange_Player = new NearTarget_Condition(true, transform, chaseRange, target);
         random_GainDistance = new Random_Condition(false, gainDistanceOdds);
         random_TpRandom = new Random_Condition(false, tpRandomOdds);
         random_TpAttack = new Random_Condition(false, tpAtkOdds);
@@ -128,10 +129,10 @@ public class AnubisBoss_BT : BehaviourTree
         randomTp_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { coolDown_TpRandom, random_TpRandom }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Tp_Action, tpToRandom_Action }, "randomTp_sequencer");
 
         // Action Set #3
-        animation_Dash_Action = new Animation_Action(new Behaviour_Condition[] { isNear_Player, isNotChaseRange_Player }, anubis.animator, dashAnimName);
+        animation_Dash_Action = new Animation_Action(new Behaviour_Condition[] { isNear_Player, isNotChaseRange_Player, notAbove_Player }, anubis.animator, dashAnimName);
 
         // Composite (Action Set #3)
-        dash_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { coolDown_Dash }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Dash_Action, animation_Dash_Action, animation_Dash_Action }, "dash_sequencer");
+        dash_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { coolDown_Dash }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Dash_Action, animation_Dash_Action, animation_Dash_Action }, "dash_sequencer", true, 1);
 
         // Action Set #4
         //Doit se déplacer plus vite que le joueur, sinon timer?
@@ -140,7 +141,8 @@ public class AnubisBoss_BT : BehaviourTree
         animation_Melees_Action = new Animation_Action[meleesAnimName.Length];
         for(int i = 0; i < meleesAnimName.Length; i++)
         {
-            animation_Melees_Action[i] = new Animation_Action(null, anubis.animator, meleesAnimName[i]);
+            //                                                                                                      Nombre magique, pas touché
+            animation_Melees_Action[i] = new Animation_Action(null, anubis.animator, meleesAnimName[i], meleesAnimName[i], 0.5f);
         }
         gainDistance_Action = new GainDistance_Action(new Behaviour_Condition[] { random_GainDistance }, anubis.animator, anubis.agent, gainDistance);
 
@@ -150,12 +152,12 @@ public class AnubisBoss_BT : BehaviourTree
         attackNodes.Add(gainDistance_Action);
 
         // Composite (Action Set #4)
-        attack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { isChaseRange_Player }, Behaviour_Composite.CompositeType.Sequence, this, attackNodes.ToArray(), "attack_sequencer");
+        attack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { isChaseRange_Player }, Behaviour_Composite.CompositeType.Sequence, this, attackNodes.ToArray(), "attack_sequencer", true, 1);
 
         // Action Set #5
         
         // Composite (Action Set #5)
-        melee_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { notAbove_Player, isNear_Player }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { dash_sequencer, attack_sequencer }, "melee_sequencer");
+        melee_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { isNear_Player }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { dash_sequencer, attack_sequencer }, "melee_sequencer", false, 1);
 
         // Action Set #6
         tpMeleeAtk_Action = new TpMeleeAttack_Action(null, anubis.animator, anubis.agent, target, tpStopDistance);
