@@ -36,6 +36,7 @@ public class DeathUiManager : MonoBehaviour
 
     public void HideDeathUI()
     {
+
         if (deathPanel == null) return;
         deathPanel.SetActive(false);
         Cursor.lockState = CursorLockMode.None;

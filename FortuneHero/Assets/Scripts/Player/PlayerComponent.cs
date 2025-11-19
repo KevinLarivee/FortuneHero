@@ -5,8 +5,7 @@ public class PlayerComponent : MonoBehaviour
 {
     static PlayerComponent instance;
     public static PlayerComponent Instance { get { return instance; } }
-
-
+    
     [Header("Movement")]
     public float jumpMultiplier = 1f;
     public float gravityMultiplier = 2; //Dans playerComponenet pour le jumpPad ? (modifier la grav. pour faire floter le joueur ?)
@@ -96,6 +95,7 @@ public class PlayerComponent : MonoBehaviour
     }
     public void PlayerDeath()
     {
+        if (!healthComponent.alive) return; // Si déjà mort, on sort
         //jouer animation de mort
         animator.SetTrigger("isDead");
         PausePlayer(true);

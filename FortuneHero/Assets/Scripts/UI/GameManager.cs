@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] GameObject panelDeath;
     [SerializeField] GameObject panelVictory;
-    PlayerComponent player;
 
 
     public bool isInBossFight = false; 
@@ -24,15 +23,15 @@ public class GameManager : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
         if(spawnPoint == null) spawnPoint = transform;
         Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
-        player = PlayerComponent.Instance;
     }
 
     public void OnPlayerDeath()
     {
 
+        Debug.Log("Test");
         panelDeath.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-        player.PausePlayer(true);
+
 
 
     }
@@ -42,7 +41,6 @@ public class GameManager : MonoBehaviour
 
         panelVictory.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-        player.PausePlayer(true);
 
 
     }

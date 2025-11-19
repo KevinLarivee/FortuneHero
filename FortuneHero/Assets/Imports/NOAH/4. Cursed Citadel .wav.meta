@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: f24debf1f7baf974392a3a88d03b1520
+guid: 640583c78cc304749a73eb0bebe4d3a0
 AudioImporter:
   externalObjects: {}
-  serializedVersion: 8
+  serializedVersion: 7
   defaultSettings:
     serializedVersion: 2
     loadType: 0
@@ -21,3 +21,10 @@ AudioImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 275561
+  packageName: Free 6 Dark Fantasy Boss Battle Tracks
+  packageVersion: 1.0
+  assetPath: Assets/6 Boss Battle Tracks/Tracks/4. Cursed Citadel .wav
+  uploadId: 640189
