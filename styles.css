@@ -1,0 +1,441 @@
+/* arabic */
+@font-face {
+  font-family: 'Almarai';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/almarai/v19/tsstApxBaigK_hnnQ1iFo0C3.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+/* latin */
+@font-face {
+  font-family: 'Almarai';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/almarai/v19/tsstApxBaigK_hnnQ12Fow.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* arabic */
+@font-face {
+  font-family: 'Almarai';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://fonts.gstatic.com/s/almarai/v19/tssoApxBaigK_hnnS-agtnqWo572.woff2) format('woff2');
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC, U+102E0-102FB, U+10E60-10E7E, U+10EC2-10EC4, U+10EFC-10EFF, U+1EE00-1EE03, U+1EE05-1EE1F, U+1EE21-1EE22, U+1EE24, U+1EE27, U+1EE29-1EE32, U+1EE34-1EE37, U+1EE39, U+1EE3B, U+1EE42, U+1EE47, U+1EE49, U+1EE4B, U+1EE4D-1EE4F, U+1EE51-1EE52, U+1EE54, U+1EE57, U+1EE59, U+1EE5B, U+1EE5D, U+1EE5F, U+1EE61-1EE62, U+1EE64, U+1EE67-1EE6A, U+1EE6C-1EE72, U+1EE74-1EE77, U+1EE79-1EE7C, U+1EE7E, U+1EE80-1EE89, U+1EE8B-1EE9B, U+1EEA1-1EEA3, U+1EEA5-1EEA9, U+1EEAB-1EEBB, U+1EEF0-1EEF1;
+}
+/* latin */
+@font-face {
+  font-family: 'Almarai';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://fonts.gstatic.com/s/almarai/v19/tssoApxBaigK_hnnS-agtn-Wow.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: italic;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/librebaskerville/v17/kmKhZrc3Hgbbcjq75U4uslyuy4kn0qNcWx8QDP2V.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: italic;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/librebaskerville/v17/kmKhZrc3Hgbbcjq75U4uslyuy4kn0qNcWxEQDA.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/librebaskerville/v17/kmKnZrc3Hgbbcjq75U4uslyuy4kn0qNXaxMICA.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/librebaskerville/v17/kmKnZrc3Hgbbcjq75U4uslyuy4kn0qNZaxM.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://fonts.gstatic.com/s/librebaskerville/v17/kmKiZrc3Hgbbcjq75U4uslyuy4kn0qviTgY5KcCsww.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Libre Baskerville';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://fonts.gstatic.com/s/librebaskerville/v17/kmKiZrc3Hgbbcjq75U4uslyuy4kn0qviTgY3KcA.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* CSS Variables */
+:root {
+  --color-accent: #f5c76b; /* primary warm accent */
+  --color-accent-dark: #d4a850; /* accent (darker) */
+  --color-text-dark: #111111;
+  --color-header-bg: #070D0F;
+  --color-button-bg: #081010;
+  --color-button-text: #f1d48a;
+  --color-button-text-dark: #071013;
+  --color-bg-dark: #1a1a1a;
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-paragraph: #333333;
+  --color-paragraph-dark: #cccccc;
+  --color-link: #66ccff;
+  --color-muted: #999999;
+  --color-divider: #444444;
+  --color-muted-dark: #666666;
+
+  /* Spacing scale */
+  --space-0: 4px;
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 40px;
+  --space-5: 60px;
+  --space-6: 80px;
+
+  /* Radii / Shadows / Transitions / Sizes */
+  --radius: 8px;
+  --radius-lg: 16px;
+  --shadow-soft: 0 8px 18px rgba(0,0,0,0.25);
+  --shadow-lg: 0 12px 30px rgba(0,0,0,0.3);
+  --transition-fast: 180ms;
+
+  /* Buttons */
+  --btn-padding-y: 16px;
+  --btn-padding-x: 42px;
+  --btn-padding-x-sm: 20px;
+  --btn-font-size: 1.05rem;
+  --btn-radius-pill: 48px;
+
+  /* Layout tokens */
+  --logo-max-height: 92px;
+  --hero-min-height: 500px;
+  --min-column-width: 200px;
+
+  /* Typography tokens */
+  --font-family-body: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  --font-family-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --base-font-size: 16px;
+  --line-height-base: 1.8;
+
+  /* Breakpoints (note: custom properties can't be used directly inside media queries broadly yet) */
+  --bp-sm: 768px;
+}
+
+/* Fortune Hero - Main Stylesheet */
+
+/* Reset & Base Styles */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Layout Utilities */
+.container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 var(--space-2);
+}
+
+.page-section {
+  padding: var(--space-5) var(--space-2) !important;
+  width: 100%;
+}
+
+/* Typography */
+h1 {
+  font-size: 4rem;
+  font-weight: 700;
+  margin: 10px 0 20px 0;
+  line-height: 1.05;
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  color: var(--color-text-dark);
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 30px 0;
+}
+
+h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin: 15px 0;
+  color: var(--color-paragraph);
+}
+
+strong {
+  font-weight: 700;
+}
+
+/* Color Themes */
+.light-bold {
+  background-color: var(--color-accent) !important;
+  color: var(--color-text-dark);
+}
+
+.light {
+  background-color: var(--color-white) !important;
+}
+
+.dark {
+  background-color: var(--color-bg-dark) !important;
+  color: var(--color-white);
+}
+
+.dark p {
+  color: var(--color-paragraph-dark);
+}
+
+.dark h1, .dark h2, .dark h4 {
+  color: var(--color-white);
+}
+
+.dark a {
+  color: var(--color-link);
+}
+
+/* Header */
+header {
+  background: var(--color-header-bg) !important;
+  padding: var(--space-3) var(--space-2) !important;
+  display: flex;
+  align-items: center;
+}
+
+header img {
+  max-height: var(--logo-max-height);
+  width: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  align-items: stretch;
+  margin-top: var(--space-3);
+  min-height: var(--hero-min-height);
+}
+
+.hero-text {
+  padding-right: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: var(--radius);
+  object-fit: cover;
+}
+
+/* Buttons */
+.btn, .button-download {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--btn-padding-y) var(--btn-padding-x);
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-weight: 700;
+  font-size: var(--btn-font-size);
+  margin-top: var(--space-3);
+  transition: transform var(--transition-fast) ease, background var(--transition-fast) ease;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+.btn:focus {
+  outline: 3px solid rgba(212,168,80,0.18);
+  outline-offset: 2px;
+}
+
+.btn--primary,
+.button-download {
+  background: var(--color-button-bg);
+  color: var(--color-button-text);
+  border: 4px solid var(--color-accent-dark);
+}
+
+.btn--primary:hover,
+.button-download:hover {
+  background: var(--color-accent-dark);
+  color: var(--color-button-text-dark);
+  transform: translateY(-3px) scale(1.02);
+}
+
+/* Make the download button more compact and pill-shaped */
+.button-download {
+  padding: var(--btn-padding-y) var(--btn-padding-x-sm);
+  border-radius: var(--btn-radius-pill);
+}
+
+/* Video */
+.video-wrapper {
+  width: 100%;
+  margin: var(--space-4) 0 var(--space-6) 0;
+  text-align: center;
+  grid-column: 1 / -1;
+}
+
+video {
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  background: var(--color-black);
+  border-radius: var(--radius);
+  display: block;
+  margin: 0 auto;
+  box-shadow: var(--shadow-lg);
+}
+
+/* About Section */
+.about-content {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: var(--space-5);
+  align-items: flex-start;
+  margin-top: var(--space-4);
+}
+
+.about-title {
+  padding-right: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.about-title h1 {
+  margin: 0;
+}
+
+.about-text {
+  padding-left: 0;
+}
+
+.about-text p {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  margin: 20px 0;
+}
+
+/* Footer */
+/* Reduce footer vertical space for a tighter footer layout */
+footer.page-section {
+  padding: var(--space-3) var(--space-2) !important;
+}
+
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4); /* slightly smaller gap */
+  margin: var(--space-3) 0; /* reduce vertical margin */
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footer-block {
+  flex: 1;
+  min-width: var(--min-column-width);
+}
+
+.footer-block h4 {
+  color: var(--color-accent-dark);
+}
+
+.footer-block p {
+  color: var(--color-muted);
+  font-size: 1rem;
+  margin: 5px 0;
+}
+
+.footer-divider {
+  border-top: 1px solid var(--color-divider);
+  margin: var(--space-3) 0; /* smaller gap above divider */
+  padding-top: var(--space-1); /* less top padding */
+  text-align: center;
+  color: var(--color-muted-dark);
+  font-size: 0.85rem; /* slightly smaller text */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero-text {
+    padding-right: 0;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  .page-section {
+    padding: 50px 20px !important;
+  }
+
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .footer-grid {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  /* Make download button even more compact on small screens */
+  .button-download {
+    padding: var(--btn-padding-y) 16px;
+  }
+}
