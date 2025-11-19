@@ -48,9 +48,6 @@ public class BossComponent : MonoBehaviour
         //    StartCoroutine(Attack());
 
         //timeUntilPatrolTimer += Time.deltaTime; //start le timer 
-
-        //if (timeUntilPatrolTimer >= timeUntilPatrol) //si le timer atteint le max:
-        //{
         //    //Enable le patrol
         //    patrol.isActive = true;
         //    enemyState = EnemyState.Patrol;
@@ -87,8 +84,9 @@ public class BossComponent : MonoBehaviour
         //enemyDrops.SpawnDrops();
 
         //Déclenché fin de niveau!!!!
-        Destroy(gameObject, 5f);
         GameManager.Instance.OnPlayerWin();
+        Debug.Log("death");
+        Destroy(gameObject);
     }
 
     protected void OnCollisionEnter(Collision collision)

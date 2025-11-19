@@ -49,7 +49,7 @@ public class DeathUiManager : MonoBehaviour
             deathPanel.SetActive(false);
 
         // Re-lock le curseur
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         GameManager.Instance.RestartLevel();
     }
 
@@ -58,7 +58,7 @@ public class DeathUiManager : MonoBehaviour
         if (deathPanel != null)
             deathPanel.SetActive(false);
 
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         GameManager.Instance.RestartBoss();
     }
 
@@ -67,7 +67,7 @@ public class DeathUiManager : MonoBehaviour
         if (deathPanel != null)
             deathPanel.SetActive(false);
 
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
         LoadManager.Instance.Load("LobbyScene");
         GameManager.Instance.ReturnToLobby();
     }

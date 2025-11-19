@@ -17,8 +17,6 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        panelDeath.GetComponent<DeathUiManager>();
-        panelVictory.GetComponent<VictoireUI>();
 
         Instance = this;
         //DontDestroyOnLoad(gameObject);
@@ -33,18 +31,15 @@ public class GameManager : MonoBehaviour
         Debug.Log("Test");
         panelDeath.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-
-
-
     }
 
     public void OnPlayerWin()
     {
+        Debug.Log("Test");
         PauseMenu.Instance.SetPauseAllowed(false);
+        PlayerComponent.Instance.PausePlayer(true);
         panelVictory.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
-
-
     }
     public void RestartLevel()
     {
