@@ -31,6 +31,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Test");
         panelDeath.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+        if(!isInBossFight)
+        {
+            PlayerPrefs.GetInt("coins", 0);
+        }
     }
 
     public void OnPlayerWin()
@@ -40,14 +44,17 @@ public class GameManager : MonoBehaviour
         PlayerComponent.Instance.PausePlayer(true);
         panelVictory.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+        PlayerPrefs.GetInt("coins", 0);
     }
     public void RestartLevel()
     {
+        PlayerPrefs.GetInt("coins", 0);
         LoadManager.Instance.Load(loadScene);
     }
 
     public void ReturnToLobby()
     {
+        PlayerPrefs.GetInt("coins", 0);
         LoadManager.Instance.Load("LobbyScene");
     }
 
