@@ -343,8 +343,6 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
                 var go = Instantiate(pf);
                 PoseCard(dealerCardsContainer, go.transform, i, holeCardHidden);
 
-                // si on révèle la hole card (i == 1) : flip 90 -> -90 sur X en local du holder
-                // si on révèle la hole card (i == 1) : flip 90 -> -90 une seule fois
                 if (showDealerHole && i == 1 && !dealerHoleRevealed)
                 {
                     dealerHoleRevealed = true;
@@ -355,27 +353,24 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
 
                     StartCoroutine(AnimateFlip(go.transform, 90f, -90f, dealerFlipDuration));
                 }
-
             }
         }
 
         if (playerHandText != null)
-            playerHandText.text = "Joueur : " + $" ({HandValue(playerCards)})";
+            playerHandText.text = $"Joueur : {HandValueDisplay(playerCards)}";
 
         if (dealerHandText != null)
         {
             if (showDealerHole)
             {
-                // Les deux cartes visibles → afficher la valeur totale
-                dealerHandText.text = $"Croupier : {HandValue(dealerCards)}";
+                dealerHandText.text = $"Croupier : {HandValueDisplay(dealerCards)}";
             }
             else
             {
                 if (dealerCards.Count > 0)
                 {
-                    int visibleCard = dealerCards[0];                      // première carte
-                    int visibleValue = ValueForRank(Rank(visibleCard));    // valeur d’une seule carte
-
+                    int visibleCard = dealerCards[0];
+                    int visibleValue = ValueForRank(Rank(visibleCard));
                     dealerHandText.text = $"Croupier : {visibleValue}";
                 }
                 else
@@ -384,7 +379,6 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
                 }
             }
         }
-
     }
 
 
@@ -768,6 +762,44 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
 
         return total;
     }
+
+    static string HandValueDisplay(List<int> cards)
+    {
+        int totalWithoutAceBonus = 0;
+        int aces = 0;
+
+        foreach (var c in cards)
+        {
+            int r = Rank(c);
+
+            if (r == 0)
+            {
+                totalWithoutAceBonus += 1;   // As compté comme 1
+                aces++;
+            }
+            else if (r >= 10)
+            {
+                totalWithoutAceBonus += 10;  // J,Q,K
+            }
+            else
+            {
+                totalWithoutAceBonus += r + 1; // 2..10
+            }
+        }
+
+        if (aces > 0)
+        {
+            int softTotal = totalWithoutAceBonus + 10; // on transforme un As en 11
+            if (softTotal <= 21)
+            {
+                // ex: A + 5 → "6 ou 16"
+                return $"{totalWithoutAceBonus} ou {softTotal}";
+            }
+        }
+
+        return totalWithoutAceBonus.ToString();
+    }
+
 
     // ======== Prefabs helpers ========
     GameObject GetPrefabForCard(int card)
