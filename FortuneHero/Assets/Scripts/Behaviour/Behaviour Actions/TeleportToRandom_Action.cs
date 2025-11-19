@@ -22,8 +22,8 @@ public class TeleportToRandom_Action : Behaviour_Node
 
     public override void FinishAction(bool result)
     {
-        agent.SetDestination(agent.transform.position);
         agent.enabled = true;
+        agent.SetDestination(agent.transform.position);
         base.FinishAction(result);
     }
 }

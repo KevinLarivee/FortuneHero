@@ -15,7 +15,8 @@ public class AnubisBossComponent : BossComponent
     [SerializeField] float envAtkSpeed = 15f;
     [SerializeField] Transform pyramidTop;
     [SerializeField] Transform exitPoint;
-    [SerializeField] GameObject platforms;
+    //[SerializeField] GameObject platforms;
+    [SerializeField] List<ParticleSystem> platforms;
     [SerializeField] float yThreshold = 10f;
     [SerializeField] float yDefaultValue = 30f;
     [SerializeField] GameObject ground;
@@ -52,12 +53,12 @@ public class AnubisBossComponent : BossComponent
         bufferTimer = bufferCd;
         target = PlayerComponent.Instance.transform;
 
-        List<ParticleSystem> temp = new List<ParticleSystem>();
-        foreach (Transform t in platforms.transform)
-        {
-            temp.Add(t.GetComponent<ParticleSystem>());
-        }
-        envPlatforms = temp.ToArray();
+        //List<ParticleSystem> temp = new List<ParticleSystem>();
+        //foreach (Transform t in platforms.transform)
+        //{
+        //    temp.Add(t.GetComponent<ParticleSystem>());
+        //}
+        //envPlatforms = temp.ToArray();
 
         bt = GetComponent<AnubisBoss_BT>();
     }
@@ -93,8 +94,8 @@ public class AnubisBossComponent : BossComponent
         while (Vector3.Distance(envAtk.transform.position, pyramidTop.position) > 1f)
         {
             //Pas sur
-            if (envAtk == null)
-                yield break;
+            //if (envAtk == null)
+            //    yield break;
             envAtk.transform.position = Vector3.MoveTowards(envAtk.transform.position, pyramidTop.position, envAtkSpeed * Time.deltaTime);
             yield return null;
         }
@@ -109,7 +110,7 @@ public class AnubisBossComponent : BossComponent
 
     private void PlayParticles()
     {
-        foreach (ParticleSystem p in envPlatforms)
+        foreach (ParticleSystem p in /*envPlatforms*/ platforms)
         {
             p.gameObject.SetActive(true);
             p.Play();
@@ -117,7 +118,7 @@ public class AnubisBossComponent : BossComponent
     }
     private void StopParticles(GameObject envAtk)
     {
-        foreach (ParticleSystem p in envPlatforms)
+        foreach (ParticleSystem p in /*envPlatforms*/ platforms)
         {
             p.gameObject.SetActive(false);
             p.Stop();
