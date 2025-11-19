@@ -36,6 +36,11 @@ public class VictoireUI : MonoBehaviour
 
     private void OnReturnToLobby()
     {
+        if (victoirePanel != null)
+            victoirePanel.SetActive(false);
+
+        // Re-lock le curseur
+        Cursor.lockState = CursorLockMode.Locked;
         LoadManager.Instance.Load("LobbyScene");
     }
 }

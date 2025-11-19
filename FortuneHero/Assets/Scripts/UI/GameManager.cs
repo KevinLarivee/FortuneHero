@@ -18,16 +18,18 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         panelDeath.GetComponent<DeathUiManager>();
+        panelVictory.GetComponent<VictoireUI>();
 
         Instance = this;
         //DontDestroyOnLoad(gameObject);
         if(spawnPoint == null) spawnPoint = transform;
         Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnPlayerDeath()
     {
-
+        PauseMenu.Instance.SetPauseAllowed(false);
         Debug.Log("Test");
         panelDeath.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
@@ -38,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     public void OnPlayerWin()
     {
-
+        PauseMenu.Instance.SetPauseAllowed(false);
         panelVictory.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
 

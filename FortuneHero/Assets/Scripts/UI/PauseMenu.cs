@@ -6,8 +6,11 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    static PauseMenu instance;
+    public static PauseMenu Instance { get { return instance; } }
     [SerializeField] GameObject pauseMenuUI; 
     private bool isPaused = false;
+    private bool canPause = true;
     [SerializeField] GameObject panelParametres;
     [SerializeField] GameObject skillMenuUI;
 
@@ -15,11 +18,13 @@ public class PauseMenu : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
         panelParametres.GetComponent<MenuOption>().previous = Retour;
         player = PlayerComponent.Instance;
     }
     public void OnPause(InputAction.CallbackContext context)
     {
+        if (!canPause) return;
         if (context.performed) 
         {
             if (isPaused)
@@ -45,6 +50,11 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         player.PausePlayer(false);
+    }
+
+    public void SetPauseAllowed(bool value)
+    {
+        canPause = value;
     }
 
     public void ReturnToLobby()
