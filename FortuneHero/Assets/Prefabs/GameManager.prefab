@@ -51,8 +51,9 @@ MonoBehaviour:
   PlayerPrefab: {fileID: 6551409111273694015, guid: 3e4ec8f394b04ed4b8c66a3b90cd346e, type: 3}
   spawnPoint: {fileID: 0}
   loadScene: Niveau1
+  loadBoss: Boss1Arena
   panelDeath: {fileID: 4687570630239897800}
-  panelVictory: {fileID: 0}
+  panelVictory: {fileID: 4809727158814005392}
   isInBossFight: 0
 --- !u!114 &5175611476088266235
 MonoBehaviour:
@@ -289,5 +290,10 @@ PrefabInstance:
 --- !u!224 &2513817697009775183 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 682014913847582152, guid: 5d5bdb63732b2ff4182fbe7fd2ab9faa, type: 3}
+  m_PrefabInstance: {fileID: 3140661588717793159}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4809727158814005392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7577951018056726295, guid: 5d5bdb63732b2ff4182fbe7fd2ab9faa, type: 3}
   m_PrefabInstance: {fileID: 3140661588717793159}
   m_PrefabAsset: {fileID: 0}

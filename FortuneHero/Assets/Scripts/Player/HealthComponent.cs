@@ -57,7 +57,8 @@ public class HealthComponent : MonoBehaviour
     }
     public void SetBar(float fraction)
     {
-        bar.fillAmount = fraction;
+        if(bar != null)
+            bar.fillAmount = fraction;
     }
     public void Hit(float dmg, params StatusEffect[] status)
     {

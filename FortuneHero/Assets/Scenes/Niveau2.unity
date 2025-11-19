@@ -16142,6 +16142,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4769977475108798152, guid: df07d9d1fd5fbd548917dce3729ce0e0, type: 3}
+      propertyPath: loadBoss
+      value: Boss2Arena
+      objectReference: {fileID: 0}
+    - target: {fileID: 4769977475108798152, guid: df07d9d1fd5fbd548917dce3729ce0e0, type: 3}
+      propertyPath: loadScene
+      value: Niveau2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4769977475108798152, guid: df07d9d1fd5fbd548917dce3729ce0e0, type: 3}
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 0}

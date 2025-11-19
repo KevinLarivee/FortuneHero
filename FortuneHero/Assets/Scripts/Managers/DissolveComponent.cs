@@ -33,7 +33,6 @@ public class DissolveComponent : MonoBehaviour
     
     public IEnumerator Dissolve(bool reverse = false)
     {
-        Debug.Log(reverse);
         if(materials.Length > 0)
         {
             float rate = reverse ? -dissolveRate : dissolveRate;

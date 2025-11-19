@@ -31,6 +31,7 @@ public class AnubisBoss_BT : BehaviourTree
     [Header("Conditions")]
     [SerializeField] float nearPlayerDistance = 30f;
     [SerializeField] float chaseRange = 5f;
+    [SerializeField] float meleeRange = 3f;
 
     //Odds pour faire chaque nodes (en decimal)
     [Header("Node odds (Decimal")]
@@ -73,6 +74,7 @@ public class AnubisBoss_BT : BehaviourTree
     NearTarget_Condition isNear_Player;
     NearTarget_Condition isChaseRange_Player;
     NearTarget_Condition isNotChaseRange_Player;
+    NearTarget_Condition isAttackRange_Player;
     Random_Condition random_GainDistance;
     Random_Condition random_TpRandom;
     Random_Condition random_TpAttack;
@@ -101,6 +103,7 @@ public class AnubisBoss_BT : BehaviourTree
         isNear_Player = new NearTarget_Condition(false, transform, nearPlayerDistance, target);
         isChaseRange_Player = new NearTarget_Condition(false, transform, chaseRange, target);
         isNotChaseRange_Player = new NearTarget_Condition(true, transform, chaseRange, target);
+        isAttackRange_Player = new NearTarget_Condition(false, transform, meleeRange, target);
         random_GainDistance = new Random_Condition(false, gainDistanceOdds);
         random_TpRandom = new Random_Condition(false, tpRandomOdds);
         random_TpAttack = new Random_Condition(false, tpAtkOdds);
@@ -142,7 +145,7 @@ public class AnubisBoss_BT : BehaviourTree
         for(int i = 0; i < meleesAnimName.Length; i++)
         {
             //                                                                                                      Nombre magique, pas touché
-            animation_Melees_Action[i] = new Animation_Action(null, anubis.animator, meleesAnimName[i], meleesAnimName[i], 0.5f);
+            animation_Melees_Action[i] = new Animation_Action(new Behaviour_Condition[] { isAttackRange_Player }, anubis.animator, meleesAnimName[i], meleesAnimName[i], 0.5f);
         }
         gainDistance_Action = new GainDistance_Action(new Behaviour_Condition[] { random_GainDistance }, anubis.animator, anubis.agent, gainDistance);
 

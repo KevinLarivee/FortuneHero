@@ -15,24 +15,21 @@ public class AnubisBossComponent : BossComponent
     [SerializeField] float envAtkSpeed = 15f;
     [SerializeField] Transform pyramidTop;
     [SerializeField] Transform exitPoint;
-    //[SerializeField] GameObject platforms;
-    [SerializeField] List<ParticleSystem> platforms;
+    [SerializeField] GameObject platforms;
     [SerializeField] float yThreshold = 10f;
     [SerializeField] float yDefaultValue = 30f;
     [SerializeField] GameObject ground;
     [SerializeField] Material quickSand;
-    [SerializeField] string tpMelee;
     [SerializeField] float dashDistance = 5f;
     [SerializeField] float rotationSpeed = 150f;
 
     ParticleSystem[] envPlatforms;
     Transform target;
     DissolveComponent dissolve;
-    AnubisBoss_BT bt;
     GameObject projectile;
+    GameObject envAtk;
 
     public int dmg = 10;
-    int tpCount = 0;
     float bufferCd = 0.2f;
     float bufferTimer = 0;
     bool isStartingDash = false;
@@ -53,14 +50,14 @@ public class AnubisBossComponent : BossComponent
         bufferTimer = bufferCd;
         target = PlayerComponent.Instance.transform;
 
-        //List<ParticleSystem> temp = new List<ParticleSystem>();
-        //foreach (Transform t in platforms.transform)
-        //{
-        //    temp.Add(t.GetComponent<ParticleSystem>());
-        //}
-        //envPlatforms = temp.ToArray();
-
-        bt = GetComponent<AnubisBoss_BT>();
+        List<ParticleSystem> temp = new List<ParticleSystem>();
+        foreach (Transform t in platforms.transform)
+        {
+            t.GetChild(0).gameObject.SetActive(true);
+            temp.Add(t.GetComponentInChildren<ParticleSystem>());
+            t.GetChild(0).gameObject.SetActive(false);
+        }
+        envPlatforms = temp.ToArray();
     }
     void Update()
     {
@@ -84,8 +81,10 @@ public class AnubisBossComponent : BossComponent
     }
     public IEnumerator EnvironmentAttack()
     {
-        Debug.Log("In Coroutine");
-        GameObject envAtk = Instantiate(rangePrefab, exitPoint.position, Quaternion.identity);
+        if(envAtk != null)
+            Destroy(envAtk);
+
+        envAtk = Instantiate(rangePrefab, exitPoint.position, Quaternion.identity);
         //PlayParticles();
         //Changer pour le "mini Boss"
         //yield return new WaitUntil(() => );
@@ -102,7 +101,10 @@ public class AnubisBossComponent : BossComponent
         if (envAtk != null)
         {
             PlayParticles();
-            envAtk.AddComponent<HealthComponent>().onDeath += () => StopParticles(envAtk);
+            HealthComponent temp = envAtk.AddComponent<HealthComponent>();
+            temp.onDeath += StopParticles;
+            temp.maxHp = 30;
+            Destroy(envAtk.GetComponent<BossProjectileMovement>());
         }
         //StopParticles();
         //envAtk.isActivated = false;
@@ -110,20 +112,22 @@ public class AnubisBossComponent : BossComponent
 
     private void PlayParticles()
     {
-        foreach (ParticleSystem p in /*envPlatforms*/ platforms)
+        foreach (ParticleSystem p in envPlatforms)
         {
             p.gameObject.SetActive(true);
             p.Play();
         }
     }
-    private void StopParticles(GameObject envAtk)
+    public void StopParticles()
     {
-        foreach (ParticleSystem p in /*envPlatforms*/ platforms)
+        Debug.Log("Stoped");
+        foreach (ParticleSystem p in envPlatforms)
         {
-            p.gameObject.SetActive(false);
             p.Stop();
+            p.gameObject.SetActive(false);
         }
         Destroy(envAtk);
+        envAtk = null;
     }
 
     public void InstantiateProjectile()
@@ -170,9 +174,7 @@ public class AnubisBossComponent : BossComponent
     }
     public void StartDissolve()
     {
-        if (bt.activeNode is Behaviour_Composite && (bt.activeNode as Behaviour_Composite).compositeInstanceID == tpMelee)
-            tpCount = (tpCount + 1) % 4;
-        if (tpCount != 3)
+        if (TpMeleeAttack_Action.possibleTpPos == null || TpMeleeAttack_Action.possibleTpPos.Count != 0)
             StartCoroutine(dissolve.Dissolve());
         else //Ne va rien faire au pire
             ReverseDissolve();

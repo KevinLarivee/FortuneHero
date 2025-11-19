@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1287191611766510493}
   - component: {fileID: 1748428858258961208}
   - component: {fileID: 6395919280390212385}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lightning
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4962,7 +4962,7 @@ GameObject:
   - component: {fileID: 2215134907852130738}
   - component: {fileID: 8460024468871609458}
   - component: {fileID: 5425050677647802102}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Paralyze
   m_TagString: Untagged
   m_Icon: {fileID: 0}

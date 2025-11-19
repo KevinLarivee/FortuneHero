@@ -16,7 +16,7 @@ public class TpMeleeAttack_Action : Behaviour_Node
     string animName;
     bool gate;
 
-    List<Vector3> possibleTpPos = new();
+    static public List<Vector3> possibleTpPos;
     Vector3 playerPos;
     public TpMeleeAttack_Action(Behaviour_Condition[] conditions, Animator animator, NavMeshAgent agent, Transform target, float offset, string animName = "TpThrust") : base(conditions)
     {
@@ -30,13 +30,13 @@ public class TpMeleeAttack_Action : Behaviour_Node
     public override void ExecuteAction(Behaviour_Composite parent_composite)
     {
         base.ExecuteAction(parent_composite);
-        if (possibleTpPos.Count == 0) //j'ai enlever la condition de s'il est null, pcq je creer la liste dans la def de variable (pcq sa essayait de Clear et Add sur une liste qui existait pas)
+        if (possibleTpPos == null || possibleTpPos.Count == 0)
         {
             SetTpPositions();
         }
-        TpAttack(); //Vu que votre version check la condition avant, on peut juste mettre le premier TpAttack dans le ExecuteAction
         agent.isStopped = true;
         gate = false;
+        TpAttack(); //Vu que votre version check la condition avant, on peut juste mettre le premier TpAttack dans le ExecuteAction
     }
     public override void Tick(float deltaTime)
     {
@@ -65,7 +65,7 @@ public class TpMeleeAttack_Action : Behaviour_Node
 
     private void SetTpPositions()
     {
-        possibleTpPos.Clear();
+        possibleTpPos = new List<Vector3>();
         possibleTpPos.Add(new Vector3(-offset, 0f, 0f)); // [0]
         possibleTpPos.Add(new Vector3(offset, 0f, 0f));  // [1]
         possibleTpPos.Add(new Vector3(0f, 0f, -offset)); // [2]
@@ -74,9 +74,26 @@ public class TpMeleeAttack_Action : Behaviour_Node
     private void TpAttack()
     {
         playerPos = target.position;
-        int randIndex = Random.Range(0, possibleTpPos.Count);
-        Vector3 posOffset = possibleTpPos[randIndex];
-        possibleTpPos.RemoveAt(randIndex);
+        NavMeshQueryFilter filter = new NavMeshQueryFilter();
+        filter.areaMask = 1 << NavMesh.GetAreaFromName("Walkable");
+        filter.agentTypeID = agent.agentTypeID;
+        int randIndex = -1;
+        Vector3 posOffset;
+        do
+        {
+            randIndex = Random.Range(0, possibleTpPos.Count);
+            posOffset = possibleTpPos[randIndex];
+            possibleTpPos.RemoveAt(randIndex);
+
+        } while (possibleTpPos.Count > 0 && !NavMesh.SamplePosition(playerPos + posOffset, out NavMeshHit hit, 2f, NavMesh.AllAreas));
+        
+        if(possibleTpPos.Count == 0)
+        {
+            SetTpPositions();
+            FinishAction(false);
+            return;
+        }
+
 
         animator.SetTrigger(animName);
         //Activate le Shader de tp ?        

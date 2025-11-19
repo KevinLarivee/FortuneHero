@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject PlayerPrefab;
     public Transform spawnPoint;
     [SerializeField] string loadScene = "Niveau1";
+    [SerializeField] string loadBoss = "Boss1Arena";
 
     public static GameManager Instance { get; private set; }
 
@@ -61,6 +62,6 @@ public class GameManager : MonoBehaviour
 
     public void RestartBoss()
     {
-        LoadManager.Instance.Load(loadScene);
+        LoadManager.Instance.Load(loadBoss);
     }
 }
