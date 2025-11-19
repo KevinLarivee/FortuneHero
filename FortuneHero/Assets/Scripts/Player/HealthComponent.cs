@@ -66,9 +66,12 @@ public class HealthComponent : MonoBehaviour
             hp -= dmg;
             onHit?.Invoke();
             SetBar(hp / maxHp);
-            alive = hp > 0;
-            if (!alive)
-                onDeath?.Invoke();
+
+            if (hp <= 0)
+            {
+                onDeath?.Invoke(); 
+                alive = false;    
+            }
         }
     }
     public void ResetHealth()
