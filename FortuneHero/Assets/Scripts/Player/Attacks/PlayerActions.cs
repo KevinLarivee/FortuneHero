@@ -20,7 +20,12 @@ public class PlayerActions : MonoBehaviour
 
     public List<PowerUp> powerUps;
 
-
+    [Header("Audio")]
+    [SerializeField] AudioClip meleeAtkClip;
+    [SerializeField] AudioClip lightningClip;
+    [SerializeField] AudioClip shieldClip;
+    [SerializeField] AudioClip fireballClip;
+    AudioSource audioSource;
 
     //[SerializeField] Collider weaponCollider;
     [SerializeField] GameObject exitPoint;
@@ -65,7 +70,6 @@ public class PlayerActions : MonoBehaviour
     float aoeTimer;
 
 
-
     PlayerOverlayComponent overlay;
     Animator animator;
     HealthComponent health;
@@ -81,6 +85,7 @@ public class PlayerActions : MonoBehaviour
         animator = GetComponent<Animator>();
         overlay = GetComponent<PlayerOverlayComponent>();
         health = GetComponent<HealthComponent>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -139,6 +144,8 @@ public class PlayerActions : MonoBehaviour
         if (ctx.performed && canMeleeAtk)
         {
             animator.SetTrigger("MeleeAttack");
+            audioSource.clip = meleeAtkClip;
+            audioSource.Play();
             //meleeAtkTimer = meleeAtkCd;
             //canMeleeAtk = false;
             //var animState = animator.GetCurrentAnimatorStateInfo(1);
@@ -188,6 +195,8 @@ public class PlayerActions : MonoBehaviour
     public void StartAoeParalyze()
     {
         if (isPaused) return;
+        audioSource.clip = lightningClip;
+        audioSource.Play();
         StartCoroutine(AoeParalyze());
     }
     private IEnumerator AoeParalyze()
@@ -201,7 +210,7 @@ public class PlayerActions : MonoBehaviour
             CheckForEnemies(spawnPos);
             yield return new WaitForSeconds(0.3f);
         }
-
+        audioSource.Stop();
         Destroy(obj);
     }
 
@@ -228,6 +237,8 @@ public class PlayerActions : MonoBehaviour
                 break;
             default:
                 prefab = defaultProjectilePrefab;
+                audioSource.clip = fireballClip;
+                audioSource.Play();
                 break;
         }
 
@@ -246,6 +257,8 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator InvShield()
     {
+        audioSource.clip = shieldClip;
+        audioSource.Play();
         health.isInvincible = true;
         var obj = Instantiate(invShieldPrefab, transform.position, Quaternion.identity);
         obj.transform.parent = transform;

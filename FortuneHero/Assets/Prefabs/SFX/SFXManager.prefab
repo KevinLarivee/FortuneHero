@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1647627275949269878}
   - component: {fileID: 5282164571911794752}
+  - component: {fileID: 1446879211988568994}
   m_Layer: 0
-  m_Name: MusicManager
+  m_Name: SFXManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +44,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: e58ef32046c9dd14cb32dd911de7de12, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: a62b7660b7db87345961c40cf9856d93, type: 3}
+  m_Resource: {fileID: 8300000, guid: a8e5c5ffc154a044d8f90e808680ef3f, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -129,3 +130,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1446879211988568994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7809681139150856127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b45938ca4406334e9acf2b8a9962a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  audioMixer: {fileID: 24100000, guid: e58ef32046c9dd14cb32dd911de7de12, type: 2}

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Drawing;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(CharacterController))]
@@ -16,10 +17,18 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] GameObject lightningVFX;
     [SerializeField] GameObject fireVFX;
 
+    [Header("Audio")]
+    [SerializeField] AudioClip jumpClip;
+    [SerializeField] AudioClip landingClip;
+    [SerializeField] AudioClip dashClip;
+    AudioSource audioSource;
+
+
     CharacterController player;
     Animator animator;
     HealthComponent health;
     PlayerComponent playerInstance;
+  
 
     [SerializeField] LayerMask playerLayer;
     Vector3 jump;
@@ -69,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
     bool doubleJumpStartTimer = false;
     bool doubleJumped = false;
     bool usedJumpPad = false;
+    bool landed = false;
     #endregion
 
     [Header("Speed")]
@@ -99,6 +109,7 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         health = GetComponent<HealthComponent>();
+        audioSource = GetComponent<AudioSource>();
 
         inputAxisController = freelookCam.GetComponent<CinemachineInputAxisController>();
         aimingCamera = aimCam.GetComponent<CinemachineThirdPersonFollow>();
@@ -171,13 +182,15 @@ public class PlayerMovement : MonoBehaviour
                 direction.Normalize();
             direction.y = 0;
         }
-        //else
-        //{
-        //    //gravity = 0;
-        //}
 
         if (IsGrounded())
         {
+            if (!landed)
+            {
+                audioSource.clip = landingClip;
+                audioSource.Play();
+                landed = true;
+            }
             if (jump.y <= -10)
             {
                 if (usedJumpPad)
@@ -198,6 +211,7 @@ public class PlayerMovement : MonoBehaviour
             jump.y += Mathf.Max(gravity * playerInstance.gravityMultiplier * Time.deltaTime, -15);
             coyoteTimeCounter -= Time.deltaTime;
             animator.SetBool("isGrounded", false);
+            landed = false;
         }
 
         //Jump + buffer mechanics
@@ -211,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpBufferCounter = 0f;
                 isKnockedBack = false;
                 animator.SetBool("hasJumped", true);
-                StartCoroutine(StartJumpVFX());
+                StartCoroutine(StartJumpEffects());
             }
             else if (coyoteTimeCounter <= 0f && !doubleJumped)
             {
@@ -219,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpBufferCounter = 0f;
                 doubleJumped = true;
                 doubleJumpStartTimer = true;
-                StartCoroutine(StartJumpVFX());
+                StartCoroutine(StartJumpEffects());
             }
         }
         if (doubleJumpStartTimer)
@@ -375,8 +389,9 @@ public class PlayerMovement : MonoBehaviour
         //yield return new WaitForEndOfFrame();
         jump.y = 0f;
         moveSpeed = maxSpeed * playerInstance.speedMultiplier * playerInstance.dashSpeed;
+        audioSource.clip = dashClip;
+        audioSource.Play();
         yield return new WaitForSeconds(dashTime);
-
         moveSpeed = maxSpeed * playerInstance.speedMultiplier;
         isDashing = false;
         yield return new WaitForSeconds(playerInstance.dashCooldown);
@@ -436,8 +451,10 @@ public class PlayerMovement : MonoBehaviour
         jump = force;
         animator.SetBool("hasJumped", true);
     }
-    public IEnumerator StartJumpVFX()
+    public IEnumerator StartJumpEffects()
     {
+        audioSource.clip = jumpClip;
+        audioSource.Play();
         var gameobject = Instantiate(jumpVFX, transform.position + Vector3.up * 0.5f, Quaternion.Euler(90, 0, 0)); //Object Pool
         yield return new WaitForSeconds(jumpVFXCd);
         Destroy(gameobject);
