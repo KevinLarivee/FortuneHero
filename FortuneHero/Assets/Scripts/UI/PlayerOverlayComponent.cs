@@ -58,6 +58,8 @@ public class PlayerOverlayComponent : MonoBehaviour
     {
         coins += amount;
         coinText.text = "" + coins;
+        PlayerPrefs.SetInt("coins", coins);
+
     }
 
     public void UseShield(float amount)
@@ -68,11 +70,6 @@ public class PlayerOverlayComponent : MonoBehaviour
         shieldBar.fillAmount = currentShield / maxShield;
     }
 
-    
-    
-
-   
-
     public void GainXP(int amount)
     {
         currentXP += amount;
@@ -82,6 +79,8 @@ public class PlayerOverlayComponent : MonoBehaviour
             LevelUp();
         }
         xpBar.fillAmount = (float)currentXP / xpToNextLevel;
+        PlayerPrefs.SetInt("XP", currentXP);
+
     }
 
     void LevelUp()
@@ -89,6 +88,8 @@ public class PlayerOverlayComponent : MonoBehaviour
         level++;
         xpToNextLevel += 50; 
         levelText.text = "Niveau: " + level;
+        PlayerPrefs.SetInt("Level", level);
+
     }
 
     private int RequiredXpForLevel(int level)
