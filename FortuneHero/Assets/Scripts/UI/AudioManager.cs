@@ -8,20 +8,6 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     public AudioMixer audioMixer; // AudioMixer ici
     private float currentVolume = 0f; // volume actuel dependant du son qui est lancer dans la scene
-
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject); // reste entre les scènes
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
     void Start()
     {
         // Récupère le volume au démarrage avec un playerpref pour le garder
