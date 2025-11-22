@@ -4356,6 +4356,18 @@ PrefabInstance:
       propertyPath: tpPoints
       value: 
       objectReference: {fileID: 415724763}
+    - target: {fileID: 1469072344100619827, guid: ae6f80411d9366d449024e2432ee7acf, type: 3}
+      propertyPath: statusEffect
+      value: 
+      objectReference: {fileID: 5837454174333962557, guid: d08dc1ae579f5634589ff2d6bf28d156, type: 3}
+    - target: {fileID: 1469072344100619827, guid: ae6f80411d9366d449024e2432ee7acf, type: 3}
+      propertyPath: weapons.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1469072344100619827, guid: ae6f80411d9366d449024e2432ee7acf, type: 3}
+      propertyPath: 'weapons.Array.data[0]'
+      value: 
+      objectReference: {fileID: 467032908}
     - target: {fileID: 2227412776647764039, guid: ae6f80411d9366d449024e2432ee7acf, type: 3}
       propertyPath: m_Name
       value: Anubis
@@ -5047,6 +5059,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3005125682327090855, guid: f661d8f8f9dc85a41bc5e3ff9cc52076, type: 3}
   m_PrefabInstance: {fileID: 463448700}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &467032908 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1853383090241820055, guid: ae6f80411d9366d449024e2432ee7acf, type: 3}
+  m_PrefabInstance: {fileID: 345963269}
   m_PrefabAsset: {fileID: 0}
 --- !u!43 &554120065
 Mesh:

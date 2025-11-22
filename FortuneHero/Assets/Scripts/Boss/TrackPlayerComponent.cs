@@ -41,14 +41,17 @@ public class TrackPlayerComponent : MonoBehaviour
     [SerializeField] Transform[] weapons;
     [SerializeField] float rangeSizeIncrease = 0.5f;
 
-    void Start()
-    {
-        player = PlayerComponent.Instance;
-        playerHealth = player.GetComponent<HealthComponent>();
-        previousPlayerHealth = playerHealth.hp;
 
+    private void Awake()
+    {
         boss = GetComponent<BossComponent>();
         bossHealth = boss.GetComponent<HealthComponent>();
+        player = PlayerComponent.Instance;
+        playerHealth = player.GetComponent<HealthComponent>();
+    }
+    void Start()
+    {
+        previousPlayerHealth = playerHealth.hp;
 
         boss.rangePrefab.transform.localScale = Vector3.one;
     }
