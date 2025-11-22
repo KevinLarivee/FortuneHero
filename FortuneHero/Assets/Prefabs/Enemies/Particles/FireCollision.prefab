@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2114934740800456221}
   - component: {fileID: 6787008178455296978}
   - component: {fileID: 1134804177895233063}
-  - component: {fileID: 6753992759198000883}
   m_Layer: 4
   m_Name: FireCollision
   m_TagString: Untagged
@@ -115,27 +114,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6753992759198000883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8049974088879247194}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 020f0624cc307a44684e4680cc19067c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DamageCollision
-  damage: 1
-  targetTag: Player
-  statusEffects: 0
-  knockbackForce: 10
-  verticalMultiplier: 0.4
-  burnDamage: 5
-  afterBurnTime: 3
-  paralyzeDamage: 1
-  paralyzeDuration: 0.1
-  freezeDamage: 1
-  freezeMultiplier: 2
-  freezeDuration: 2

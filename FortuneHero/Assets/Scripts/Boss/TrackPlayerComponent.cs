@@ -29,16 +29,16 @@ public class TrackPlayerComponent : MonoBehaviour
     public float yThreshold = 15f;
     public float farThreshold = 15f;
 
-    public float phaseTime = 100f;
-    public StatusEffect statusDrawBack = StatusEffect.None;
-    [HideIf(nameof(statusDrawBack), StatusEffect.None)] public GameObject statusEffectPrefab;
+    public float phaseTime = 50f;
+    public GameObject statusEffect;
 
     float previousPlayerHealth;
 
     [SerializeField] GameObject nearZoneDebuff;
-    [SerializeField] TriggerProjectile[] rangedProjectile;
-    [SerializeField] DamageCollision[] meleeCollision;
+    //[SerializeField] TriggerProjectile[] rangedProjectile;
+    //[SerializeField] DamageCollision[] meleeCollision;
     [SerializeField] string meleeSpeedAnimatorParameter = "meleeSpeed";
+    [SerializeField] Transform[] weapons;
     [SerializeField] float rangeSizeIncrease = 0.5f;
 
     void Start()
@@ -46,11 +46,9 @@ public class TrackPlayerComponent : MonoBehaviour
         player = PlayerComponent.Instance;
         playerHealth = player.GetComponent<HealthComponent>();
         previousPlayerHealth = playerHealth.hp;
-        playerHealth.onHit += OnPlayerHit;
 
         boss = GetComponent<BossComponent>();
         bossHealth = boss.GetComponent<HealthComponent>();
-        bossHealth.onHit += OnBossHit;
 
         boss.rangePrefab.transform.localScale = Vector3.one;
     }
@@ -196,24 +194,24 @@ public class TrackPlayerComponent : MonoBehaviour
     public void BossMeleeMiss(Action drawBack, bool active = true) =>
         PreSetStat("bossMeleeMiss", 1f, drawBack ?? BossMeleeMissDrawBack, active);
     public void BossMeleeBlocked(Action drawBack, bool active = true) =>
-        PreSetStat("bossMeleeBlocked", 1f, drawBack ?? BossMeleeBlockedDrawBack, active);
+        PreSetStat("bossMeleeBlocked", 2f, drawBack ?? BossMeleeBlockedDrawBack, active);
     public void BossMeleeHit(Action drawBack, bool active = true) =>
-        PreSetStat("bossMeleeHit", 1f, drawBack ?? BossMeleeHitDrawBack, active);
+        PreSetStat("bossMeleeHit", 1.5f, drawBack ?? BossMeleeHitDrawBack, active);
 
     public void BossRangeMiss(Action drawBack, bool active = true) =>
         PreSetStat("bossRangeMiss", 1f, drawBack ?? BossRangeMissDrawBack, active);
     public void BossRangeBlocked(Action drawBack, bool active = true) =>
-        PreSetStat("bossRangeBlocked", 1f, drawBack ?? BossRangeBlockedDrawBack, active);
+        PreSetStat("bossRangeBlocked", 2f, drawBack ?? BossRangeBlockedDrawBack, active);
     public void BossRangeHit(Action drawBack, bool active = true) =>
-        PreSetStat("bossRangeHit", 1f, drawBack ?? BossRangeHitDrawBack, active);
+        PreSetStat("bossRangeHit", 1.5f, drawBack ?? BossRangeHitDrawBack, active);
 
 
-    public void PlayerY(Action drawBack, float multiplier = 0.05f, bool active = true) =>
+    public void PlayerY(Action drawBack, float multiplier = 0.5f, bool active = true) =>
         PreSetStat("playerY", multiplier, drawBack ?? PlayerYDrawBack, active);
     public void PlayerFar(Action drawBack, bool active = true) =>
-        PreSetStat("playerFar", 0.05f, drawBack ?? PlayerFarDrawBack, active);
+        PreSetStat("playerFar", 0.25f, drawBack ?? PlayerFarDrawBack, active);
     public void PlayerNear(Action drawBack, bool active = true) =>
-        PreSetStat("playerNear", 0.05f, drawBack ?? PlayerNearDrawBack, active);
+        PreSetStat("playerNear", 0.25f, drawBack ?? PlayerNearDrawBack, active);
 
     public void PlayerHealth(Action drawBack, bool active = true) =>
         PreSetStat("playerHealth", 1f, drawBack ?? PlayerHealthDrawBack, active);
@@ -224,20 +222,9 @@ public class TrackPlayerComponent : MonoBehaviour
     //    PreSetStat("playerDashing", 0.5f, drawBa ?? ck, active);
 
     public void PlayerMeleeDmg(Action drawBack, bool active = true) =>
-        PreSetStat("playerMeleeDmg", 0.2f, drawBack ?? PlayerMeleeDmgDrawBack, active); //dépendrais de maxHp du boss?
+        PreSetStat("playerMeleeDmg", player.rangedAtkDmg / bossHealth.maxHp, drawBack ?? PlayerMeleeDmgDrawBack, active); //dépendrais de maxHp du boss?
     public void PlayerRangeDmg(Action drawBack, bool active = true) =>
         PreSetStat("playerRangeDmg", 0.2f, drawBack ?? PlayerRangeDmgDrawBack, active); //dépendrais de maxHp du boss?
-    #endregion
-
-    #region Functions Utiles
-    void OnPlayerHit()
-    {
-        //Différencier quelles attaques a frappées le joueur?
-    }
-    void OnBossHit()
-    {
-        //Différencier quelles attaques a frappées le boss?
-    }
     #endregion
 
     #region Default DrawBacks
@@ -257,11 +244,11 @@ public class TrackPlayerComponent : MonoBehaviour
     }
     void BossMeleeBlockedDrawBack()
     {
-        //Empêcher le block (Dans boss component)
-        foreach (var melee in meleeCollision)
+        boss.meleeStatus = true;
+        
+        foreach (Transform t in weapons)
         {
-            //melee.statusEffect = statusDrawBack;
-
+            Instantiate(statusEffect, t);
         }
     }
     void BossMeleeHitDrawBack()
@@ -277,7 +264,7 @@ public class TrackPlayerComponent : MonoBehaviour
     }
     void BossRangeBlockedDrawBack()
     {
-        //Empêcher le block (Dans boss component)
+        boss.rangeStatus = true;
     }
     void BossRangeHitDrawBack()
     {

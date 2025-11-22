@@ -22,6 +22,7 @@ public class AnubisBossComponent : BossComponent
     [SerializeField] Material quickSand;
     [SerializeField] float dashDistance = 5f;
     [SerializeField] float rotationSpeed = 150f;
+    [SerializeField] float paralyseTime = 0.5f;
 
     ParticleSystem[] envPlatforms;
     Transform target;
@@ -29,25 +30,27 @@ public class AnubisBossComponent : BossComponent
     GameObject projectile;
     GameObject envAtk;
 
+    PlayerMovement playerM;
+
     public int dmg = 10;
     float bufferCd = 0.2f;
     float bufferTimer = 0;
     bool isStartingDash = false;
 
+    bool rangeMiss = false;
+
     void Start()
     {
         trackPlayer.AllPresets();
-
         trackPlayer.yThreshold = yThreshold;
-
-        //Pour reverse
-        trackPlayer.PlayerY(QuickSand, -0.05f);
+        trackPlayer.PlayerY(QuickSand, -0.05f);//Pour reverse
         trackPlayer.SetStat("playerY", yDefaultValue);
+        trackPlayer.BossRangeMiss(() => rangeMiss = true);
 
         healthComponent = GetComponent<HealthComponent>();
         dissolve = GetComponent<DissolveComponent>();
         healthComponent.onDeath += Death;
-        bufferTimer = bufferCd;
+        bufferTimer = 0;
         target = PlayerComponent.Instance.transform;
 
         List<ParticleSystem> temp = new List<ParticleSystem>();
@@ -58,13 +61,8 @@ public class AnubisBossComponent : BossComponent
             t.GetChild(0).gameObject.SetActive(false);
         }
         envPlatforms = temp.ToArray();
-    }
-    void Update()
-    {
-        if (bufferTimer < bufferCd)
-        {
-            bufferTimer += Time.deltaTime;
-        }
+
+        playerM = PlayerMovement.Instance;
     }
     protected override void Hit()
     {
@@ -144,6 +142,7 @@ public class AnubisBossComponent : BossComponent
     }
     public void RangedExplosion(CSquareEvent colliders)
     {
+        bool isHit = false;
         if (colliders.other.CompareTag("Shield"))
         {
             trackPlayer.IncreaseStat("bossRangeMiss", -1);
@@ -155,14 +154,20 @@ public class AnubisBossComponent : BossComponent
             trackPlayer.IncreaseStat("bossRangeMiss", -1);
             trackPlayer.IncreaseStat("bossRangeHit", 1);
             colliders.other.gameObject.GetComponent<HealthComponent>().Hit(rangeDmg);
+            isHit = true;
         }
-        //Surement plus de code ici
-        Instantiate(explosionPrefab, colliders.self.transform.position, Quaternion.identity);
-        //Rajouter des layers?
-        if (Physics.OverlapSphere(colliders.self.transform.position, 3f, LayerMask.GetMask("Player")).Any(c => c.CompareTag("Player")))
+        if (rangeMiss)
         {
-            PlayerComponent.Instance.GetComponent<HealthComponent>().Hit(rangeDmg);
+            Instantiate(explosionPrefab, colliders.self.transform.position, Quaternion.identity);
+            //Rajouter des layers?
+            if (Physics.OverlapSphere(colliders.self.transform.position, 3f, LayerMask.GetMask("Player")).Any(c => c.CompareTag("Player")))
+            {
+                isHit = true;
+                colliders.other.gameObject.GetComponent<HealthComponent>().Hit(1);
+            }
         }
+        if(isHit && rangeStatus)
+            playerM.ToggleParalyse(paralyseTime);
     }
     public void EnableWeaponCollider()
     {
@@ -235,10 +240,14 @@ public class AnubisBossComponent : BossComponent
 
     void OnTriggerEnter(Collider other)
     {
-        if (bufferTimer >= bufferCd && other.CompareTag("Player"))
+        if (Time.time - bufferTimer >= bufferCd && other.CompareTag("Player"))
         {
             other.gameObject.GetComponent<HealthComponent>().Hit(dmg);
-            bufferTimer = 0;
+            bufferTimer = Time.time;
+        }
+        if (meleeStatus)
+        {
+            playerM.ToggleParalyse(paralyseTime);
         }
     }
 }

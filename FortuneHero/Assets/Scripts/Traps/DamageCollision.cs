@@ -44,8 +44,7 @@ public class DamageCollision : MonoBehaviour
 
         PlayerMovement.Instance.KnockBack(transform.position + knockDir, knockbackForce, verticalMultiplier);
         Debug.Log($"{collision.gameObject.name} touché. Dégats: {damage}");
-
-        if (Physics.Raycast(collision.contacts[0].point, -collision.contacts[0].normal, 1f, 69))
+        if (Physics.Raycast(collision.contacts[0].point, -collision.contacts[0].normal, 1f, LayerMask.GetMask("Default", "Interactable", "Enemy", "EnemyPlatform")))
             RespawnManager.Instance.Respawn();
     }
     //public bool HasEffect(StatusEffect effect)

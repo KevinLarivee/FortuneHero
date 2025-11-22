@@ -9,8 +9,10 @@ public class LavaBossComponent : BossComponent
     [SerializeField] Collider[] hands;
     [SerializeField] GameObject groundSmash;
     [SerializeField] int jumpDmg = 10;
+    [SerializeField] float burnTime = 2f;
 
     FireTrapComponent fireBreath;
+    PlayerMovement playerM;
     //GolemBoss_BT bt;
 
     int currentSlash = 0;
@@ -33,7 +35,10 @@ public class LavaBossComponent : BossComponent
         trackPlayer.yThreshold = lowestY;
 
         trackPlayer.PlayerY(RemovePlatforms);
+
         fireBreath.gameObject.SetActive(false);
+
+        playerM = PlayerMovement.Instance;
     }
 
     void RemovePlatforms()
@@ -69,6 +74,8 @@ public class LavaBossComponent : BossComponent
     {
         GameObject temp = Instantiate(rangePrefab, hand.transform.position, hand.transform.rotation);
         temp.transform.LookAt(PlayerComponent.Instance.transform);
+        if (rangeStatus)
+            Instantiate(trackPlayer.statusEffect, temp.transform);
         trackPlayer.IncreaseStat("bossRangeMiss", 1);
         temp.GetComponent<TriggerProjectile>().onTrigger.AddListener((CSquareEvent c) =>
         {
@@ -82,6 +89,11 @@ public class LavaBossComponent : BossComponent
                 trackPlayer.IncreaseStat("bossRangeMiss", -1);
                 trackPlayer.IncreaseStat("bossRangeHit", 1);
                 c.other.gameObject.GetComponent<HealthComponent>().Hit(rangeDmg);
+            }
+            if (rangeStatus)
+            {
+                playerM.ToggleBurn(true);
+                playerM.AfterBurn(burnTime);
             }
         });
     }
@@ -147,6 +159,12 @@ public class LavaBossComponent : BossComponent
             trackPlayer.IncreaseStat("bossMeleeHit", 1);
             trackPlayer.IncreaseStat("bossMeleeMiss", -1);
             meleeAlreadyHit = true;
+        }
+
+        if (meleeStatus)
+        {
+            playerM.ToggleBurn(true);
+            playerM.AfterBurn(burnTime);
         }
     }
 }

@@ -8,12 +8,12 @@ public class ParticleDamageCollision : MonoBehaviour
     [Header("Paramètres d'attaque")]
     [SerializeField] int damage = 1;
     [SerializeField] string target = "Player";
-    [SerializeField] StatusEffect statusEffect = StatusEffect.Knockback;
+    //[SerializeField] StatusEffect statusEffect = StatusEffect.Knockback;
 
-    [Header("Knockback")]
-    [SerializeField] float knockbackForce = 10f;
-    [SerializeField] float knockbackDuration = 0.25f;
-    [Range(0f, 3f)][SerializeField] float verticalFactor = 1f;
+    //[Header("Knockback")]
+    //[SerializeField] float knockbackForce = 10f;
+    //[SerializeField] float knockbackDuration = 0.25f;
+    //[Range(0f, 3f)][SerializeField] float verticalFactor = 1f;
 
 
     ParticleSystem particle;
@@ -36,11 +36,11 @@ public class ParticleDamageCollision : MonoBehaviour
             //PlayerMovement.Instance.KnockBack(sourcePos, knockbackForce, knockbackDuration, verticalFactor);
             Debug.Log($"{other.name} touché. Dégats: {damage}");
 
-            int numCollisionEvents = particle.GetCollisionEvents(other, collisionEvents);
-            ParticleCollisionEvent collision = collisionEvents[0];
+            //int numCollisionEvents = particle.GetCollisionEvents(other, collisionEvents);
+            //ParticleCollisionEvent collision = collisionEvents[0];
 
-            if (Physics.Raycast(collision.intersection, -collision.normal, 1f, 69))
-                RespawnManager.Instance.Respawn();
+            //if (Physics.Raycast(collision.intersection, -collision.normal, 1f, 69))
+            //    RespawnManager.Instance.Respawn();
 
         }
     }

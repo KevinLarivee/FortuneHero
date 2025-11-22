@@ -8,7 +8,7 @@ public class FireTrapComponent : MonoBehaviour
     [SerializeField] float inactiveTime = 1f;
     [SerializeField] float activeTime = 1f;
     [SerializeField] float activeDistance = 20f;
-    PlayerMovement player;
+    PlayerMovement playerM;
     //FireComponent flame;
     Coroutine fireCycle;
     float distance = 0f;
@@ -42,7 +42,7 @@ public class FireTrapComponent : MonoBehaviour
         effects = GetComponents<ParticleSystem>();
         ignoreTrigger = LayerMask.GetMask("IgnoreTrigger");
         StopFire();
-        player = PlayerMovement.Instance;
+        playerM = PlayerMovement.Instance;
         if(effects != null)
         {
             timeToLive = effects[0].main.startLifetime.constant;
@@ -52,7 +52,7 @@ public class FireTrapComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distance = Vector3.Distance(player.transform.position, transform.position);
+        distance = Vector3.Distance(playerM.transform.position, transform.position);
         if (distance <= activeDistance && fireCycle == null)
         {
             fireCycle = StartCoroutine(FireCycle());
@@ -113,18 +113,18 @@ public class FireTrapComponent : MonoBehaviour
                 playerIsEnter = true;
                 Debug.Log("Start Burn");
                 //Appliquer Effet de feu à la cible
-                PlayerMovement.Instance.ToggleBurn(true);
+                playerM.ToggleBurn(true);
                 if (slowness)
                 {
                     Debug.Log("Start Slowness");
                     //Appliquer l'effet de slowness à la cible
-                    PlayerMovement.Instance.SlowPlayer(slownessValue);
+                    playerM.SlowPlayer(slownessValue);
                 }
                 if (preventDash)
                 {
                     Debug.Log("Start Prevent Dash");
                     //Appliquer l'effet de slowness à la cible
-                    PlayerMovement.Instance.ToggleDash(false);
+                    playerM.ToggleDash(false);
                 }
             }
         }
@@ -152,13 +152,13 @@ public class FireTrapComponent : MonoBehaviour
             {
                 Debug.Log("Stop slowness");
                 //Retirer slowness
-                PlayerMovement.Instance.SpeedUpPlayer(slownessValue);
+                playerM.SpeedUpPlayer(slownessValue);
             }
             if (preventDash)
             {
                 Debug.Log("Stop prevent dash");
                 //Retirer slowness
-                PlayerMovement.Instance.ToggleDash(true);
+                playerM.ToggleDash(true);
             }
             playerIsEnter = false;
         }
@@ -169,10 +169,11 @@ public class FireTrapComponent : MonoBehaviour
         //Pour essayer avec des particles systems
         yield return new WaitForSeconds(0.1f);
         ExitFire();
-        yield return new WaitForSeconds(afterBurnTime);
-        Debug.Log("Stop Burn");
-        //Retirer burning de la target
-        PlayerMovement.Instance.ToggleBurn(false);
+        //yield return new WaitForSeconds(afterBurnTime);
+        //Debug.Log("Stop Burn");
+        ////Retirer burning de la target
+        //playerM.ToggleBurn(false);
+        playerM.AfterBurn(afterBurnTime);
         afterBurn = null;
     }
     public void ShootFireCollision()
@@ -180,6 +181,11 @@ public class FireTrapComponent : MonoBehaviour
         GameObject fireCollision = Instantiate(firePrefab, transform.position, transform.rotation);
         fireCollision.GetComponent<TriggerProjectile>().onTrigger.AddListener(EnterFire);
         fireCollision.GetComponent<TTL>().timeToLive = timeToLive;
+    }
+
+    private void OnDisable()
+    {
+        ExitFire();
     }
     bool ShowDelay => lavaPrefab != null;
 }

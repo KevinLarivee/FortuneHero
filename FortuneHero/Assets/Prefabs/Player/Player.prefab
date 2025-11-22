@@ -251,8 +251,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4199309781050396456}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.019589815, y: 0.97987485, z: 0.15587024, w: -0.12315094}
-  m_LocalPosition: {x: 0.28355825, y: 1.9969715, z: 1.1102747}
+  m_LocalRotation: {x: 0.019638361, y: 0.9798133, z: 0.15625656, w: -0.12314317}
+  m_LocalPosition: {x: 0.7466128, y: 1.3835442, z: 2.923369}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1539,6 +1539,10 @@ PrefabInstance:
     - target: {fileID: 1052733513831382886, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 27.117695
+      objectReference: {fileID: 0}
+    - target: {fileID: 1232701668966020401, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1232701668966020401, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: m_IsActive
@@ -2858,7 +2862,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3288302976710426708, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.715602
+      value: 4.71525
       objectReference: {fileID: 0}
     - target: {fileID: 4280938676662723590, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: Target.TrackingTarget
@@ -2878,19 +2882,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.12315095
+      value: -0.12314318
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.019589817
+      value: 0.019638365
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9798748
+      value: 0.9798133
       objectReference: {fileID: 0}
     - target: {fileID: 5056853679293721066, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.15587024
+      value: 0.15625657
       objectReference: {fileID: 0}
     - target: {fileID: 6856785937392868880, guid: b08980c22e9ee3b4c910056e00dd127d, type: 3}
       propertyPath: m_ControllerManager.Controllers.Array.data[1].InputValue

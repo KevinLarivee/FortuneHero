@@ -11,6 +11,8 @@ public class BossComponent : MonoBehaviour
     public float rangeDefense = 1f;
     public float movementProbability = 0.3f;
     public float meleeProbability = 0.8f;
+    public bool meleeStatus = false;
+    public bool rangeStatus = false;
 
     public int meleeDmg = 1;
     public int rangeDmg = 5;
@@ -89,13 +91,13 @@ public class BossComponent : MonoBehaviour
         Destroy(gameObject);
     }
 
-    protected void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<HealthComponent>().Hit(collisionDmg); //Lier le dmg au dmg de l'enemy
-        }
-    }
+    //protected void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        collision.gameObject.GetComponent<HealthComponent>().Hit(collisionDmg); //Lier le dmg au dmg de l'enemy
+    //    }
+    //}
 
 }
 

@@ -96,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
     float knockBackTimer;
     float burnDmgPerTick = 2f; //Temp ? (envoye par fireComponent potentiellement)
     float burnTimer;
+    int burnCount = 0;
     float paralyseTimer;
     bool canJump = true;
     bool isKnockedBack = false;
@@ -425,7 +426,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!health.isInvincible)
         {
-            playerInstance.isBurning = burning;
+            burnCount += burning ? 1 : -1;
+            playerInstance.isBurning = burnCount > 0;
         }
     }
     public void ToggleParalyse(float paralyseTime)
@@ -464,6 +466,15 @@ public class PlayerMovement : MonoBehaviour
         health.isInvincible = true;
         yield return new WaitForSeconds(duration);
         health.isInvincible = false;
+    }
+    public void AfterBurn(float afterBurnTime) =>
+        StartCoroutine(AfterBurnCR(afterBurnTime));
+    IEnumerator AfterBurnCR(float afterBurnTime)
+    {
+        yield return new WaitForSeconds(afterBurnTime);
+        Debug.Log("Stop Burn");
+        //Retirer burning de la target
+        ToggleBurn(false);
     }
 
     void SnapFreeLookBehindPlayer()
