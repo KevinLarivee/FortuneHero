@@ -14,7 +14,8 @@ public class FadeInOut : MonoBehaviour
         //1f = opaque et 0f= invisible
         //renderer.SetAlpha(0f);
         //gameObject.SetActive(false);
-        StartCoroutine(FadeOut());
+        //StartCoroutine(FadeOut());
+        SetAlpha(0f);
 
     }
     public IEnumerator FadeIn()
@@ -35,12 +36,12 @@ public class FadeInOut : MonoBehaviour
         float alpha = 1f;
         while (alpha > 0f)
         {
-            Debug.Log(alpha);
+            //Debug.Log(alpha);
             alpha = alpha - fadeSpeed * Time.deltaTime;
             SetAlpha(alpha);
             yield return null;
         }
-        Debug.Log("FIN FADE OUT");
+        //Debug.Log("FIN FADE OUT");
 
         gameObject.SetActive(false);
     }

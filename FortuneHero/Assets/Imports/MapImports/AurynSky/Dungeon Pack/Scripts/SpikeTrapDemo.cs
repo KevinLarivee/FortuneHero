@@ -28,7 +28,6 @@ public class SpikeTrapDemo : MonoBehaviour {
 
         spikeTrapAnim.SetTrigger("open");
         //wait 2 seconds;
-        Debug.Log(audioSource);
         yield return new WaitForSeconds(2);
         //play close animation;
         spikeTrapAnim.SetTrigger("close");

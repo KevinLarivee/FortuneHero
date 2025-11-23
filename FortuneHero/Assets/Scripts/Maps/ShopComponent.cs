@@ -130,7 +130,7 @@ public class ShopComponent : MonoBehaviour, IInteractable
         itemImage.texture = power.Image.texture;
         itemName.text = power.Name;
         itemDescription.text = power.Description;
-        if (PlayerComponent.Instance.currentCoins >= power.Price)
+        if (PlayerPrefs.GetInt("coins") >= power.Price)
         {
             canBuy = true;
             itemPrice.text = power.Price.ToString();
@@ -138,7 +138,7 @@ public class ShopComponent : MonoBehaviour, IInteractable
         else
         {
             canBuy = false;
-            itemPrice.text = "Not enough coins";
+            itemPrice.text = "Not enough coins. You need: " + power.Price.ToString() + " coins";
         }
 
     }
@@ -148,7 +148,7 @@ public class ShopComponent : MonoBehaviour, IInteractable
         if(canBuy)
         {
             Destroy(obj);
-            PlayerComponent.Instance.GetXpAndCoins(0, -power.Price);
+            PlayerComponent.Instance.UpdateCoins(-power.Price);
             selector.GainPowerUp(power);
         }
     }

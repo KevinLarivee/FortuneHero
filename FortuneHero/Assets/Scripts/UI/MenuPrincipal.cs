@@ -18,6 +18,7 @@ public class MenuPrincipal : MonoBehaviour
 
     public void Jouer()
     {
+        PlayerPrefs.SetInt("coins", 0);
         LoadManager.Instance.Load("LobbyScene");
     }
 

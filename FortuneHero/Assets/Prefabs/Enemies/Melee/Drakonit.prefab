@@ -1553,7 +1553,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeEnemyComponent
   dmg: 5
-  collisionDmg: 2
+  collisionDmg: 0
   paralyzePrefab: {fileID: 1479063743343128894}
   isParalyzed: 0
   moveSpeed: 5

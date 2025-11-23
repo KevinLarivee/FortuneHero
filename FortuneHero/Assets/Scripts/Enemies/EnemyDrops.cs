@@ -17,19 +17,6 @@ public class EnemyDrops : MonoBehaviour
     [SerializeField] float spread = 1.5f;
     [SerializeField] float heightOffset = 0.5f;
 
-  
-
-
-
-    private void Start()
-    {
-       
-    }
-
-    void Update()
-    {
-
-    }
     //public void SpawnDrops()
     //{
     //    int count = XpCount + CoinsCount; 
