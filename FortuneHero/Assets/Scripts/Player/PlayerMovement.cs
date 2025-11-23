@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Drawing;
 using Unity.Cinemachine;
+using Unity.InferenceEngine;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.InputSystem;
@@ -30,7 +31,8 @@ public class PlayerMovement : MonoBehaviour
     PlayerComponent playerInstance;
   
 
-    [SerializeField] LayerMask playerLayer;
+    [SerializeField] LayerMask groundLayers;
+    LayerMask currentGroundLayer;
     Vector3 jump;
     Vector3 knockBackDirection;
     Vector2 move;
@@ -188,8 +190,11 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!landed)
             {
-                audioSource.clip = landingClip;
-                audioSource.Play();
+                //audioSource.clip = landingClip;
+                //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup;
+                //audioSource.Play();
+                SFXManager.Instance.PlaySFX(landingClip, transform, PlayerComponent.Instance.SFXGroup);
+
                 landed = true;
             }
             if (jump.y <= -10)
@@ -279,8 +284,9 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 origin = transform.position + Vector3.up * 0.5f;
 
-        if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 0.2f, playerLayer))
+        if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 0.2f, groundLayers))
         {
+            currentGroundLayer = hit.transform.gameObject.layer;
             return true;
         }
         return false;
@@ -390,8 +396,11 @@ public class PlayerMovement : MonoBehaviour
         //yield return new WaitForEndOfFrame();
         jump.y = 0f;
         moveSpeed = maxSpeed * playerInstance.speedMultiplier * playerInstance.dashSpeed;
-        audioSource.clip = dashClip;
-        audioSource.Play();
+        //audioSource.clip = dashClip;
+        //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup_Louder;
+        //audioSource.Play();
+        SFXManager.Instance.PlaySFX(dashClip, transform, PlayerComponent.Instance.SFXGroup_Louder);
+
         yield return new WaitForSeconds(dashTime);
         moveSpeed = maxSpeed * playerInstance.speedMultiplier;
         isDashing = false;
@@ -455,8 +464,11 @@ public class PlayerMovement : MonoBehaviour
     }
     public IEnumerator StartJumpEffects()
     {
-        audioSource.clip = jumpClip;
-        audioSource.Play();
+        //audioSource.clip = jumpClip;
+        //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup;
+        //audioSource.Play();
+        SFXManager.Instance.PlaySFX(jumpClip, transform, PlayerComponent.Instance.SFXGroup);
+
         var gameobject = Instantiate(jumpVFX, transform.position + Vector3.up * 0.5f, Quaternion.Euler(90, 0, 0)); //Object Pool
         yield return new WaitForSeconds(jumpVFXCd);
         Destroy(gameobject);

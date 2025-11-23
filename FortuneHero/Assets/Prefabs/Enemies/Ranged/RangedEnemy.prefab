@@ -655,7 +655,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangedEnemyComponent
   dmg: 1
-  collisionDmg: 3
+  collisionDmg: 0
   paralyzePrefab: {fileID: 3066136394147834298}
   isParalyzed: 0
   moveSpeed: 5

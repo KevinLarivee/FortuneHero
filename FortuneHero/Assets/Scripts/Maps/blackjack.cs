@@ -417,8 +417,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         }
 
         // Débite la mise
-        coins -= currentBet;
-        PlayerPrefs.SetInt("coins", coins);
+        PlayerComponent.Instance.UpdateCoins(-currentBet);
         UpdateBalanceText();
 
         // Init manche
@@ -642,11 +641,11 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         if (btnStand != null) btnStand.interactable = false;
         if (btnDeal != null) btnDeal.interactable = true;
 
-        int coins = PlayerPrefs.GetInt("coins");
+        int coinGain = 0;
 
         if (isPush)
         {
-            coins += currentBet;
+            coinGain = currentBet;
             if (resultText != null) resultText.text = "Égalité. Mise remboursée.";
         }
         else if (playerWon)
@@ -654,13 +653,13 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
             if (isBlackjackNatural)
             {
                 int win = Mathf.RoundToInt(currentBet * 2.5f);
-                coins += win;
+                coinGain = win;
                 if (resultText != null) resultText.text = $"Blackjack ! 2.5x votre mise! +{win}";
             }
             else
             {
                 int win = currentBet * 2;
-                coins += win;
+                coinGain = win;
                 if (resultText != null) resultText.text = $"Gagné ! +{win}";
             }
         }
@@ -669,7 +668,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
             if (resultText != null) resultText.text = "Perdu.";
         }
 
-        PlayerPrefs.SetInt("coins", coins);
+        PlayerComponent.Instance.UpdateCoins(coinGain);
         UpdateBalanceText();
     }
 

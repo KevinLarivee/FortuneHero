@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class PlayerOverlayComponent : MonoBehaviour
 {
-    [SerializeField]  Image shieldBar;
+    [SerializeField] Image shieldBar;
     [SerializeField] float maxShield = 10;
     private float currentShield;
     [SerializeField] Image xpBar;
@@ -38,20 +38,20 @@ public class PlayerOverlayComponent : MonoBehaviour
 
     void Update()
     {
-        int newLevel = PlayerPrefs.GetInt("Level", level);
-        int newXP = PlayerPrefs.GetInt("XP", currentXP);
-        int newCoins = PlayerPrefs.GetInt("coins", coins);
+        //int newLevel = PlayerPrefs.GetInt("Level", level);
+        //int newXP = PlayerPrefs.GetInt("XP", currentXP);
+        //int newCoins = PlayerPrefs.GetInt("coins", coins);
 
-        if (newLevel != level || newXP != currentXP || newCoins != coins)
-        {
-            level = newLevel;
-            currentXP = newXP;
-            coins = newCoins;
+        //if (newLevel != level || newXP != currentXP || newCoins != coins)
+        //{
+        //    level = newLevel;
+        //    currentXP = newXP;
+        //    coins = newCoins;
 
-            levelText.text = "Niveau: " + level;
-            coinText.text = "" + coins;
-            xpBar.fillAmount = (float)currentXP / RequiredXpForLevel(level);
-        }
+        //    levelText.text = "Niveau: " + level;
+        //    coinText.text = "" + coins;
+        //    xpBar.fillAmount = (float)currentXP / RequiredXpForLevel(level);
+        //}
     }
 
     public void AddCoins(int amount)
@@ -59,14 +59,12 @@ public class PlayerOverlayComponent : MonoBehaviour
         coins += amount;
         coinText.text = "" + coins;
         PlayerPrefs.SetInt("coins", coins);
-
+        Debug.Log(PlayerPrefs.GetInt("coins"));
     }
 
     public void UseShield(float amount)
     {
         currentShield = amount;
-        
-
         shieldBar.fillAmount = currentShield / maxShield;
     }
 

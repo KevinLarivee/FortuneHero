@@ -1,11 +1,17 @@
-using UnityEngine;
+using System.Transactions;
 using Unity.Cinemachine;
+using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayerComponent : MonoBehaviour
 {
     static PlayerComponent instance;
     public static PlayerComponent Instance { get { return instance; } }
-    
+
+    [Header("Audio Groups")]
+    public AudioMixerGroup SFXGroup;
+    public AudioMixerGroup SFXGroup_Louder;
+
     [Header("Movement")]
     public float jumpMultiplier = 1f;
     public float gravityMultiplier = 2; //Dans playerComponenet pour le jumpPad ? (modifier la grav. pour faire floter le joueur ?)
@@ -19,8 +25,8 @@ public class PlayerComponent : MonoBehaviour
     public bool isBurning = false;
 
     [Header("Player status")]
-    public int currentCoins = 0;
-    public int currentXp = 0;
+    //public int currentCoins = 0;
+    //public int currentXp = 0;
     public int currentLevel = 0;
     public int xpRequirement = 100;
 
@@ -60,14 +66,18 @@ public class PlayerComponent : MonoBehaviour
 
         float saved = PlayerPrefs.GetFloat(MouseSensativity.PrefKey, 1f);
         ApplySensitivity(saved);
+
+        //currentCoins = PlayerPrefs.GetInt("coins");
+        //currentXp = PlayerPrefs.GetInt("XP");
     }
 
-    public void GetXpAndCoins(int xpGain, int coinGain) //Mettre valeur negative pour perdre coins ou xp, pour get un des deux, mettre l'autre a 0
+    public void UpdateCoins(int coinGain)
     {
-        currentXp += xpGain;
-        currentCoins += coinGain;
         playerOverlay.AddCoins(coinGain);
-        //Faire autre logique: sound effects, Ui updates (?), etc.
+    }
+    public void UpdateXP(int xpGain)
+    {
+       playerOverlay.GainXP(xpGain);
     }
     public void PausePlayer(bool paused)
     {
@@ -102,7 +112,6 @@ public class PlayerComponent : MonoBehaviour
         //Afficher lecran de mort
         GameManager.Instance.OnPlayerDeath();
         //particle effect ou autre ??
-        //Comment on veut reset les stats et tt. (boss stats, coins, currenthp, etc.)
     }
     private void OnDestroy()
     {

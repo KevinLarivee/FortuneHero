@@ -293,8 +293,9 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
         isSpinning = true;
         resultText.text = "Spin en cours...";
 
-        coins -= currentBet;
-        PlayerPrefs.SetInt("coins", coins);
+        //coins -= currentBet;
+        //PlayerPrefs.SetInt("coins", coins);
+        PlayerComponent.Instance.UpdateCoins(-currentBet);
         UpdateBalanceText();
 
         Symbol s1 = RandomSymbol();
@@ -328,8 +329,9 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
                 case Symbol.Sept: mult = 20; break;
             }
             int gain = currentBet * mult;
-            coins += gain;
-            PlayerPrefs.SetInt("coins", coins);
+            //coins += gain;
+            //PlayerPrefs.SetInt("coins", coins);
+            PlayerComponent.Instance.UpdateCoins(gain);
             resultText.text = $"GAGNÉ {gain} COINS!";
         }
         else

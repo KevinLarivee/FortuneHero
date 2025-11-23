@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7333730174496039093}
   - component: {fileID: 3461929684902478665}
   - component: {fileID: 93940685882000858}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: JumpPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 4776122664119478348}
   - component: {fileID: 99492033381526940}
   - component: {fileID: 2951564790200731411}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: JumpadVrai (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,13 +248,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2691613754781486165}
     m_Modifications:
+    - target: {fileID: 151920881395052490, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1531768878563115421, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2843229867266135104, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3220440682565326704, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3377181292992421420, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: m_Name
       value: Magic circle 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3377181292992421420, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
+      propertyPath: m_Layer
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3377181292992421420, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
       propertyPath: m_IsActive
@@ -304,6 +320,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8598798586939600705, guid: 48c5715f9603c3842a353516a8baefbb, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -322,6 +342,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2691613754781486165}
     m_Modifications:
+    - target: {fileID: 3421342357796937106, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5861865862258548446, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6096757213908423747, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -370,9 +398,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7432514348511525154, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7827560633128401882, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8014496765054662584, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8018772970214966197, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8974203713140315807, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
       propertyPath: m_Name
       value: PlashJumpad
+      objectReference: {fileID: 0}
+    - target: {fileID: 8974203713140315807, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
+      propertyPath: m_Layer
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8974203713140315807, guid: 10c64b32137286147b46d3cb721f4b46, type: 3}
       propertyPath: m_IsActive

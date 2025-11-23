@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2375612345401155320}
   - component: {fileID: 944131864028948178}
   - component: {fileID: 123730342924596971}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Exp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4866,6 +4866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a17647afa83b049b776dd49a61ee31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::XpOrb
-  amount: 5
+  type: 0
+  xpPerOrb: 5
+  coinsPerOrb: 10
   attractRadius: 4
   moveSpeed: 6

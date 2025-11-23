@@ -1649,6 +1649,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5170577574725540656}
     - target: {fileID: 5201706343988872358, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: SFXGroup
+      value: 
+      objectReference: {fileID: 2754299548873818701, guid: e58ef32046c9dd14cb32dd911de7de12, type: 2}
+    - target: {fileID: 5201706343988872358, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: SFXGroup_Louder
+      value: 
+      objectReference: {fileID: 6249870059031340914, guid: e58ef32046c9dd14cb32dd911de7de12, type: 2}
+    - target: {fileID: 5201706343988872358, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: inputController
       value: 
       objectReference: {fileID: 212614361492900741}
@@ -1662,7 +1670,7 @@ PrefabInstance:
       objectReference: {fileID: 7887299915373100978}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: meleeAtkCd
-      value: 0
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: shieldClip
@@ -1840,6 +1848,10 @@ PrefabInstance:
       propertyPath: landingClip
       value: 
       objectReference: {fileID: 8300000, guid: 3a39a1a9dc78e5f47a24b9de9f5a0258, type: 3}
+    - target: {fileID: 8964794528452801434, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: groundLayers.m_Bits
+      value: 641
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1849,7 +1861,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 274636264266613328}
+      addedObject: {fileID: 7752178857977108554}
     - targetCorrespondingSourceObject: {fileID: 4139259780649103951, guid: 0283053334043de45b20b0876511552a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4366416510931192982}
@@ -1865,7 +1877,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5348063350356945621, guid: 0283053334043de45b20b0876511552a, type: 3}
   m_PrefabInstance: {fileID: 5148080969612856965}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &274636264266613328
+--- !u!82 &7752178857977108554
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1877,14 +1889,14 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
-  m_PlayOnAwake: 0
-  m_Volume: 0.338
+  m_PlayOnAwake: 1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 153
+  Priority: 128
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -1922,7 +1934,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0.5
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0

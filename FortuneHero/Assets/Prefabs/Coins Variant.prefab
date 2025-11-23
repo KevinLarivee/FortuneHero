@@ -16,6 +16,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Coins Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 720135145037961379, guid: 5714829a3d11d394c8f7dba269972167, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3002810503943988136, guid: 5714829a3d11d394c8f7dba269972167, type: 3}
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0

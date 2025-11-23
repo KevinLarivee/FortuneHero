@@ -119,12 +119,12 @@ public class PlayerActions : MonoBehaviour
         }
 
         //Attacks
-        //if (!canMeleeAtk)
-        //{
-        //    meleeAtkTimer -= Time.deltaTime;
-        //    if (meleeAtkTimer <= 0f)
-        //        canMeleeAtk = true;
-        //}
+        if (!canMeleeAtk)
+        {
+            meleeAtkTimer -= Time.deltaTime;
+            if (meleeAtkTimer <= 0f)
+                canMeleeAtk = true;
+        }
         if (!canRangedAtk)
         {
             rangedAtkTimer -= Time.deltaTime;
@@ -144,8 +144,13 @@ public class PlayerActions : MonoBehaviour
         if (ctx.performed && canMeleeAtk)
         {
             animator.SetTrigger("MeleeAttack");
-            audioSource.clip = meleeAtkClip;
-            audioSource.Play();
+            //audioSource.clip = meleeAtkClip;
+            //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup_Louder;
+            //audioSource.Play();
+            SFXManager.Instance.PlaySFX(meleeAtkClip, transform, PlayerComponent.Instance.SFXGroup_Louder);
+            meleeAtkTimer = meleeAtkCd;
+            canMeleeAtk = false;
+
             //meleeAtkTimer = meleeAtkCd;
             //canMeleeAtk = false;
             //var animState = animator.GetCurrentAnimatorStateInfo(1);
@@ -196,7 +201,10 @@ public class PlayerActions : MonoBehaviour
     {
         if (isPaused) return;
         audioSource.clip = lightningClip;
+        audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup;
         audioSource.Play();
+        //SFXManager.Instance.PlaySFX(lightningClip, transform, PlayerComponent.Instance.SFXGroup);
+
         StartCoroutine(AoeParalyze());
     }
     private IEnumerator AoeParalyze()
@@ -237,8 +245,10 @@ public class PlayerActions : MonoBehaviour
                 break;
             default:
                 prefab = defaultProjectilePrefab;
-                audioSource.clip = fireballClip;
-                audioSource.Play();
+                //audioSource.clip = fireballClip;
+                //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup_Louder;
+                //audioSource.Play();
+                SFXManager.Instance.PlaySFX(fireballClip, transform, PlayerComponent.Instance.SFXGroup_Louder);
                 break;
         }
 
@@ -257,8 +267,10 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator InvShield()
     {
-        audioSource.clip = shieldClip;
-        audioSource.Play();
+        //audioSource.clip = shieldClip;
+        //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup;
+        //audioSource.Play();
+        SFXManager.Instance.PlaySFX(shieldClip, transform, PlayerComponent.Instance.SFXGroup);
         health.isInvincible = true;
         var obj = Instantiate(invShieldPrefab, transform.position, Quaternion.identity);
         obj.transform.parent = transform;
