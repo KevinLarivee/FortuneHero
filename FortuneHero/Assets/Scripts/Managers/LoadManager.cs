@@ -42,6 +42,7 @@ public class LoadManager : MonoBehaviour
             instance = this;
         fadeManager = GetComponentInChildren<FadeInOut>();
         DontDestroyOnLoad(gameObject);
+        
     }
     public void Load(params string[] scenesToLoad)
     {
@@ -50,6 +51,7 @@ public class LoadManager : MonoBehaviour
 
     IEnumerator LoadScene(params string[] scenesToLoad)
     {
+        Time.timeScale = 1f;
         yield return StartCoroutine(fadeManager.FadeIn());
         StartCoroutine(LoadingAnimation());
         AsyncOperation[] asyncOps = new AsyncOperation[scenesToLoad.Length];

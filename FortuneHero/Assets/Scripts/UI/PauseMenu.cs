@@ -8,11 +8,12 @@ public class PauseMenu : MonoBehaviour
 {
     static PauseMenu instance;
     public static PauseMenu Instance { get { return instance; } }
-    [SerializeField] GameObject pauseMenuUI; 
-    private bool isPaused = false;
-    private bool canPause = true;
+    [SerializeField] GameObject pauseMenuUI;
     [SerializeField] GameObject panelParametres;
     [SerializeField] GameObject skillMenuUI;
+    bool isPaused = false;
+    bool canPause = true;
+    float currentTimeScale;
 
     PlayerComponent player;
 
@@ -37,6 +38,7 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame(string input = "")
     {
         (input == "f" ? skillMenuUI : pauseMenuUI).SetActive(true); 
+        currentTimeScale = Time.timeScale;
         Time.timeScale = 0f;         
         isPaused = true;
         Cursor.lockState = CursorLockMode.None;
@@ -46,7 +48,7 @@ public class PauseMenu : MonoBehaviour
     public void ResumeGame(string input = "")
     {
         (input == "f" ? skillMenuUI : pauseMenuUI).SetActive(false); 
-        Time.timeScale = 1f;         
+        Time.timeScale = currentTimeScale;         
         isPaused = false;
         Cursor.lockState = CursorLockMode.Locked;
         player.PausePlayer(false);

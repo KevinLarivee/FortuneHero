@@ -1,22 +1,34 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class ProjectileCollision : MonoBehaviour
 {
     [SerializeField] GameObject iceBallExplosionPrefab;
+    [SerializeField] float heightOffset = 2;
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Boss"))
         {
             var enemyHealthComponent = other.GetComponentInParent<HealthComponent>();
 
-            if (PlayerActions.Instance.currentType == ProjectileType.IceBall)
+            if (PlayerActions.Instance.currentType == ProjectileType.IceBall) //si iceball
             {
                 var iceExplosionObj = Instantiate(iceBallExplosionPrefab, other.gameObject.transform.position, Quaternion.identity);
                 iceExplosionObj.transform.parent = other.transform;
-                var enemyComponent = other.gameObject.GetComponentInParent<EnemyComponent>();
-                enemyComponent.StartCoroutine(enemyComponent.HitByIceBall(PlayerActions.Instance.speedDrop, PlayerActions.Instance.slowDuration, iceExplosionObj));
+                iceExplosionObj.transform.position = new Vector3(iceExplosionObj.transform.position.x, iceExplosionObj.transform.position.y + heightOffset, iceExplosionObj.transform.position.z);
+                if (other.CompareTag("Boss"))
+                {
+                    var bossComponent = other.GetComponent<BossComponent>();
+                    bossComponent.StartHitByIceBall(PlayerActions.Instance.speedDrop, PlayerActions.Instance.slowDuration, iceExplosionObj);
+                }
+                else
+                {
+                    var enemyComponent = other.gameObject.GetComponentInParent<EnemyComponent>();
+                    enemyComponent.StartCoroutine(enemyComponent.HitByIceBall(PlayerActions.Instance.speedDrop, PlayerActions.Instance.slowDuration, iceExplosionObj));
+                }
             }
+
             enemyHealthComponent.Hit(PlayerComponent.Instance.rangedAtkDmg);
             TrackPlayerComponent tracker;
             if ((tracker = other.gameObject.GetComponent<TrackPlayerComponent>()) != null)

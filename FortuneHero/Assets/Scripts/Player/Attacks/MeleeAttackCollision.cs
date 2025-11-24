@@ -10,7 +10,7 @@ public class MeleeAttackCollision : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Boss"))
         {
             var enemyHealthComponent = other.GetComponentInParent<HealthComponent>();
             enemyHealthComponent.Hit(PlayerComponent.Instance.meleeAtkDmg);

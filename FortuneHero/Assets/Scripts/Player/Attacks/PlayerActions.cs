@@ -144,10 +144,7 @@ public class PlayerActions : MonoBehaviour
         if (ctx.performed && canMeleeAtk)
         {
             animator.SetTrigger("MeleeAttack");
-            //audioSource.clip = meleeAtkClip;
-            //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup_Louder;
-            //audioSource.Play();
-            SFXManager.Instance.PlaySFX(meleeAtkClip, transform, PlayerComponent.Instance.SFXGroup_Louder);
+            //SFXManager.Instance.PlaySFX(meleeAtkClip, transform, PlayerComponent.Instance.SFXGroup_Louder);----------------------------------------------------------
             meleeAtkTimer = meleeAtkCd;
             canMeleeAtk = false;
 
@@ -226,7 +223,15 @@ public class PlayerActions : MonoBehaviour
     {
         Collider[] colliders = Physics.OverlapSphere(new Vector3(spawnPos.x, spawnPos.y + 1.6f, spawnPos.z), 4, layersAffectedByAoe);
         foreach (Collider collider in colliders)
-            collider.GetComponentInParent<EnemyComponent>().ToggleParalyze(paralyzeDuration);
+        {
+            if (collider.CompareTag("Boss"))
+            {
+                collider.GetComponent<BossComponent>().StartParalyzeBoss(paralyzeDuration);
+            }
+            else
+                collider.GetComponentInParent<EnemyComponent>().ToggleParalyze(paralyzeDuration);
+
+        }
     }
 
     public void SetToIceBall(bool trueOrFalse)
@@ -245,10 +250,7 @@ public class PlayerActions : MonoBehaviour
                 break;
             default:
                 prefab = defaultProjectilePrefab;
-                //audioSource.clip = fireballClip;
-                //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup_Louder;
-                //audioSource.Play();
-                SFXManager.Instance.PlaySFX(fireballClip, transform, PlayerComponent.Instance.SFXGroup_Louder);
+                //SFXManager.Instance.PlaySFX(fireballClip, transform, PlayerComponent.Instance.SFXGroup_Louder);-------------------------------------------------
                 break;
         }
 
@@ -267,10 +269,7 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator InvShield()
     {
-        //audioSource.clip = shieldClip;
-        //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup;
-        //audioSource.Play();
-        SFXManager.Instance.PlaySFX(shieldClip, transform, PlayerComponent.Instance.SFXGroup);
+        //SFXManager.Instance.PlaySFX(shieldClip, transform, PlayerComponent.Instance.SFXGroup);-----------------------------------------------
         health.isInvincible = true;
         var obj = Instantiate(invShieldPrefab, transform.position, Quaternion.identity);
         obj.transform.parent = transform;

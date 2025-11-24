@@ -7,6 +7,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(HealthComponent), typeof(BehaviourTree), typeof(TrackPlayerComponent))]
 public class BossComponent : MonoBehaviour
 {
+    [SerializeField] string bossName;
     public float meleeDefense = 1f;
     public float rangeDefense = 1f;
     public float movementProbability = 0.3f;
@@ -24,6 +25,8 @@ public class BossComponent : MonoBehaviour
     [SerializeField] int debuffsPerPhase = 2;
     protected int currentPhase = 0;
     public GameObject rangePrefab;
+    [SerializeField] GameObject paralyzePrefab;
+
 
     [HideInInspector] public Animator animator;
     [HideInInspector] public NavMeshAgent agent;
@@ -67,6 +70,55 @@ public class BossComponent : MonoBehaviour
 
     //    yield return new WaitForSeconds(attackCd);
     //}
+    public void StartParalyzeBoss(float duration)
+    {
+        StartCoroutine(ParalyzeBoss(duration));
+    }
+    public void StartHitByIceBall(float speedChange, float slowDuration, GameObject explosionObj)
+    {
+        StartCoroutine(HitByIceBall(speedChange, slowDuration, explosionObj));
+    }
+    private IEnumerator ParalyzeBoss(float duration) //OPTI ??
+    {
+        agent.isStopped = true;
+        animator.enabled = false;
+        paralyzePrefab.SetActive(true);
+        GolemBoss_BT golemComponent = null;
+        AnubisBoss_BT anubisComponent = null;
+        switch (bossName)
+        {
+            case "Golem":
+                golemComponent = GetComponent<GolemBoss_BT>();
+                golemComponent.enabled = false;
+                break;
+            case "Anubis":
+                anubisComponent = GetComponent<AnubisBoss_BT>();
+                anubisComponent.enabled = false;
+                break;
+        }
+
+        yield return new WaitForSeconds(duration);
+        switch (bossName)
+        {
+            case "Golem":
+                golemComponent.enabled = true;
+                break;
+            case "Anubis":
+                anubisComponent.enabled = true;
+                break;
+        }
+        agent.isStopped = false;
+        animator.enabled = true;
+
+        paralyzePrefab.SetActive(false);
+    }
+    public IEnumerator HitByIceBall(float speedChange, float slowDuration, GameObject explosionObj)
+    {
+        agent.speed -= speedChange;
+        yield return new WaitForSeconds(slowDuration);
+        agent.speed += speedChange;
+        Destroy(explosionObj);
+    }
 
     protected virtual void Hit()
     {

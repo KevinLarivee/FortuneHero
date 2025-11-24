@@ -597,7 +597,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba0824bf1660ce4b81b19f172a2c9f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDrops
-  drops: []
+  drops:
+  - ObjectToDrop: {fileID: 1039937051871170706, guid: 312ce025dd3510b489aae70feeb36bb1, type: 3}
+    dropSize: 2
+  - ObjectToDrop: {fileID: 720135145037961379, guid: 5714829a3d11d394c8f7dba269972167, type: 3}
+    dropSize: 2
   spread: 1.5
   heightOffset: 0.5
 --- !u!114 &3261382843962084088
@@ -630,7 +634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyingEnemyComponent
   dmg: 10
-  collisionDmg: 0
+  collisionDmg: 5
   paralyzePrefab: {fileID: 2670731201899531281}
   isParalyzed: 0
   moveSpeed: 5

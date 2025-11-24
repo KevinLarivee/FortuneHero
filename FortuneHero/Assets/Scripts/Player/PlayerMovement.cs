@@ -190,10 +190,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!landed)
             {
-                //audioSource.clip = landingClip;
-                //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup;
-                //audioSource.Play();
-                SFXManager.Instance.PlaySFX(landingClip, transform, PlayerComponent.Instance.SFXGroup);
+                //SFXManager.Instance.PlaySFX(landingClip, transform, PlayerComponent.Instance.SFXGroup); ----------------------------------------------
 
                 landed = true;
             }
@@ -396,10 +393,7 @@ public class PlayerMovement : MonoBehaviour
         //yield return new WaitForEndOfFrame();
         jump.y = 0f;
         moveSpeed = maxSpeed * playerInstance.speedMultiplier * playerInstance.dashSpeed;
-        //audioSource.clip = dashClip;
-        //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup_Louder;
-        //audioSource.Play();
-        SFXManager.Instance.PlaySFX(dashClip, transform, PlayerComponent.Instance.SFXGroup_Louder);
+        //SFXManager.Instance.PlaySFX(dashClip, transform, PlayerComponent.Instance.SFXGroup_Louder);--------------------------------------------
 
         yield return new WaitForSeconds(dashTime);
         moveSpeed = maxSpeed * playerInstance.speedMultiplier;
@@ -464,10 +458,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public IEnumerator StartJumpEffects()
     {
-        //audioSource.clip = jumpClip;
-        //audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup;
-        //audioSource.Play();
-        SFXManager.Instance.PlaySFX(jumpClip, transform, PlayerComponent.Instance.SFXGroup);
+        //SFXManager.Instance.PlaySFX(jumpClip, transform, PlayerComponent.Instance.SFXGroup);-------------------------------------------------------------
 
         var gameobject = Instantiate(jumpVFX, transform.position + Vector3.up * 0.5f, Quaternion.Euler(90, 0, 0)); //Object Pool
         yield return new WaitForSeconds(jumpVFXCd);

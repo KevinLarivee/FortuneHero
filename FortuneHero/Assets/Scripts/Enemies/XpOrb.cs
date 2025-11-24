@@ -63,7 +63,7 @@ public class XpOrb : MonoBehaviour
             //Debug.Log($"Niveau {level} avec {xp} XP (next: {RequiredXpForLevel(level)})");
         }
 
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 
     private static int RequiredXpForLevel(int level)
