@@ -54,7 +54,7 @@ public class PatrolComponent : MonoBehaviour
         if(isActive && !isWaiting /*&& !enemy.isParalyzed a voir si nessecaire*/)
         {
             if(targets.Length > 0)
-            move(targets[currentTarget]);
+                move(targets[currentTarget]);
         }
     }
     public Transform NextTarget()

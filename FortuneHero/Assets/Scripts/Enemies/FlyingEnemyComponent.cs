@@ -23,9 +23,11 @@ public class FlyingEnemyComponent : EnemyComponent
 
         //Utilise pas NavMesh, donc doit gerer la rotation 
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
-        Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
+        if(posToTarget != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
         //D�j� dans base
         //if (posToTarget.sqrMagnitude <= stoppingDistance * stoppingDistance)
         //    newTarget = patrol.NextTarget();
@@ -38,8 +40,11 @@ public class FlyingEnemyComponent : EnemyComponent
         Vector3 posToTarget = target - transform.position;
         transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
         //Envoie un message dans la console si posToTarget est 0...
-        Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        if (posToTarget != Vector3.zero)
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(posToTarget);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        }
 
         base.ChasingMove();
     }
