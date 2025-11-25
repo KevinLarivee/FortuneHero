@@ -524,6 +524,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadManager
   loadingTime: 1
+  panelLoad: {fileID: 1819830762}
   icon1: {fileID: 1890738009}
   icon2: {fileID: 245014064}
   icon3: {fileID: 1597927844}

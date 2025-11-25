@@ -42,7 +42,6 @@ public class LoadManager : MonoBehaviour
             instance = this;
         fadeManager = GetComponentInChildren<FadeInOut>();
         DontDestroyOnLoad(gameObject);
-        
     }
     public void Load(params string[] scenesToLoad)
     {

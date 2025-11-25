@@ -16,6 +16,7 @@ public class FadeInOut : MonoBehaviour
         //gameObject.SetActive(false);
         //StartCoroutine(FadeOut());
         SetAlpha(0f);
+        gameObject.SetActive(false);
 
     }
     public IEnumerator FadeIn()
