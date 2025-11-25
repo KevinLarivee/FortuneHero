@@ -49,8 +49,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 63
   activeDistance: 50
-  fovHorizontal: 90
-  fovVertical: 40
+  maxAngle: 300
   viewDistance: 20
   rayCountHorizontal: 10
   rayCountVertical: 10

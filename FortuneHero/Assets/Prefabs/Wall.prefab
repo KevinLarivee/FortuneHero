@@ -278,7 +278,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -338,9 +338,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df84964e098879b4c951545d1a345260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingSpikeWall
-  speed: 1
+  speed: 1.5
   syncTime: 8
-  extendDistance: 3
+  extendDistance: 6
   isActive: 1
 --- !u!65 &2986415099365618610
 BoxCollider:
@@ -668,7 +668,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -959,7 +959,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1250,7 +1250,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1541,7 +1541,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -1832,7 +1832,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2123,7 +2123,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2414,7 +2414,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2687,7 +2687,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 5979
+  m_VersionIndex: 5988
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2807,13 +2807,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageCollision
   damage: 1
   targetTag: Player
-  statusEffect: 0
+  statusEffects: 0
   knockbackForce: 10
-  knockbackDuration: 0.25
-  verticalFactor: 1
-  squishMask:
-    serializedVersion: 2
-    m_Bits: 0
+  verticalMultiplier: 0.4
+  burnDamage: 5
+  afterBurnTime: 3
+  paralyzeDamage: 1
+  paralyzeDuration: 0.1
+  freezeDamage: 1
+  freezeMultiplier: 2
+  freezeDuration: 2
 --- !u!54 &569448484501335084
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3119,7 +3122,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -3410,7 +3413,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3032
+  m_VersionIndex: 3041
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []

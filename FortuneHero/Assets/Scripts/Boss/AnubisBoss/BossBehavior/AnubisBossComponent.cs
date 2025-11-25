@@ -8,6 +8,7 @@ using UnityEngine;
 public class AnubisBossComponent : BossComponent
 {
     [Header("Anubis Boss Specific")]
+    [SerializeField] AudioClip rangeChargeSFX;
     [SerializeField] Collider weaponCollider;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject explosionPrefab;
@@ -135,6 +136,7 @@ public class AnubisBossComponent : BossComponent
 
     public void InstantiateProjectile()
     {
+        SFXManager.Instance.PlaySFX(rangeChargeSFX, transform, PlayerComponent.Instance.SFXGroup);
         projectile = Instantiate(projectilePrefab, exitPoint.position, Quaternion.Euler(90, transform.rotation.y, transform.rotation.z));
         projectile.GetComponent<BossProjectileMovement>().onTrigger.AddListener(RangedExplosion);
         projectile.transform.parent = weaponCollider.gameObject.transform;

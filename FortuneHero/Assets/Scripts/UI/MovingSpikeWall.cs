@@ -65,7 +65,7 @@ public class MovingSpikeWall : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Player"))
             extending = false;
-        else if (collision.contacts.Any(c => c.thisCollider == spikes))
+        else if (script != null && collision.contacts.Any(c => c.thisCollider == spikes)) //deuxieme condition tt le temps true ??
             script.Damage(collision);
     }
 

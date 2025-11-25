@@ -55,7 +55,7 @@ public class LavaBossComponent : BossComponent
 
     public void FireBreathStart()
     {
-        SFXManager.Instance.PlaySFX(fireBreathSFX, transform, PlayerComponent.Instance.SFXGroup);
+        //SFXManager.Instance.PlaySFX(fireBreathSFX, transform, PlayerComponent.Instance.SFXGroup);
         fireBreath.gameObject.SetActive(true);
     }
     public void FireBreathStop()

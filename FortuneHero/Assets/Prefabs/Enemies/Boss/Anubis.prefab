@@ -735,8 +735,8 @@ MonoBehaviour:
   meleeProbability: 0.8
   meleeStatus: 0
   rangeStatus: 0
-  meleeDmg: 1
-  rangeDmg: 5
+  meleeDmg: 5
+  rangeDmg: 15
   collisionDmg: 0
   moveSpeed: 5
   attackStopDistance: 3
@@ -750,6 +750,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   agent: {fileID: 0}
   trackPlayer: {fileID: 0}
+  rangeChargeSFX: {fileID: 8300000, guid: 5a96944c07dc0234bb570bf3e38da760, type: 3}
   weaponCollider: {fileID: 8715552731622049047}
   projectilePrefab: {fileID: 2183248266996118486, guid: b11fe0cbf57f47c48ad489ad902dc34b, type: 3}
   explosionPrefab: {fileID: 8974203713140315807, guid: a47e7f9aff2fadc45b79d330d5c554c2, type: 3}
@@ -758,12 +759,10 @@ MonoBehaviour:
   pyramidTop: {fileID: 0}
   exitPoint: {fileID: 3418210675735554232}
   platforms: {fileID: 0}
-  yThreshold: 10
-  yDefaultValue: 30
+  yDefaultValue: 200
   ground:
   - {fileID: 0}
   - {fileID: 0}
-  quickSand: {fileID: 2100000, guid: 0770c8f589b609546b94800d4e5026f4, type: 2}
   dashDistance: 10
   rotationSpeed: 150
   paralyseTime: 0.5
@@ -836,6 +835,7 @@ MonoBehaviour:
   farThreshold: 15
   phaseTime: 50
   statusEffect: {fileID: 5837454174333962557, guid: d08dc1ae579f5634589ff2d6bf28d156, type: 3}
+  nearZoneSFX: {fileID: 0}
   nearZoneDebuff: {fileID: 0}
   meleeSpeedAnimatorParameter: meleeSpeed
   weapons:
