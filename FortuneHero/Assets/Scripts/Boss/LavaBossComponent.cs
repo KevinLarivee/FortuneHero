@@ -49,6 +49,7 @@ public class LavaBossComponent : BossComponent
 
     void RemovePlatforms()
     {
+        playerM.transform.parent = null;
         platforms.SetActive(false);
     }
 

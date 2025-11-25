@@ -51,14 +51,20 @@ public class DetectorComponent : MonoBehaviour
             if (angleToTarget > maxAngle / 2)
                 return;
 
-            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, viewDistance))
+            if (Physics.Raycast(transform.position, directionToTarget, out RaycastHit hit, viewDistance, mask))
             {
                 if (!hit.collider.CompareTag(target))
+                {
+                    Debug.DrawLine(origin, hit.point, Color.red); // rien touché
                     return;
+                }
             }
             else
+            {
+                Debug.DrawRay(origin, directionToTarget * viewDistance, Color.red); // rien touché
                 return;
-
+            }
+            Debug.DrawLine(origin, hit.point, Color.green); // touche la cible
             transform.LookAt(hit.transform);
             targetDetected(hit.transform.position);
 

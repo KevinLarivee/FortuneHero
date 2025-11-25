@@ -81,6 +81,9 @@ public class PlayerComponent : MonoBehaviour
     }
     public void PausePlayer(bool paused)
     {
+        if (!healthComponent.alive)
+            paused = true;
+
         playerM.isPaused = paused;
         playerA.isPaused = paused;
         playerI.isPaused = paused;
