@@ -63,6 +63,7 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         LoadManager.Instance.Load("LobbyScene");
+        pauseMenuUI.SetActive(false);
     }
 
     public void Options()
