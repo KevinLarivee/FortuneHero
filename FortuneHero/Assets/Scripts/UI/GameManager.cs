@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject panelVictory;
 
 
-    public bool isInBossFight = false; 
+    public bool isInBossFight = false;
+    int initialCoins = 0;
 
     void Awake()
     {
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
         if(spawnPoint == null) spawnPoint = transform;
         Instantiate(PlayerPrefab, spawnPoint.position, spawnPoint.rotation);
         Cursor.lockState = CursorLockMode.Locked;
+        initialCoins = PlayerPrefs.GetInt("coins");
     }
 
     public void OnPlayerDeath()
@@ -62,6 +64,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartBoss()
     {
+        PlayerPrefs.SetInt("coins", initialCoins);
         LoadManager.Instance.Load(loadBoss);
     }
 }

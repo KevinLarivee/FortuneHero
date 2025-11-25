@@ -64,7 +64,10 @@ public class DoorComponent : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if(canEnter)
+        if (canEnter)
+        {
             LoadManager.Instance.Load(sceneToLoad);
+            canEnter = false;
+        }
     }
 }
