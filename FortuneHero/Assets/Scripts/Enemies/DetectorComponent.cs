@@ -2,23 +2,13 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-//https://youtu.be/CSeUMTaNFYk?si=iJySCe-ZcVHSxKwn
-
 public class DetectorComponent : MonoBehaviour
 {
     [SerializeField] string target = "Player";
     [SerializeField] LayerMask mask;
     [SerializeField] float activeDistance = 50f;
-
-    //[SerializeField] float fovHorizontal = 90f;
-    //[SerializeField] float fovVertical = 90f;
-    [SerializeField] float maxAngle = 90f;
+    [SerializeField] float maxAngle = 200f;
     [SerializeField] float viewDistance = 20f;
-    [SerializeField] int rayCountHorizontal = 10;
-    [SerializeField] int rayCountVertical = 10;
-
-    float angleIncreaseH;
-    float angleIncreaseV;
 
     PlayerMovement player;
 

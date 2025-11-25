@@ -4,6 +4,7 @@ public class WorldCrosshairController : MonoBehaviour
 {
     [SerializeField] RectTransform crosshairUI;
     [SerializeField] Camera aimCamera;
+    [SerializeField] Transform dirTarget;
     [SerializeField] float maxDistance = 20f;
     [SerializeField] float crossHairOffsetMultiplier = 0.01f;
     [SerializeField] LayerMask raycastMask = ~0;
@@ -19,6 +20,9 @@ public class WorldCrosshairController : MonoBehaviour
     {
         Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
         Ray ray = aimCamera.ScreenPointToRay(screenCenter);
+
+        //À vérifier
+        ray.origin = aimCamera.transform.position + aimCamera.transform.forward * Vector3.Distance(aimCamera.transform.position, dirTarget.position);
 
         Vector3 targetPos;
         if(Physics.Raycast(ray, out RaycastHit hit, maxDistance, raycastMask))

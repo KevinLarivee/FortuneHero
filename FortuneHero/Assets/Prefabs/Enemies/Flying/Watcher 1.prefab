@@ -540,6 +540,7 @@ GameObject:
   - component: {fileID: 3261382843962084088}
   - component: {fileID: 4730124545735067552}
   - component: {fileID: 7535734103015417398}
+  - component: {fileID: 591673178188501905}
   m_Layer: 8
   m_Name: Watcher 1
   m_TagString: Enemy
@@ -634,7 +635,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlyingEnemyComponent
   dmg: 10
-  collisionDmg: 5
   paralyzePrefab: {fileID: 2670731201899531281}
   isParalyzed: 0
   moveSpeed: 5
@@ -670,6 +670,30 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &591673178188501905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4583572862365802054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 020f0624cc307a44684e4680cc19067c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageCollision
+  damage: 10
+  targetTag: Player
+  statusEffects: 8
+  knockbackForce: 3
+  verticalMultiplier: 0.2
+  burnDamage: 5
+  afterBurnTime: 3
+  paralyzeDamage: 1
+  paralyzeDuration: 0.1
+  freezeDamage: 1
+  freezeMultiplier: 2
+  freezeDuration: 2
 --- !u!1 &5128064828395088716
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,12 +810,10 @@ MonoBehaviour:
   target: Player
   mask:
     serializedVersion: 2
-    m_Bits: 63
+    m_Bits: 601
   activeDistance: 50
   maxAngle: 300
   viewDistance: 20
-  rayCountHorizontal: 10
-  rayCountVertical: 10
 --- !u!1 &5760682570275573614
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
-[RequireComponent(typeof(EnemyDrops), typeof(HealthComponent))]
+[RequireComponent(typeof(EnemyDrops), typeof(HealthComponent), typeof(DamageCollision))]
 public class EnemyComponent : MonoBehaviour, IPoolable
 {
     protected enum EnemyState { Patrol, Attacking, Chasing }
@@ -12,7 +12,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
     public ObjectPoolComponent Pool { get; set; }
 
     public int dmg = 10;
-    public int collisionDmg = 5;
+    //public int collisionDmg = 5;
 
     [SerializeField] GameObject paralyzePrefab;
     public bool isParalyzed = false;
@@ -147,7 +147,7 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
             if (!IsInAttackDistance())
                 enemyState = EnemyState.Chasing;
-
+            Debug.Log(enemyState);
             isAttacking = false;
             animator.SetBool("isAttacking", isAttacking);
 
@@ -250,13 +250,13 @@ public class EnemyComponent : MonoBehaviour, IPoolable
 
 
 
-    protected void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            collision.gameObject.GetComponent<HealthComponent>().Hit(collisionDmg);
-        }
-    }
+    //protected void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Player"))
+    //    {
+    //        collision.gameObject.GetComponent<HealthComponent>().Hit(collisionDmg);
+    //    }
+    //}
 
     protected void OnTriggerEnter(Collider other)
     {

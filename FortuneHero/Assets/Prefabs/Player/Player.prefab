@@ -651,6 +651,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WorldCrosshairController
   crosshairUI: {fileID: 2035551786354705453}
   aimCamera: {fileID: 7887299915373100978}
+  dirTarget: {fileID: 2372103120546118006}
   maxDistance: 20
   crossHairOffsetMultiplier: 0.01
   raycastMask:
