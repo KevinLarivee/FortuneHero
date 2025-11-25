@@ -21,7 +21,7 @@ public class XpOrb : MonoBehaviour
     public float moveSpeed = 6f;
 
     private Transform target;
-
+    
     void Update()
     {
         if (target == null)
@@ -51,22 +51,23 @@ public class XpOrb : MonoBehaviour
         {
             SFXManager.Instance.PlaySFX(XpPickUpSFX, transform, PlayerComponent.Instance.SFXGroup);
             PlayerComponent.Instance.UpdateXP(xpPerOrb);
-            //int level = Mathf.Max(1, PlayerPrefs.GetInt("Level", 1)); 
-            //int xp = Mathf.Max(0, PlayerPrefs.GetInt("XP", 0));  
-            //int skillUp = PlayerPrefs.GetInt("Skill", 0);
+            int level = Mathf.Max(1, PlayerPrefs.GetInt("Level", 1));
+            int xp = Mathf.Max(0, PlayerPrefs.GetInt("XP", 0));
+            int skillUp = PlayerPrefs.GetInt("Skill", 0);
 
-            //xp += Mathf.Max(0, xpPerOrb); 
-            //while (xp >= RequiredXpForLevel(level))
-            //{
-            //    xp -= RequiredXpForLevel(level);
-            //    level++;
-            //    PlayerPrefs.SetInt("Skill", skillUp + 1); // Indicateur de montée de niveau
-            //}
+            xp += Mathf.Max(0, xpPerOrb);
+            while (xp >= RequiredXpForLevel(level))
+            {
+                xp -= RequiredXpForLevel(level);
+                level++;
+                PlayerPrefs.SetInt("Skill", skillUp + 1); // Indicateur de montée de niveau
+            }
 
-            //PlayerPrefs.SetInt("Level", level);
-            //PlayerPrefs.SetInt("XP", xp);
-            //PlayerPrefs.Save();
-            //Debug.Log($"Niveau {level} avec {xp} XP (next: {RequiredXpForLevel(level)})");
+            PlayerPrefs.SetInt("Level", level);
+            PlayerPrefs.SetInt("XP", xp);
+            PlayerPrefs.Save();
+            Debug.Log($"Niveau {level} avec {xp} XP (next: {RequiredXpForLevel(level)})");
+            Debug.Log($"{PlayerPrefs.GetInt("Skill", 0)}");
         }
 
         Destroy(gameObject);

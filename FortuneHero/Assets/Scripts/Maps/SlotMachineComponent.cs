@@ -70,6 +70,10 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
     private int weightBAR = 25;
     private int weightSept = 15;
     private int totalWeight;
+    private GameObject rootObj;
+    private GameObject wizardBodyObj;
+
+
 
     private bool isSpinning = false;
 
@@ -78,6 +82,17 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
         // Récupère le CinemachineBrain sur la caméra principale (Camera.main)
         //if (Camera.main != null)
         brain = PlayerComponent.Instance.transform.root.GetComponentInChildren<CinemachineBrain>();
+        var wizardTransform = PlayerComponent.Instance.transform;
+
+        var rootChild = wizardTransform.Find("root");
+        if (rootChild != null)
+            rootObj = rootChild.gameObject;
+
+        var bodyChild = wizardTransform.Find("WizardBody");
+        if (bodyChild != null)
+            wizardBodyObj = bodyChild.gameObject;
+
+
 
         // Assure des priorités connues au démarrage
         if (mainVcam != null) mainVcam.Priority = mainPriority;
@@ -180,9 +195,15 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
         UpdateBetText();
         UpdateBalanceText();
         resultText.text = "";
+        if (rootObj != null)
+            rootObj.SetActive(false);
+        if (wizardBodyObj != null)
+            wizardBodyObj.SetActive(false);
+
 
         // Gel du jeu visuel, mais on laisse le script Player lire l’input (pour Interact)wd
         Time.timeScale = 0f;
+
         //PlayerComponent.Instance.PausePlayer(true);
         Cursor.lockState = CursorLockMode.None;
     }
@@ -192,11 +213,16 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
         // Dé-gel et fermeture
         Time.timeScale = 1f;
         Cursor.lockState = CursorLockMode.Locked;
+        
 
         panelSlot.SetActive(false);
         if(panelPlayer != null)
             panelPlayer.SetActive(true);
         resultText.text = "";
+        if (rootObj != null)
+            rootObj.SetActive(true);
+        if (wizardBodyObj != null)
+            wizardBodyObj.SetActive(true);
 
         // Stop attente d’ouverture si en cours
         pendingOpen = false;

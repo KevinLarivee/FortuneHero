@@ -73,29 +73,29 @@ public class Skill : MonoBehaviour
     private void RefreshUI()
     {
         // Points restants
-        skillPointsText.text = $" {skillComponent.skillPoints}";
+        skillPointsText.text = $" {PlayerPrefs.GetInt("Skill", 0)}";
 
         // --- Melee ---
         attackUsedText.text = $"{GetBuys(SkillComponent.SkillType.MeleeAtkPlus)}";
         attackValueText.text = $"ATK+: {skillComponent.meleeAtkBonus:F1}";
 
-       defenseUsedText.text = $"Utilisés: {GetBuys(SkillComponent.SkillType.ShieldBlockTime)}";
+       defenseUsedText.text = $"{GetBuys(SkillComponent.SkillType.ShieldBlockTime)}";
         defenseValueText.text = $"Durée blocage: {skillComponent.shieldBlockTimeBonus:F1}s";
 
         // --- HP ---
-        hpUsedText.text = $"Utilisés: {GetBuys(SkillComponent.SkillType.MaxHealthPlus)}";
+        hpUsedText.text = $"{GetBuys(SkillComponent.SkillType.MaxHealthPlus)}";
         hpValueText.text = $"HP+: {skillComponent.maxHealthBonus}";
 
         // --- Dash ---
-        dashUsedText.text = $"Utilisés: {GetBuys(SkillComponent.SkillType.DashCooldownMinus)}";
+        dashUsedText.text = $"{GetBuys(SkillComponent.SkillType.DashCooldownMinus)}";
         dashValueText.text = $"CD dash-: {skillComponent.dashCooldownReduction:F1}s";
 
         // --- Speed ---
-        speedUsedText.text = $"Utilisés: {GetBuys(SkillComponent.SkillType.SpeedPlus)}";
+        speedUsedText.text = $"{GetBuys(SkillComponent.SkillType.SpeedPlus)}";
         speedValueText.text = $"Vitesse+: {skillComponent.speedBonus:F1}";
 
         // --- Distance ---
-        distanceUsedText.text = $"Utilisés: {GetBuys(SkillComponent.SkillType.RangeAtkPlus)}";
+        distanceUsedText.text = $"{GetBuys(SkillComponent.SkillType.RangeAtkPlus)}";
         distanceValueText.text = $"ATK Dist+: {skillComponent.rangeAtkBonus:F1}";
     }
 
