@@ -180,7 +180,7 @@ public class FireTrapComponent : MonoBehaviour
     }
     public void ShootFireCollision()
     {
-        GameObject fireCollision = Instantiate(firePrefab, transform.position, transform.rotation);
+        GameObject fireCollision = Instantiate(firePrefab, transform.position + transform.forward, transform.rotation);
         fireCollision.GetComponent<TriggerProjectile>().onTrigger.AddListener(EnterFire);
         fireCollision.GetComponent<TTL>().timeToLive = timeToLive;
     }
