@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8535573163927740907}
   - component: {fileID: 4590848696907759227}
   - component: {fileID: 5869708228092255540}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: CircleSparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4916,7 +4916,7 @@ GameObject:
   - component: {fileID: 234000725457640201}
   - component: {fileID: 725172144973210357}
   - component: {fileID: 5896098865019900707}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: OuterRingDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9852,7 +9852,7 @@ GameObject:
   - component: {fileID: 1916285507677800406}
   - component: {fileID: 2834299951644564829}
   - component: {fileID: 6228754741259953536}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14903,7 +14903,7 @@ GameObject:
   - component: {fileID: 5690984616062000078}
   - component: {fileID: 7248927859906055410}
   - component: {fileID: 8162723222745611400}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Sides
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14919,7 +14919,7 @@ Transform:
   m_GameObject: {fileID: 8842270730491027044}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.124, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19671,7 +19671,7 @@ ParticleSystemRenderer:
   m_SmallMeshCulling: 1
   m_ForceMeshLod: -1
   m_MeshLodSelectionBias: 0
-  m_RenderingLayerMask: 1
+  m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 96d60590d2a3f0143a9a84d4568d9de8, type: 2}
@@ -19709,7 +19709,7 @@ ParticleSystemRenderer:
   m_ShadowBias: 0
   m_RenderAlignment: 2
   m_Pivot: {x: 0, y: 0, z: 0}
-  m_Flip: {x: 0, y: 0, z: 0}
+  m_Flip: {x: 1, y: 0, z: 0}
   m_EnableGPUInstancing: 1
   m_ApplyActiveColorSpace: 1
   m_AllowRoll: 1
