@@ -9,6 +9,7 @@ public class CoolDown_Condition : Behaviour_Condition
     {
         this.reverseCondition = reverseCondition;
         this.delay = delay;
+        lastTime = Time.time;
     }
 
     public override bool Evaluate()

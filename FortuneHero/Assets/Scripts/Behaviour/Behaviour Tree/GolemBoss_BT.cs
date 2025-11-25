@@ -67,7 +67,7 @@ public class GolemBoss_BT : BehaviourTree
     NearTarget_Condition isNear_Lava;
     NearTarget_Condition isFar_Lava;
     CoolDown_Condition coolDown_Lava;
-    Random_Condition random_Movement;
+    public Random_Condition random_Movement;
     NearTarget_Condition isNear_Player;
     AboveSelf_Condition notAbove_Player;
     Random_Condition random_Melee;
@@ -154,9 +154,5 @@ public class GolemBoss_BT : BehaviourTree
 
         // Root Composite
         root = new Behaviour_Composite(null, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { chase_parallel, attacks_selector }, "root");
-    }
-    public void ChangeMovementProbability(float probability)
-    {
-        random_Movement.probability = probability;
     }
 }

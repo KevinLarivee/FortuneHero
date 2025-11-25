@@ -10,8 +10,6 @@ public class MoveToTarget_Action : Behaviour_Node
     float maxTime = 0f;
     float currentTime = 0f;
 
-    float initialSpeed;
-
     public MoveToTarget_Action(Behaviour_Condition[] behaviour_Conditions, GameObject target, float speed, NavMeshAgent agent, float maxTime) : base(behaviour_Conditions)
     {
         this.target = target;
@@ -24,8 +22,7 @@ public class MoveToTarget_Action : Behaviour_Node
     {
         base.ExecuteAction(parent_composite);
         agent.isStopped = false;
-        initialSpeed = agent.speed;
-        agent.speed = speed;
+        agent.speed += speed;
         agent.SetDestination(target.transform.position);
         currentTime = maxTime;
     }
@@ -51,7 +48,7 @@ public class MoveToTarget_Action : Behaviour_Node
     }
     public override void FinishAction(bool result)
     {
-        agent.speed = initialSpeed;
+        agent.speed -= speed;
         agent.SetDestination(agent.transform.position);
         base.FinishAction(result);
     }

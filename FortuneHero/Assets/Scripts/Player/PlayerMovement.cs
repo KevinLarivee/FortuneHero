@@ -218,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //Jump + buffer mechanics
-        if (jumpBufferCounter > 0f)
+        if (jumpBufferCounter > 0f && canJump)
         {
             jumpBufferCounter -= Time.deltaTime;
             if (IsGrounded() || coyoteTimeCounter > 0f)
@@ -422,6 +422,9 @@ public class PlayerMovement : MonoBehaviour
         knockBackDirection.y = horizontalForce * verticalMultiplier;
         knockBackTimer = knockBackTime;
 
+        if(!health.isInvincible)
+            StartCoroutine(MakeInvincible(invDuration));
+
         animator.SetTrigger("isHit");
         animator.SetBool("isRunning", false);
     }
@@ -433,12 +436,13 @@ public class PlayerMovement : MonoBehaviour
             playerInstance.isBurning = burnCount > 0;
         }
     }
-    public void ToggleParalyse(float paralyseTime)
+    public void ToggleParalyse(float paralyseTime, float dmg = 0f)
     {
         if (!playerInstance.isParalysed && !health.isInvincible)
         {
             playerInstance.isParalysed = true;
             paralyseTimer = paralyseTime;
+            health.Hit(dmg);
         }
     }
     public void ToggleDash(bool dash)

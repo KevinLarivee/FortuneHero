@@ -194,27 +194,27 @@ public class TrackPlayerComponent : MonoBehaviour
         SetStat("phaseElapsedTime", phaseTime);
     }
 
-    public void BossMeleeMiss(Action drawBack, bool active = true) =>
-        PreSetStat("bossMeleeMiss", 1f, drawBack ?? BossMeleeMissDrawBack, active);
-    public void BossMeleeBlocked(Action drawBack, bool active = true) =>
-        PreSetStat("bossMeleeBlocked", 2f, drawBack ?? BossMeleeBlockedDrawBack, active);
-    public void BossMeleeHit(Action drawBack, bool active = true) =>
-        PreSetStat("bossMeleeHit", 1.5f, drawBack ?? BossMeleeHitDrawBack, active);
+    public void BossMeleeMiss(Action drawBack, float multiplier = 1f, bool active = true) =>
+        PreSetStat("bossMeleeMiss", multiplier, drawBack ?? BossMeleeMissDrawBack, active);
+    public void BossMeleeBlocked(Action drawBack, float multiplier = 2f, bool active = true) =>
+        PreSetStat("bossMeleeBlocked", multiplier, drawBack ?? BossMeleeBlockedDrawBack, active);
+    public void BossMeleeHit(Action drawBack, float multiplier = 1.5f, bool active = true) =>
+        PreSetStat("bossMeleeHit", multiplier, drawBack ?? BossMeleeHitDrawBack, active);
 
-    public void BossRangeMiss(Action drawBack, bool active = true) =>
-        PreSetStat("bossRangeMiss", 1f, drawBack ?? BossRangeMissDrawBack, active);
-    public void BossRangeBlocked(Action drawBack, bool active = true) =>
-        PreSetStat("bossRangeBlocked", 2f, drawBack ?? BossRangeBlockedDrawBack, active);
-    public void BossRangeHit(Action drawBack, bool active = true) =>
-        PreSetStat("bossRangeHit", 1.5f, drawBack ?? BossRangeHitDrawBack, active);
+    public void BossRangeMiss(Action drawBack, float multiplier = 1f, bool active = true) =>
+        PreSetStat("bossRangeMiss", multiplier, drawBack ?? BossRangeMissDrawBack, active);
+    public void BossRangeBlocked(Action drawBack, float multiplier = 2f, bool active = true) =>
+        PreSetStat("bossRangeBlocked", multiplier, drawBack ?? BossRangeBlockedDrawBack, active);
+    public void BossRangeHit(Action drawBack, float multiplier = 1.5f, bool active = true) =>
+        PreSetStat("bossRangeHit", multiplier, drawBack ?? BossRangeHitDrawBack, active);
 
 
     public void PlayerY(Action drawBack, float multiplier = 0.5f, bool active = true) =>
         PreSetStat("playerY", multiplier, drawBack ?? PlayerYDrawBack, active);
-    public void PlayerFar(Action drawBack, bool active = true) =>
-        PreSetStat("playerFar", 0.25f, drawBack ?? PlayerFarDrawBack, active);
-    public void PlayerNear(Action drawBack, bool active = true) =>
-        PreSetStat("playerNear", 0.25f, drawBack ?? PlayerNearDrawBack, active);
+    public void PlayerFar(Action drawBack, float multiplier = 0.25f, bool active = true) =>
+        PreSetStat("playerFar", multiplier, drawBack ?? PlayerFarDrawBack, active);
+    public void PlayerNear(Action drawBack, float multiplier = 0.5f, bool active = true) =>
+        PreSetStat("playerNear", multiplier, drawBack ?? PlayerNearDrawBack, active);
 
     public void PlayerHealth(Action drawBack, bool active = true) =>
         PreSetStat("playerHealth", 1f, drawBack ?? PlayerHealthDrawBack, active);
@@ -225,9 +225,9 @@ public class TrackPlayerComponent : MonoBehaviour
     //    PreSetStat("playerDashing", 0.5f, drawBa ?? ck, active);
 
     public void PlayerMeleeDmg(Action drawBack, bool active = true) =>
-        PreSetStat("playerMeleeDmg", player.rangedAtkDmg / bossHealth.maxHp, drawBack ?? PlayerMeleeDmgDrawBack, active); //dépendrais de maxHp du boss?
+        PreSetStat("playerMeleeDmg", player.meleeAtkDmg / bossHealth.maxHp, drawBack ?? PlayerMeleeDmgDrawBack, active); //dépendrais de maxHp du boss?
     public void PlayerRangeDmg(Action drawBack, bool active = true) =>
-        PreSetStat("playerRangeDmg", 0.2f, drawBack ?? PlayerRangeDmgDrawBack, active); //dépendrais de maxHp du boss?
+        PreSetStat("playerRangeDmg", player.rangedAtkDmg / bossHealth.maxHp, drawBack ?? PlayerRangeDmgDrawBack, active); //dépendrais de maxHp du boss?
     #endregion
 
     #region Default DrawBacks
@@ -285,12 +285,14 @@ public class TrackPlayerComponent : MonoBehaviour
         //Augmenter la vitesse du boss, ou les attaques le rapprochant du joueur, ou ralentir le joueur?
         if (nearZoneDebuff != null)
             nearZoneDebuff.SetActive(true);
+        else
+            boss.ChangeMovementProbability(1.5f, "far");
         RemoveStat("playerNear");
     }
     void PlayerNearDrawBack()
     {
         //Déclencher un knockback périodique? Ou éloigner le boss du joueur.
-        boss.movementProbability *= 1.5f;
+        boss.ChangeMovementProbability(1.5f, "near");
         RemoveStat("playerFar");
     }
 

@@ -14,6 +14,7 @@ public class Chase_Action : Behaviour_Node
 
     public override void ExecuteAction(Behaviour_Composite parent_composite)
     {
+        Debug.Log("Start chasing");
         agent.SetDestination(target.transform.position);
         base.ExecuteAction(parent_composite);
     }
@@ -35,6 +36,7 @@ public class Chase_Action : Behaviour_Node
     }
     public override void FinishAction(bool result)
     {
+        Debug.Log("End Chasing");
         agent.destination = agent.transform.position;
         base.FinishAction(result);
     }

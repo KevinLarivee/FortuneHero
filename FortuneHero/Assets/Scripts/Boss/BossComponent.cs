@@ -7,7 +7,6 @@ using UnityEngine.AI;
 [RequireComponent(typeof(HealthComponent), typeof(BehaviourTree), typeof(TrackPlayerComponent))]
 public class BossComponent : MonoBehaviour
 {
-    [SerializeField] string bossName;
     public float meleeDefense = 1f;
     public float rangeDefense = 1f;
     public float movementProbability = 0.3f;
@@ -78,38 +77,19 @@ public class BossComponent : MonoBehaviour
     {
         StartCoroutine(HitByIceBall(speedChange, slowDuration, explosionObj));
     }
-    private IEnumerator ParalyzeBoss(float duration) //OPTI ??
+    private IEnumerator ParalyzeBoss(float duration)
     {
         agent.isStopped = true;
         animator.enabled = false;
         paralyzePrefab.SetActive(true);
-        GolemBoss_BT golemComponent = null;
-        AnubisBoss_BT anubisComponent = null;
-        switch (bossName)
-        {
-            case "Golem":
-                golemComponent = GetComponent<GolemBoss_BT>();
-                golemComponent.enabled = false;
-                break;
-            case "Anubis":
-                anubisComponent = GetComponent<AnubisBoss_BT>();
-                anubisComponent.enabled = false;
-                break;
-        }
+        BehaviourTree bt = GetComponent<BehaviourTree>();
+        bt.enabled = false;
 
         yield return new WaitForSeconds(duration);
-        switch (bossName)
-        {
-            case "Golem":
-                golemComponent.enabled = true;
-                break;
-            case "Anubis":
-                anubisComponent.enabled = true;
-                break;
-        }
+
+        bt.enabled = true;
         agent.isStopped = false;
         animator.enabled = true;
-
         paralyzePrefab.SetActive(false);
     }
     public IEnumerator HitByIceBall(float speedChange, float slowDuration, GameObject explosionObj)
@@ -150,6 +130,12 @@ public class BossComponent : MonoBehaviour
     //        collision.gameObject.GetComponent<HealthComponent>().Hit(collisionDmg); //Lier le dmg au dmg de l'enemy
     //    }
     //}
+
+    //Sert just à être override
+    public virtual void ChangeMovementProbability(float probability, string buff)
+    {
+        movementProbability = probability;
+    }
 
 }
 

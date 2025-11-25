@@ -11,15 +11,15 @@ public class ProjectileCollision : MonoBehaviour
         if (other.CompareTag("Enemy") || other.CompareTag("Boss"))
         {
             var enemyHealthComponent = other.GetComponentInParent<HealthComponent>();
+            var bossComponent = other.GetComponent<BossComponent>();
 
             if (PlayerActions.Instance.currentType == ProjectileType.IceBall) //si iceball
             {
                 var iceExplosionObj = Instantiate(iceBallExplosionPrefab, other.gameObject.transform.position, Quaternion.identity);
                 iceExplosionObj.transform.parent = other.transform;
                 iceExplosionObj.transform.position = new Vector3(iceExplosionObj.transform.position.x, iceExplosionObj.transform.position.y + heightOffset, iceExplosionObj.transform.position.z);
-                if (other.CompareTag("Boss"))
+                if (bossComponent != null)
                 {
-                    var bossComponent = other.GetComponent<BossComponent>();
                     bossComponent.StartHitByIceBall(PlayerActions.Instance.speedDrop, PlayerActions.Instance.slowDuration, iceExplosionObj);
                 }
                 else
@@ -29,10 +29,10 @@ public class ProjectileCollision : MonoBehaviour
                 }
             }
 
-            enemyHealthComponent.Hit(PlayerComponent.Instance.rangedAtkDmg);
+            enemyHealthComponent.Hit(PlayerComponent.Instance.rangedAtkDmg / (bossComponent != null ? bossComponent.rangeDefense : 1));
             TrackPlayerComponent tracker;
             if ((tracker = other.gameObject.GetComponent<TrackPlayerComponent>()) != null)
-                tracker.IncreaseStat("playerRangeDmg", PlayerComponent.Instance.meleeAtkDmg);
+                tracker.IncreaseStat("playerRangeDmg", PlayerComponent.Instance.meleeAtkDmg / (bossComponent != null ? bossComponent.rangeDefense : 1));
         }
         PlayerActions.Instance.SetToIceBall(false);
         Destroy(gameObject);

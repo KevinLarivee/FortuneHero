@@ -11,7 +11,7 @@ public class QuickSandComponent : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag(targetTag))
+        if (isActiveAndEnabled && collision.gameObject.CompareTag(targetTag))
         {
             Debug.Log("Start Slowness");
             //Appliquer l'effet de slowness à la cible
@@ -26,18 +26,18 @@ public class QuickSandComponent : MonoBehaviour
             {
                 Debug.Log("Start Prevent Jump");
                 //Appliquer l'effet de preventJump à la cible
-                PlayerMovement.Instance.ToggleJump(false);
+                PlayerMovement.Instance.ToggleJump(false, false);
             }
         }
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag(targetTag))
+        if (isActiveAndEnabled && collision.gameObject.CompareTag(targetTag))
         {
             ExitQuickSand();
         }
     }
-    private void OnDestroy()
+    private void OnDisable()
     {
         ExitQuickSand();
     }

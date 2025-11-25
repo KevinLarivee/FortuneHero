@@ -16,10 +16,8 @@ public class AnubisBossComponent : BossComponent
     [SerializeField] Transform pyramidTop;
     [SerializeField] Transform exitPoint;
     [SerializeField] GameObject platforms;
-    [SerializeField] float yThreshold = 10f;
     [SerializeField] float yDefaultValue = 30f;
-    [SerializeField] GameObject ground;
-    [SerializeField] Material quickSand;
+    [SerializeField] MeshRenderer[] ground;
     [SerializeField] float dashDistance = 5f;
     [SerializeField] float rotationSpeed = 150f;
     [SerializeField] float paralyseTime = 0.5f;
@@ -33,18 +31,25 @@ public class AnubisBossComponent : BossComponent
     PlayerMovement playerM;
 
     public int dmg = 10;
-    float bufferCd = 0.2f;
     float bufferTimer = 0;
     bool isStartingDash = false;
 
     bool rangeMiss = false;
+    bool meleeAlreadyHit = false;
 
     void Start()
     {
         trackPlayer.AllPresets();
-        trackPlayer.yThreshold = yThreshold;
-        trackPlayer.PlayerY(QuickSand, -0.05f);//Pour reverse
-        trackPlayer.SetStat("playerY", yDefaultValue);
+        trackPlayer.PlayerNear(null, 0.25f);
+        trackPlayer.PlayerFar(null, 0.5f);
+        trackPlayer.BossMeleeMiss(null, 0.125f);
+        trackPlayer.BossMeleeBlocked(null, 1f);
+        trackPlayer.BossMeleeHit(null, 0.75f);
+        trackPlayer.BossRangeMiss(null, 0.5f);
+        trackPlayer.BossRangeBlocked(null, 1f);
+        trackPlayer.BossRangeHit(null, 0.75f);
+        trackPlayer.PlayerY(() => StartCoroutine(QuickSand()), -0.05f);//Pour reverse
+        trackPlayer.SetStat("playerY", -yDefaultValue);
         trackPlayer.BossRangeMiss(() => rangeMiss = true);
 
         healthComponent = GetComponent<HealthComponent>();
@@ -70,7 +75,7 @@ public class AnubisBossComponent : BossComponent
         base.Hit();
         if (willChangePhase)
         {
-            trackPlayer.SetStat("playerY", yDefaultValue);
+            trackPlayer.SetStat("playerY", -yDefaultValue);
         }
     }
     public void StartEnvironnementAttack()
@@ -101,7 +106,7 @@ public class AnubisBossComponent : BossComponent
             PlayParticles();
             HealthComponent temp = envAtk.AddComponent<HealthComponent>();
             temp.onDeath += StopParticles;
-            temp.maxHp = 30;
+            temp.hp = 30;
             Destroy(envAtk.GetComponent<BossProjectileMovement>());
         }
         //StopParticles();
@@ -136,9 +141,12 @@ public class AnubisBossComponent : BossComponent
     }
     public void RangedAttack()
     {
+        //Crash parfois...
         projectile.transform.parent = null;
         //projectile.transform.rotation = Quaternion.LookRotation(target.position - exitPoint.position);
         projectile.GetComponent<BossProjectileMovement>().launchProjectile = true;
+        trackPlayer.IncreaseStat("bossRangeMiss", 1);
+
     }
     public void RangedExplosion(CSquareEvent colliders)
     {
@@ -172,6 +180,8 @@ public class AnubisBossComponent : BossComponent
     public void EnableWeaponCollider()
     {
         weaponCollider.enabled = true;
+        trackPlayer.IncreaseStat("bossMeleeMiss", 1);
+        meleeAlreadyHit = false;
     }
     public void DisableWeaponCollider()
     {
@@ -232,18 +242,49 @@ public class AnubisBossComponent : BossComponent
 
     }
 
-    public void QuickSand()
+    public override void ChangeMovementProbability(float probability, string buff)
     {
-        ground.GetComponent<MeshRenderer>().material = quickSand;
-        ground.AddComponent<QuickSandComponent>();
+        if (buff == "near")
+            GetComponent<AnubisBoss_BT>().random_TpRandom.probability *= probability;
+        else
+            GetComponent<AnubisBoss_BT>().random_TpAttack.probability *= probability;
+    }
+
+    public IEnumerator QuickSand()
+    {
+        while (isActiveAndEnabled)
+        {
+            foreach (MeshRenderer m in ground)
+            {
+                m.material.SetVector("_Direction", new Vector4(5, 0));
+                m.GetComponent<QuickSandComponent>().enabled = true;
+            }
+            yield return new WaitForSeconds(Random.Range(1f, 5f));
+            foreach (MeshRenderer m in ground)
+            {
+                m.material.SetVector("_Direction", Vector4.zero);
+                m.GetComponent<QuickSandComponent>().enabled = false;
+            }
+            yield return new WaitForSeconds(Random.Range(5f, 10f));
+        }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (Time.time - bufferTimer >= bufferCd && other.CompareTag("Player"))
+        if (other.excludeLayers == LayerMask.GetMask("IgnoreTrigger") || meleeAlreadyHit)
+            return;
+        if (other.CompareTag("Shield"))
         {
-            other.gameObject.GetComponent<HealthComponent>().Hit(dmg);
-            bufferTimer = Time.time;
+            trackPlayer.IncreaseStat("bossMeleeBlocked", 1);
+            trackPlayer.IncreaseStat("bossMeleeMiss", -1);
+            meleeAlreadyHit = true;
+        }
+        else if (other.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<HealthComponent>().Hit(meleeDmg);
+            trackPlayer.IncreaseStat("bossMeleeHit", 1);
+            trackPlayer.IncreaseStat("bossMeleeMiss", -1);
+            meleeAlreadyHit = true;
         }
         if (meleeStatus)
         {

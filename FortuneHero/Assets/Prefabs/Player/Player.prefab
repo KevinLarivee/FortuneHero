@@ -655,7 +655,7 @@ MonoBehaviour:
   crossHairOffsetMultiplier: 0.01
   raycastMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 849
 --- !u!1 &6551409111273694015
 GameObject:
   m_ObjectHideFlags: 0

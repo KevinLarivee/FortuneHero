@@ -16,6 +16,7 @@ public class TriggerOutside : MonoBehaviour
         if (Physics.Raycast(origin, Vector3.down, out hit, 100f, LayerMask.GetMask("default")))
             groundY = hit.point.y;
         StartCoroutine(NearZoneCoroutine());
+        targetHealth = GameObject.FindWithTag(target).GetComponent<HealthComponent>();
     }
 
     private void Update()

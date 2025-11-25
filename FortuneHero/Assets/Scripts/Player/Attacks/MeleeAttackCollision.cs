@@ -13,10 +13,11 @@ public class MeleeAttackCollision : MonoBehaviour
         if (other.CompareTag("Enemy") || other.CompareTag("Boss"))
         {
             var enemyHealthComponent = other.GetComponentInParent<HealthComponent>();
-            enemyHealthComponent.Hit(PlayerComponent.Instance.meleeAtkDmg);
+            var boss = other.GetComponent<BossComponent>();
+            enemyHealthComponent.Hit(PlayerComponent.Instance.meleeAtkDmg / (boss != null ? boss.meleeDefense : 1));
             TrackPlayerComponent tracker;
             if ((tracker = other.gameObject.GetComponent<TrackPlayerComponent>()) != null)
-                tracker.IncreaseStat("playerMeleeDmg", PlayerComponent.Instance.meleeAtkDmg);
+                tracker.IncreaseStat("playerMeleeDmg", PlayerComponent.Instance.meleeAtkDmg / (boss != null ? boss.meleeDefense : 1));
         }
     }
 }

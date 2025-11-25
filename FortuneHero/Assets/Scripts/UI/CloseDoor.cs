@@ -2,18 +2,20 @@ using UnityEngine;
 
 public class CloseDoor : MonoBehaviour
 {
-    public GameObject door; 
-    public GameObject boss;
+    [SerializeField] GameObject door;
+    [SerializeField] GameObject boss;
+    [SerializeField] string target = "Player";
+
 
     private bool activated = false; 
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!activated && other.CompareTag("Player"))
+        if (other.CompareTag(target))
         {
             door.SetActive(true);
             boss.SetActive(true);
-            activated = true;      // Empêche toute nouvelle activation
+            Destroy(gameObject);
         }
     }
 }

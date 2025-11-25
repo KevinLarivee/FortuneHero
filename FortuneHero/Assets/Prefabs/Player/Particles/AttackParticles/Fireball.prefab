@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -8621111204251743143}
   - component: {fileID: -5549035433942938144}
   - component: {fileID: -8201399241838229544}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Fireball
   m_TagString: RangedAtk
   m_Icon: {fileID: 0}
@@ -4911,6 +4911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileCollision
   iceBallExplosionPrefab: {fileID: 0}
+  heightOffset: 2
 --- !u!82 &-8201399241838229544
 AudioSource:
   m_ObjectHideFlags: 0

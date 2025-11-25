@@ -13,7 +13,7 @@ public class AnubisBoss_BT : BehaviourTree
     [SerializeField] float tpStopDistance = 1f;
     [SerializeField] float gainDistance = 10f;
     [SerializeField] float rotationSpeed = 100f;
-    [SerializeField] float rangedSpeed = 1f;
+    [SerializeField] float rangedSpeed = -6f;
 
 
     [SerializeField] string envAnimName;
@@ -38,7 +38,6 @@ public class AnubisBoss_BT : BehaviourTree
     [SerializeField] float gainDistanceOdds = 0.3f;
     [SerializeField] float tpRandomOdds = 0.7f;
     [SerializeField] float tpAtkOdds = 0.2f;
-    [SerializeField] float rangeOdds = 0.5f;
 
 
     //EnvironmentAttack envAtk;
@@ -75,10 +74,10 @@ public class AnubisBoss_BT : BehaviourTree
     NearTarget_Condition isChaseRange_Player;
     NearTarget_Condition isNotChaseRange_Player;
     NearTarget_Condition isAttackRange_Player;
+    NearTarget_Condition isNotAttackRange_Player;
     Random_Condition random_GainDistance;
-    Random_Condition random_TpRandom;
-    Random_Condition random_TpAttack;
-    Random_Condition random_Range;
+    public Random_Condition random_TpRandom;
+    public Random_Condition random_TpAttack;
     CoolDown_Condition coolDown_Environnement;
     CoolDown_Condition coolDown_TpRandom;
     CoolDown_Condition coolDown_Dash;
@@ -104,10 +103,10 @@ public class AnubisBoss_BT : BehaviourTree
         isChaseRange_Player = new NearTarget_Condition(false, transform, chaseRange, target);
         isNotChaseRange_Player = new NearTarget_Condition(true, transform, chaseRange, target);
         isAttackRange_Player = new NearTarget_Condition(false, transform, meleeRange, target);
+        isNotAttackRange_Player = new NearTarget_Condition(true, transform, meleeRange, target);
         random_GainDistance = new Random_Condition(false, gainDistanceOdds);
         random_TpRandom = new Random_Condition(false, tpRandomOdds);
         random_TpAttack = new Random_Condition(false, tpAtkOdds);
-        random_Range = new Random_Condition(false, rangeOdds); //50% de chance d'utiliser l'attaque?
         coolDown_Environnement = new CoolDown_Condition(false, envCd);
         coolDown_TpRandom = new CoolDown_Condition(false, tpCd);
         coolDown_Dash = new CoolDown_Condition(false, dashCd);
@@ -144,7 +143,7 @@ public class AnubisBoss_BT : BehaviourTree
         animation_Melees_Action = new Animation_Action[meleesAnimName.Length];
         for(int i = 0; i < meleesAnimName.Length; i++)
         {
-            //                                                                                                      Nombre magique, pas touché
+            //                                                                                                                                              Nombre magique, pas touché
             animation_Melees_Action[i] = new Animation_Action(new Behaviour_Condition[] { isAttackRange_Player }, anubis.animator, meleesAnimName[i], meleesAnimName[i], 0.5f);
         }
         gainDistance_Action = new GainDistance_Action(new Behaviour_Condition[] { random_GainDistance }, anubis.animator, anubis.agent, gainDistance);
@@ -155,7 +154,7 @@ public class AnubisBoss_BT : BehaviourTree
         attackNodes.Add(gainDistance_Action);
 
         // Composite (Action Set #4)
-        attack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { isChaseRange_Player }, Behaviour_Composite.CompositeType.Sequence, this, attackNodes.ToArray(), "attack_sequencer", true, 1);
+        attack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { isChaseRange_Player }, Behaviour_Composite.CompositeType.Sequence, this, attackNodes.ToArray(), "attack_sequencer", true, 2);
 
         // Action Set #5
         
@@ -169,10 +168,10 @@ public class AnubisBoss_BT : BehaviourTree
         tpAttack_sequencer = new Behaviour_Composite(new Behaviour_Condition[] { notAbove_Player, random_TpAttack }, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Tp_Action, tpMeleeAtk_Action, tpMeleeAtk_Action, tpMeleeAtk_Action, tpMeleeAtk_Action }, "tpAttack_sequencer");
 
         // Action Set #7
-        animation_Ranged_Action = new Animation_Action(new Behaviour_Condition[] { isNotChaseRange_Player }, anubis.animator, rangedParameter, rangedAnimName);
+        animation_Ranged_Action = new Animation_Action(new Behaviour_Condition[] { isNotAttackRange_Player }, anubis.animator, rangedParameter, rangedAnimName);
 
         // Composite (Action Set #7)
-        ranged_sequencer = new Behaviour_Composite(null, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Ranged_Action, animation_Ranged_Action, animation_Ranged_Action, animation_Ranged_Action }, "ranged_sequencer");
+        ranged_sequencer = new Behaviour_Composite(null, Behaviour_Composite.CompositeType.Sequence, this, new Behaviour_Node[] { animation_Ranged_Action, animation_Ranged_Action }, "ranged_sequencer");
 
         // Action Set #8
         rotateToFaceTarget_Endlessly_Action = new RotateToFaceTarget_Action(null, player.gameObject, rotationSpeed, transform, float.MaxValue);
@@ -185,13 +184,8 @@ public class AnubisBoss_BT : BehaviourTree
         root = new Behaviour_Composite(null, Behaviour_Composite.CompositeType.Selector, this, new Behaviour_Node[] { env_sequencer, randomTp_sequencer, melee_sequencer, tpAttack_sequencer, ranged_parallel }, "root");
     }
 
-    //private void OnDisable()
-    //{
-    //    interrupt.Stop();
-    //}
-    //private void OnEnable()
-    //{
-    //    if (interrupt != null) //Initialize appeler après Enable
-    //        interrupt.Start();
-    //}
+    public void ChangeMovementProbability(float probability)
+    {
+        random_TpRandom.probability = probability;
+    }
 }

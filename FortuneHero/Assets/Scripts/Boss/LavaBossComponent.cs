@@ -141,6 +141,12 @@ public class LavaBossComponent : BossComponent
         hands[0].enabled = false;
     }
 
+    public override void ChangeMovementProbability(float probability, string buff)
+    {
+        if(buff == "near")
+            GetComponent<GolemBoss_BT>().random_Movement.probability = probability;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if (other.excludeLayers == LayerMask.GetMask("IgnoreTrigger") || meleeAlreadyHit)
@@ -153,7 +159,7 @@ public class LavaBossComponent : BossComponent
             trackPlayer.IncreaseStat("bossMeleeMiss", -1);
             meleeAlreadyHit = true;
         }
-        else if (other.CompareTag("Player") && other.excludeLayers != LayerMask.GetMask("IgnoreTrigger"))
+        else if (other.CompareTag("Player"))
         {
             other.gameObject.GetComponent<HealthComponent>().Hit(meleeDmg);
             trackPlayer.IncreaseStat("bossMeleeHit", 1);

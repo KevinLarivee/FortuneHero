@@ -79,15 +79,17 @@ public class TpMeleeAttack_Action : Behaviour_Node
         filter.agentTypeID = agent.agentTypeID;
         int randIndex = -1;
         Vector3 posOffset;
+        bool valid = false;
         do
         {
             randIndex = Random.Range(0, possibleTpPos.Count);
             posOffset = possibleTpPos[randIndex];
             possibleTpPos.RemoveAt(randIndex);
+            valid = NavMesh.SamplePosition(playerPos + posOffset, out NavMeshHit hit, 2f, NavMesh.AllAreas);
 
-        } while (possibleTpPos.Count > 0 && !NavMesh.SamplePosition(playerPos + posOffset, out NavMeshHit hit, 2f, NavMesh.AllAreas));
+        } while (possibleTpPos.Count > 0 && !valid);
         
-        if(possibleTpPos.Count == 0)
+        if(!valid)
         {
             SetTpPositions();
             FinishAction(false);
