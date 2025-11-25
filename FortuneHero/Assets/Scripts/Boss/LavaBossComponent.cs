@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class LavaBossComponent : BossComponent
 {
+    [Header("Audio")]
+    [SerializeField] AudioClip fireBreathSFX;
+    [SerializeField] AudioClip slashSFX;
+    [SerializeField] AudioClip groundSmashSFX;
+
+
     [SerializeField] GameObject platforms;
     public GameObject lavaFalls;
     [SerializeField] Collider[] hands;
@@ -48,6 +54,7 @@ public class LavaBossComponent : BossComponent
 
     public void FireBreathStart()
     {
+        SFXManager.Instance.PlaySFX(fireBreathSFX, transform, PlayerComponent.Instance.SFXGroup);
         fireBreath.gameObject.SetActive(true);
     }
     public void FireBreathStop()
@@ -72,6 +79,7 @@ public class LavaBossComponent : BossComponent
     }
     void CreateSlash(Collider hand)
     {
+        //SFXManager.Instance.PlaySFX(slashSFX, transform, PlayerComponent.Instance.SFXGroup);
         GameObject temp = Instantiate(rangePrefab, hand.transform.position, hand.transform.rotation);
         temp.transform.LookAt(PlayerComponent.Instance.transform);
         if (rangeStatus)
@@ -106,6 +114,7 @@ public class LavaBossComponent : BossComponent
             pos = hit.point;
         }
         GameObject temp = Instantiate(groundSmash, pos, Quaternion.identity);
+        SFXManager.Instance.PlaySFX(groundSmashSFX, transform, PlayerComponent.Instance.SFXGroup_Louder);
         foreach (TriggerExpand triggerExpand in temp.GetComponentsInChildren<TriggerExpand>())
         {
             triggerExpand.onTrigger.AddListener((Collider c) =>

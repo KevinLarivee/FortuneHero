@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class FireTrapComponent : MonoBehaviour
 {
+    [SerializeField] AudioClip fireTrapSFX;
     [SerializeField] float inactiveTime = 1f;
     [SerializeField] float activeTime = 1f;
     [SerializeField] float activeDistance = 20f;
@@ -69,6 +70,7 @@ public class FireTrapComponent : MonoBehaviour
     }
     public void PlayFire()
     {
+        SFXManager.Instance.PlaySFX(fireTrapSFX, transform, PlayerComponent.Instance.SFXGroup);
         foreach (ParticleSystem p in effects)
         {
             p.Play();

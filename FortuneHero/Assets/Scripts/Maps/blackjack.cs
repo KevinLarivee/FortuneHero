@@ -9,6 +9,11 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
 {
     public float exitTime { get => throw new System.NotImplementedException(); set => new System.NotImplementedException(); }
 
+    [Header("Audio")]
+    [SerializeField] AudioClip cardFlipSFX;   // comme panelSlot
+    [SerializeField] AudioClip changeBetSFX;
+
+
     [Header("UI Panels")]
     [SerializeField] GameObject panelBlackjack;   // comme panelSlot
     [SerializeField] GameObject panelPlayer;      // comme panelPlayer de la slot
@@ -212,6 +217,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         {
             currentBet += 5;
             UpdateBetText();
+            SFXManager.Instance.PlaySFX(changeBetSFX, transform, PlayerComponent.Instance.SFXGroup);
         }
     }
 
@@ -222,6 +228,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         {
             currentBet -= 5;
             UpdateBetText();
+            SFXManager.Instance.PlaySFX(changeBetSFX, transform, PlayerComponent.Instance.SFXGroup);
         }
     }
 
@@ -605,6 +612,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
     IEnumerator AnimateFlip(Transform tr, float fromX, float toX, float duration)
     {
         float t = 0f;
+        SFXManager.Instance.PlaySFX(cardFlipSFX, transform, PlayerComponent.Instance.SFXGroup_Louder);
 
         // on part de la rotation actuelle, mais on force l'angle X de départ/fin
         Vector3 startEuler = tr.localEulerAngles;
@@ -691,6 +699,7 @@ public class BlackjackComponent : MonoBehaviour, IInteractable
         if (deck.Count == 0) BuildAndShuffleDeck();
         int c = deck[deck.Count - 1];
         deck.RemoveAt(deck.Count - 1);
+        SFXManager.Instance.PlaySFX(cardFlipSFX, transform, PlayerComponent.Instance.SFXGroup_Louder);
         return c;
     }
 

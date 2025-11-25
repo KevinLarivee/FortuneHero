@@ -4866,6 +4866,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90a17647afa83b049b776dd49a61ee31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::XpOrb
+  coinPickUpSFX: {fileID: 8300000, guid: aa17e2a842f1ced468b812dd34a647eb, type: 3}
+  XpPickUpSFX: {fileID: 8300000, guid: 85a898f161c7c144287c8d7c97f6d397, type: 3}
   type: 0
   xpPerOrb: 5
   coinsPerOrb: 10

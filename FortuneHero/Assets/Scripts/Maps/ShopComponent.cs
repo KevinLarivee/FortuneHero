@@ -11,6 +11,10 @@ using UnityEngine.UI;
 
 public class ShopComponent : MonoBehaviour, IInteractable
 {
+    [Header("Audio")]
+    [SerializeField] AudioClip buyItemSFX;
+
+
     [Header("ItemCanva")]
     [SerializeField] GameObject ItemCanva;
     [SerializeField] RawImage itemImage;
@@ -138,7 +142,7 @@ public class ShopComponent : MonoBehaviour, IInteractable
         else
         {
             canBuy = false;
-            itemPrice.text = "Not enough coins. You need: " + power.Price.ToString() + " coins";
+            itemPrice.text = "Not enough coins. Price: " + power.Price.ToString();
         }
 
     }
@@ -148,6 +152,7 @@ public class ShopComponent : MonoBehaviour, IInteractable
         if(canBuy)
         {
             Destroy(obj);
+            SFXManager.Instance.PlaySFX(buyItemSFX, transform, PlayerComponent.Instance.SFXGroup);
             PlayerComponent.Instance.UpdateCoins(-power.Price);
             selector.GainPowerUp(power);
         }

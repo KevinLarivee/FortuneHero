@@ -8,6 +8,12 @@ using UnityEngine.UI;
 public class SlotMachineComponent : MonoBehaviour, IInteractable
 {
     public float exitTime { get => throw new System.NotImplementedException(); set => new System.NotImplementedException(); }
+
+    [Header("Audio")]
+    [SerializeField] AudioClip winSFX;
+    [SerializeField] AudioClip changeBetSFX;
+
+
     [Header("UI Panels")]
     [SerializeField] GameObject panelSlot;
     [SerializeField] GameObject panelPlayer;
@@ -209,6 +215,7 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
     {
         if (currentBet < maxBet)
         {
+            SFXManager.Instance.PlaySFX(changeBetSFX, transform, PlayerComponent.Instance.SFXGroup);
             currentBet += 5;
             UpdateBetText();
         }
@@ -218,6 +225,7 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
     {
         if (currentBet > minBet)
         {
+            SFXManager.Instance.PlaySFX(changeBetSFX, transform, PlayerComponent.Instance.SFXGroup);
             currentBet -= 5;
             UpdateBetText();
         }
@@ -333,6 +341,7 @@ public class SlotMachineComponent : MonoBehaviour, IInteractable
             //PlayerPrefs.SetInt("coins", coins);
             PlayerComponent.Instance.UpdateCoins(gain);
             resultText.text = $"GAGNÉ {gain} COINS!";
+            SFXManager.Instance.PlaySFX(winSFX, transform, PlayerComponent.Instance.SFXGroup);
         }
         else
         {

@@ -230,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89a1631e73ab1a34f9ceee5753dc4a4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FireTrapComponent
+  fireTrapSFX: {fileID: 8300000, guid: 792beffd1d176454fb3411c1d3e0a1d9, type: 3}
   inactiveTime: 1
   activeTime: 1
   activeDistance: 20

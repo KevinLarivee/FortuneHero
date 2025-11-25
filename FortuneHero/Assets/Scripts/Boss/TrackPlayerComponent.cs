@@ -34,6 +34,7 @@ public class TrackPlayerComponent : MonoBehaviour
 
     float previousPlayerHealth;
 
+    [SerializeField] AudioClip nearZoneSFX;
     [SerializeField] GameObject nearZoneDebuff;
     //[SerializeField] TriggerProjectile[] rangedProjectile;
     //[SerializeField] DamageCollision[] meleeCollision;
@@ -284,7 +285,10 @@ public class TrackPlayerComponent : MonoBehaviour
     {
         //Augmenter la vitesse du boss, ou les attaques le rapprochant du joueur, ou ralentir le joueur?
         if (nearZoneDebuff != null)
+        {
+            SFXManager.Instance.PlaySFX(nearZoneSFX, transform, PlayerComponent.Instance.SFXGroup_Louder);
             nearZoneDebuff.SetActive(true);
+        }
         else
             boss.ChangeMovementProbability(1.5f, "far");
         RemoveStat("playerNear");

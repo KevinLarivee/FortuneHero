@@ -5,6 +5,10 @@ public enum PickupType { XP, Coin }
 [RequireComponent(typeof(SphereCollider))]
 public class XpOrb : MonoBehaviour
 {
+    [Header("Audio")]
+    [SerializeField] AudioClip coinPickUpSFX;
+    [SerializeField] AudioClip XpPickUpSFX;
+
     [Header("Type de pickup")]
     public PickupType type = PickupType.XP;
 
@@ -40,10 +44,12 @@ public class XpOrb : MonoBehaviour
 
         if (type == PickupType.Coin)
         {
+            SFXManager.Instance.PlaySFX(coinPickUpSFX, transform, PlayerComponent.Instance.SFXGroup);
             PlayerComponent.Instance.UpdateCoins(coinsPerOrb);
         }
         else // XP
         {
+            SFXManager.Instance.PlaySFX(XpPickUpSFX, transform, PlayerComponent.Instance.SFXGroup);
             PlayerComponent.Instance.UpdateXP(xpPerOrb);
             //int level = Mathf.Max(1, PlayerPrefs.GetInt("Level", 1)); 
             //int xp = Mathf.Max(0, PlayerPrefs.GetInt("XP", 0));  

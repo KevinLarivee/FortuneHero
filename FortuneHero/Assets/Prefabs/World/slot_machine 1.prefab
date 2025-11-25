@@ -105,6 +105,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3429457ad494e9428ea38a554a105f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SlotMachineComponent
+  winSFX: {fileID: 8300000, guid: a45eb6add74fcc046987cc19a93078bd, type: 3}
+  changeBetSFX: {fileID: 8300000, guid: 5ad599dad30eb6542a54d19aaf55fde8, type: 3}
   panelSlot: {fileID: 4245764648189224264}
   panelPlayer: {fileID: 0}
   btnIncreaseBet: {fileID: 1758219536978610051}

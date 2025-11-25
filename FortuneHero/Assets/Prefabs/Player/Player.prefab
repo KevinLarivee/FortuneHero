@@ -1488,6 +1488,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5965113584445915505}
     m_Modifications:
+    - target: {fileID: -5322448002162408945, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: m_StepOffset
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 293407045210260451, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -1.208195
@@ -1652,6 +1656,10 @@ PrefabInstance:
       propertyPath: SFXGroup
       value: 
       objectReference: {fileID: 2754299548873818701, guid: e58ef32046c9dd14cb32dd911de7de12, type: 2}
+    - target: {fileID: 5201706343988872358, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: meleeAtkDmg
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5201706343988872358, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: SFXGroup_Louder
       value: 

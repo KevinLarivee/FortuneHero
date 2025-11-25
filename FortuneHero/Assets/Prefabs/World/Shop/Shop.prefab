@@ -28,7 +28,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 6.39}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5837333838787724849}
@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed33304cfc41a7e4f8b9ade23d7a37c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopComponent
+  buyItemSFX: {fileID: 8300000, guid: 5ad599dad30eb6542a54d19aaf55fde8, type: 3}
   ItemCanva: {fileID: 8627699718535994686}
   itemImage: {fileID: 1412674617329483164}
   itemName: {fileID: 5923174658366396839}

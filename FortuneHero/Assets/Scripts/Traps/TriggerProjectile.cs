@@ -62,7 +62,7 @@ public class TriggerProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.name);
+        //Debug.Log(other.name);
         if(!isDestroyed)
             onTrigger?.Invoke(new(selfCollider, other));
         isDestroyed = true;
