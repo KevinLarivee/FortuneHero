@@ -68,10 +68,10 @@ public class SkillComponent : MonoBehaviour
     // Table des coûts
     private Dictionary<SkillType, int> _costs;
 
-    void Awake()
+    void Start()
     {
-        player = GetComponent<PlayerComponent>();
-        health = GetComponent<HealthComponent>();
+        player = PlayerComponent.Instance;
+        health = player.healthComponent;
 
         if (player != null)
         {
@@ -93,19 +93,13 @@ public class SkillComponent : MonoBehaviour
         _buys[SkillType.MaxHealthPlus] = PlayerPrefs.GetInt("MaxHealthPlus", 0);
         _buys[SkillType.SpeedPlus] = PlayerPrefs.GetInt("SpeedPlus", 0);
 
-        foreach (KeyValuePair<SkillType, int> buy in _buys){
-            for(int  i = 0; i < buy.Value; i++)
+        foreach (KeyValuePair<SkillType, int> buy in _buys)
+        {
+            for (int i = 0; i < buy.Value; i++)
             {
                 ApplySkillEffect(buy.Key);
             }
         }
-
-
-    }
-
-    void Start()
-    {
-       
 
         _costs = new Dictionary<SkillType, int>
         {
@@ -171,7 +165,7 @@ public class SkillComponent : MonoBehaviour
 
 
         // Rembourser
-        PlayerPrefs.SetInt("Skill", skillPoints - 1);
+        PlayerPrefs.SetInt("Skill", skillPoints + 1);
         PlayerPrefs.SetInt(nameof(type), _buys[type]);
         PlayerPrefs.Save();
 

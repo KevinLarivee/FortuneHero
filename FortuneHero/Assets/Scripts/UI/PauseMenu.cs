@@ -63,7 +63,8 @@ public class PauseMenu : MonoBehaviour
     public void ReturnToLobby()
     {
         Time.timeScale = 1f;
-        LoadManager.Instance.Load("LobbyScene");
+        //LoadManager.Instance.Load("LobbyScene");
+        GameManager.Instance.ReturnToLobby();
         pauseMenuUI.SetActive(false);
     }
     public void ReturnToMenu()

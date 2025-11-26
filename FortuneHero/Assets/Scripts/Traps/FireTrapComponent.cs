@@ -107,6 +107,7 @@ public class FireTrapComponent : MonoBehaviour
     {
         if (c2.other.CompareTag(target) && c2.other.excludeLayers != ignoreTrigger)
         {
+            Debug.Log("Enter Fire");
             if (afterBurn != null)
                 StopCoroutine(afterBurn);
             afterBurn = StartCoroutine(AfterBurn());
@@ -148,6 +149,7 @@ public class FireTrapComponent : MonoBehaviour
     }
     void ExitFire()
     {
+        Debug.Log("Exit Fire");
         if (playerIsEnter)
         {
             if (slowness)

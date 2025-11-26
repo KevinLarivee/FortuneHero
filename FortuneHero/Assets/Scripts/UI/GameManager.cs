@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
         if(!isInBossFight)
         {
             PlayerPrefs.SetInt("coins", 0);
-            PlayerPrefs.SetInt("coins", 0);
             PlayerPrefs.SetInt("Level", 1);
             PlayerPrefs.SetInt("XP", 0);
             PlayerComponent.Instance.skill.ResetAllSkills();
@@ -64,7 +63,6 @@ public class GameManager : MonoBehaviour
 
     public void ReturnToLobby()
     {
-        PlayerPrefs.SetInt("coins", 0);
         PlayerPrefs.SetInt("coins", 0);
         PlayerPrefs.SetInt("Level", 1);
         PlayerPrefs.SetInt("XP", 0);

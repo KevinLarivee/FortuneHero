@@ -45,7 +45,7 @@ public class PlayerComponent : MonoBehaviour
     PlayerMovement playerM;
     PlayerActions playerA;
     PlayerInteractions playerI;
-    HealthComponent healthComponent;
+    public HealthComponent healthComponent;
     Animator animator;
     PlayerOverlayComponent playerOverlay;
 
