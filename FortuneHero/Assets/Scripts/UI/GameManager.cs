@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         PlayerPrefs.SetInt("coins", 0);
         PlayerPrefs.SetInt("Progression", 1);
+        PlayerPrefs.Save();
     }
     public void RestartLevel()
     {
