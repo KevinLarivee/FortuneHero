@@ -43,7 +43,6 @@ public class FadeInOut : MonoBehaviour
             yield return null;
         }
         //Debug.Log("FIN FADE OUT");
-
         gameObject.SetActive(false);
     }
     void SetAlpha(float alpha)

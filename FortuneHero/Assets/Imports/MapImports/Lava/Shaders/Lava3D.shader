@@ -36,7 +36,7 @@ Shader "Ultimate 10+ Shaders/Lava3D_URP"
         Pass
         {
             Name "ForwardUnlit"
-            Tags { "LightMode" = "UniversalForward" }
+            Tags { "LightMode" = "SRPDefaultUnlit" }
 
             HLSLPROGRAM
             #pragma vertex   vert

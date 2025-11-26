@@ -11,7 +11,7 @@ public class SpikeTrapDemo : MonoBehaviour {
     [SerializeField] float detectionRange = 20f;
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
         //get the Animator component from the trap;
         spikeTrapAnims = GetComponentsInChildren<Animator>();

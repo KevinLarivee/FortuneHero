@@ -10911,7 +10911,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDemo
   spikeTrapSFX: {fileID: 8300000, guid: 620fe2e9482e594439c8f80ccc9689e5, type: 3}
-  detectionRange: 20
+  detectionRange: 30
 --- !u!1001 &410368956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20722,7 +20722,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDemo
   spikeTrapSFX: {fileID: 8300000, guid: 620fe2e9482e594439c8f80ccc9689e5, type: 3}
-  detectionRange: 20
+  detectionRange: 45
 --- !u!1 &782114476
 GameObject:
   m_ObjectHideFlags: 0

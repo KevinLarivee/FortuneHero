@@ -176,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 forward = isAiming ? transform.forward : freelookCam.transform.forward;
         Vector3 right = isAiming ? transform.right : freelookCam.transform.right;
 
-        if(!isDashing)
+        if (!isDashing)
         {
             direction = forward * move.y + right * move.x;
             if (direction.magnitude > 0)
@@ -192,15 +192,15 @@ public class PlayerMovement : MonoBehaviour
 
                 landed = true;
             }
-            //if (jump.y <= -10)
-            //{
+            if (jump.y <= -10)
+            {
                 if (usedJumpPad)
                 {
                     usedJumpPad = false;
                     jump.x = 0;
                     jump.z = 0;
                 }
-            //}
+            }
             jump.y = Mathf.Max(-10, jump.y);
             coyoteTimeCounter = coyoteTime;
             doubleJumped = false;
@@ -271,7 +271,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("y", move.y, 0.2f, Time.deltaTime);
             animator.SetBool("isRunning", false);
         }
-           
+
 
         player.Move((moveSpeed * direction + jump) * Time.deltaTime);
     }
@@ -323,7 +323,7 @@ public class PlayerMovement : MonoBehaviour
     public void Move(InputAction.CallbackContext ctx)
     {
         //if (isPaused) return;
-            move = ctx.ReadValue<Vector2>();
+        move = ctx.ReadValue<Vector2>();
     }
     public void Look(InputAction.CallbackContext ctx)
     {
@@ -379,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
             inputAxisController.enabled = false;
             SlowPlayer(2);
             animator.SetBool("isAiming", true);
-            animator.SetBool("isRunning", false);  
+            animator.SetBool("isRunning", false);
         }
     }
 
@@ -419,7 +419,7 @@ public class PlayerMovement : MonoBehaviour
         knockBackDirection.y = horizontalForce * verticalMultiplier;
         knockBackTimer = knockBackTime;
 
-        if(!health.isInvincible)
+        if (!health.isInvincible)
             StartCoroutine(MakeInvincible(invDuration));
 
         animator.SetTrigger("isHit");
