@@ -42,10 +42,13 @@ public class DamageCollision : MonoBehaviour
         knockDir.y = 0f;
         knockDir.Normalize();
 
-        PlayerMovement.Instance.KnockBack(transform.position + knockDir, knockbackForce, verticalMultiplier);
         Debug.Log($"{collision.gameObject.name} touché. Dégats: {damage}");
-        if (Physics.Raycast(collision.contacts[0].point, -collision.contacts[0].normal, 1f, LayerMask.GetMask("Default", "Interactable", "Enemy", "EnemyPlatform")))
+        if (!PlayerComponent.Instance.healthComponent.isInvincible && Physics.Raycast(collision.contacts[0].point, -collision.contacts[0].normal, 1f, LayerMask.GetMask("Default", "Interactable", "Enemy", "EnemyPlatform")))
+        {
             RespawnManager.Instance.Respawn();
+            return;
+        }
+        PlayerMovement.Instance.KnockBack(transform.position + knockDir, knockbackForce, verticalMultiplier);
     }
     //public bool HasEffect(StatusEffect effect)
     //{
