@@ -11,7 +11,7 @@ public class DissolveComponent : MonoBehaviour
     [SerializeField] float dissolveRate = 0.0125f;
     [SerializeField] float refreshRate = 0.025f;
 
-    Material[] materials;
+    public Material[] materials;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

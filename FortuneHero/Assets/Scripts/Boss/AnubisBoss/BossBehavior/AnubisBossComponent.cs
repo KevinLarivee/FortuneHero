@@ -199,7 +199,7 @@ public class AnubisBossComponent : BossComponent
     }
     public void StartDissolve()
     {
-        if (TpMeleeAttack_Action.possibleTpPos == null || TpMeleeAttack_Action.possibleTpPos.Count != 0)
+        if (((bt.activeNode as Behaviour_Composite).compositeInstanceID != "tpAttack_sequencer" || TpMeleeAttack_Action.possibleTpPos == null || TpMeleeAttack_Action.possibleTpPos.Count != 0) && dissolve.materials[0].GetFloat("_DissolveAmount") < 1f)
         {
             SFXManager.Instance.PlaySFX(startTpSFX, transform, PlayerComponent.Instance.SFXGroup);
             StartCoroutine(dissolve.Dissolve());
@@ -209,8 +209,11 @@ public class AnubisBossComponent : BossComponent
     }
     public void ReverseDissolve()
     {
-        SFXManager.Instance.PlaySFX(endTpSFX, transform, PlayerComponent.Instance.SFXGroup);
-        StartCoroutine(dissolve.Dissolve(true));
+        if(dissolve.materials[0].GetFloat("_DissolveAmount") > 0f)
+        {
+            SFXManager.Instance.PlaySFX(endTpSFX, transform, PlayerComponent.Instance.SFXGroup);
+            StartCoroutine(dissolve.Dissolve(true));
+        }
     }
 
     public void StartDash()

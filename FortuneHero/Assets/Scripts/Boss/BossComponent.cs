@@ -32,10 +32,12 @@ public class BossComponent : MonoBehaviour
     [HideInInspector] public TrackPlayerComponent trackPlayer;
     //protected EnemyDrops enemyDrops;
     protected HealthComponent healthComponent;
+    protected BehaviourTree bt;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
+        BehaviourTree bt = GetComponent<BehaviourTree>();
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         healthComponent = GetComponent<HealthComponent>();
@@ -82,7 +84,6 @@ public class BossComponent : MonoBehaviour
         agent.isStopped = true;
         animator.enabled = false;
         paralyzePrefab.SetActive(true);
-        BehaviourTree bt = GetComponent<BehaviourTree>();
         bt.enabled = false;
 
         yield return new WaitForSeconds(duration);
