@@ -6,36 +6,45 @@ public class SpikeTrapDemo : MonoBehaviour {
 
     //This script goes on the SpikeTrap prefab;
 
-    public Animator spikeTrapAnim; //Animator for the SpikeTrap;
-    AudioSource audioSource;
-
+    Animator[] spikeTrapAnims; //Animator for the SpikeTrap;
+    [SerializeField] AudioClip spikeTrapSFX;
+    [SerializeField] float detectionRange = 20f;
 
     // Use this for initialization
     void Awake()
     {
         //get the Animator component from the trap;
-        spikeTrapAnim = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        spikeTrapAnims = GetComponentsInChildren<Animator>();
         //start opening and closing the trap for demo purposes;
         StartCoroutine(OpenCloseTrap());
     }
-
+  
 
     IEnumerator OpenCloseTrap()
     {
-        //play open animation;
-        audioSource.Play();
+        if ((transform.position - PlayerComponent.Instance.transform.position).sqrMagnitude > detectionRange * detectionRange)
+        {
+            yield return new WaitForSeconds(1);
+            StartCoroutine(OpenCloseTrap());
+        }
+        else
+        {
+            SFXManager.Instance.PlaySFX(spikeTrapSFX, transform, PlayerComponent.Instance.SFXGroup);
+            foreach (Animator anim in spikeTrapAnims)
+            {
+                anim.SetTrigger("open");
+            }
 
-        spikeTrapAnim.SetTrigger("open");
-        //wait 2 seconds;
-        yield return new WaitForSeconds(2);
-        //play close animation;
-        spikeTrapAnim.SetTrigger("close");
-        audioSource.Stop();
-        //wait 2 seconds;
-        yield return new WaitForSeconds(2);
-        //Do it again;
-        StartCoroutine(OpenCloseTrap());
+            yield return new WaitForSeconds(2);
 
+            foreach (Animator anim in spikeTrapAnims)
+            {
+                anim.SetTrigger("close");
+            }
+
+            yield return new WaitForSeconds(2);
+            StartCoroutine(OpenCloseTrap());
+        }
+            
     }
 }

@@ -1087,15 +1087,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1532332636}
-  - {fileID: 603600497}
-  - {fileID: 1627680918}
-  - {fileID: 35373466}
-  - {fileID: 960479571}
-  - {fileID: 908957291}
-  - {fileID: 1480658335}
-  - {fileID: 742344475}
-  - {fileID: 562317592}
+  - {fileID: 781754716}
+  - {fileID: 404806173}
   m_Father: {fileID: 204512524}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &42147150
@@ -3780,19 +3773,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 35418870}
+    m_TransformParent: {fileID: 404806173}
     m_Modifications:
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.5
+      value: 0.023000002
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.059999466
+      value: -1.7110006
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.3
+      value: 0.07999611
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3826,7 +3819,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeTrapD horiz (4)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411465237436810964, guid: a2ee902073450864a95753fbc15e023f, type: 3}
+    - {fileID: -7523235595995895108, guid: a2ee902073450864a95753fbc15e023f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -10865,6 +10860,57 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00a373796e771044aba51f5e69abc2d8, type: 3}
+--- !u!1 &404806172
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 404806173}
+  - component: {fileID: 404806174}
+  m_Layer: 0
+  m_Name: LastFloorTraps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &404806173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404806172}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.523, y: 1.771, z: 17.22}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 35373466}
+  - {fileID: 960479571}
+  - {fileID: 908957291}
+  - {fileID: 1480658335}
+  - {fileID: 742344475}
+  - {fileID: 562317592}
+  m_Father: {fileID: 35418870}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &404806174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404806172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfc9ddd4ef5c6f47afe9453d93658aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDemo
+  spikeTrapSFX: {fileID: 8300000, guid: 620fe2e9482e594439c8f80ccc9689e5, type: 3}
 --- !u!1001 &410368956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17370,19 +17416,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 35418870}
+    m_TransformParent: {fileID: 404806173}
     m_Modifications:
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.6000023
+      value: -2.077006
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.0200005
+      value: 3.2490005
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.3
+      value: 0.07999611
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -17416,7 +17462,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeTrapD horiz (9)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411465237436810964, guid: a2ee902073450864a95753fbc15e023f, type: 3}
+    - {fileID: -7523235595995895108, guid: a2ee902073450864a95753fbc15e023f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -20625,6 +20673,54 @@ Transform:
   m_Children: []
   m_Father: {fileID: 362550500}
   m_LocalEulerAnglesHint: {x: 0, y: 11.8, z: 0}
+--- !u!1 &781754715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 781754716}
+  - component: {fileID: 781754717}
+  m_Layer: 0
+  m_Name: FirstFloorTraps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &781754716
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781754715}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -87.2, y: 4.119999, z: 195.05}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1532332636}
+  - {fileID: 603600497}
+  - {fileID: 1627680918}
+  m_Father: {fileID: 35418870}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &781754717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781754715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbfc9ddd4ef5c6f47afe9453d93658aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpikeTrapDemo
+  spikeTrapSFX: {fileID: 8300000, guid: 620fe2e9482e594439c8f80ccc9689e5, type: 3}
 --- !u!1 &782114476
 GameObject:
   m_ObjectHideFlags: 0
@@ -28961,19 +29057,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 35418870}
+    m_TransformParent: {fileID: 404806173}
     m_Modifications:
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.9000015
+      value: -2.3770015
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.059999466
+      value: -1.7110006
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.3
+      value: 0.07999611
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -29007,7 +29103,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeTrapD horiz (6)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411465237436810964, guid: a2ee902073450864a95753fbc15e023f, type: 3}
+    - {fileID: -7523235595995895108, guid: a2ee902073450864a95753fbc15e023f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -30732,19 +30830,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 35418870}
+    m_TransformParent: {fileID: 404806173}
     m_Modifications:
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.10000229
+      value: 2.422994
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.0200005
+      value: 3.2490005
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.259342
+      value: 0.039346695
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -30778,7 +30876,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeTrapD horiz (8)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411465237436810964, guid: a2ee902073450864a95753fbc15e023f, type: 3}
+    - {fileID: -7523235595995895108, guid: a2ee902073450864a95753fbc15e023f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -37601,7 +37701,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 35418870}
+    m_TransformParent: {fileID: 781754716}
     m_Modifications:
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalScale.x
@@ -37617,15 +37717,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -72.100006
+      value: 15.099991
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.119999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 191.9
+      value: -3.1500092
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -37659,7 +37759,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeTrapD horiz (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411465237436810964, guid: a2ee902073450864a95753fbc15e023f, type: 3}
+    - {fileID: -7523235595995895108, guid: a2ee902073450864a95753fbc15e023f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -54119,7 +54221,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 35418870}
+    m_TransformParent: {fileID: 781754716}
     m_Modifications:
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalScale.x
@@ -54135,15 +54237,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -99.600006
+      value: -12.400009
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.119999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 191.9
+      value: -3.1500092
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -54177,7 +54279,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeTrapD horiz (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411465237436810964, guid: a2ee902073450864a95753fbc15e023f, type: 3}
+    - {fileID: -7523235595995895108, guid: a2ee902073450864a95753fbc15e023f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -56335,19 +56439,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 35418870}
+    m_TransformParent: {fileID: 404806173}
     m_Modifications:
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.2999992
+      value: 0.22299695
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.0200005
+      value: 3.2490005
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.3
+      value: 0.07999611
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -56381,7 +56485,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeTrapD horiz (7)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411465237436810964, guid: a2ee902073450864a95753fbc15e023f, type: 3}
+    - {fileID: -7523235595995895108, guid: a2ee902073450864a95753fbc15e023f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -60458,19 +60564,19 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 35418870}
+    m_TransformParent: {fileID: 404806173}
     m_Modifications:
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 2.523
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.059999466
+      value: -1.7110006
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.259342
+      value: 0.039346695
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -60504,7 +60610,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeTrapD horiz (5)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411465237436810964, guid: a2ee902073450864a95753fbc15e023f, type: 3}
+    - {fileID: -7523235595995895108, guid: a2ee902073450864a95753fbc15e023f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -87649,7 +87757,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 35418870}
+    m_TransformParent: {fileID: 781754716}
     m_Modifications:
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalScale.x
@@ -87665,15 +87773,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -87.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.119999
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 198.29999
+      value: 3.2499847
       objectReference: {fileID: 0}
     - target: {fileID: 5620556667296651001, guid: a2ee902073450864a95753fbc15e023f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -87707,7 +87815,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpikeTrapD horiz
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4411465237436810964, guid: a2ee902073450864a95753fbc15e023f, type: 3}
+    - {fileID: -7523235595995895108, guid: a2ee902073450864a95753fbc15e023f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

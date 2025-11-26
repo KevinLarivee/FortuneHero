@@ -22,17 +22,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioClip jumpClip;
     [SerializeField] AudioClip landingClip;
     [SerializeField] AudioClip dashClip;
-    AudioSource audioSource;
-
 
     CharacterController player;
     Animator animator;
     HealthComponent health;
     PlayerComponent playerInstance;
-  
 
     [SerializeField] LayerMask groundLayers;
-    LayerMask currentGroundLayer;
     Vector3 jump;
     Vector3 knockBackDirection;
     Vector2 move;
@@ -60,9 +56,11 @@ public class PlayerMovement : MonoBehaviour
     //Vector3 cameraRotation;
     #endregion
 
+    #region Dash
     [SerializeField] float dashTime = 0.2f;
     bool canDash = true;
     bool isDashing = false;
+    #endregion
 
     #region Jump
     [Header("Jump")]
@@ -83,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
     bool landed = false;
     #endregion
 
+    #region Movement (speed)
     [Header("Speed")]
     [SerializeField] float moveSpeed = 0f;
     [SerializeField] float maxSpeed = 12f;
@@ -90,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float deceleration = 10f;
     float groundDrag = 1f;
     float airDrag = 0.5f;
+    #endregion
 
     #region Status
     [SerializeField] float burnTimeUntilDmgTick = 1f;
@@ -104,7 +104,6 @@ public class PlayerMovement : MonoBehaviour
     bool isKnockedBack = false;
     #endregion
 
-    private float knockBackVerticalVelocity;
     void Awake()
     {
         instance = this;
@@ -112,7 +111,6 @@ public class PlayerMovement : MonoBehaviour
         player = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         health = GetComponent<HealthComponent>();
-        audioSource = GetComponent<AudioSource>();
 
         inputAxisController = freelookCam.GetComponent<CinemachineInputAxisController>();
         aimingCamera = aimCam.GetComponent<CinemachineThirdPersonFollow>();
@@ -194,15 +192,15 @@ public class PlayerMovement : MonoBehaviour
 
                 landed = true;
             }
-            if (jump.y <= -10)
-            {
+            //if (jump.y <= -10)
+            //{
                 if (usedJumpPad)
                 {
                     usedJumpPad = false;
                     jump.x = 0;
                     jump.z = 0;
                 }
-            }
+            //}
             jump.y = Mathf.Max(-10, jump.y);
             coyoteTimeCounter = coyoteTime;
             doubleJumped = false;
@@ -283,7 +281,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (Physics.SphereCast(origin, 0.4f, Vector3.down, out RaycastHit hit, 0.2f, groundLayers))
         {
-            currentGroundLayer = hit.transform.gameObject.layer;
             return true;
         }
         return false;
@@ -457,6 +454,7 @@ public class PlayerMovement : MonoBehaviour
     public void SetJumpPadForce(Vector3 force)
     {
         usedJumpPad = true;
+        doubleJumped = false;
         jump = force;
         animator.SetBool("hasJumped", true);
     }

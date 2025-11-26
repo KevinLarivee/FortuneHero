@@ -751,6 +751,10 @@ MonoBehaviour:
   agent: {fileID: 0}
   trackPlayer: {fileID: 0}
   rangeChargeSFX: {fileID: 8300000, guid: 5a96944c07dc0234bb570bf3e38da760, type: 3}
+  startTpSFX: {fileID: 8300000, guid: b17d56211d0900140bb1b4bfa4dee331, type: 3}
+  endTpSFX: {fileID: 8300000, guid: 4d16da43cad4ba94083f94ba42b88d08, type: 3}
+  dashSFX: {fileID: 8300000, guid: ebb32844279f0f841bf78360dfdf058a, type: 3}
+  swingSFX: {fileID: 8300000, guid: dfe2a930a70b63b4882dffa6b6e134b0, type: 3}
   weaponCollider: {fileID: 8715552731622049047}
   projectilePrefab: {fileID: 2183248266996118486, guid: b11fe0cbf57f47c48ad489ad902dc34b, type: 3}
   explosionPrefab: {fileID: 8974203713140315807, guid: a47e7f9aff2fadc45b79d330d5c554c2, type: 3}

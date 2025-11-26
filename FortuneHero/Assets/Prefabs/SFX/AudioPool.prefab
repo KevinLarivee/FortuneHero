@@ -46,4 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectPoolComponent
   pools:
   - objectToPool: {fileID: 6243327481973080387, guid: 3f81408d0044fcf469e69492893556dc, type: 3}
-    poolSize: 20
+    poolSize: 100

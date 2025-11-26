@@ -9,6 +9,13 @@ public class AnubisBossComponent : BossComponent
 {
     [Header("Anubis Boss Specific")]
     [SerializeField] AudioClip rangeChargeSFX;
+    [SerializeField] AudioClip startTpSFX;
+    [SerializeField] AudioClip endTpSFX;
+    [SerializeField] AudioClip dashSFX;
+    [SerializeField] AudioClip swingSFX;
+
+
+
     [SerializeField] Collider weaponCollider;
     [SerializeField] GameObject projectilePrefab;
     [SerializeField] GameObject explosionPrefab;
@@ -181,6 +188,7 @@ public class AnubisBossComponent : BossComponent
     }
     public void EnableWeaponCollider()
     {
+        SFXManager.Instance.PlaySFX(swingSFX, transform, PlayerComponent.Instance.SFXGroup);
         weaponCollider.enabled = true;
         trackPlayer.IncreaseStat("bossMeleeMiss", 1);
         meleeAlreadyHit = false;
@@ -192,12 +200,16 @@ public class AnubisBossComponent : BossComponent
     public void StartDissolve()
     {
         if (TpMeleeAttack_Action.possibleTpPos == null || TpMeleeAttack_Action.possibleTpPos.Count != 0)
+        {
+            SFXManager.Instance.PlaySFX(startTpSFX, transform, PlayerComponent.Instance.SFXGroup);
             StartCoroutine(dissolve.Dissolve());
+        }
         else //Ne va rien faire au pire
             ReverseDissolve();
     }
     public void ReverseDissolve()
     {
+        SFXManager.Instance.PlaySFX(endTpSFX, transform, PlayerComponent.Instance.SFXGroup);
         StartCoroutine(dissolve.Dissolve(true));
     }
 
@@ -227,6 +239,7 @@ public class AnubisBossComponent : BossComponent
     }
     public IEnumerator Dash()
     {
+        SFXManager.Instance.PlaySFX(dashSFX, transform, PlayerComponent.Instance.SFXGroup_Louder);
         isStartingDash = true;
         Vector3 startPos = transform.position;
         Vector3 targetPos = startPos + transform.forward * dashDistance;

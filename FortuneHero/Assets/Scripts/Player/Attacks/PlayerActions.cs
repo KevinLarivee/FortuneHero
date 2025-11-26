@@ -198,7 +198,7 @@ public class PlayerActions : MonoBehaviour
     {
         if (isPaused) return;
         audioSource.clip = lightningClip;
-        audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup;
+        audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup_Louder;
         audioSource.Play();
         //SFXManager.Instance.PlaySFX(lightningClip, transform, PlayerComponent.Instance.SFXGroup);
 
