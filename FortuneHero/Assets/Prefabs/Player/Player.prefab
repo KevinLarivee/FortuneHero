@@ -1638,6 +1638,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4631671485836190074, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: skill
+      value: 
+      objectReference: {fileID: 4616310008237832444}
+    - target: {fileID: 4631671485836190074, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: xpBar
       value: 
       objectReference: {fileID: 1180781493309883970}
@@ -1653,6 +1657,10 @@ PrefabInstance:
       propertyPath: shieldBar
       value: 
       objectReference: {fileID: 5170577574725540656}
+    - target: {fileID: 5201706343988872358, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: skill
+      value: 
+      objectReference: {fileID: 4616310008237832444}
     - target: {fileID: 5201706343988872358, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: SFXGroup
       value: 

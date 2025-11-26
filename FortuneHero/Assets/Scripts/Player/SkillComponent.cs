@@ -17,6 +17,7 @@ public class SkillComponent : MonoBehaviour
     // === Références joueur / vie ===
     private PlayerComponent player;
     private HealthComponent health;
+    private PlayerActions playerAction;
 
     // Valeurs de base lues au début (avant bonus)
     private int baseMeleeAtk;
@@ -85,6 +86,21 @@ public class SkillComponent : MonoBehaviour
             baseMaxHp = health.maxHp;
         }
         skillPoints = PlayerPrefs.GetInt("Skill", skillPoints);
+        _buys[SkillType.MeleeAtkPlus] = PlayerPrefs.GetInt("MeleeAtkPlus", 0);
+        _buys[SkillType.RangeAtkPlus] = PlayerPrefs.GetInt("RangeAtkPlus", 0);
+        _buys[SkillType.ShieldBlockTime] = PlayerPrefs.GetInt("ShieldBlockTime", 0);
+        _buys[SkillType.DashCooldownMinus] = PlayerPrefs.GetInt("DashCooldownMinus", 0);
+        _buys[SkillType.MaxHealthPlus] = PlayerPrefs.GetInt("MaxHealthPlus", 0);
+        _buys[SkillType.SpeedPlus] = PlayerPrefs.GetInt("SpeedPlus", 0);
+
+        foreach (KeyValuePair<SkillType, int> buy in _buys){
+            for(int  i = 0; i < buy.Value; i++)
+            {
+                ApplySkillEffect(buy.Key);
+            }
+        }
+
+
     }
 
     void Start()
@@ -124,16 +140,16 @@ public class SkillComponent : MonoBehaviour
             Debug.LogWarning($"[SkillComponent] Pas assez de skill points ({skillPoints}) pour acheter {type} (coût {cost}).");
             return false;
         }
+        // Compter l’achat
+        _buys[type]++;
 
         // Débiter
         PlayerPrefs.SetInt("Skill", skillPoints - 1);
+        PlayerPrefs.SetInt(nameof(type), _buys[type]);
         PlayerPrefs.Save();
 
         // Appliquer l’effet (cumulable)
         ApplySkillEffect(type);
-
-        // Compter l’achat
-        _buys[type]++;
 
         Debug.Log($"[SkillComponent] Achat de {type} réussi. Restant: {skillPoints} SP.");
         return true;
@@ -149,38 +165,44 @@ public class SkillComponent : MonoBehaviour
         }
 
         int cost = _costs[type];
+        _buys[type]--;
+
+        // Débiter
+
 
         // Rembourser
         PlayerPrefs.SetInt("Skill", skillPoints - 1);
+        PlayerPrefs.SetInt(nameof(type), _buys[type]);
         PlayerPrefs.Save();
 
         // Retirer l’effet (inverse de ApplySkillEffect)
         switch (type)
         {
             case SkillType.MeleeAtkPlus:
-                meleeAtkBonus -= meleeAtkPerBuy;
+                player.meleeAtkDmg -= meleeAtkPerBuy;
                 break;
             case SkillType.RangeAtkPlus:
-                rangeAtkBonus -= rangeAtkPerBuy;
+                player.rangedAtkDmg -= rangeAtkPerBuy;
                 break;
             case SkillType.ShieldBlockTime:
-                shieldBlockTimeBonus -= shieldBlockTimePerBuy;
+                playerAction.defenceMaxCharge -= shieldBlockTimePerBuy;
                 break;
             case SkillType.DashCooldownMinus:
-                dashCooldownReduction -= dashCooldownMinusPerBuy;
+                player.dashCooldown -= dashCooldownMinusPerBuy;
                 break;
             case SkillType.MaxHealthPlus:
-                maxHealthBonus -= maxHealthPerBuy;
+                health.maxHp -= maxHealthPerBuy;
+                health.hp -= maxHealthPerBuy;
                 break;
             case SkillType.SpeedPlus:
-                speedBonus -= speedPerBuy;
+                player.speedMultiplier -= speedPerBuy;
                 break;
         }
 
         // Recalculer les stats
         ApplyAllBonusesToPlayer();
 
-        _buys[type]--;
+        
 
         Debug.Log($"[SkillComponent] Retrait de {type} réussi. Restant: {skillPoints} SP.");
         return true;
@@ -204,22 +226,23 @@ public class SkillComponent : MonoBehaviour
         switch (type)
         {
             case SkillType.MeleeAtkPlus:
-                meleeAtkBonus += meleeAtkPerBuy;
+                player.meleeAtkDmg += meleeAtkPerBuy;
                 break;
             case SkillType.RangeAtkPlus:
-                rangeAtkBonus += rangeAtkPerBuy;
+                player.rangedAtkDmg += rangeAtkPerBuy;
                 break;
             case SkillType.ShieldBlockTime:
-                shieldBlockTimeBonus += shieldBlockTimePerBuy;
+                playerAction.defenceMaxCharge += shieldBlockTimePerBuy;
                 break;
             case SkillType.DashCooldownMinus:
-                dashCooldownReduction += dashCooldownMinusPerBuy;
+                player.dashCooldown += dashCooldownMinusPerBuy;
                 break;
             case SkillType.MaxHealthPlus:
-                maxHealthBonus += maxHealthPerBuy;
+                health.maxHp += maxHealthPerBuy;
+                health.hp += maxHealthPerBuy;
                 break;
             case SkillType.SpeedPlus:
-                speedBonus += speedPerBuy;
+                player.speedMultiplier += speedPerBuy;
                 break;
         }
 
@@ -259,29 +282,40 @@ public class SkillComponent : MonoBehaviour
     // Reset des buffs (ex: fin de niveau)
     public void ResetAllSkills()
     {
-        meleeAtkBonus = 0f;
-        rangeAtkBonus = 0f;
-        shieldBlockTimeBonus = 0f;
-        dashCooldownReduction = 0f;
-        maxHealthBonus = 0f;
-        speedBonus = 0f;
+        //meleeAtkBonus = 0f;
+        //rangeAtkBonus = 0f;
+        //shieldBlockTimeBonus = 0f;
+        //dashCooldownReduction = 0f;
+        //maxHealthBonus = 0f;
+        //speedBonus = 0f;
 
-        _buys[SkillType.MeleeAtkPlus] = 0;
-        _buys[SkillType.RangeAtkPlus] = 0;
-        _buys[SkillType.ShieldBlockTime] = 0;
-        _buys[SkillType.DashCooldownMinus] = 0;
-        _buys[SkillType.MaxHealthPlus] = 0;
-        _buys[SkillType.SpeedPlus] = 0;
+        //_buys[SkillType.MeleeAtkPlus] = 0;
+        //_buys[SkillType.RangeAtkPlus] = 0;
+        //_buys[SkillType.ShieldBlockTime] = 0;
+        //_buys[SkillType.DashCooldownMinus] = 0;
+        //_buys[SkillType.MaxHealthPlus] = 0;
+        //_buys[SkillType.SpeedPlus] = 0;
 
-        ApplyAllBonusesToPlayer();
+        //ApplyAllBonusesToPlayer();
 
-        Debug.Log("[SkillComponent] Tous les skills temporaires ont été réinitialisés pour le prochain niveau.");
+        //Debug.Log("[SkillComponent] Tous les skills temporaires ont été réinitialisés pour le prochain niveau.");
+
+        PlayerPrefs.SetInt("Skill", 0);
+        PlayerPrefs.SetInt("MeleeAtkPlus", 0);
+        PlayerPrefs.SetInt("RangeAtkPlus", 0);
+        PlayerPrefs.SetInt("ShieldBlockTime", 0);
+        PlayerPrefs.SetInt("DashCooldownMinus", 0);
+        PlayerPrefs.SetInt("MaxHealthPlus", 0);
+        PlayerPrefs.SetInt("SpeedPlus", 0);
+        PlayerPrefs.Save();
     }
 
     public void AddSkillPoints(int amount)
     {
         if (amount <= 0) return;
         skillPoints += amount;
+        PlayerPrefs.SetInt("Skill", skillPoints);
+        PlayerPrefs.Save();
     }
 
     public int GetBuys(SkillType type)

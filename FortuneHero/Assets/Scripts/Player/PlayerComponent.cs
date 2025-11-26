@@ -29,6 +29,7 @@ public class PlayerComponent : MonoBehaviour
     //public int currentXp = 0;
     public int currentLevel = 0;
     public int xpRequirement = 100;
+    public SkillComponent skill;
 
     [Header("Attacks")]
     public int meleeAtkDmg = 10;

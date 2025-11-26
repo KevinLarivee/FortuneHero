@@ -43,7 +43,7 @@ public class PlayerActions : MonoBehaviour
     [SerializeField] float defenceCurrentCharge = 0f;
     bool showShield = false;
     bool canDefend = false;
-    float defenceMaxCharge = 10f;
+    public float defenceMaxCharge = 10f;
     float speedWhileShielding = 2f;
 
     [Header("RangedAtk")]

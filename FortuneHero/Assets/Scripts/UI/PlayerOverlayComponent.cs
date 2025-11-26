@@ -87,6 +87,7 @@ public class PlayerOverlayComponent : MonoBehaviour
         xpToNextLevel += 50; 
         levelText.text = "Niveau: " + level;
         PlayerPrefs.SetInt("Level", level);
+        PlayerComponent.Instance.skill.AddSkillPoints(1);
 
     }
 
