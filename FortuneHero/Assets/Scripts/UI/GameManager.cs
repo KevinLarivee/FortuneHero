@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         panelVictory.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
         PlayerPrefs.SetInt("coins", 0);
+        PlayerPrefs.SetInt("Progression", 1);
     }
     public void RestartLevel()
     {

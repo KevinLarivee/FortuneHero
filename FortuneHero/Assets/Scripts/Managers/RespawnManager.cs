@@ -10,6 +10,7 @@ public class RespawnManager : MonoBehaviour
     Vector3 respawnPoint = Vector3.zero;
 
     [SerializeField] float repeatrate = 0.5f;
+    [SerializeField] float invDuration = 8f;
     bool isRespawning = false;
 
     static RespawnManager instance;
@@ -50,6 +51,8 @@ public class RespawnManager : MonoBehaviour
         pc.transform.position = respawnPoint;
         //Animation de respawn
         yield return dissolve.Dissolve(true);
+        if (!pc.healthComponent.isInvincible)
+            StartCoroutine(pm.MakeInvincible(invDuration));
         pc.PausePlayer(false);
         isRespawning = false;
     }
