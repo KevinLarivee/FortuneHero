@@ -7,9 +7,9 @@ public class DeathUiManager : MonoBehaviour
 
 
 
-    public GameObject deathPanel; 
-    public Button restartLevelButton;
+    public GameObject deathPanel;
     public Button restartBossButton;
+    public Button restartLevelButton;
     public Button lobbyButton;
 
     void Awake()
@@ -20,10 +20,9 @@ public class DeathUiManager : MonoBehaviour
 
     void Start()
     {
-        restartLevelButton.onClick.AddListener(OnRestartLevel);
         restartBossButton.onClick.AddListener(OnRestartBoss);
+        restartLevelButton.onClick.AddListener(OnRestartLevel);
         lobbyButton.onClick.AddListener(OnReturnToLobby);
-
     }
 
     void OnEnable()
