@@ -69,8 +69,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RespawnManager
   mask:
     serializedVersion: 2
-    m_Bits: 535
+    m_Bits: 513
   repeatrate: 0.5
+  invDuration: 5
 --- !u!114 &-4842880484022899830
 MonoBehaviour:
   m_ObjectHideFlags: 0

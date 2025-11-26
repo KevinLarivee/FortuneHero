@@ -410,6 +410,8 @@ public class PlayerMovement : MonoBehaviour
     }
     public void KnockBack(Vector3 sourcePosition, float horizontalForce, float verticalMultiplier)
     {
+        if (health.isInvincible)
+            return;
         isKnockedBack = true;
         Vector3 direction = (transform.position - sourcePosition).normalized;
         direction.Normalize();

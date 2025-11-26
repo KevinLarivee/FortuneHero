@@ -16,10 +16,13 @@ public class RespawnManager : MonoBehaviour
     static RespawnManager instance;
     public static RespawnManager Instance { get { return instance; } }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    private void Awake()
     {
         instance = this;
-
+    }
+    void Start()
+    {
         pc = PlayerComponent.Instance;
         pm = PlayerMovement.Instance;
         dissolve = pc.GetComponent<DissolveComponent>();
@@ -44,6 +47,8 @@ public class RespawnManager : MonoBehaviour
     }
     IEnumerator RespawnAnimation()
     {
+        if (!pc.healthComponent.isInvincible)
+            StartCoroutine(pm.MakeInvincible(invDuration));
         isRespawning = true;
         pc.PausePlayer(true);
         //Animation de despawn
@@ -51,8 +56,6 @@ public class RespawnManager : MonoBehaviour
         pc.transform.position = respawnPoint;
         //Animation de respawn
         yield return dissolve.Dissolve(true);
-        if (!pc.healthComponent.isInvincible)
-            StartCoroutine(pm.MakeInvincible(invDuration));
         pc.PausePlayer(false);
         isRespawning = false;
     }

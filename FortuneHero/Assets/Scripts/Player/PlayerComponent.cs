@@ -50,6 +50,8 @@ public class PlayerComponent : MonoBehaviour
     PlayerOverlayComponent playerOverlay;
 
     InputSystem_Actions.PlayerActions actions;
+
+    bool wasInvincible = false;
     void Awake()
     {
         instance = this;
