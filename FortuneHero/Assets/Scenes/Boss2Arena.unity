@@ -4949,9 +4949,13 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6510011052755742396, guid: ae6f80411d9366d449024e2432ee7acf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8238716480473417436, guid: ae6f80411d9366d449024e2432ee7acf, type: 3}
       propertyPath: maxHp
-      value: 400
+      value: 300
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6827,6 +6831,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3676957602881566033, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -227.99997
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731827468305418961, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -228
+      objectReference: {fileID: 0}
     - target: {fileID: 4171777087355274631, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.3352575
@@ -6870,6 +6882,18 @@ PrefabInstance:
     - target: {fileID: 4610281150307999625, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
       propertyPath: m_Name
       value: BlackjackTable
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440086631267123817, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440086631267123817, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 8440086631267123817, guid: 5a19eddcd26064245aa6266469b8024e, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12204,7 +12228,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4357414599966805034, guid: df07d9d1fd5fbd548917dce3729ce0e0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.18
       objectReference: {fileID: 0}
     - target: {fileID: 4357414599966805034, guid: df07d9d1fd5fbd548917dce3729ce0e0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12212,7 +12236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4357414599966805034, guid: df07d9d1fd5fbd548917dce3729ce0e0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -9.04
       objectReference: {fileID: 0}
     - target: {fileID: 4357414599966805034, guid: df07d9d1fd5fbd548917dce3729ce0e0, type: 3}
       propertyPath: m_LocalRotation.w

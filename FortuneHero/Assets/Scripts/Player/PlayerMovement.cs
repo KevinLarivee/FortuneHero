@@ -163,8 +163,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 health.Hit(burnDmgPerTick);
                 burnTimer = 0;
-                Debug.Log("You have been burned! - " + burnDmgPerTick + "hp");
-                animator.SetTrigger("isHit");
+                //Debug.Log("You have been burned! - " + burnDmgPerTick + "hp");
+                //animator.SetTrigger("isHit");
             }
         }
         else
@@ -188,8 +188,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!landed)
             {
-                //SFXManager.Instance.PlaySFX(landingClip, transform, PlayerComponent.Instance.SFXGroup); ----------------------------------------------
-
+                SFXManager.Instance.PlaySFX(landingClip, transform, PlayerComponent.Instance.SFXGroup);
                 landed = true;
             }
             if (jump.y <= -10)
@@ -390,7 +389,7 @@ public class PlayerMovement : MonoBehaviour
         //yield return new WaitForEndOfFrame();
         jump.y = 0f;
         moveSpeed = maxSpeed * playerInstance.speedMultiplier * playerInstance.dashSpeed;
-        //SFXManager.Instance.PlaySFX(dashClip, transform, PlayerComponent.Instance.SFXGroup_Louder);--------------------------------------------
+        SFXManager.Instance.PlaySFX(dashClip, transform, PlayerComponent.Instance.SFXGroup_Louder);
 
         yield return new WaitForSeconds(dashTime);
         moveSpeed = maxSpeed * playerInstance.speedMultiplier;
@@ -460,8 +459,7 @@ public class PlayerMovement : MonoBehaviour
     }
     public IEnumerator StartJumpEffects()
     {
-        //SFXManager.Instance.PlaySFX(jumpClip, transform, PlayerComponent.Instance.SFXGroup);-------------------------------------------------------------
-
+        SFXManager.Instance.PlaySFX(jumpClip, transform, PlayerComponent.Instance.SFXGroup);
         var gameobject = Instantiate(jumpVFX, transform.position + Vector3.up * 0.5f, Quaternion.Euler(90, 0, 0)); //Object Pool
         yield return new WaitForSeconds(jumpVFXCd);
         Destroy(gameobject);

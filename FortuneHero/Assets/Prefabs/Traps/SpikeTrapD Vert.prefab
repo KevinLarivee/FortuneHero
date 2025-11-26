@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4128849069878904635}
   - component: {fileID: 1200085366105320334}
   - component: {fileID: 7438218984128045890}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpearD (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 1774447366783848181}
   - component: {fileID: 787390873243850899}
   - component: {fileID: 5475879351465370669}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpearD (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 7278093226821570703}
   - component: {fileID: 7611543813742204612}
   - component: {fileID: 4095724350074954789}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpearD (4)
   m_TagString: Trap
   m_Icon: {fileID: 0}
@@ -304,10 +304,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DamageCollision
   damage: 1
   targetTag: Player
-  statusEffect: 4
+  statusEffects: 0
   knockbackForce: 8
-  knockbackDuration: 0.25
-  verticalFactor: 0.1
+  verticalMultiplier: 0.4
+  burnDamage: 5
+  afterBurnTime: 3
+  paralyzeDamage: 1
+  paralyzeDuration: 0.1
+  freezeDamage: 1
+  freezeMultiplier: 2
+  freezeDuration: 2
 --- !u!1 &1906684096539011470
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +325,7 @@ GameObject:
   - component: {fileID: 6372079692792551940}
   - component: {fileID: 8942268088628106022}
   - component: {fileID: 7304748354685987384}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpearD (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -408,7 +414,7 @@ GameObject:
   - component: {fileID: 8696057324655457785}
   - component: {fileID: 3580246451754128298}
   - component: {fileID: 4709126962776072618}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpearD (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +503,7 @@ GameObject:
   - component: {fileID: 971928154869042881}
   - component: {fileID: 625080234008153719}
   - component: {fileID: 5937672854090095371}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpearD (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,7 +595,7 @@ GameObject:
   - component: {fileID: 7520825746673678504}
   - component: {fileID: 6548516658291623143}
   - component: {fileID: 1569430962724899533}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpikeTrapD Vert
   m_TagString: Trap
   m_Icon: {fileID: 0}
@@ -710,7 +716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfc9ddd4ef5c6f47afe9453d93658aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spikeTrapAnim: {fileID: 0}
+  spikeTrapSFX: {fileID: 0}
+  detectionRange: 20
 --- !u!65 &1569430962724899533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -743,7 +750,7 @@ GameObject:
   - component: {fileID: 8159927099730387960}
   - component: {fileID: 887513668524487962}
   - component: {fileID: 3388078049308173747}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpearD (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -832,7 +839,7 @@ GameObject:
   - component: {fileID: 6846057219283688459}
   - component: {fileID: 6866894994844061281}
   - component: {fileID: 4791002222145688611}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpearD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -921,7 +928,7 @@ GameObject:
   - component: {fileID: 7007830738236461835}
   - component: {fileID: 8380863225613109400}
   - component: {fileID: 6263858320933133737}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpearD (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -142,14 +142,14 @@ public class ShopComponent : MonoBehaviour, IInteractable
         else
         {
             canBuy = false;
-            itemPrice.text = "Not enough coins. Price: " + power.Price.ToString();
+            itemPrice.text = "Pas assez d'argent. Prix: " + power.Price.ToString();
         }
 
     }
     private void BuyPowerUp(GameObject obj, PowerUp power)
     {
         //check si j'ai assez de cash
-        if(canBuy)
+        if(canBuy && obj != null)
         {
             Destroy(obj);
             SFXManager.Instance.PlaySFX(buyItemSFX, transform, PlayerComponent.Instance.SFXGroup);
@@ -188,7 +188,6 @@ public class ShopComponent : MonoBehaviour, IInteractable
         if (isInRange)
         {
             BuyPowerUp(currentItem, currentPower);
-            Debug.Log("Buy that shit");
         }
     }
 }

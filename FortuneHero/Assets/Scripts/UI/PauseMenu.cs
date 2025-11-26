@@ -22,6 +22,7 @@ public class PauseMenu : MonoBehaviour
         instance = this;
         panelParametres.GetComponent<MenuOption>().previous = Retour;
         player = PlayerComponent.Instance;
+        pauseMenuUI.SetActive(false);
     }
     public void OnPause(InputAction.CallbackContext context)
     {
@@ -63,6 +64,11 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         LoadManager.Instance.Load("LobbyScene");
+        pauseMenuUI.SetActive(false);
+    }
+    public void ReturnToMenu()
+    {
+        LoadManager.Instance.Load("UIScene");
         pauseMenuUI.SetActive(false);
     }
 

@@ -144,7 +144,7 @@ public class PlayerActions : MonoBehaviour
         if (ctx.performed && canMeleeAtk)
         {
             animator.SetTrigger("MeleeAttack");
-            //SFXManager.Instance.PlaySFX(meleeAtkClip, transform, PlayerComponent.Instance.SFXGroup_Louder);----------------------------------------------------------
+            SFXManager.Instance.PlaySFX(meleeAtkClip, transform, PlayerComponent.Instance.SFXGroup_Louder);
             meleeAtkTimer = meleeAtkCd;
             canMeleeAtk = false;
 
@@ -200,7 +200,7 @@ public class PlayerActions : MonoBehaviour
         audioSource.clip = lightningClip;
         audioSource.outputAudioMixerGroup = PlayerComponent.Instance.SFXGroup_Louder;
         audioSource.Play();
-        //SFXManager.Instance.PlaySFX(lightningClip, transform, PlayerComponent.Instance.SFXGroup);
+        SFXManager.Instance.PlaySFX(lightningClip, transform, PlayerComponent.Instance.SFXGroup);
 
         StartCoroutine(AoeParalyze());
     }
@@ -250,7 +250,7 @@ public class PlayerActions : MonoBehaviour
                 break;
             default:
                 prefab = defaultProjectilePrefab;
-                //SFXManager.Instance.PlaySFX(fireballClip, transform, PlayerComponent.Instance.SFXGroup_Louder);-------------------------------------------------
+                SFXManager.Instance.PlaySFX(fireballClip, transform, PlayerComponent.Instance.SFXGroup_Louder);
                 break;
         }
 
@@ -269,7 +269,7 @@ public class PlayerActions : MonoBehaviour
     }
     private IEnumerator InvShield()
     {
-        //SFXManager.Instance.PlaySFX(shieldClip, transform, PlayerComponent.Instance.SFXGroup);-----------------------------------------------
+        SFXManager.Instance.PlaySFX(shieldClip, transform, PlayerComponent.Instance.SFXGroup);
         health.isInvincible = true;
         var obj = Instantiate(invShieldPrefab, transform.position, Quaternion.identity);
         obj.transform.parent = transform;

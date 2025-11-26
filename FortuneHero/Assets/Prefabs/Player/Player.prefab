@@ -1722,6 +1722,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6516314194230397906}
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[0].Name
+      value: "Pluie d'\xE9clairs"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[1].Name
+      value: Boule de glace
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[2].Name
+      value: Bouclier+++
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[0].Price
       value: 60
       objectReference: {fileID: 0}
@@ -1732,6 +1744,19 @@ PrefabInstance:
     - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: powerUps.Array.data[2].Price
       value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[0].Description
+      value: "Fait appara\xEEtre des \xE9clairs qui paralyse tous les ennemis dans
+        son rayon"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[1].Description
+      value: "Lance une boule de glace qui ralenti l'ennemi touch\xE9"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5366150510080605653, guid: 0283053334043de45b20b0876511552a, type: 3}
+      propertyPath: powerUps.Array.data[2].Description
+      value: Te rends invincible durant un certain temps
       objectReference: {fileID: 0}
     - target: {fileID: 5515543847912823315, guid: 0283053334043de45b20b0876511552a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2587,6 +2612,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5965113584445915505}
     m_Modifications:
+    - target: {fileID: 1165946908936102046, guid: e1574dda2ea384c43a361bd7e02f53e1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2700551693458503085, guid: e1574dda2ea384c43a361bd7e02f53e1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3741930582909002148, guid: e1574dda2ea384c43a361bd7e02f53e1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4863057610839113103, guid: e1574dda2ea384c43a361bd7e02f53e1, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -2667,9 +2704,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5409935779472113859, guid: e1574dda2ea384c43a361bd7e02f53e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7208783516211491723, guid: e1574dda2ea384c43a361bd7e02f53e1, type: 3}
       propertyPath: m_Name
       value: SousMenuOption 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9189594499810194345, guid: e1574dda2ea384c43a361bd7e02f53e1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3052,18 +3097,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvaMenuJeu
       objectReference: {fileID: 0}
+    - target: {fileID: 650105696901429133, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2040163961068383107, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4804041047266393419}
     - target: {fileID: 2351817592301552141, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2351817592301552141, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4804041047266393419}
+    - target: {fileID: 2582586339027544912, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4804041047266393419}
+    - target: {fileID: 3117575441835456340, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.82499665
+      objectReference: {fileID: 0}
+    - target: {fileID: 3117575441835456340, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -6.6
+      objectReference: {fileID: 0}
     - target: {fileID: 4431583479269694694, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3148,10 +3205,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 4804041047266393419}
-    - target: {fileID: 8461689794371412947, guid: c06787f0d5e99c64ea36d1367b753064, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
